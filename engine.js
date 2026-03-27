@@ -1,3 +1,18 @@
+// ── FIREBASE ─────────────────────────────────────────────────────
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAC8O2ePjgN-QZoWsWMq3ydBcJcIktbvkc",
+  authDomain: "axioma-ec7f6.firebaseapp.com",
+  projectId: "axioma-ec7f6",
+  storageBucket: "axioma-ec7f6.firebasestorage.app",
+  messagingSenderId: "445517585785",
+  appId: "1:445517585785:web:e5ea3d151eb8d211dea3a8"
+};
+let _db = null;
+try {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  _db = firebase.firestore();
+} catch(e) { console.warn('Firebase init failed:', e.message); }
+
 const LEVELS = [
   { level: 0, name: 'GUEST',       xp: 0    },
   { level: 1, name: 'SCRIPT_KID',  xp: 50   },
@@ -236,9 +251,13 @@ const Engine = {
     // Načti e-mail z URL parametru (předán Thinkificem přes {{email}})
     const urlEmail = new URLSearchParams(window.location.search).get('email') || '';
     this.saveKey = urlEmail ? 'axioma_save_' + urlEmail.toLowerCase().trim() : 'axioma_save';
-    this.loadState();
-    this.updateUI();
-    this.switchView('view-map');
+    // Zobraz header okamžitě, mapu až po načtení stavu (Firestore je async)
+    document.getElementById('view-map').classList.add('active');
+    this.loadState().then(() => {
+      this.updateUI();
+      this.generateBlueprint();
+      this.renderXPBar();
+    });
   },
 
   switchView: function(viewId) {
@@ -860,33 +879,59 @@ const Engine = {
   },
 
   saveState: function() {
-    try {
-      localStorage.setItem(this.saveKey || 'axioma_save', JSON.stringify(this.state));
-    } catch(e) {
-      // localStorage nedostupný (iframe/Safari) — progress se neukládá, ale aplikace běží
+    const key = this.saveKey || 'axioma_save';
+    // localStorage — záloha pro offline
+    try { localStorage.setItem(key, JSON.stringify(this.state)); } catch(e) {}
+    // Firestore — jen pro přihlášené žáky (saveKey obsahuje email)
+    if (_db && key !== 'axioma_save') {
+      _db.collection('saves').doc(key).set({ state: this.state, updated: Date.now() })
+        .catch(e => console.warn('Firestore save error:', e.message));
     }
   },
   loadState: function() {
-    try {
-      const saved = localStorage.getItem(this.saveKey || 'axioma_save');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Migrace starých uložení — doplnit chybějící pole
-        this.state = Object.assign({ achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] }, parsed);
-        // Migrace: cap maxHp na 5 (starší uložení mohla mít 6)
-        if (this.state.maxHp > 5) { this.state.maxHp = 5; this.state.hp = Math.min(this.state.hp, 5); }
-      } else {
-        this.state.xp = GameData.config.startingXP || 0;
-      }
-    } catch(e) {
-      // localStorage nedostupný — spustit s prázdným stavem
-      this.state.xp = GameData.config.startingXP || 0;
+    const key = this.saveKey || 'axioma_save';
+    const defaults = { achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] };
+    const applyState = (parsed) => {
+      this.state = Object.assign(defaults, parsed);
+      if (this.state.maxHp > 5) { this.state.maxHp = 5; this.state.hp = Math.min(this.state.hp, 5); }
+    };
+    // Přihlášený žák s emailem → Firestore (cross-device)
+    if (_db && key !== 'axioma_save') {
+      return _db.collection('saves').doc(key).get()
+        .then(doc => {
+          if (doc.exists && doc.data().state) {
+            applyState(doc.data().state);
+          } else {
+            // Nic ve Firestore → zkus localStorage (migrace starých dat)
+            try {
+              const local = localStorage.getItem(key);
+              if (local) { applyState(JSON.parse(local)); this.saveState(); }
+            } catch(e) {}
+          }
+        })
+        .catch(() => {
+          // Firestore nedostupný → fallback na localStorage
+          try {
+            const local = localStorage.getItem(key);
+            if (local) applyState(JSON.parse(local));
+          } catch(e) {}
+        });
     }
+    // Anonymní / bez emailu → localStorage
+    return Promise.resolve().then(() => {
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved) applyState(JSON.parse(saved));
+      } catch(e) {}
+    });
   },
 
   resetGame: function() {
     if(confirm("Opravdu chcete iniciovat System Wipe? Všechna data budou smazána.")) {
       try { localStorage.removeItem(this.saveKey || 'axioma_save'); } catch(e) {}
+      if (_db && this.saveKey && this.saveKey !== 'axioma_save') {
+        _db.collection('saves').doc(this.saveKey).delete().catch(() => {});
+      }
       this.state = { xp: 0, clearedNodes: [], hp: 5, maxHp: 5, achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] };
       this.updateUI();
       this.generateBlueprint();
