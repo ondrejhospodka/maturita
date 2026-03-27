@@ -859,23 +859,34 @@ const Engine = {
     }, 400);
   },
 
-  saveState: function() { localStorage.setItem(this.saveKey || 'axioma_save', JSON.stringify(this.state)); },
+  saveState: function() {
+    try {
+      localStorage.setItem(this.saveKey || 'axioma_save', JSON.stringify(this.state));
+    } catch(e) {
+      // localStorage nedostupný (iframe/Safari) — progress se neukládá, ale aplikace běží
+    }
+  },
   loadState: function() {
-    const saved = localStorage.getItem(this.saveKey || 'axioma_save');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // Migrace starých uložení — doplnit chybějící pole
-      this.state = Object.assign({ achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] }, parsed);
-      // Migrace: cap maxHp na 5 (starší uložení mohla mít 6)
-      if (this.state.maxHp > 5) { this.state.maxHp = 5; this.state.hp = Math.min(this.state.hp, 5); }
-    } else {
+    try {
+      const saved = localStorage.getItem(this.saveKey || 'axioma_save');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Migrace starých uložení — doplnit chybějící pole
+        this.state = Object.assign({ achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] }, parsed);
+        // Migrace: cap maxHp na 5 (starší uložení mohla mít 6)
+        if (this.state.maxHp > 5) { this.state.maxHp = 5; this.state.hp = Math.min(this.state.hp, 5); }
+      } else {
+        this.state.xp = GameData.config.startingXP || 0;
+      }
+    } catch(e) {
+      // localStorage nedostupný — spustit s prázdným stavem
       this.state.xp = GameData.config.startingXP || 0;
     }
   },
 
   resetGame: function() {
     if(confirm("Opravdu chcete iniciovat System Wipe? Všechna data budou smazána.")) {
-      localStorage.removeItem(this.saveKey || 'axioma_save');
+      try { localStorage.removeItem(this.saveKey || 'axioma_save'); } catch(e) {}
       this.state = { xp: 0, clearedNodes: [], hp: 5, maxHp: 5, achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] };
       this.updateUI();
       this.generateBlueprint();
