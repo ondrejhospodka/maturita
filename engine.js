@@ -23,7 +23,6 @@ const LEVELS = [
   { level: 6, name: 'GHOST',       xp: 1700 },
   { level: 7, name: 'PHANTOM',     xp: 2500 },
   { level: 8, name: 'CIPHER',      xp: 3500 },
-  { level: 9, name: 'ROOT',        xp: 5000 },
 ];
 
 const ACHIEVEMENTS = [
@@ -31,7 +30,8 @@ const ACHIEVEMENTS = [
   {
     id: 'ACH_FIRST', name: 'FIRST_BREACH', secret: false,
     flavor: 'Přístup povolen. Systém kompromitován.',
-    condition: 'Správně vyřeš svůj první firewall.',
+    condition: 'Vstup do své první arény.',
+    reward: { type: 'battery', amount: 1, label: '+1 Recharge Battery (+3 energie)' },
     color: '#00d2ff',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <rect x="8" y="20" width="24" height="16" rx="3"/>
@@ -41,22 +41,21 @@ const ACHIEVEMENTS = [
     </svg>`,
   },
   {
-    id: 'ACH_TRAINING', name: 'SIMULATION_COMPLETE', secret: false,
-    flavor: 'Virtuální prostředí překonáno.',
-    condition: 'Správně dokonči svůj první trénink.',
-    color: '#00d2ff',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <rect x="5" y="8" width="30" height="22" rx="2"/>
-      <line x1="5" y1="26" x2="35" y2="26"/>
-      <line x1="15" y1="34" x2="25" y2="34"/>
-      <line x1="20" y1="30" x2="20" y2="34"/>
-      <text x="9" y="22" font-family="monospace" font-size="9" fill="currentColor" stroke="none">&gt;_</text>
+    id: 'ACH_FIRST_CORRECT', name: 'ACCESS_GRANTED', secret: false,
+    flavor: 'Průnik potvrzen. Cesta do systému otevřena.',
+    condition: 'Správně vyřeš svůj první firewall.',
+    reward: { type: 'xp', amount: 10, label: '+10 XP' },
+    color: '#2ecc8a',
+    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="32" height="32" rx="3"/>
+      <polyline points="11,20 17,27 29,13" stroke-width="2.5"/>
     </svg>`,
   },
   {
     id: 'ACH_BUY_LIFE', name: 'RESOURCE_ALLOCATION', secret: false,
     flavor: 'Přesměrování zdrojů schváleno.',
     condition: 'Nakup si nový pokus za XP.',
+    reward: { type: 'xp', amount: 5, label: '+5 XP cashback' },
     color: '#00d2ff',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="20,4 33,11 33,25 20,32 7,25 7,11"/>
@@ -67,9 +66,10 @@ const ACHIEVEMENTS = [
   },
   // ── SKILL ────────────────────────────────────────────────────────
   {
-    id: 'ACH_NOHINT', name: 'GHOST_MODE', secret: false,
-    flavor: 'Žádná stopa. Čistý průnik.',
-    condition: 'Vyřeš firewall bez otevření nápovědy.',
+    id: 'ACH_NOHINT', name: 'GHOST_MODE', secret: true,
+    flavor: 'Žádná stopa. Celý sektor bez pomoci. Kapacita rozšířena.',
+    condition: 'Projdi celý modul bez jediného použití nápovědy.',
+    reward: { type: 'maxHp', amount: 1, label: '+1 permanentní HP slot' },
     color: '#7c5cfc',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <path d="M5 20 Q20 8 35 20 Q20 32 5 20"/>
@@ -80,16 +80,30 @@ const ACHIEVEMENTS = [
   {
     id: 'ACH_STREAK', name: 'ZERO_RESISTANCE', secret: false,
     flavor: 'Firewall se vzdal. Odpor = 0.',
-    condition: 'Vyřeš 10 příkladů za sebou správně bez jediné chyby.',
+    condition: 'Vyřeš 15 příkladů za sebou správně bez jediné chyby.',
+    reward: { type: 'xp', amount: 10, label: '+10 XP' },
     color: '#f7b84f',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="22,4 14,20 20,20 18,36 26,20 20,20 22,4"/>
     </svg>`,
   },
   {
+    id: 'ACH_TRAINER', name: 'SIMULATION_CORE', secret: false,
+    flavor: 'Tréning dokončen. Simulace provedeny. Systém aktualizován.',
+    condition: 'Dokonči 25 simulací (SIM).',
+    reward: { type: 'xp', amount: 15, label: '+15 XP' },
+    color: '#2ecc8a',
+    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="8" width="32" height="24" rx="2"/>
+      <polyline points="10,23 16,17 10,11"/>
+      <line x1="19" y1="27" x2="31" y2="27"/>
+    </svg>`,
+  },
+  {
     id: 'ACH_PERSISTENCE', name: 'PERSISTENCE', secret: false,
     flavor: 'Systém testoval tvou vůli. Prošels.',
     condition: 'Správně vyřeš příklad, na kterém jsi předtím dvakrát selhal.',
+    reward: { type: 'xp', amount: 15, label: '+15 XP' },
     color: '#f7b84f',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M32 12 A13 13 0 1 0 35 22"/>
@@ -104,6 +118,7 @@ const ACHIEVEMENTS = [
     id: 'ACH_LAST_STAND', name: 'LAST_STAND', secret: false,
     flavor: 'Jeden pokus. Jeden průnik. Stačilo.',
     condition: 'Správně odpověz, když ti zbývá právě 1 pokus.',
+    reward: { type: 'xp', amount: 15, label: '+15 XP' },
     color: '#ff3b6a',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 4 L34 10 L34 22 Q34 32 20 37 Q6 32 6 22 L6 10 Z"/>
@@ -115,6 +130,7 @@ const ACHIEVEMENTS = [
     id: 'ACH_SECTOR', name: 'SECTOR_CLEAR', secret: false,
     flavor: 'Sektor pod kontrolou.',
     condition: 'Vyřeš všechny firewally v jednom modulu.',
+    reward: { type: 'xp', amount: 25, label: '+25 XP' },
     color: '#00d2ff',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <rect x="4" y="4" width="14" height="14" rx="1"/>
@@ -128,6 +144,7 @@ const ACHIEVEMENTS = [
     id: 'ACH_CLEAN', name: 'CLEAN_SWEEP', secret: false,
     flavor: 'Nulová chybovost. Systém respektuje.',
     condition: 'Vyřeš 3 různé moduly bez jediné chyby.',
+    reward: { type: 'battery', amount: 1, label: '+1 Recharge Battery (+3 energie)' },
     color: '#2ecc8a',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 4 L33 10 L33 22 Q33 32 20 37 Q7 32 7 22 L7 10 Z"/>
@@ -135,56 +152,44 @@ const ACHIEVEMENTS = [
     </svg>`,
   },
   {
-    id: 'ACH_TRAINING_OFFICER', name: 'TRAINING_OFFICER', secret: false,
-    flavor: 'Simulace absolvovány. Přístup ke všem protokolům.',
-    condition: 'Dokonči všechny tréninky v jednom modulu.',
-    color: '#7c5cfc',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <rect x="5" y="8" width="30" height="20" rx="2"/>
-      <line x1="5" y1="22" x2="35" y2="22"/>
-      <line x1="18" y1="32" x2="22" y2="32"/>
-      <line x1="20" y1="28" x2="20" y2="32"/>
-      <text x="10" y="20" font-family="monospace" font-size="7" fill="currentColor" stroke="none">SIM</text>
-      <polyline points="22,12 25,16 31,10" stroke-width="2.5"/>
-    </svg>`,
-  },
-  {
-    id: 'ACH_NO_WHEELS', name: 'NO_TRAINING_WHEELS', secret: false,
-    flavor: 'Podpůrné systémy odpojeny. Operuješ solo.',
-    condition: 'Projdi celý modul bez spuštění jediného tréninku.',
-    color: '#f7b84f',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <rect x="4" y="9" width="26" height="18" rx="2"/>
-      <line x1="4" y1="22" x2="30" y2="22"/>
-      <text x="9" y="20" font-family="monospace" font-size="7" fill="currentColor" stroke="none">&gt;_</text>
-      <line x1="28" y1="7" x2="38" y2="33" stroke="#ff3b6a" stroke-width="2.5"/>
-      <line x1="38" y1="7" x2="28" y2="33" stroke="#ff3b6a" stroke-width="2.5"/>
-    </svg>`,
-  },
-  {
     id: 'ACH_VETERAN', name: 'VETERAN', secret: false,
     flavor: 'Bojový záznam ověřen. Přístup: SENIOR.',
     condition: 'Správně vyřeš celkem 30 firewallů.',
+    reward: { type: 'xp', amount: 40, label: '+40 XP' },
     color: '#f7b84f',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="20,4 24,15 36,15 27,23 30,34 20,27 10,34 13,23 4,15 16,15"/>
     </svg>`,
   },
   {
-    id: 'ACH_HALF', name: 'HALFWAY_THROUGH', secret: false,
-    flavor: 'Polovina sítě kompromitována.',
-    condition: 'Vyřeš 50 % všech firewallů v aplikaci.',
-    color: '#f7b84f',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="20" cy="20" r="14"/>
-      <path d="M20 6 A14 14 0 0 1 34 20 L20 20 Z" fill="currentColor" stroke="none" opacity="0.6"/>
-      <path d="M20 6 A14 14 0 0 1 34 20" stroke-width="2.5"/>
-      <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
+    id: 'ACH_HALFWAY', name: 'MIDPOINT_BREACH', secret: false,
+    flavor: 'Polovina systému prolomena. Druhá polovina čeká.',
+    condition: 'Správně vyřeš 60 firewallů.',
+    reward: { type: 'xp', amount: 20, label: '+20 XP' },
+    color: '#00d2ff',
+    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <rect x="4" y="17" width="32" height="6" rx="1"/>
+      <rect x="4" y="17" width="16" height="6" rx="1" fill="currentColor" stroke="none"/>
+      <line x1="20" y1="9" x2="20" y2="31" stroke-width="2.5"/>
+    </svg>`,
+  },
+  {
+    id: 'ACH_FINAL_PUSH', name: 'FINAL_PUSH', secret: false,
+    flavor: 'Zbývá minimum. Systém cítí tlak.',
+    condition: 'Správně vyřeš 100 firewallů.',
+    reward: { type: 'xp', amount: 30, label: '+30 XP' },
+    color: '#7c5cfc',
+    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 5 L14 22 L20 19 L26 22 Z"/>
+      <line x1="14" y1="34" x2="26" y2="34"/>
+      <line x1="16" y1="30" x2="14" y2="34"/>
+      <line x1="24" y1="30" x2="26" y2="34"/>
+      <line x1="20" y1="19" x2="20" y2="30"/>
     </svg>`,
   },
   {
     id: 'ACH_ALL', name: 'SYSTEM_OVERRIDE', secret: false,
-    flavor: 'Absolutní přístup. Systém = váš.',
+    flavor: 'Všechny firewally padly. Není co přidat.',
     condition: 'Vyřeš všechny firewally v celé aplikaci.',
     color: '#ff3b6a',
     icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -200,39 +205,27 @@ const ACHIEVEMENTS = [
   },
   // ── TAJNÉ ────────────────────────────────────────────────────────
   {
-    id: 'ACH_ROOT', name: 'ROOT_ACCESS', secret: true,
-    flavor: 'Jsi systém. Systém jsi ty.',
-    condition: 'Podmínky utajeny.',
-    color: '#ffd700',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <circle cx="20" cy="20" r="16"/>
-      <text x="20" y="26" font-family="monospace" font-size="16" font-weight="bold" fill="currentColor" stroke="none" text-anchor="middle">#</text>
+    id: 'ACH_PHOENIX', name: 'PHOENIX', secret: true,
+    flavor: 'Po pádu — 3 průniky bez zaváhání. Systém respektuje.',
+    condition: 'Po lockdownu vyřeš 3 firewally v řadě bez chyby.',
+    reward: { type: 'battery', amount: 1, label: '+1 Recharge Battery (+3 energie)' },
+    color: '#f7b84f',
+    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 36 C12 28 6 20 10 12 C12 8 16 4 20 4 C24 4 28 8 30 12 C34 20 28 28 20 36"/>
+      <path d="M16 20 L20 12 L24 20" stroke-width="2.5"/>
+      <line x1="20" y1="12" x2="20" y2="28"/>
     </svg>`,
   },
   {
-    id: 'ACH_LOOP', name: 'ERROR_LOOP', secret: true,
-    flavor: 'Chyba přetrvává. Systém tě zná.',
-    condition: 'Podmínky utajeny.',
+    id: 'ACH_IRON_WILL', name: 'IRON_WILL', secret: true,
+    flavor: 'Lockdown nestačil. Region dokončen navzdory všemu.',
+    condition: 'Dokonči celý region, ve kterém jsi zažil lockdown.',
+    reward: { type: 'battery', amount: 1, label: '+1 Recharge Battery (+3 energie)' },
     color: '#ff3b6a',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-      <path d="M5 20 C5 12 12 8 20 8 C28 8 35 12 35 20 C35 28 28 32 20 32 C12 32 5 28 5 20"/>
-      <text x="20" y="24" font-family="monospace" font-size="9" fill="currentColor" stroke="none" text-anchor="middle">ERR</text>
-    </svg>`,
-  },
-  {
-    id: 'ACH_COLD', name: 'COLD_BOOT', secret: true,
-    flavor: 'Systém restartován po dlouhé době.',
-    condition: 'Podmínky utajeny.',
-    color: '#00d2ff',
-    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <circle cx="20" cy="20" r="13"/>
-      <line x1="20" y1="7" x2="20" y2="33"/>
-      <line x1="7" y1="20" x2="33" y2="20"/>
-      <line x1="11" y1="11" x2="29" y2="29"/>
-      <line x1="29" y1="11" x2="11" y2="29"/>
-      <line x1="20" y1="7" x2="17" y2="11"/>
-      <line x1="20" y1="7" x2="23" y2="11"/>
-      <polyline points="20,20 20,14 24,14" stroke-width="2"/>
+    icon: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 4 L34 10 L34 22 Q34 32 20 37 Q6 32 6 22 L6 10 Z"/>
+      <path d="M15 18 L20 28 L25 18" stroke-width="2.5"/>
+      <line x1="20" y1="10" x2="20" y2="28" stroke-width="2"/>
     </svg>`,
   },
 ];
@@ -243,8 +236,15 @@ function renderMath() {
   } else { setTimeout(renderMath, 100); }
 }
 
+function getDefaultState() {
+  return JSON.parse(JSON.stringify({ xp: 0, clearedNodes: [], hp: 5, maxHp: 5, batteries: 0, achievements: [], streak: 0, correctAfterLockdown: -1, deathsPerQuestion: {}, errorsInRegion: {}, lockdownsInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [], maxLevelEver: 0, lastPlayDate: null, dailyStreak: 0, dailyMissionDate: null, dailyMissionProgress: 0, dailyMissionClaimed: false, endgameSeen: false, onboardingSeen: false, totalDeaths: 0, firstLockdownSeen: false }));
+}
+
+function getTodayISO() { return new Date().toISOString().slice(0, 10); }
+function getYesterdayISO() { return new Date(Date.now() - 86400000).toISOString().slice(0, 10); }
+
 const Engine = {
-  state: { xp: 0, clearedNodes: [], hp: 5, maxHp: 5, achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] },
+  state: getDefaultState(),
   currentRegionId: null,
 
   init: function() {
@@ -257,7 +257,54 @@ const Engine = {
       this.updateUI();
       this.generateBlueprint();
       this.renderXPBar();
+      this.renderDailyPanel();
+      if (!this.state.onboardingSeen) this.showOnboarding();
     });
+  },
+
+  showOnboarding: function() {
+    const overlay = document.createElement('div');
+    overlay.id = 'onboarding-overlay';
+    overlay.innerHTML = `
+      <div class="onboarding-box">
+        <div class="onboarding-tag">[ PŘÍSTUP UDĚLEN — INICIALIZACE ]</div>
+        <div class="onboarding-lines">
+          <div class="onboarding-line">Klikni na libovolný sektor na mapě.</div>
+          <div class="onboarding-line">Vyřeš příklad a prolom firewall.</div>
+          <div class="onboarding-line">Každá chyba stojí 1 energii. Máš jich 5.</div>
+          <div class="onboarding-line">Na nule nastane LOCKDOWN — trénink a reset.</div>
+          <div class="onboarding-line">Za správné odpovědi sbíráš XP a postupuješ na další levely.</div>
+        </div>
+        <button class="btn-primary onboarding-btn" onclick="Engine.closeOnboarding()">&gt; VSTOUPIT DO SYSTÉMU</button>
+      </div>`;
+    document.body.appendChild(overlay);
+  },
+
+  closeOnboarding: function() {
+    const overlay = document.getElementById('onboarding-overlay');
+    if (overlay) overlay.remove();
+    this.state.onboardingSeen = true;
+    this.saveState();
+  },
+
+  showRules: function() {
+    const overlay = document.createElement('div');
+    overlay.id = 'onboarding-overlay';
+    overlay.innerHTML = `
+      <div class="onboarding-box">
+        <div class="onboarding-tag">[ PRAVIDLA SYSTÉMU ]</div>
+        <div class="onboarding-lines">
+          <div class="onboarding-line">Klikni na libovolný sektor na mapě.</div>
+          <div class="onboarding-line">Vyřeš příklad a prolom firewall.</div>
+          <div class="onboarding-line">Každá chyba stojí 1 energii. Máš jich 5.</div>
+          <div class="onboarding-line">Na nule nastane LOCKDOWN — trénink a reset energie na 4.</div>
+          <div class="onboarding-line">Energii lze dobít: DOBÍT ENERGII (−30 XP) nebo z Baterie (získáš po každém level-upu).</div>
+          <div class="onboarding-line">Za správné odpovědi sbíráš XP a postupuješ na další levely.</div>
+          <div class="onboarding-line" style="color:var(--neon-red)">⚠ LOCKDOWN PENALTY: každý LOCKDOWN odečte XP — čím víc máš, tím vyšší ztráta (−5 / −20 / −50 XP). Šetři energií!</div>
+        </div>
+        <button class="btn-primary onboarding-btn" onclick="document.getElementById('onboarding-overlay').remove()">&gt; ZAVŘÍT</button>
+      </div>`;
+    document.body.appendChild(overlay);
   },
 
   switchView: function(viewId) {
@@ -284,12 +331,24 @@ const Engine = {
     for (let i = 0; i < this.state.maxHp; i++) {
       attempts += `<span class="attempt-box${i < this.state.hp ? '' : ' lost'}"></span>`;
     }
-    hpContainer.innerHTML = `ENERGY: ${attempts}`;
+    const batCount = this.state.batteries || 0;
+    const batHtml = batCount > 0
+      ? `<span class="battery-indicator pulse" onclick="Engine.useBattery()" title="Klikni pro +3 energie">⚡×${batCount}</span>`
+      : `<span class="battery-indicator dim">⚡×0</span>`;
+    hpContainer.innerHTML = `ENERGY: ${attempts} ${batHtml}`;
     document.getElementById('res-xp').innerText = this.state.xp;
     const levelEl = document.getElementById('res-level');
     if (levelEl) {
       const { current } = this.getLevelInfo(this.state.xp);
       levelEl.textContent = `LVL ${current.level} // ${current.name}`;
+    }
+    // Restart counter
+    const rcEl = document.getElementById('restart-count');
+    if (rcEl) {
+      const restartKey = (this.saveKey || 'axioma_save') + '_restarts';
+      const count = parseInt(localStorage.getItem(restartKey) || '0');
+      rcEl.textContent = count > 0 ? `↺ ${count}×` : '';
+      rcEl.title = `Počet tvrdých restartů: ${count}`;
     }
   },
 
@@ -337,9 +396,8 @@ const Engine = {
     }
 
     // Bar 2 — XP potenciál s barevnými segmenty úrovní
-    const totalPossibleXP = GameData.questions
-      .filter(q => !q.isTraining && q.reward && q.reward.xp)
-      .reduce((sum, q) => sum + q.reward.xp, 0);
+    // Maximum = práh nejvyššího levelu (CIPHER = 3500), aby segmenty správně seděly
+    const totalPossibleXP = LEVELS[LEVELS.length - 1].xp;
     const potPct = totalPossibleXP > 0 ? Math.min(100, Math.round((xp / totalPossibleXP) * 100)) : 0;
     const remaining = Math.max(0, totalPossibleXP - xp);
     const levelsLeft = next ? (LEVELS.length - 1 - current.level) : 0;
@@ -354,8 +412,7 @@ const Engine = {
       '#f7b84f', // 5 HACKER
       '#e67e22', // 6 GHOST
       '#ff6b8a', // 7 PHANTOM
-      '#c462f5', // 8 CIPHER
-      '#ffd700', // 9 ROOT
+      '#ffd700', // 8 CIPHER (max level — zlatá)
     ];
 
     // Segmenty = barevné pruhy pro každou úroveň
@@ -383,7 +440,7 @@ const Engine = {
     const compBarHTML = `
       <div class="xp-bar-top" style="margin-top:10px">
         <span class="xp-lvl-badge" style="border-color:#f7b84f;color:#f7b84f">POTENCIÁL</span>
-        <span class="xp-lvl-name" style="color:#f7b84f;font-size:0.8rem;text-shadow:0 0 8px rgba(247,184,79,0.5)">LEVELOVÝ POTENCIÁL</span>
+
         <span class="xp-lvl-next">${levelsLeft > 0 ? `ještě ${levelsLeft} levelů · ` : '// MAX LEVEL · '}zbývá ${remaining} XP</span>
       </div>
       <div class="xp-bar-track">
@@ -395,11 +452,16 @@ const Engine = {
   },
 
   showLevelUp: function(levelData) {
+    // Přiděl Recharge Battery za level-up
+    this.state.batteries = (this.state.batteries || 0) + 1;
+    this.saveState();
+    this.updateUI();
+
     const toast = document.getElementById('level-up-toast');
     if (!toast) return;
-    toast.innerHTML = `<span class="toast-tag">[ LEVEL UP ]</span><span class="toast-lvlname">${levelData.name}</span><span class="toast-lvlnum">LVL ${levelData.level}</span>`;
+    toast.innerHTML = `<span class="toast-tag">[ LEVEL UP ]</span><span class="toast-lvlname">${levelData.name}</span><span class="toast-lvlnum">LVL ${levelData.level}</span><span class="toast-battery">⚡ +1 RECHARGE BATTERY (+3 energie)</span>`;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3500);
+    setTimeout(() => toast.classList.remove('show'), 4500);
     this.renderXPBar();
   },
 
@@ -408,8 +470,20 @@ const Engine = {
     const ach = ACHIEVEMENTS.find(a => a.id === id);
     if (!ach) return;
     this.state.achievements.push(id);
-    this.saveState();
 
+    // Aplikuj odměnu
+    let rewardHtml = '';
+    if (ach.reward) {
+      const r = ach.reward;
+      if (r.type === 'xp') { this.state.xp += r.amount; }
+      else if (r.type === 'battery') { this.state.batteries = (this.state.batteries || 0) + r.amount; }
+      else if (r.type === 'maxHp') { this.state.maxHp += r.amount; this.state.hp += r.amount; }
+      rewardHtml = `<div class="ach-toast-reward" style="color:${ach.color};margin-top:4px;font-family:'DM Mono',monospace;font-size:0.85em;">▸ ${r.label}</div>`;
+    }
+    this.saveState();
+    this.updateUI();
+
+    // Achievement toast — small bottom-right notification
     const toast = document.getElementById('ach-toast');
     if (!toast) return;
     toast.style.borderColor = ach.color;
@@ -420,6 +494,7 @@ const Engine = {
         <div class="ach-toast-tag">[ ACHIEVEMENT UNLOCKED ]</div>
         <div class="ach-toast-name" id="ach-scramble-target" style="color:${ach.color}"></div>
         <div class="ach-toast-flavor">${ach.flavor}</div>
+        ${rewardHtml}
       </div>`;
     toast.classList.add('show');
 
@@ -447,38 +522,36 @@ const Engine = {
     const u = (id) => !s.achievements.includes(id);
 
     if (context === 'correct') {
-      if (u('ACH_FIRST')) this.unlockAchievement('ACH_FIRST');
-      if (u('ACH_STREAK') && s.streak >= 10) this.unlockAchievement('ACH_STREAK');
+      if (u('ACH_FIRST_CORRECT')) this.unlockAchievement('ACH_FIRST_CORRECT');
+      if (u('ACH_STREAK') && s.streak >= 15) this.unlockAchievement('ACH_STREAK');
       if (u('ACH_LAST_STAND') && s.hp === 1) this.unlockAchievement('ACH_LAST_STAND');
-      // GHOST_MODE: correct firewall answer without opening hints this encounter
-      if (u('ACH_NOHINT') && !Arena.hintUsedThisEncounter) this.unlockAchievement('ACH_NOHINT');
       // PERSISTENCE: correct after 2+ prior failures on same question
       const qid = Arena.currentQuestion?.id;
       if (qid && u('ACH_PERSISTENCE') && (s.deathsPerQuestion[qid] || 0) >= 2) this.unlockAchievement('ACH_PERSISTENCE');
+      // PHOENIX: 3 správně v řadě po lockdownu
+      if (u('ACH_PHOENIX') && s.correctAfterLockdown >= 3) this.unlockAchievement('ACH_PHOENIX');
     }
     if (context === 'training_correct') {
-      const tq = Arena.currentQuestion;
-      if (u('ACH_TRAINING')) this.unlockAchievement('ACH_TRAINING');
-      // Track completed trainings per region
-      if (tq && !s.completedTrainings.includes(tq.id)) {
-        s.completedTrainings.push(tq.id);
-        this.saveState();
-      }
-      // TRAINING_OFFICER: all trainings in one region done
-      if (u('ACH_TRAINING_OFFICER') && tq) {
-        const regionTrainings = GameData.questions.filter(q => q.regionId === tq.regionId && q.isTraining);
-        if (regionTrainings.length > 0 && regionTrainings.every(t => s.completedTrainings.includes(t.id))) {
-          this.unlockAchievement('ACH_TRAINING_OFFICER');
-        }
-      }
+      s.simCount = (s.simCount || 0) + 1;
+      this.saveState();
+      if (u('ACH_TRAINER') && s.simCount >= 25) this.unlockAchievement('ACH_TRAINER');
     }
     if (context === 'buy_life') {
       if (u('ACH_BUY_LIFE')) this.unlockAchievement('ACH_BUY_LIFE');
     }
     if (context === 'region_clear') {
       if (u('ACH_SECTOR')) this.unlockAchievement('ACH_SECTOR');
-      // NO_TRAINING_WHEELS: region cleared without launching any training
-      if (u('ACH_NO_WHEELS') && !s.trainingLaunchedInRegion[this.currentRegionId]) this.unlockAchievement('ACH_NO_WHEELS');
+      // GHOST_MODE: celý sektor bez jediné použité nápovědy
+      if (u('ACH_NOHINT')) {
+        const regionBossIds = GameData.questions
+          .filter(q => q.regionId === this.currentRegionId && !q.isTraining)
+          .map(q => q.id);
+        if (regionBossIds.length > 0 && !regionBossIds.some(id => s.hintedQuestions.includes(id))) {
+          this.unlockAchievement('ACH_NOHINT');
+        }
+      }
+      // IRON_WILL: region cleared after having lockdown in that region
+      if (u('ACH_IRON_WILL') && s.lockdownsInRegion[this.currentRegionId]) this.unlockAchievement('ACH_IRON_WILL');
       // CLEAN_SWEEP: track how many regions cleared without error
       if (!s.errorsInRegion[this.currentRegionId]) {
         s.cleanRegionCount = (s.cleanRegionCount || 0) + 1;
@@ -487,28 +560,23 @@ const Engine = {
       }
     }
     if (context === 'xp_change') {
-      const total = GameData.questions.filter(q => !q.isTraining).length;
-      const solved = s.clearedNodes.length;
+      const total = GameData.questions.filter(q => !q.isTraining && q.id !== 'q_placeholder_11').length;
+      const solved = s.clearedNodes.filter(id => id !== 'q_placeholder_11').length;
       if (u('ACH_VETERAN') && solved >= 30) this.unlockAchievement('ACH_VETERAN');
-      if (u('ACH_HALF') && total > 0 && solved >= Math.floor(total / 2)) this.unlockAchievement('ACH_HALF');
-      if (u('ACH_ALL') && solved >= total) this.unlockAchievement('ACH_ALL');
-      if (u('ACH_ROOT') && this.getLevelInfo(s.xp).current.level >= 9) this.unlockAchievement('ACH_ROOT');
+      if (u('ACH_HALFWAY') && solved >= 60) this.unlockAchievement('ACH_HALFWAY');
+      if (u('ACH_FINAL_PUSH') && solved >= 100) this.unlockAchievement('ACH_FINAL_PUSH');
+      if (u('ACH_ALL') && solved >= total) {
+        this.unlockAchievement('ACH_ALL');
+        setTimeout(() => this.showPreEndgame(), 5000); // Po achievement toastu
+      }
     }
     if (context === 'wrong') {
       const qid = Arena.currentQuestion?.id;
       if (qid) {
         s.deathsPerQuestion[qid] = (s.deathsPerQuestion[qid] || 0) + 1;
-        if (u('ACH_LOOP') && s.deathsPerQuestion[qid] >= 3) this.unlockAchievement('ACH_LOOP');
       }
       if (this.currentRegionId) s.errorsInRegion[this.currentRegionId] = true;
       this.saveState();
-    }
-    if (context === 'review') {
-      const qid = Arena.currentQuestion?.id;
-      if (qid && s.lastPlayed[qid]) {
-        const daysDiff = (Date.now() - s.lastPlayed[qid]) / (1000 * 60 * 60 * 24);
-        if (u('ACH_COLD') && daysDiff >= 7) this.unlockAchievement('ACH_COLD');
-      }
     }
   },
 
@@ -520,6 +588,7 @@ const Engine = {
       const isUnlocked = unlocked.includes(ach.id);
       const isSecret = ach.secret && !isUnlocked;
       const conditionText = isSecret ? 'Podmínky utajeny.' : ach.condition;
+      const rewardText = (!isSecret && ach.reward) ? `<div class="ach-reward-label">Odměna: ${ach.reward.label}</div>` : '';
       return `
         <div class="ach-card ${isUnlocked ? 'unlocked' : 'locked'}" style="${isUnlocked ? `--ach-color:${ach.color}` : ''}">
           <div class="ach-icon">${isSecret ? `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2"><text x="20" y="26" font-size="18" text-anchor="middle" fill="currentColor" stroke="none">?</text></svg>` : ach.icon}</div>
@@ -527,6 +596,7 @@ const Engine = {
             <div class="ach-name">${isSecret ? '???????????' : ach.name}</div>
             <div class="ach-flavor">${isSecret ? '???' : ach.flavor}</div>
             <div class="ach-condition">${conditionText}</div>
+            ${rewardText}
           </div>
           ${isUnlocked ? '<div class="ach-check">✓</div>' : ''}
         </div>`;
@@ -564,7 +634,7 @@ const Engine = {
 
   buyBypass: function() {
     if (this.state.hp >= this.state.maxHp) {
-      alert("Náboje jsou plné. Dobíjení není třeba.");
+      alert("Energie je plná. Dobíjení není třeba.");
       return;
     }
     if (this.state.xp >= GameData.config.bypassCost) {
@@ -573,10 +643,30 @@ const Engine = {
       this.saveState();
       this.updateUI();
       this.checkAchievements('buy_life');
-      alert(`Náboj dobít. Energie: ${this.state.hp}/${this.state.maxHp}.`);
+      alert(`+1 energie. Stav: ${this.state.hp}/${this.state.maxHp}.`);
     } else {
       alert("Nedostatek XP. Vyřešte další úlohy v Síti.");
     }
+  },
+
+  useBattery: function() {
+    if (Arena.lockdownMode) {
+      alert("Systém zablokován. Dokonči simulaci — teprve pak bude přístup k energii obnoven.");
+      return;
+    }
+    if (!this.state.batteries || this.state.batteries <= 0) {
+      alert("Nemáte žádnou Recharge Battery.");
+      return;
+    }
+    if (this.state.hp >= this.state.maxHp) {
+      alert("Energie je plná. Baterii šetřete na později.");
+      return;
+    }
+    this.state.batteries -= 1;
+    this.state.hp = Math.min(this.state.hp + 3, this.state.maxHp);
+    this.saveState();
+    this.updateUI();
+    alert(`Recharge Battery použita. +3 energie → ${this.state.hp}/${this.state.maxHp}.`);
   },
 
   generateBlueprint: function() {
@@ -585,11 +675,13 @@ const Engine = {
     // ── Geometrie prstenu ──────────────────────────────────────────
     const modules = GameData.regions.filter(r => r.id !== 'maturita');
     const N  = modules.length;   // dynamicky podle počtu regionů
-    const cx = 375, cy = 350, R = 210;   // střed prstenu a poloměr
+    const cx = 375, cy = 350, R = 185;   // střed prstenu a poloměr
     const clearedCount  = this.getClearedModulesCount();
-    const required      = GameData.config.modulesRequiredForCore;
-    const isMaturitaCleared = this.isRegionCleared('maturita');
-    const unlocked      = clearedCount >= required;
+    const totalModules  = modules.length;
+    const isMaturitaCleared = this.state.endgameSeen;
+    const totalBossCount = GameData.questions.filter(q => !q.isTraining).length;
+    const solvedBossCount = this.state.clearedNodes.length;
+    const allBossesCleared = solvedBossCount >= totalBossCount;
 
     // Polohy uzlů rovnoměrně na kružnici (od 12 hodin po směru hodinových ručiček)
     const nodes = modules.map((_, i) => {
@@ -612,19 +704,31 @@ const Engine = {
         <filter id="gc" x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="3" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/>
         </filter>
+        <filter id="fog1" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="22"/>
+        </filter>
+        <filter id="fog2" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="9"/>
+        </filter>
       </defs>
 
-      <!-- Ambientní záře prstenu -->
-      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#002f4a" stroke-width="44" filter="url(#gb)"/>
+      <!-- Mlhová kružnice – tři vrstvená halo -->
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00d2ff" stroke-width="90" filter="url(#fog1)" opacity="0.07"/>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00b4d8" stroke-width="50" filter="url(#fog2)" opacity="0.13"/>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00d2ff" stroke-width="16" filter="url(#fog2)" opacity="0.22"/>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#7ae7ff" stroke-width="2" filter="url(#gc)" opacity="0.35"/>
 
       <!-- Otáčející se přerušovaný prsten (CERN styl) -->
       <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00d2ff" stroke-width="1.5"
-              stroke-dasharray="7,12" class="spin-ring" opacity="0.7"/>
+              stroke-dasharray="7,12" class="spin-ring" opacity="0.55"/>
 
       <!-- Vnitřní tmavý kruh (oblast MATURITA) -->
       <circle cx="${cx}" cy="${cy}" r="135" fill="#060913" stroke="#0d1e38" stroke-width="1.5"/>
       <circle cx="${cx}" cy="${cy}" r="135" fill="none" stroke="#00d2ff" stroke-width="0.8"
               stroke-dasharray="2,16" opacity="0.18"/>
+
+      <!-- Sonarový pulz ze středu -->
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00d2ff" stroke-width="1.2" class="sonar-pulse"/>
     `;
 
     // ── Obloukové spoje mezi sousedními uzly ──────────────────────
@@ -640,13 +744,20 @@ const Engine = {
               ${lit ? 'filter="url(#gg)"' : ''}/>`;
     }
 
+    // ── Paprsky ze středu — pod středovým textem, svítí po dořešení ─
+    modules.forEach((_, idx) => {
+      const pos = nodes[idx];
+      h += `<line x1="${cx}" y1="${cy}" x2="${pos.x}" y2="${pos.y}"
+              stroke="#00d2ff" stroke-width="0.8" opacity="0.18"/>`;
+    });
+
     // ── Střed: MATURITA display ────────────────────────────────────
     const barW  = 182, barH = 15;
     const barX  = cx - barW / 2;
     const barY  = cy + 24;
-    const fillW = Math.round(barW * Math.min(clearedCount / required, 1));
-    const mCol  = isMaturitaCleared ? '#7c5cfc' : (unlocked ? '#ff3b6a' : '#e2e8f0');
-    const mFilt = unlocked ? 'filter="url(#gr)"' : '';
+    const fillW = Math.round(barW * Math.min(clearedCount / totalModules, 1));
+    const mCol  = isMaturitaCleared ? '#7c5cfc' : (allBossesCleared ? '#ff3b6a' : '#e2e8f0');
+    const mFilt = allBossesCleared ? 'filter="url(#gr)"' : '';
 
     h += `
       <text x="${cx}" y="${cy - 62}" fill="#64748b" font-family="DM Mono"
@@ -657,7 +768,7 @@ const Engine = {
       </text>
       <line x1="${cx-68}" y1="${cy-18}" x2="${cx+68}" y2="${cy-18}" stroke="#1a2544" stroke-width="1"/>
       <text x="${cx}" y="${cy+12}" fill="#64748b" font-family="DM Mono"
-            font-size="10" text-anchor="middle">${clearedCount} / ${required} přístupových kódů</text>
+            font-size="10" text-anchor="middle">${clearedCount} / ${totalModules} modulů dokončeno</text>
 
       <!-- Progress bar -->
       <rect x="${barX}" y="${barY}" width="${barW}" height="${barH}" rx="4"
@@ -667,19 +778,24 @@ const Engine = {
       <text x="${cx}" y="${barY + barH/2 + 1}" fill="${fillW > barW/2 ? '#001a0f' : '#2ecc8a'}"
             font-family="DM Mono" font-size="10" font-weight="bold"
             text-anchor="middle" dominant-baseline="middle">
-        ${Math.round((clearedCount / required) * 100)} %
+        ${Math.round((clearedCount / totalModules) * 100)} %
       </text>
     `;
 
-    if (unlocked && !isMaturitaCleared) {
+    if (allBossesCleared && !isMaturitaCleared) {
       h += `
-        <g onclick="Engine.showRegion('maturita')" style="cursor:pointer">
+        <g onclick="Engine.showPreEndgame()" style="cursor:pointer">
           <rect x="${cx-100}" y="${barY+24}" width="200" height="34" rx="3"
                 fill="rgba(255,59,106,0.12)" stroke="#ff3b6a" stroke-width="1.5" filter="url(#gr)"/>
           <text x="${cx}" y="${barY+41}" fill="#ff3b6a" font-family="Inter"
                 font-size="12" font-weight="800" text-anchor="middle" dominant-baseline="middle"
-                letter-spacing="2">▶ SPUSTIT MATURITU</text>
+                letter-spacing="2">▶ HACKNOUT MATURITU</text>
         </g>`;
+    } else if (!allBossesCleared) {
+      const remaining = totalBossCount - solvedBossCount;
+      h += `
+        <text x="${cx}" y="${barY+44}" fill="#475569" font-family="DM Mono"
+              font-size="10" text-anchor="middle">Zbývá ${remaining} firewallů</text>`;
     } else if (isMaturitaCleared) {
       h += `
         <text x="${cx}" y="${barY+44}" fill="#7c5cfc" font-family="DM Mono"
@@ -699,8 +815,13 @@ const Engine = {
       if (cleared) {
         h += `
           <g class="lock-group" data-region="${region.id}" onclick="Engine.showRegion('${region.id}')">
-            <circle cx="${pos.x}" cy="${pos.y}" r="${NODE_R}" fill="#051a0c" stroke="#2ecc8a"
+            <!-- Zelené podsvícení dořešeného uzlu -->
+            <circle cx="${pos.x}" cy="${pos.y}" r="${NODE_R}" fill="#09200f" stroke="#2ecc8a"
                     stroke-width="2.5" filter="url(#gg)"/>
+            <!-- Pulzující zelené halo (neon glow, stejný r) -->
+            <circle class="pulse-halo-green" cx="${pos.x}" cy="${pos.y}" r="${NODE_R}" fill="none"
+                    stroke="#2ecc8a" stroke-width="9" opacity="0" filter="url(#fog2)"
+                    style="pointer-events:none"/>
             <text x="${pos.x}" y="${pos.y}" fill="#2ecc8a" font-family="DM Mono"
                   font-size="11" font-weight="bold"
                   text-anchor="middle" dominant-baseline="middle" style="pointer-events:none"
@@ -728,7 +849,19 @@ const Engine = {
                     stroke-width="2.5" filter="url(#gg)"
                     stroke-dasharray="${arcLength} ${NODE_CIRC}"
                     transform="rotate(-90 ${pos.x} ${pos.y})"/>
-            ` : ''}
+            <!-- Smíchané halo: červená a zelená se střídají (neon glow) -->
+            <circle class="pulse-halo-mix-r" cx="${pos.x}" cy="${pos.y}" r="${NODE_R}" fill="none"
+                    stroke="#ff3b6a" stroke-width="9" opacity="0" filter="url(#fog2)"
+                    style="pointer-events:none"/>
+            <circle class="pulse-halo-mix-g" cx="${pos.x}" cy="${pos.y}" r="${NODE_R}" fill="none"
+                    stroke="#2ecc8a" stroke-width="9" opacity="0" filter="url(#fog2)"
+                    style="pointer-events:none"/>
+            ` : `
+            <!-- Čistě červené halo (žádný progress, neon glow) -->
+            <circle class="pulse-halo-red" cx="${pos.x}" cy="${pos.y}" r="${NODE_R}" fill="none"
+                    stroke="#ff3b6a" stroke-width="9" opacity="0" filter="url(#fog2)"
+                    style="pointer-events:none"/>
+            `}
             <text x="${pos.x}" y="${pos.y}" fill="#ff3b6a" font-family="DM Mono"
                   font-size="11" font-weight="bold"
                   text-anchor="middle" dominant-baseline="middle" style="pointer-events:none"
@@ -740,84 +873,69 @@ const Engine = {
       }
     });
 
-    // ── Legenda vpravo ────────────────────────────────────────────
-    const lx = 652, ly = 28, lw = 258, eH = 56;
-    const lH  = 42 + modules.length * eH + 28;
+    // ── Legenda — HTML sidebar ──────────────────────────────────────
+    const sidebar = document.getElementById('legend-sidebar');
+    let legendHTML = `
+      <div class="legend-header"><h3>PŘÍSTUPOVÉ KÓDY</h3></div>`;
 
-    h += `
-      <rect x="${lx}" y="${ly}" width="${lw}" height="${lH}" rx="3"
-            fill="#0c1222" stroke="#1a2544"/>
-      <text x="${lx + lw/2}" y="${ly+23}" fill="#00d2ff" font-family="Inter"
-            font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">PŘÍSTUPOVÉ KÓDY</text>
-      <line x1="${lx+8}" y1="${ly+31}" x2="${lx+lw-8}" y2="${ly+31}" stroke="#1a2544"/>`;
-
-    modules.forEach((region, idx) => {
+    modules.forEach((region) => {
       const cleared   = this.isRegionCleared(region.id);
       const progress  = this.getRegionProgress(region.id);
       const col       = cleared ? '#2ecc8a' : '#ff3b6a';
       const status    = cleared
         ? '✓ HACKNUTO'
         : (progress.solved > 0 ? `${progress.solved}/${progress.total} vyřešeno` : '▶ FIREWALL AKTIVNÍ');
-      const num    = String(region.moduleNum !== undefined ? region.moduleNum : idx).padStart(2, '0');
+      const num    = String(region.moduleNum !== undefined ? region.moduleNum : 0).padStart(2, '0');
       const sName  = region.name.replace(/^\d+: /, '');
-      const ey     = ly + 36 + idx * eH;
 
-      // Mini progress oblouk v legendě (r=12, obvod ~75.398)
-      const LEGEND_R    = 12;
-      const LEGEND_CIRC = +(2 * Math.PI * LEGEND_R).toFixed(3);
-      const legendArc   = progress.total > 0
-        ? +((progress.solved / progress.total) * LEGEND_CIRC).toFixed(3)
+      // Progress arc v SVG kruhu (r=9)
+      const LR   = 9;
+      const LCIRC = +(2 * Math.PI * LR).toFixed(3);
+      const arcLen = progress.total > 0
+        ? +((progress.solved / progress.total) * LCIRC).toFixed(3)
         : 0;
 
-      h += `
-        <g data-legend-item="${region.id}" onclick="Engine.showRegion('${region.id}')" style="cursor:pointer">
-          <!-- Hitbox: pokrývá celý řádek; fill musí být nenulový, aby SVG registrovalo pointer events -->
-          <rect x="${lx+4}" y="${ey+1}" width="${lw-8}" height="51" rx="2" fill="rgba(0,0,0,0.001)"/>
-          <!-- Highlight: menší, zarovnaný na obsah řádku (texty jsou na ey+9 a ey+23) -->
-          <rect id="hl-legend-${region.id}" x="${lx+5}" y="${ey-6}" width="${lw-10}" height="38" rx="2"
-                fill="rgba(0,210,255,0.07)" stroke="#00d2ff" stroke-width="1.2" opacity="0"
-                style="pointer-events:none; transition: opacity 0.2s"/>
-          <circle cx="${lx+16}" cy="${ey+14}" r="${LEGEND_R}" fill="${col}"
-                  ${cleared ? 'filter="url(#gg)"' : ''}/>
-          ${(!cleared && legendArc > 0) ? `
-          <circle cx="${lx+16}" cy="${ey+14}" r="${LEGEND_R}" fill="none" stroke="#2ecc8a"
-                  stroke-width="2.5" filter="url(#gg)"
-                  stroke-dasharray="${legendArc} ${LEGEND_CIRC}"
-                  transform="rotate(-90 ${lx+16} ${ey+14})"/>
-          ` : ''}
-          <text x="${lx+16}" y="${ey+14}" fill="white" font-family="DM Mono" font-size="10"
-                font-weight="bold" text-anchor="middle" dominant-baseline="middle"
-                style="pointer-events:none">${num}</text>
-          <text x="${lx+36}" y="${ey+9}"  fill="${col}" font-family="DM Mono" font-size="12"
-                font-weight="bold" style="pointer-events:none">${sName}</text>
-          <text x="${lx+36}" y="${ey+23}" fill="${col}" font-family="DM Mono" font-size="10"
-                opacity="0.7" style="pointer-events:none">${status}</text>
-        </g>`;
-      if (idx < modules.length - 1) {
-        h += `<line x1="${lx+8}" y1="${ey+38}" x2="${lx+lw-8}" y2="${ey+38}"
-                    stroke="#1a2544" stroke-width="0.5" opacity="0.4"/>`;
-      }
+      const arcSVG = (!cleared && arcLen > 0) ? `
+        <circle cx="11" cy="11" r="${LR}" fill="none" stroke="#2ecc8a"
+                stroke-width="2.5" stroke-dasharray="${arcLen} ${LCIRC}"
+                transform="rotate(-90 11 11)"/>` : '';
+      const glowFilter = cleared ? 'style="filter: drop-shadow(0 0 5px #2ecc8a)"' : '';
+
+      legendHTML += `
+        <div class="legend-item" data-legend-item="${region.id}"
+             onclick="Engine.showRegion('${region.id}')">
+          <div class="legend-node" ${glowFilter}>
+            <svg class="arc" width="36" height="36" viewBox="0 0 22 22">
+              <circle cx="11" cy="11" r="${LR}" fill="${col}"/>
+              ${arcSVG}
+            </svg>
+            <span class="num">${num}</span>
+          </div>
+          <div class="legend-texts">
+            <div class="legend-name" style="color:${col}">${sName}</div>
+            <div class="legend-status" style="color:${col}">${status}</div>
+          </div>
+        </div>`;
     });
 
-    h += `<text x="${lx+lw/2}" y="${ly+lH-10}" fill="#64748b" font-family="DM Mono"
-                font-size="9" text-anchor="middle">${clearedCount}/${required} pro přístup k MATURITĚ</text>`;
+    legendHTML += `<div class="legend-footer">${clearedCount}/${totalModules} modulů dokončeno</div>`;
+    sidebar.innerHTML = legendHTML;
 
     svg.innerHTML = h;
     this.renderXPBar();
 
-    // ── Hover: propojení uzlů ↔ legenda ──────────────────────────────
+    // ── Hover: propojení uzlů (SVG) ↔ legenda (HTML sidebar) ──────────
     modules.forEach(region => {
       const ringEl   = svg.querySelector(`[data-region="${region.id}"]`);
-      const legendEl = svg.querySelector(`[data-legend-item="${region.id}"]`);
+      const legendEl = sidebar.querySelector(`[data-legend-item="${region.id}"]`);
       const hlRing   = svg.querySelector(`#hl-ring-${region.id}`);
-      const hlLgnd   = svg.querySelector(`#hl-legend-${region.id}`);
       const show = () => {
-        if (hlRing) hlRing.style.opacity = '1';
-        if (hlLgnd) hlLgnd.style.opacity = '1';
+        if (hlRing)   hlRing.style.opacity = '1';
+        if (legendEl) legendEl.classList.add('hl');
       };
       const hide = () => {
-        if (hlRing) hlRing.style.opacity = '0';
-        if (hlLgnd) hlLgnd.style.opacity = '0';
+        if (hlRing)   hlRing.style.opacity = '0';
+        if (legendEl) legendEl.classList.remove('hl');
       };
       if (ringEl)   { ringEl.addEventListener('mouseenter',   show); ringEl.addEventListener('mouseleave',   hide); }
       if (legendEl) { legendEl.addEventListener('mouseenter', show); legendEl.addEventListener('mouseleave', hide); }
@@ -869,13 +987,47 @@ const Engine = {
   addResources: function(xpEarned) {
     if(!xpEarned) return;
     const oldLevel = this.getLevelInfo(this.state.xp).current.level;
+    const oldXp = this.state.xp;
     this.state.xp += xpEarned;
     const newLevel = this.getLevelInfo(this.state.xp).current.level;
+    const maxEver = this.state.maxLevelEver || 0;
+    // Level-up celebration a battery jen při prvním překročení tohoto prahu
+    // Zabraňuje smyčce nákup Single Charge → XP pod práh → správná odpověď → znovu battery
+    if (newLevel > maxEver) {
+      this.state.maxLevelEver = newLevel;
+    }
+    // Upozornění na zvýšení LOCKDOWN penalty při překročení XP prahů
+    const PENALTY_MILESTONES = [
+      { threshold: 300,  newPenalty: 20, label: '−20 XP' },
+      { threshold: 1500, newPenalty: 50, label: '−50 XP' },
+    ];
+    for (const m of PENALTY_MILESTONES) {
+      if (oldXp < m.threshold && this.state.xp >= m.threshold) {
+        setTimeout(() => this.showPenaltyMilestone(m.label), 800);
+        break;
+      }
+    }
     this.saveState();
     setTimeout(() => {
       this.updateUI();
-      if (newLevel > oldLevel) this.showLevelUp(LEVELS[newLevel]);
+      if (newLevel > oldLevel && newLevel > maxEver) this.showLevelUp(LEVELS[newLevel]);
     }, 400);
+  },
+
+  showPenaltyMilestone: function(penaltyLabel) {
+    const el = document.createElement('div');
+    el.style.cssText = `position:fixed;top:80px;left:50%;transform:translateX(-50%);
+      background:#1a0a0a;border:1px solid var(--neon-red);border-radius:8px;
+      padding:14px 22px;z-index:9999;max-width:380px;text-align:center;
+      color:var(--neon-red);font-family:var(--font-mono);font-size:0.88em;
+      box-shadow:0 0 18px rgba(255,40,60,0.35);animation:fadeInDown 0.3s ease;`;
+    el.innerHTML = `<div style="font-weight:bold;margin-bottom:6px;">⚠ LOCKDOWN PENALTY ZVÝŠENA</div>
+      <div style="color:#e2e8f0">Teď máš dost XP, aby LOCKDOWN bolel více.<br>
+      Každý příští LOCKDOWN odečte <span style="color:var(--neon-red);font-weight:bold">${penaltyLabel}</span>.</div>
+      <div style="margin-top:8px;font-size:0.82em;color:var(--text-muted)">Kliknutím zavřeš</div>`;
+    el.onclick = () => el.remove();
+    document.body.appendChild(el);
+    setTimeout(() => { if (el.parentNode) el.remove(); }, 7000);
   },
 
   saveState: function() {
@@ -890,10 +1042,24 @@ const Engine = {
   },
   loadState: function() {
     const key = this.saveKey || 'axioma_save';
-    const defaults = { achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] };
+    const defaults = getDefaultState();
     const applyState = (parsed) => {
       this.state = Object.assign(defaults, parsed);
-      if (this.state.maxHp > 5) { this.state.maxHp = 5; this.state.hp = Math.min(this.state.hp, 5); }
+      // Migration guards pro starší uložené stavy
+      if (!this.state.batteries) this.state.batteries = 0;
+      if (this.state.correctAfterLockdown === undefined) this.state.correctAfterLockdown = -1;
+      if (!this.state.lockdownsInRegion) this.state.lockdownsInRegion = {};
+      if (this.state.maxLevelEver === undefined) this.state.maxLevelEver = 0;
+      if (this.state.dailyStreak === undefined) this.state.dailyStreak = 0;
+      if (this.state.lastPlayDate === undefined) this.state.lastPlayDate = null;
+      if (this.state.dailyMissionDate === undefined) this.state.dailyMissionDate = null;
+      if (this.state.dailyMissionProgress === undefined) this.state.dailyMissionProgress = 0;
+      if (this.state.dailyMissionClaimed === undefined) this.state.dailyMissionClaimed = false;
+      if (this.state.endgameSeen === undefined) this.state.endgameSeen = false;
+      // Vyčisti mrtvé klíče ze starých uložení
+      delete this.state.lastPlayed;
+      delete this.state.completedTrainings;
+      delete this.state.trainingLaunchedInRegion;
     };
     // Přihlášený žák s emailem → Firestore (cross-device)
     if (_db && key !== 'axioma_save') {
@@ -928,13 +1094,18 @@ const Engine = {
 
   resetGame: function() {
     if(confirm("Opravdu chcete iniciovat System Wipe? Všechna data budou smazána.")) {
+      // Increment restart counter (stored separately — přežije wipe)
+      const restartKey = (this.saveKey || 'axioma_save') + '_restarts';
+      const prevRestarts = parseInt(localStorage.getItem(restartKey) || '0');
+      localStorage.setItem(restartKey, prevRestarts + 1);
       try { localStorage.removeItem(this.saveKey || 'axioma_save'); } catch(e) {}
       if (_db && this.saveKey && this.saveKey !== 'axioma_save') {
         _db.collection('saves').doc(this.saveKey).delete().catch(() => {});
       }
-      this.state = { xp: 0, clearedNodes: [], hp: 5, maxHp: 5, achievements: [], streak: 0, deathsPerQuestion: {}, errorsInRegion: {}, lastPlayed: {}, completedTrainings: [], trainingLaunchedInRegion: {}, cleanRegionCount: 0, hintedQuestions: [], celebratedModules: [] };
+      this.state = getDefaultState();
       this.updateUI();
       this.generateBlueprint();
+      this.renderDailyPanel();
     }
   },
 
@@ -1128,6 +1299,444 @@ const Engine = {
     }, 800);
   },
 
+  // ── DAILY STREAK + DAILY MISSION ─────────────────────────────────
+  updateDailyProgress: function() {
+    const today = getTodayISO();
+    const last = this.state.lastPlayDate;
+
+    // Streak logika
+    if (last !== today) {
+      if (last === getYesterdayISO()) {
+        this.state.dailyStreak += 1;
+      } else {
+        this.state.dailyStreak = 1;
+      }
+      this.state.lastPlayDate = today;
+    }
+
+    // Denní mise — reset pokud nový den
+    if (this.state.dailyMissionDate !== today) {
+      this.state.dailyMissionDate = today;
+      this.state.dailyMissionProgress = 0;
+      this.state.dailyMissionClaimed = false;
+    }
+    this.state.dailyMissionProgress += 1;
+
+    // Mise dokončena: +20 XP bonus
+    if (this.state.dailyMissionProgress >= 10 && !this.state.dailyMissionClaimed) {
+      this.state.dailyMissionClaimed = true;
+      this.state.xp += 20;
+      setTimeout(() => this.showDailyMissionComplete(), 600);
+    }
+
+    this.saveState();
+    this.renderDailyPanel();
+  },
+
+  showDailyMissionComplete: function() {
+    const toast = document.getElementById('level-up-toast');
+    if (!toast) return;
+    toast.innerHTML = `
+      <span class="toast-tag">[ DENNÍ MISE SPLNĚNA ]</span>
+      <span class="toast-lvlname" style="color:#2ecc8a">10 / 10</span>
+      <span class="toast-lvlnum">+20 XP</span>`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  },
+
+  renderDailyPanel: function() {
+    const container = document.getElementById('daily-panel');
+    if (!container) return;
+    const today = getTodayISO();
+    const streak = this.state.dailyStreak || 0;
+    const isActiveToday = this.state.lastPlayDate === today;
+    const missionDate = this.state.dailyMissionDate;
+    const progress = (missionDate === today) ? (this.state.dailyMissionProgress || 0) : 0;
+    const claimed = (missionDate === today) && this.state.dailyMissionClaimed;
+    const pct = Math.min(100, Math.round((progress / 10) * 100));
+
+    const streakColor = streak >= 7 ? '#f7b84f' : (streak >= 3 ? '#2ecc8a' : 'var(--neon-cyan)');
+    const streakGlow = streak >= 3 ? `text-shadow: 0 0 8px ${streakColor}` : '';
+
+    container.innerHTML = `
+      <div class="daily-row">
+        <div class="daily-streak" style="color:${streakColor};${streakGlow}">
+          <span class="daily-streak-fire">${isActiveToday ? '🔥' : '⚫'}</span>
+          <span class="daily-streak-num">${streak}</span>
+          <span class="daily-streak-label">DNÍ V ŘADĚ</span>
+        </div>
+        <div class="daily-mission">
+          <div class="daily-mission-label">
+            DENNÍ MISE: <span style="color:${claimed ? '#2ecc8a' : 'var(--neon-cyan)'}">${claimed ? 'SPLNĚNA ✓' : `${progress} / 10`}</span>
+          </div>
+          <div class="daily-mission-track">
+            <div class="daily-mission-fill" style="width:${pct}%;${claimed ? 'background:#2ecc8a;box-shadow:0 0 10px rgba(46,204,138,0.6)' : ''}"></div>
+          </div>
+        </div>
+      </div>`;
+  },
+
+  // ── PRE-ENDGAME (oslavná obrazovka → HACKNOUT MATURITU) ─────────
+  showPreEndgame: function() {
+    if (this.state.endgameSeen) return;
+
+    // Inject CSS
+    if (!document.getElementById('pre-endgame-style')) {
+      const style = document.createElement('style');
+      style.id = 'pre-endgame-style';
+      style.textContent = `
+        #pre-endgame-overlay {
+          position:fixed;inset:0;z-index:99998;
+          background:radial-gradient(ellipse at center, rgba(6,9,19,0.92) 0%, rgba(0,0,0,0.98) 100%);
+          display:flex;align-items:center;justify-content:center;flex-direction:column;
+          opacity:0;transition:opacity 0.8s ease;
+        }
+        #pre-endgame-overlay.visible { opacity:1; }
+        .pe-particles { position:absolute;inset:0;overflow:hidden;pointer-events:none; }
+        .pe-particle {
+          position:absolute;width:2px;height:2px;border-radius:50%;
+          animation:pe-float 3s ease-in-out infinite;
+        }
+        @keyframes pe-float {
+          0%,100% { opacity:0;transform:translateY(0) scale(1); }
+          50% { opacity:1;transform:translateY(-40px) scale(1.5); }
+        }
+        .pe-content {
+          position:relative;z-index:10;text-align:center;
+          max-width:520px;padding:0 20px;
+        }
+        .pe-tag {
+          font-family:'DM Mono',monospace;font-size:0.75rem;
+          color:#2ecc8a;letter-spacing:4px;
+          opacity:0;transform:translateY(20px);
+          transition:opacity 0.6s ease, transform 0.6s ease;
+        }
+        .pe-tag.visible { opacity:1;transform:none; }
+        .pe-title {
+          font-family:'Inter',sans-serif;font-size:2.2rem;font-weight:900;
+          color:#fff;letter-spacing:3px;margin:18px 0 12px;
+          text-shadow:0 0 40px rgba(0,210,255,0.3),0 0 80px rgba(124,92,252,0.15);
+          opacity:0;transform:scale(0.8);
+          transition:opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+        }
+        .pe-title.visible { opacity:1;transform:scale(1); }
+        .pe-subtitle {
+          font-family:'DM Mono',monospace;font-size:0.9rem;
+          color:#64748b;line-height:1.6;
+          opacity:0;transition:opacity 0.6s ease 0.8s;
+        }
+        .pe-subtitle.visible { opacity:1; }
+        .pe-stats {
+          display:flex;gap:32px;justify-content:center;margin:28px 0;
+          opacity:0;transition:opacity 0.6s ease 1.2s;
+        }
+        .pe-stats.visible { opacity:1; }
+        .pe-stat-num {
+          font-family:'DM Mono',monospace;font-size:1.8rem;font-weight:bold;
+          color:#00d2ff;display:block;
+        }
+        .pe-stat-label {
+          font-family:'DM Mono',monospace;font-size:0.7rem;
+          color:#475569;letter-spacing:1px;
+        }
+        .pe-hack-btn {
+          margin-top:32px;
+          background:transparent;border:2px solid #ff3b6a;color:#ff3b6a;
+          font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:800;
+          letter-spacing:3px;padding:16px 48px;cursor:pointer;
+          position:relative;overflow:hidden;
+          opacity:0;transform:translateY(20px);
+          transition:opacity 0.6s ease 1.6s, transform 0.6s ease 1.6s,
+                     background 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+        .pe-hack-btn.visible { opacity:1;transform:none; }
+        .pe-hack-btn:hover {
+          background:#ff3b6a;color:#060913;
+          box-shadow:0 0 40px rgba(255,59,106,0.5),0 0 80px rgba(255,59,106,0.2);
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    const totalBosses = GameData.questions.filter(q => !q.isTraining).length;
+    const achCount = this.state.achievements.length;
+    const totalXP = this.state.xp;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'pre-endgame-overlay';
+
+    // Particle background
+    let particles = '';
+    for (let i = 0; i < 40; i++) {
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const delay = (Math.random() * 3).toFixed(1);
+      const colors = ['#00d2ff','#7c5cfc','#2ecc8a','#ff3b6a','#f7b84f'];
+      const c = colors[Math.floor(Math.random() * colors.length)];
+      particles += `<div class="pe-particle" style="left:${x}%;top:${y}%;background:${c};animation-delay:${delay}s"></div>`;
+    }
+
+    overlay.innerHTML = `
+      <div class="pe-particles">${particles}</div>
+      <div class="pe-content">
+        <div class="pe-tag" id="pe-tag">[ VŠECHNY FIREWALLY NEUTRALIZOVÁNY ]</div>
+        <div class="pe-title" id="pe-title">MATURITA JE TVÁ</div>
+        <div class="pe-subtitle" id="pe-subtitle">
+          Každý firewall prolomen. Každý sektor pod kontrolou.<br>
+          Systém čeká na poslední příkaz.
+        </div>
+        <div class="pe-stats" id="pe-stats">
+          <div><span class="pe-stat-num">${totalBosses}</span><span class="pe-stat-label">FIREWALLŮ</span></div>
+          <div><span class="pe-stat-num">${achCount}</span><span class="pe-stat-label">ACHIEVEMENTŮ</span></div>
+          <div><span class="pe-stat-num">${totalXP}</span><span class="pe-stat-label">XP</span></div>
+        </div>
+        <button class="pe-hack-btn" id="pe-hack-btn" onclick="
+          document.getElementById('pre-endgame-overlay').remove();
+          Engine.showEndgame();
+        ">▶ HACKNOUT MATURITU</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Staggered reveals
+    requestAnimationFrame(() => {
+      overlay.classList.add('visible');
+      setTimeout(() => document.getElementById('pe-tag')?.classList.add('visible'), 300);
+      setTimeout(() => document.getElementById('pe-title')?.classList.add('visible'), 300);
+      setTimeout(() => document.getElementById('pe-subtitle')?.classList.add('visible'), 300);
+      setTimeout(() => document.getElementById('pe-stats')?.classList.add('visible'), 300);
+      setTimeout(() => document.getElementById('pe-hack-btn')?.classList.add('visible'), 300);
+    });
+  },
+
+  // ── ENDGAME ─────────────────────────────────────────────────────
+  showEndgame: function() {
+    if (this.state.endgameSeen) return;
+    this.state.endgameSeen = true;
+    this.saveState();
+
+    const totalBosses = GameData.questions.filter(q => !q.isTraining).length;
+    const totalXP = this.state.xp;
+    const { current } = this.getLevelInfo(totalXP);
+    const streak = this.state.dailyStreak || 0;
+    const restartKey = (this.saveKey || 'axioma_save') + '_restarts';
+    const restarts = parseInt(localStorage.getItem(restartKey) || '0');
+    const achCount = this.state.achievements.length;
+
+    // Inject CSS
+    if (!document.getElementById('endgame-style')) {
+      const style = document.createElement('style');
+      style.id = 'endgame-style';
+      style.textContent = `
+        #endgame-overlay {
+          position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.92);
+          display:flex;align-items:center;justify-content:center;
+          overflow:hidden;
+        }
+        #endgame-matrix-canvas { position:absolute;inset:0;z-index:0;opacity:0.3; }
+        #endgame-panel {
+          position:relative;z-index:10;
+          background:#060d06;
+          border:2px solid #2ecc8a;
+          box-shadow:0 0 60px rgba(46,204,138,0.2),0 0 120px rgba(46,204,138,0.08),inset 0 0 60px rgba(0,0,0,0.6);
+          width:min(560px,92vw);
+          font-family:'Courier New',monospace;
+          font-size:0.88rem;
+          color:#2ecc8a;
+          opacity:0;transform:translateY(-28px) scale(0.97);
+          transition:opacity 0.8s ease, transform 0.8s ease;
+        }
+        #endgame-panel.visible { opacity:1;transform:none; }
+        .eg-header {
+          padding:14px 20px 10px;
+          border-bottom:1px solid #1a4a2e;
+          display:flex;align-items:center;justify-content:space-between;
+        }
+        .eg-header-tag { font-size:0.68rem;color:#1a7a4a;letter-spacing:4px; }
+        .eg-header-ok { font-size:0.68rem;color:#1a7a4a;border:1px solid #1a4a2e;padding:2px 8px; }
+        .eg-main-title {
+          font-family:'Inter',sans-serif;font-weight:900;
+          font-size:clamp(1.6rem,5vw,2.6rem);
+          color:#2ecc8a;letter-spacing:6px;
+          text-shadow:0 0 24px rgba(46,204,138,0.9),0 0 60px rgba(46,204,138,0.4);
+          animation:egTitlePulse 1.8s ease-in-out infinite;
+          text-align:center;padding:22px 20px 4px;min-height:2em;
+        }
+        @keyframes egTitlePulse {
+          0%,100%{text-shadow:0 0 24px rgba(46,204,138,0.9),0 0 60px rgba(46,204,138,0.4)}
+          50%{text-shadow:0 0 40px rgba(46,204,138,1),0 0 100px rgba(46,204,138,0.6),0 0 200px rgba(46,204,138,0.2)}
+        }
+        .eg-body { padding:4px 20px 16px; }
+        .eg-row {
+          display:flex;align-items:baseline;
+          margin-bottom:5px;line-height:1.7;
+        }
+        .eg-label { color:#1a7a4a;min-width:130px;flex-shrink:0; }
+        .eg-value { color:#2ecc8a; }
+        .eg-value.hl { color:#f7b84f;font-weight:bold; }
+        .eg-value.acc { color:#00ff41; }
+        .eg-divider { border:none;border-top:1px solid #1a4a2e;margin:10px 0; }
+        .eg-bar-wrap { display:flex;align-items:center;gap:10px;flex:1; }
+        .eg-bar-track {
+          flex:1;height:10px;background:#0d1f0d;
+          border:1px solid #1a4a2e;position:relative;overflow:hidden;
+        }
+        .eg-bar-fill {
+          height:100%;background:#2ecc8a;
+          box-shadow:0 0 8px rgba(46,204,138,0.6);
+          transition:width 1.2s ease;width:0%;
+        }
+        .eg-bar-pct { min-width:38px;text-align:right;color:#1a7a4a;font-size:0.8rem; }
+        .eg-cursor { display:inline-block;animation:egCursor 0.5s step-end infinite; }
+        @keyframes egCursor { 0%,100%{opacity:1}50%{opacity:0} }
+        .eg-footer { padding:10px 20px 18px; }
+        .eg-btn {
+          display:block;width:100%;
+          background:transparent;border:1px solid #2ecc8a;
+          color:#2ecc8a;font-family:'Courier New',monospace;
+          font-size:0.88rem;letter-spacing:0.08em;
+          padding:10px 0;cursor:pointer;
+          transition:background 0.15s,color 0.15s;
+        }
+        .eg-btn:hover { background:#1a4a2e;color:#00ff41; }
+      `;
+      document.head.appendChild(style);
+    }
+
+    const overlay = document.createElement('div');
+    overlay.id = 'endgame-overlay';
+    overlay.innerHTML = `
+      <canvas id="endgame-matrix-canvas"></canvas>
+      <div id="endgame-panel">
+        <div class="eg-header">
+          <span class="eg-header-tag">[ FINAL SEQUENCE // VŠECHNY FIREWALLY NEUTRALIZOVÁNY ]</span>
+          <span class="eg-header-ok">[ OK ]</span>
+        </div>
+        <div class="eg-main-title" id="eg-title-scramble"></div>
+        <div class="eg-body">
+          <hr class="eg-divider">
+          <div class="eg-row"><span class="eg-label">OPERÁTOR</span><span class="eg-value acc" id="eg-s-fw">0</span><span class="eg-value"> firewallů prolomeno</span></div>
+          <div class="eg-row"><span class="eg-label">CELKEM XP</span><span class="eg-value hl" id="eg-s-xp">0</span><span class="eg-value"> bodů</span></div>
+          <div class="eg-row"><span class="eg-label">ÚROVEŇ</span><span class="eg-value acc">LVL ${current.level} // ${current.name}</span></div>
+          <div class="eg-row"><span class="eg-label">ACHIEVEMENTS</span><span class="eg-value" id="eg-s-ach">0</span><span class="eg-value"> / ${ACHIEVEMENTS.length}</span></div>
+          <div class="eg-row"><span class="eg-label">STREAK</span><span class="eg-value" id="eg-s-str">0</span><span class="eg-value"> dní v řadě</span></div>
+          <div class="eg-row"><span class="eg-label">RESTARTY</span><span class="eg-value" id="eg-s-rst">0</span></div>
+          <hr class="eg-divider">
+          <div class="eg-row" style="align-items:center">
+            <span class="eg-label">POTENCIÁL</span>
+            <div class="eg-bar-wrap">
+              <div class="eg-bar-track"><div class="eg-bar-fill" id="eg-bar"></div></div>
+              <span class="eg-bar-pct" id="eg-bar-pct">0 %</span>
+            </div>
+          </div>
+          <hr class="eg-divider">
+          <div id="eg-typewriter" style="min-height:1.4em">&gt; <span class="eg-cursor">█</span></div>
+        </div>
+        <div class="eg-footer">
+          <button class="eg-btn" onclick="document.getElementById('endgame-overlay').remove()">
+            &gt; ODPOJIT SE OD SYSTÉMU
+          </button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+
+    // Matrix rain
+    const canvas = document.getElementById('endgame-matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const chars = 'AXIOMA01∑∫√πΔΩ∞≠≈±×÷SYSTEM_OVERRIDE';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00d2ff';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.globalAlpha = 0.3 + Math.random() * 0.4;
+        ctx.fillStyle = Math.random() > 0.92 ? '#ff3b6a' : (Math.random() > 0.85 ? '#7c5cfc' : '#00d2ff');
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      if (document.getElementById('endgame-overlay')) requestAnimationFrame(drawMatrix);
+    }
+    drawMatrix();
+
+    // Counter animace helper
+    function egAnimCounter(elId, target, duration) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const start = performance.now();
+      (function tick(now) {
+        const t = Math.min(1, (now - start) / duration);
+        el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target);
+        if (t < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    }
+
+    // Panel fade-in
+    setTimeout(() => {
+      const panel = document.getElementById('endgame-panel');
+      if (panel) panel.classList.add('visible');
+    }, 600);
+
+    // Scramble title
+    setTimeout(() => {
+      const target = document.getElementById('eg-title-scramble');
+      const finalText = 'MATURITA HACKED';
+      const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#@%&';
+      let iter = 0;
+      const interval = setInterval(() => {
+        if (!target) { clearInterval(interval); return; }
+        target.textContent = finalText.split('').map((ch, i) => {
+          if (ch === ' ') return ' ';
+          if (i < iter) return finalText[i];
+          return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+        }).join('');
+        if (iter >= finalText.length) clearInterval(interval);
+        iter += 0.4;
+      }, 50);
+    }, 900);
+
+    // Counters
+    setTimeout(() => {
+      egAnimCounter('eg-s-fw', totalBosses, 1200);
+      egAnimCounter('eg-s-xp', totalXP, 1800);
+      egAnimCounter('eg-s-ach', achCount, 1000);
+      egAnimCounter('eg-s-str', streak, 800);
+      egAnimCounter('eg-s-rst', restarts, 600);
+    }, 1600);
+
+    // Progress bar (XP / potenciál)
+    setTimeout(() => {
+      const totalPossibleXP = GameData.questions
+        .filter(q => !q.isTraining && q.reward && q.reward.xp)
+        .reduce((sum, q) => sum + q.reward.xp, 0);
+      const pct = totalPossibleXP > 0 ? Math.min(100, Math.round((totalXP / totalPossibleXP) * 100)) : 100;
+      const bar = document.getElementById('eg-bar');
+      const barPct = document.getElementById('eg-bar-pct');
+      if (bar) bar.style.width = pct + '%';
+      if (barPct) barPct.textContent = pct + ' %';
+    }, 2200);
+
+    // Typewriter
+    setTimeout(() => {
+      const tw = document.getElementById('eg-typewriter');
+      const msg = '> přístup k MATURITĚ: potvrzen. Systém kompromitován.';
+      let twIdx = 0;
+      const twTimer = setInterval(() => {
+        if (!tw || !document.getElementById('endgame-overlay')) { clearInterval(twTimer); return; }
+        tw.innerHTML = msg.slice(0, twIdx) + '<span class="eg-cursor">█</span>';
+        twIdx++;
+        if (twIdx > msg.length) clearInterval(twTimer);
+      }, 38);
+    }, 2600);
+  },
+
   // DEV OVERRIDES
   devUnlockAll: function() {
     if(confirm("DEV MODE: Chcete odemknout všechny uzly na mapě?")) {
@@ -1152,14 +1761,17 @@ const Arena = {
 
   startEncounter: function(questionId) {
     this.reviewMode = false;
-    this.hintUsedThisEncounter = Engine.state.hintedQuestions.includes(questionId);
+    this.hintUsedThisEncounter = false;
     this.currentQuestion = GameData.questions.find(q => q.id === questionId);
     // Pokud jde o trénink spuštěný z firewallu, zaznamenej do regionu
     if (this.currentQuestion && this.currentQuestion.isTraining && Engine.currentRegionId) {
-      Engine.state.trainingLaunchedInRegion[Engine.currentRegionId] = true;
       Engine.saveState();
     }
     if (!this.currentQuestion) return;
+    // FIRST_BREACH: první vstup do arény (pouze boss otázky, ne tréninky)
+    if (!this.currentQuestion.isTraining && !Engine.state.achievements.includes('ACH_FIRST')) {
+      Engine.unlockAchievement('ACH_FIRST');
+    }
     Engine.switchView('view-arena');
     this.resetUI();
     this.renderQuestion();
@@ -1323,21 +1935,34 @@ const Arena = {
       fb.className = 'sys-alert correct-fb';
 
       if (this.currentQuestion.isTraining) {
+        Engine.updateDailyProgress();
         Engine.checkAchievements('training_correct');
         if (this.lockdownMode) {
           // Povinný trénink dokončen — teprve teď resetuj HP (částečně: 3/5)
           this.lockdownMode = false;
-          Engine.state.hp = 3;
+          Engine.state.hp = Math.min(4, Engine.state.maxHp);
           Engine.saveState();
           Engine.updateUI();
           Arena.setEndConnectionVisible(true);
-          fb.innerHTML = `<strong>[SIMULACE DOKONČENA — PŘÍSTUP ČÁSTEČNĚ OBNOVEN]</strong><br>Energie doplněna na 3 náboje. Příště dobij náboj včas.<br><em>${feedbackMessage}</em>`;
+          fb.innerHTML = `<strong>[SIMULACE DOKONČENA — PŘÍSTUP ČÁSTEČNĚ OBNOVEN]</strong><br>Energie doplněna na ${Engine.state.hp} náboje. Příště dobij náboj včas.<br><em>${feedbackMessage}</em>`;
           nextBtn.innerText = "> ZKUSIT FIREWALL ZNOVU";
           nextBtn.onclick = () => Arena.startEncounter(this.currentQuestion.firewallId);
         } else {
-          fb.innerHTML = `<strong>[SIMULACE ÚSPĚŠNÁ]</strong><br>${feedbackMessage}`;
-          nextBtn.innerText = "> NÁVRAT K HLAVNÍMU FIREWALLU";
-          nextBtn.onclick = () => Arena.startEncounter(this.currentQuestion.firewallId);
+          // Řetězení SIM: zjisti, zda boss má další simulaci v řadě
+          const boss = GameData.questions.find(q => q.id === this.currentQuestion.firewallId);
+          const taskList = boss && boss.trainingTasks ? boss.trainingTasks : [];
+          const currentIdx = taskList.indexOf(this.currentQuestion.id);
+          const nextSimId = currentIdx >= 0 ? taskList[currentIdx + 1] : undefined;
+
+          if (nextSimId) {
+            fb.innerHTML = `<strong>[SIMULACE ÚSPĚŠNÁ — DALŠÍ FÁZE PŘIPRAVENA]</strong><br>${feedbackMessage}`;
+            nextBtn.innerText = "> POKRAČOVAT NA DALŠÍ SIMULACI";
+            nextBtn.onclick = () => Arena.startEncounter(nextSimId);
+          } else {
+            fb.innerHTML = `<strong>[SIMULACE ÚSPĚŠNÁ]</strong><br>${feedbackMessage}`;
+            nextBtn.innerText = "> NÁVRAT K HLAVNÍMU FIREWALLU";
+            nextBtn.onclick = () => Arena.startEncounter(this.currentQuestion.firewallId);
+          }
         }
       } else if (this.reviewMode) {
         fb.innerHTML = `<strong>[OPAKOVÁNÍ ÚSPĚŠNÉ]</strong><br>${feedbackMessage}`;
@@ -1346,16 +1971,44 @@ const Arena = {
       } else {
         const baseXP = this.currentQuestion.reward.xp;
         const bonusXP = !this.hintUsedThisEncounter ? Math.max(2, Math.round(baseXP * 0.25)) : 0;
-        const bonusText = bonusXP > 0
-          ? `<br><span style="color:var(--neon-cyan);font-size:0.88em;">+${bonusXP} XP bonus — čistý průchod bez nápovědy.</span>`
-          : '';
-        fb.innerHTML = `<strong>[FIREWALL PROLOMEN]</strong><br>${feedbackMessage}${bonusText}`;
+        let silentBonusXP = 0;
+        let silentBonusText = '';
+
+        // Tichý bonus: PRECISION — boss na první pokus bez nápovědy
+        const qid = this.currentQuestion.id;
+        const priorDeaths = Engine.state.deathsPerQuestion[qid] || 0;
+        if (priorDeaths === 0 && !this.hintUsedThisEncounter) {
+          silentBonusXP += 5;
+          silentBonusText += `<br><span style="color:#f7b84f;font-size:0.85em;">+5 XP PRECISION — první pokus.</span>`;
+        }
+
         if(!Engine.state.clearedNodes.includes(this.currentQuestion.id)) {
           Engine.state.clearedNodes.push(this.currentQuestion.id);
-          Engine.state.lastPlayed[this.currentQuestion.id] = Date.now();
+        }
+        // GHOST_MODE: správně bez nápovědy = odpuštění staré nápovědy
+        if (!this.hintUsedThisEncounter) {
+          const idx = Engine.state.hintedQuestions.indexOf(this.currentQuestion.id);
+          if (idx !== -1) { Engine.state.hintedQuestions.splice(idx, 1); }
         }
         Engine.state.streak = (Engine.state.streak || 0) + 1;
-        Engine.addResources(baseXP + bonusXP);
+
+        // Tichý bonus: STREAK — každých 5 správných v řadě
+        if (Engine.state.streak > 0 && Engine.state.streak % 5 === 0) {
+          silentBonusXP += 10;
+          silentBonusText += `<br><span style="color:#f7b84f;font-size:0.85em;">+10 XP STREAK ×${Engine.state.streak / 5} — ${Engine.state.streak} správně v řadě!</span>`;
+        }
+
+        // PHOENIX tracking: correctAfterLockdown (-1 = neaktivní, 0+ = počítáme)
+        if (Engine.state.correctAfterLockdown >= 0) {
+          Engine.state.correctAfterLockdown += 1;
+        }
+
+        const hintText = bonusXP > 0
+          ? `<br><span style="color:var(--neon-cyan);font-size:0.88em;">+${bonusXP} XP bonus — čistý průchod bez nápovědy.</span>`
+          : '';
+        fb.innerHTML = `<strong>[FIREWALL PROLOMEN]</strong><br>${feedbackMessage}${hintText}${silentBonusText}`;
+        Engine.addResources(baseXP + bonusXP + silentBonusXP);
+        Engine.updateDailyProgress();
         Engine.checkAchievements('correct');
         Engine.checkAchievements('xp_change');
         if (Engine.isRegionCleared(Engine.currentRegionId)) Engine.checkAchievements('region_clear');
@@ -1380,11 +2033,13 @@ const Arena = {
       } else {
         Engine.state.hp -= 1;
         Engine.state.streak = 0;
+        Engine.state.correctAfterLockdown = -1; // Reset PHOENIX při chybě
+        Engine.state.totalDeaths = (Engine.state.totalDeaths || 0) + 1;
         Engine.checkAchievements('wrong');
         Engine.updateUI();
 
         if (Engine.state.hp <= 0) {
-          // SYSTEM LOCKDOWN — dramatická obrazovka, -50 XP, přesměrování na trénink
+          // SYSTEM LOCKDOWN — dramatická obrazovka, -20 XP, přesměrování na trénink
           this.showLockdown(this.currentQuestion, feedbackMessage);
           return;
         } else {
@@ -1393,7 +2048,28 @@ const Arena = {
             trainingHtml = `<br><br><button onclick="Arena.startEncounter('${this.currentQuestion.trainingTasks[0]}')" class="btn-secondary w-full">> SPUSTIT BEZPEČNOU SIMULACI</button>`;
           }
           const logFeedback = feedbackMessage.replace(/^(Přístup odepřen\.|Chyba syntaxe\.)\s*/i, '');
-          fb.innerHTML = `<strong>[PŘÍSTUP ODEPŘEN]</strong><br><em>Log:</em> ${logFeedback}${trainingHtml}`;
+          // Varování při posledním životě
+          let lastHpWarning = '';
+          if (Engine.state.hp === 1 && !Arena.lockdownMode) {
+            const hasBat = (Engine.state.batteries || 0) > 0;
+            const hasXP  = Engine.state.xp >= (GameData.config.bypassCost || 30);
+            let actions = '';
+            if (hasBat) actions += `<button onclick="Engine.useBattery()" class="btn-primary" style="font-size:0.85em;padding:4px 10px;margin-top:4px;width:100%">⚡ POUŽÍT BATTERY (+3 HP)</button>`;
+            if (hasXP)  actions += `<button onclick="Engine.buyBypass()" class="btn-secondary" style="font-size:0.85em;padding:4px 10px;margin-top:4px;width:100%">↩ SINGLE CHARGE (−30 XP, +1 HP)</button>`;
+            if (!hasBat && !hasXP) actions = `<span style="color:var(--neon-red);font-size:0.85em">Žádné zásoby. Jeden další omyl = LOCKDOWN.</span>`;
+            lastHpWarning = `<div style="margin-top:12px;padding:10px 12px;background:rgba(255,45,85,0.1);border:1px solid rgba(255,45,85,0.5);border-radius:6px;font-size:0.85em;color:var(--neon-red)">
+              ⚠ KRITICKÁ HLADINA — ZBÝVÁ 1 HP${actions}
+            </div>`;
+          }
+          // Hint po úplně první chybě v historii hráče
+          const firstDeathHint = (Engine.state.totalDeaths === 1)
+            ? `<div style="margin-top:10px;padding:8px 12px;background:rgba(247,184,79,0.07);border-left:3px solid #f7b84f;font-family:'DM Mono',monospace;font-size:0.8em;color:#f7b84f;line-height:1.6">
+                // SYSTÉMOVÝ LOG: první ztráta energie detekována.<br>
+                // Zbývá: ${Engine.state.hp}&nbsp;/&nbsp;${Engine.state.maxHp}. Na nule nastane LOCKDOWN.<br>
+                // Energii lze dobít: DOBÍT ENERGII (−30 XP) nebo z Baterie (získáš po každém level-up).
+               </div>`
+            : '';
+          fb.innerHTML = `<strong>[PŘÍSTUP ODEPŘEN]</strong><br><em>Log:</em> ${logFeedback}${trainingHtml}${firstDeathHint}${lastHpWarning}`;
           nextBtn.innerText = "> ZKUSIT ZNOVU";
           nextBtn.onclick = () => { Arena.resetUI(); Arena.renderQuestion(); };
           nextBtn.style.display = 'inline-block';
@@ -1413,8 +2089,17 @@ const Arena = {
 
   // ── SYSTEM LOCKDOWN ──────────────────────────────────────────────
   showLockdown: function(question, feedbackMessage) {
-    const PENALTY = 50;
+    // Stupňovitá penalizace podle aktuálního XP
+    const xp = Engine.state.xp;
+    const PENALTY = xp < 300 ? 5 : (xp < 1500 ? 20 : 50);
     Engine.state.xp = Math.max(0, Engine.state.xp - PENALTY);
+    // Track lockdown v regionu pro IRON_WILL
+    if (Engine.currentRegionId) {
+      Engine.state.lockdownsInRegion[Engine.currentRegionId] = true;
+    }
+    // Aktivuj PHOENIX tracking (reset počítadla na 0)
+    Engine.state.correctAfterLockdown = 0;
+    Engine.state.firstLockdownSeen = true;
     Engine.saveState();
     Engine.updateUI();
 
@@ -1437,6 +2122,11 @@ const Arena = {
           <span class="lockdown-penalty-value">−${PENALTY} XP</span>
         </div>
         <div class="lockdown-reason"><em>Kritická chyba:</em> ${feedbackMessage}</div>
+        ${!Engine.state.firstLockdownSeen ? `
+        <div class="lockdown-first-hint">
+          // PRVNÍ LOCKDOWN: dokonči simulátor níže. Energie se obnoví na 4.<br>
+          // Příště to bude bez vysvětlení.
+        </div>` : ''}
         <div class="lockdown-actions" id="lockdown-actions" style="opacity:0;pointer-events:none;transition:opacity 0.5s">
           ${hasTraining
             ? `<button class="btn-primary w-full" onclick="Arena.lockdownToTraining('${question.trainingTasks[0]}')">
@@ -1509,7 +2199,8 @@ const Arena = {
   },
 
   lockdownRetry: function() {
-    Engine.state.hp = 3;
+    Arena.lockdownMode = false;
+    Engine.state.hp = Math.min(4, Engine.state.maxHp);
     Engine.saveState();
     Engine.updateUI();
     Arena.setEndConnectionVisible(true);
