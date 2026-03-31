@@ -32,21 +32,27 @@
     <section id="view-map" class="view">
       <div class="view-header">
         <h2>PŮDORYS KOMPLEXU</h2>
-        <p class="subtitle">Odemkněte 9 z 11 bezpečnostních sektorů pro přístup k Jádru.</p>
+        <p class="subtitle">Odemkněte všech 13 bezpečnostních sektorů pro přístup k Maturitě.</p>
       </div>
       
       <div id="map-xp-bar"></div>
+      <div id="daily-panel"></div>
       <div id="level-up-toast" class="level-up-toast"></div>
 
-      <div class="blueprint-container">
-        <!-- SVG se dynamicky vykreslí přes Engine -->
-        <svg id="blueprint-svg" viewBox="0 0 920 720" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="map-layout">
+        <div class="blueprint-container">
+          <!-- SVG se dynamicky vykreslí přes Engine -->
+          <svg id="blueprint-svg" viewBox="74 125 603 449" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="scan-line"></div>
+        </div>
+        <div id="legend-sidebar" class="legend-sidebar"></div>
       </div>
       
       <div class="sys-controls mt-4" style="display: flex; gap: 10px; flex-wrap: wrap;">
         <button onclick="Engine.switchView('view-polis')" class="btn-primary">> DOBÍT ENERGII</button>
         <button onclick="Engine.showAchievements()" class="btn-primary" style="border-color: var(--neon-purple); color: var(--neon-purple);">> ACHIEVEMENTS</button>
-        <button onclick="Engine.resetGame()" class="btn-danger">> TVRDÝ RESTART</button>
+        <button onclick="Engine.showRules()" class="btn-primary" style="border-color: var(--text-muted); color: var(--text-muted);">?</button>
+        <button onclick="Engine.resetGame()" class="btn-danger">> TVRDÝ RESTART</button><span id="restart-count" style="font-size:0.8em;color:#ff6b8a;opacity:0.7;margin-left:6px;font-family:monospace;align-self:center"></span>
       </div>
     </section>
 
@@ -99,7 +105,7 @@
         <p class="text-muted mb-4">Nedostatek energie vede k systémovému uzamčení. Využijte nasbírané XP pro dobití jednoho náboje.</p>
         <h3 class="text-cyan">Dobít energii (+1 náboj)</h3>
         <p>Aktuální cena: <strong class="text-red">30 XP</strong> za náboj</p>
-        <button onclick="Engine.buyBypass()" class="btn-primary mt-2">> DOBÍT NÁBOJ</button>
+        <button onclick="Engine.buyBypass()" class="btn-primary mt-2">> SINGLE CHARGE (+1 energie)</button>
       </div>
       <button onclick="Engine.switchView('view-map')" class="btn-secondary mt-4">< NÁVRAT K PŮDORYSU</button>
     </section>
