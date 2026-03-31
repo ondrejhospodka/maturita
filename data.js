@@ -1,6 +1,6 @@
 const GameData = {
   config: {
-    modulesRequiredForCore: 12,
+    modulesRequiredForCore: 13,
     bypassCost: 30,
     startingXP: 0
   },
@@ -74,6 +74,11 @@ const GameData = {
       revealWalls: []
     },
     {
+      id: "slovni_ulohy", moduleNum: 12, name: "12: Slovní úlohy",
+      gate: {x: 930, y: 560},
+      revealWalls: []
+    },
+    {
       id: "maturita", name: "JÁDRO: CVIČNÁ MATURITA",
       gate: {x: 500, y: 300},
       revealWalls: []
@@ -104,8 +109,8 @@ const GameData = {
         { label: "Rovnice nemá řešení", value: "D", feedback: "Chyba výpočtu. Jeden z kořenů je platný." }
       ],
       hints: [
-        `Nejdříve určete podmínky — pro která \\(x\\) jsou jmenovatele nulové? Tato \\(x\\) nemohou být řešením.`,
-        `Vynásob celou rovnici společným jmenovatelem \\(x(x+2)\\). Pozorně sleduj, co se zkrátí, a vyřeš výslednou rovnici.`,
+        `Lomený výraz nemá smysl, když je jmenovatel nulový. Pro která x to nastane?`,
+        `Rozmysli, jestli se nedá některý jmenovatel upravit. Vynásob celou rovnici společným jmenovatelem. Nezapomeň pak ověřit podmínky.`,
       ],
       correctAnswer: "A", reward: { xp: 30 }
     },
@@ -116,8 +121,8 @@ const GameData = {
       formula: "$$ \\frac{16}{x^2+2x} $$",
       instruction: "Vyberte správné podmínky řešitelnosti.",
       steps: [
-        { trigger: "> Krok 1: Rozklad", content: "Jmenovatel rozlož na součin: \\(x(x + 2)\\)." },
-        { trigger: "> Krok 2: Pravidlo nulového bodu", content: "Žádný z činitelů nesmí být nula. Pro která \\(x\\) se některý z nich rovná nule?" }
+        { trigger: "> Krok 1: Rozklad", content: "Rozlož jmenovatel na součin. Určitě se dá něco vytknout." },
+        { trigger: "> Krok 2: Pravidlo nulového bodu", content: "Pro která \\(x\\) se hodnota jmenovatele rovná nule?" }
       ],
       choices: [
         { label: "\\(x \\neq 0 \\land x \\neq -2\\)", value: "A", feedback: "Logika potvrzena. U rovnice vždy zkontroluj tyto podmínky." },
@@ -131,8 +136,8 @@ const GameData = {
     // 05. FUNKCE
     // ==========================================
     {
-      id: "q_funkce_01", regionId: "funkce", type: "closed", monsterName: `FW_05A: Defini\u010dn\u00ed obor kombinovan\u00e9 funkce`,
-      visual_color: "#4fc3f7", visual_symbol: `D(f)`, points: 3, trainingTasks: ["t_funkce_01"],
+      id: "q_funk_01", regionId: "funkce", type: "closed", monsterName: `FW_05A: Defini\u010dn\u00ed obor kombinovan\u00e9 funkce`,
+      visual_color: "#4fc3f7", visual_symbol: `D(f)`, points: 3, trainingTasks: ["t_funk_01"],
       question: `Funkce \\(f\\) je definov\u00e1na p\u0159edpisem:`,
       formula: `$$f(x) = \\sqrt{3-x} + \\dfrac{1}{x+1}$$`,
       instruction: `Ur\u010dete defini\u010dn\u00ed obor funkce \\(f\\).`,
@@ -160,19 +165,19 @@ const GameData = {
       ],
       correctAnswer: "C", reward: { xp: 15 },
       hints: [
-        `Funkce m\u00e1 dv\u011b podm\u00ednky: odmocnina vy\u017eaduje \\(3-x \\geq 0\\), jmenovatel vy\u017eaduje \\(x+1 \\neq 0\\). Ob\u011b mus\u00ed platit sou\u010dasn\u011b.`,
-        `Vyřeš podmínku odmocniny: z \\(3-x \\geq 0\\) dostaneš interval ve tvaru \\(x \\leq ?\\). Z toho intervalu pak vyřaď zakázanou hodnotu jmenovatele.`
+        `Kombinovaná funkce má více podmínek definičního oboru — každá část funkce přidává svou vlastní.`,
+        `Co podmínka odmocniny říká o přípustných hodnotách \\(x\\)? A co musí platit pro jmenovatel?`
       ]
     },
     {
-      id: "t_funkce_01", regionId: "funkce", type: "closed", monsterName: `SIM_05A: Podm\u00ednky defini\u010dn\u00edho oboru`,
-      isTraining: true, firewallId: "q_funkce_01", visual_color: "#2ecc8a", visual_symbol: `\u221a`, points: 0,
+      id: "t_funk_01", regionId: "funkce", type: "closed", monsterName: `SIM_05A: Podm\u00ednky defini\u010dn\u00edho oboru`,
+      isTraining: true, firewallId: "q_funk_01", visual_color: "#2ecc8a", visual_symbol: `\u221a`, points: 0,
       question: `Funkce \\(f(x) = \\sqrt{3-x} + \\frac{1}{x+1}\\) m\u00e1 dv\u011b podm\u00ednky defini\u010dn\u00edho oboru. Jak\u00e1 je podm\u00ednka pro odmocninu?`,
       formula: null,
       instruction: `Vyberte spr\u00e1vnou nerovnost.`,
       steps: [
-        { trigger: `> Krok 1: Odmocnina`, content: `V\u00fdraz pod odmocninou mus\u00ed b\u00fdt nez\u00e1porn\u00fd: \\(3-x \\geq 0\\), tedy \\(x \\leq 3\\).` },
-        { trigger: `> Krok 2: Jmenovatel`, content: `Jmenovatel nesm\u00ed b\u00fdt nula: \\(x+1 \\neq 0\\), tedy \\(x \\neq -1\\). Kombinace: \\(x \\leq 3\\) a \\(x \\neq -1\\).` }
+        { trigger: `> Krok 1: Odmocnina`, content: `Výraz pod odmocninou musí být nezáporný. Jakou nerovnici pro \\(x\\) to dává?` },
+        { trigger: `> Krok 2: Jmenovatel`, content: `Jmenovatel nesmí být nula. Která hodnota \\(x\\) to porušuje? Jak ji zahrneš do výsledku?` }
       ],
       choices: [
         { label: `\\(x \\leq 3\\)`, value: "A", feedback: `Logika potvrzena. \\(3-x \\geq 0\\) d\u00e1v\u00e1 \\(x \\leq 3\\).` },
@@ -222,7 +227,7 @@ const GameData = {
         {
           label: `\\(\\{ 0,1,2\\}\\)`,
           value: "C",
-          feedback: `Nekompletní. Chybí číslo \\(-1\\), které leží v intervalu \\((-2; 3)\\).`
+          feedback: `Nekompletní. Zkontroluj, zda jsi vypsala všechna celá čísla ležící v otevřeném intervalu.`
         },
         {
           label: `\\(\\{ - 1,0,1,2,3\\}\\)`,
@@ -246,7 +251,7 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Kulatá závorka`,
-          content: `Kulatá závorka znamená, že hraniční číslo do intervalu <b>nepatří</b>. Čísla \\(-1\\) a \\(2\\) tedy musíme vyřadit.`
+          content: `Kulatá závorka znamená, že hraniční číslo do intervalu <b>nepatří</b>. Která čísla tedy do intervalu nepatří?`
         },
         {
           trigger: `> Krok 2: Výpis čísel`,
@@ -262,7 +267,7 @@ const GameData = {
         {
           label: `\\(\\{ 0,1\\}\\)`,
           value: "B",
-          feedback: `Logika potvrzena. Můžeme jít na ostrou verzi.`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(\\{ 0,1,2\\}\\)`,
@@ -272,7 +277,7 @@ const GameData = {
         {
           label: `\\(\\{ 0\\}\\)`,
           value: "D",
-          feedback: `Nekompletní. Číslo \\(1\\) je ostře menší než \\(2\\), tedy \\(1 \\in A\\).`
+          feedback: `Nekompletní. Zkontroluj všechna celá čísla v intervalu — nechybí ti nějaké?`
         },
       ],
       hints: [
@@ -284,54 +289,42 @@ const GameData = {
     {
       id: "q_co_04", regionId: "ciselne_obory", type: "closed", monsterName: `FW_00B: Vennův diagram`,
       visual_color: "#00d2ff", visual_symbol: `∪`, points: 3, trainingTasks: ["t_co_04"],
-      question: `Na obrázku jsou množiny A (kruh), B (obdélník) a C (trojúhelník). Čísla v diagramu udávají prvky příslušných oblastí.`,
-      diagram: `<svg viewBox="0 0 300 228" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:350px;margin:12px auto;display:block;background:var(--surface2);border:1px solid var(--border);border-radius:8px;">
-        <circle cx="100" cy="96" r="82" fill="none" stroke="currentColor" stroke-width="2"/>
-        <rect x="145" y="38" width="92" height="152" fill="none" stroke="currentColor" stroke-width="2"/>
-        <polygon points="84,52 84,218 292,218" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="16" y="60" fill="currentColor" font-size="15" font-weight="bold">A</text>
-        <text x="244" y="52" fill="currentColor" font-size="15" font-weight="bold">B</text>
-        <text x="60" y="217" fill="currentColor" font-size="15" font-weight="bold">C</text>
-        <text x="100" y="50" fill="currentColor" font-size="16" font-weight="bold">5</text>
-        <text x="106" y="118" fill="currentColor" font-size="16" font-weight="bold">8</text>
-        <text x="163" y="82" fill="currentColor" font-size="16" font-weight="bold">3</text>
-        <text x="112" y="148" fill="currentColor" font-size="16" font-weight="bold">6</text>
-        <text x="104" y="202" fill="currentColor" font-size="16" font-weight="bold">9</text>
-      </svg>`,
-      instruction: `Které z následujících tvrzení je pravdivé?`,
+      question: `Na obrázku jsou tři množiny A, B, C znázorněné kružnicemi. Čísla v diagramu udávají prvky příslušných oblastí.`,
+      diagram: `<svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;margin:12px auto;display:block;background:var(--surface2);border:1px solid var(--border);border-radius:8px;"><circle cx="150" cy="84" r="72" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="107.5" cy="157.5" r="72" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="192.5" cy="157.5" r="72" fill="none" stroke="currentColor" stroke-width="2"/><text x="105" y="22" fill="currentColor" font-size="15" font-weight="bold">A</text><text x="35" y="192" fill="currentColor" font-size="15" font-weight="bold">B</text><text x="252" y="192" fill="currentColor" font-size="15" font-weight="bold">C</text><text x="128" y="52" fill="currentColor" font-size="17" font-weight="bold">3</text><text x="158" y="52" fill="currentColor" font-size="17" font-weight="bold">7</text><text x="108" y="117" fill="currentColor" font-size="17" font-weight="bold">5</text><text x="58" y="184" fill="currentColor" font-size="17" font-weight="bold">6</text><text x="83" y="200" fill="currentColor" font-size="17" font-weight="bold">9</text><text x="140" y="187" fill="currentColor" font-size="17" font-weight="bold">12</text></svg>`,
+      instruction: `Které z následujících tvrzení <b>NENÍ</b> pravdivé?`,
       choices: [
         {
-          label: `\\(A \\cap B = \\varnothing\\)`,
+          label: `\\(A \\cap B = \\{5\\}\\)`,
           value: "A",
-          feedback: `Chyba. A a B se překrývají — v průniku leží číslo \\(8\\).`
+          feedback: `Toto tvrzení je pravdivé. Průnik \\(A \\cap B\\) odpovídá diagramu — hledej chybu jinde.`
         },
         {
-          label: `Všechny prvky patří do alespoň dvou množin`,
+          label: `\\(C \\cup A = \\{3,\\, 5,\\, 7,\\, 12\\}\\)`,
           value: "B",
-          feedback: `Chyba. Čísla \\(5\\), \\(3\\) a \\(9\\) leží každé jen v jedné množině.`
+          feedback: `Toto tvrzení je pravdivé. Sjednocení \\(C \\cup A\\) odpovídá diagramu — zkus jiné tvrzení.`
         },
         {
-          label: `\\(B \\cap C = \\varnothing\\)`,
+          label: `\\((A \\cup B) \\setminus C = \\{3,\\, 5,\\, 6,\\, 7,\\, 9\\}\\)`,
           value: "C",
-          feedback: `Přístup povolen. Obdélník B a trojúhelník C se nepřekrývají v žádném prvku.`
+          feedback: `Toto tvrzení je pravdivé. Zkontroluj si raději množinu \\(B\\) — nezapomněl/a jsi na některý prvek?`
         },
         {
-          label: `\\(A \\cap C\\) obsahuje právě dva prvky`,
+          label: `\\(B \\setminus A = \\{6,\\, 9\\}\\)`,
           value: "D",
-          feedback: `Chyba. V oblasti \\(A \\cap C\\) leží pouze číslo \\(6\\) — tedy jen jeden prvek.`
+          feedback: `Přístup povolen. \\(B = \\{5, 6, 9, 12\\}\\), takže \\(B \\setminus A = \\{6, 9, 12\\}\\). Číslo \\(12\\) leží v \\(B \\cap C\\), tedy patří do B, ale ne do A.`
         },
       ],
       hints: [
-        `Průnik \\(A \\cap B\\) = prvky, které patří do A <b>a zároveň</b> do B.`,
-        `Vennův diagram: průnik je <b>překrývající se oblast</b> uprostřed.`,
-        `\\(B \\cap C = \\varnothing\\) znamená, že tvary B a C se vzájemně nepřekrývají.`,
+        `Nejdřív si vypiš, co přesně obsahuje každá množina: A = ?, B = ?, C = ?`,
+        `Pozor na prvky v průnicích — patří do <b>obou</b> množin, i když jsou v diagramu na okraji.`,
+        `Prvek ležící v průniku dvou množin patří do obou — nezapomeň na to při vypisování každé množiny.`,
       ],
-      correctAnswer: "C", reward: { xp: 15 }
+      correctAnswer: "D", reward: { xp: 15 }
     },
     {
       id: "t_co_04", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00B: Průniky`,
       isTraining: true, firewallId: "q_co_04", visual_color: "#2ecc8a", visual_symbol: `∩`, points: 0, showDiagramImmediately: true,
-      question: `Zkusíme si jednodušší diagram pouze se dvěma množinami A (kruh) a B (obdélník).`,
+      question: `Zkusíme si jednodušší diagram se dvěma kružnicemi A a B.`,
       instruction: `Která čísla leží v průniku množin A a B (značíme \\(A \\cap B\\))?`,
       steps: [
         {
@@ -340,36 +333,36 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Analýza obrázku`,
-          content: `Hledej oblast, kde se kruh a obdélník překrývají. Která čísla leží v tomto překryvu?`
+          content: `Hledej oblast, kde se obě kružnice překrývají. Která čísla leží v tomto překryvu?`
         },
       ],
       choices: [
         {
-          label: `\\(\\{ 4,7\\}\\)`,
+          label: `\\(\\{ 5,8\\}\\)`,
           value: "A",
-          feedback: `Číslo 4 leží pouze v kruhu A, ne v obdélníku B.`
+          feedback: `Číslo 5 leží pouze v kružnici A, ne v B.`
         },
         {
           label: `\\(\\varnothing\\) (prázdná)`,
           value: "B",
-          feedback: `Tvary se překrývají — průnik není prázdný, obsahuje 7.`
+          feedback: `Kružnice se překrývají — průnik není prázdný, obsahuje 8.`
         },
         {
-          label: `\\(\\{ 2,7\\}\\)`,
+          label: `\\(\\{ 3,8\\}\\)`,
           value: "C",
-          feedback: `Číslo 2 leží pouze v obdélníku B, ne v kruhu A.`
+          feedback: `Číslo 3 leží pouze v kružnici B, ne v A.`
         },
         {
-          label: `\\(\\{ 7\\}\\)`,
+          label: `\\(\\{ 8\\}\\)`,
           value: "D",
-          feedback: `Přesně tak! Číslo 7 je jediné, které leží v obou tvarech.`
+          feedback: `Logika potvrzena.`
         },
       ],
       hints: [
         `Průnik = prvky patřící do OBOU množin najednou.`,
-        `Hledej oblast, kde se oba tvary navzájem překrývají — to je průnik.`,
+        `Hledej oblast, kde se obě kružnice navzájem překrývají — to je průnik.`,
       ],
-      diagram: `<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:250px;margin:12px auto;display:block;background:var(--surface2);border:1px solid var(--border);border-radius:8px;"> <circle cx="70" cy="60" r="50" fill="none" stroke="currentColor" stroke-width="2"/> <rect x="90" y="20" width="80" height="80" fill="none" stroke="currentColor" stroke-width="2"/> <text x="10" y="30" fill="currentColor" font-size="15" font-weight="bold">A</text> <text x="180" y="30" fill="currentColor" font-size="15" font-weight="bold">B</text> <text x="50" y="65" fill="currentColor" font-size="16" font-weight="bold">4</text> <text x="105" y="65" fill="currentColor" font-size="16" font-weight="bold">7</text> <text x="145" y="65" fill="currentColor" font-size="16" font-weight="bold">2</text> </svg>`,
+      diagram: `<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:260px;margin:12px auto;display:block;background:var(--surface2);border:1px solid var(--border);border-radius:8px;"><circle cx="70" cy="60" r="46" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="130" cy="60" r="46" fill="none" stroke="currentColor" stroke-width="2"/><text x="20" y="25" fill="currentColor" font-size="15" font-weight="bold">A</text><text x="164" y="25" fill="currentColor" font-size="15" font-weight="bold">B</text><text x="33" y="65" fill="currentColor" font-size="16" font-weight="bold">5</text><text x="93" y="65" fill="currentColor" font-size="16" font-weight="bold">8</text><text x="148" y="65" fill="currentColor" font-size="16" font-weight="bold">3</text></svg>`,
       correctAnswer: "D", reward: { xp: 5 }
     },
     {
@@ -387,7 +380,7 @@ const GameData = {
         {
           label: `\\(\\langle - 5;\\, 7\\rangle\\)`,
           value: "B",
-          feedback: `Přístup povolen. Levá mez: \\(\\min(-3, -5) = -5\\) (\\(B\\) uzavřeně). Pravá mez: \\(\\max(7, 4) = 7\\) (\\(A\\) uzavřeně). Intervaly se překrývají → jeden interval.`
+          feedback: `Přístup povolen. Sjednocení zahrnuje všechny krajní body obou intervalů.`
         },
         {
           label: `\\(( - 5;\\, 7)\\)`,
@@ -397,13 +390,13 @@ const GameData = {
         {
           label: `\\(\\langle - 5;\\, 4)\\)`,
           value: "D",
-          feedback: `Chyba na pravé straně. Sjednocení sahá až tam, kde <b>alespoň jedna</b> množina ještě pokračuje. \\(A\\) sahá do \\(7\\), výsledek musí jít do \\(7\\).`
+          feedback: `Chyba na pravé straně. Sjednocení sahá až tam, kde alespoň jedna množina ještě pokračuje. Množina A pokračuje až do \\(7\\).`
         },
       ],
       hints: [
         `Sjednocení \\(A \\cup B\\) = vše, co patří do A <b>nebo</b> do B (nebo do obou).`,
         `Pokud se intervaly překrývají, výsledek je <b>jeden</b> souvislý interval.`,
-        `Závorka výsledku závisí na tom, co platí pro krajní bod: alespoň jedna uzavřená → uzavřená.`,
+        `Pozor na to, jestli krajní body patří nebo nepatří do intervalu.`,
       ],
       correctAnswer: "B", reward: { xp: 10 }
     },
@@ -415,11 +408,11 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Levá mez sjednocení`,
-          content: `Levá mez sjednocení = <b>minimum</b> z levých mezí obou množin. \\(A\\) začíná v \\(2\\), \\(B\\) začíná v \\(0\\). Které číslo je menší?`
+          content: `Levá mez sjednocení = <b>minimum</b> z levých mezí obou množin. \\(A\\) začíná v \\(2\\), \\(B\\) začíná v \\(0\\).`
         },
         {
           trigger: `> Krok 2: Typ závorky`,
-          content: `U sjednocení je závorka uzavřená, pokud <b>alespoň jedna</b> z množin je v tom bodě uzavřená. Co platí pro \\(B\\) v bodě \\(0\\)? Je závorka otevřená nebo uzavřená?`
+          content: `U sjednocení je závorka uzavřená, pokud <b>alespoň jedna</b> z množin je v tom bodě uzavřená. Zkontroluj, jak vypadá interval \\(B\\) v bodě \\(0\\).`
         },
       ],
       choices: [
@@ -431,7 +424,7 @@ const GameData = {
         {
           label: `Levá mez je 0, uzavřená závorka`,
           value: "B",
-          feedback: `Logika potvrzena. \\(\\min(2,0) = 0\\), \\(B\\) je v \\(0\\) uzavřená → závorka \\(\\langle 0\\).`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `Levá mez je 0, otevřená závorka`,
@@ -451,7 +444,7 @@ const GameData = {
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "t_co_05b", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00D: Celkové sjednocení`,
+      id: "t_co_05b", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00C-2: Celkové sjednocení`,
       isTraining: true, firewallId: "q_co_05", visual_color: "#2ecc8a", visual_symbol: `∪`, points: 0,
       question: `Zapište sjednocení \\(A \\cup B\\), kde \\(A = \\langle 1;\\, 8\\rangle\\) a \\(B = \\langle 0;\\, 5\\rangle\\).`,
       instruction: `Vyberte správný interval.`,
@@ -462,7 +455,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Meze sjednocení`,
-          content: `Sjednocení sahá od nejlevějšího po nejpravější bod. Levá mez: \\(\\min(1, 0)\\)? Pravá mez: \\(\\max(8, 5)\\)? Jak ovlivňují závorky to, že \\(B\\) začíná uzavřeně a \\(A\\) končí uzavřeně?`
+          content: `Sjednocení sahá od nejlevějšího po nejpravější bod. Najdi levou mez a pravou mez včetně kontroly závorek.`
         },
         {
           trigger: `> Krok 3: Finální interval`,
@@ -478,7 +471,7 @@ const GameData = {
         {
           label: `\\(\\langle 0;\\, 8\\rangle\\)`,
           value: "B",
-          feedback: `Přístup povolen. \\(\\min(1,0) = 0\\) uzavřeně, \\(\\max(8,5) = 8\\) uzavřeně. Intervaly se překrývají → jeden výsledek.`
+          feedback: `Přístup povolen.`
         },
         {
           label: `\\(\\langle 0;\\, 5\\rangle\\)`,
@@ -508,7 +501,7 @@ const GameData = {
         {
           label: `\\(\\{ 1,\\, 2,\\, 3,\\, 4,\\, 5\\}\\)`,
           value: "A",
-          feedback: `Logika potvrzena. \\(\\mathbb{N} = \\{1, 2, 3, \\ldots\\}\\). Interval \\((-3;\\, 5\\rangle\\) obsahuje z \\(\\mathbb{N}\\) čísla 1–5, přičemž \\(5 \\in A\\) (uzavřená závorka).`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(\\{ 1,\\, 2,\\, 3,\\, 4\\}\\)`,
@@ -529,30 +522,30 @@ const GameData = {
       hints: [
         `V češtině: \\(\\mathbb{N} = \\{1, 2, 3, \\ldots\\}\\) — přirozená čísla <b>nezahrnují 0</b>.`,
         `Průnik \\(A \\cap \\mathbb{N}\\) = přirozená čísla, která zároveň leží v intervalu A.`,
-        `Zkontroluj závorky — uzavřená závorka \\(\\rangle\\) u \\(5\\) znamená, že \\(5\\) do A patří.`,
+        `Zkontroluj typ závorky u pravé meze — je uzavřená nebo otevřená?`,
       ],
       correctAnswer: "A", reward: { xp: 10 }
     },
     {
-      id: "t_co_06a", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00E: Závorky a přirozená čísla`,
+      id: "t_co_06a", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00D: Závorky a přirozená čísla`,
       isTraining: true, firewallId: "q_co_06", visual_color: "#2ecc8a", visual_symbol: `ℕ`, points: 0,
       question: `Je dán interval \\(A = \\langle 1;\\, 4)\\). Patří číslo \\(4\\) do množiny \\(A \\cap \\mathbb{N}\\)?`,
       instruction: `Rozhodněte, zda \\(4\\) patří do \\(A \\cap \\mathbb{N}\\).`,
       steps: [
         {
           trigger: `> Krok 1: Je 4 v intervalu A?`,
-          content: `Interval \\(\\langle 1;\\, 4)\\) má <b>otevřenou</b> pravou závorku — číslo \\(4\\) do intervalu <b>nepatří</b>.`
+          content: `Podívej se na typ závorky u čísla \\(4\\) v intervalu \\(\\langle 1;\\, 4)\\).`
         },
         {
           trigger: `> Krok 2: Závěr`,
-          content: `I když \\(4 \\in \\mathbb{N}\\), platí \\(4 \\notin A\\). Pro průnik musí číslo splňovat obě podmínky. Co z toho plyne?`
+          content: `I když \\(4 \\in \\mathbb{N}\\), co plyne z toho, že \\(4 \\notin A\\) pro průnik?`
         },
       ],
       choices: [
         {
           label: `Ne, \\(4 \\notin A \\cap \\mathbb{N}\\)`,
           value: "A",
-          feedback: `Správně. Otevřená závorka u \\(4\\) — číslo \\(4 \\notin A\\), přestože \\(4 \\in \\mathbb{N}\\).`
+          feedback: `Logika potvrzena. Otevřená závorka u \\(4\\) → \\(4 \\notin A\\).`
         },
         {
           label: `Ano, \\(4 \\in A \\cap \\mathbb{N}\\)`,
@@ -577,7 +570,7 @@ const GameData = {
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "t_co_06b", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00F: Přirozená čísla v intervalu`,
+      id: "t_co_06b", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00D-2: Přirozená čísla v intervalu`,
       isTraining: true, firewallId: "q_co_06", visual_color: "#2ecc8a", visual_symbol: `ℕ`, points: 0,
       question: `Vypište všechna přirozená čísla z intervalu \\(A = \\langle - 1;\\, 3\\rangle\\).`,
       instruction: `Vyberte správnou množinu \\(A \\cap \\mathbb{N}\\).`,
@@ -588,7 +581,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Závorky a výpis`,
-          content: `Interval \\(\\langle -1;\\, 3\\rangle\\) má obě závorky uzavřené. Procházej přirozená čísla \\(1\\), \\(2\\), \\(3\\), … — která z nich leží v intervalu? (Vzpomeň si: čísla \\(-1\\) a \\(0\\) v \\(A\\) jsou, ale v \\(\\mathbb{N}\\) <b>nejsou</b>.)`
+          content: `Procházej přirozená čísla \\(1\\), \\(2\\), \\(3\\), … — která z nich leží v intervalu \\(\\langle -1;\\, 3\\rangle\\)?`
         },
         {
           trigger: `> Krok 3: Obrázek`,
@@ -609,7 +602,7 @@ const GameData = {
         {
           label: `\\(\\{ 1,\\, 2,\\, 3\\}\\)`,
           value: "C",
-          feedback: `Logika potvrzena. \\(\\mathbb{N} \\cap \\langle -1;\\, 3\\rangle = \\{1, 2, 3\\}\\). Záporná čísla a nula do \\(\\mathbb{N}\\) nepatří.`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(\\{ - 1,\\, 0,\\, 1,\\, 2,\\, 3\\}\\)`,
@@ -637,7 +630,7 @@ const GameData = {
         {
           label: `\\(2^{798}\\)`,
           value: "B",
-          feedback: `Přístup povolen. \\(25\,\\% = \\tfrac{1}{4} = 2^{-2}\\), výsledek \\(2^{-2} \\cdot 2^{800} = 2^{798}\\). Protokol ověřen.`
+          feedback: `Přístup povolen.`
         },
         {
           label: `\\(2^{775}\\)`,
@@ -653,12 +646,12 @@ const GameData = {
       hints: [
         `\\(25\,\\% = \\frac{1}{4} = 2^{-2}\\).`,
         `\\(a^m \\cdot a^n = a^{m+n}\\) — exponenty se <b>sčítají</b>.`,
-        `\\(2^{-2} \\cdot 2^{800} = 2^{-2+800} = ?\\)`,
+        `Dosaď do pravidla a sečti exponenty.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
     {
-      id: "t_co_07a", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00G: Procenta jako mocnina`,
+      id: "t_co_07a", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00E: Procenta jako mocnina`,
       isTraining: true, firewallId: "q_co_07", visual_color: "#2ecc8a", visual_symbol: `2ⁿ`, points: 0,
       question: `Vyjádřete 50 % jako mocninu čísla 2.`,
       formula: `$$50\\% = 2^{\\,?}$$`,
@@ -670,7 +663,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Záporný exponent`,
-          content: `\\(2^{-1} = \\frac{1}{2^1} = \\frac{1}{2}\\). Srovnej to s tím, co máš z kroku 1.`
+          content: `Jak zapíšeš zlomek \\(\\frac{1}{2}\\) jako mocninu základu 2 se záporným exponentem?`
         },
       ],
       choices: [
@@ -687,7 +680,7 @@ const GameData = {
         {
           label: `\\(2^{- 1}\\)`,
           value: "C",
-          feedback: `Přístup povolen. \\(50\\% = \\tfrac{1}{2} = 2^{-1}\\). Teď v hlavní úloze použiješ \\(25\\% = 2^{-2}\\).`
+          feedback: `Přístup povolen.`
         },
         {
           label: `\\(2^{1}\\)`,
@@ -696,13 +689,13 @@ const GameData = {
         },
       ],
       hints: [
-        `\\(50\\% = \\tfrac{1}{2}\\). Jako mocnina: \\(\\frac{1}{2} = 2^{-1}\\).`,
+        `\\(50\\% = \\tfrac{1}{2}\\). Jak zapíšeš zlomek \\(\\frac{1}{2}\\) pomocí záporného exponentu?`,
         `Záporný exponent = převrácená hodnota: \\(2^{-n} = \\frac{1}{2^n}\\).`,
       ],
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "t_co_07b", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00H: Sčítání exponentů`,
+      id: "t_co_07b", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00E-2: Sčítání exponentů`,
       isTraining: true, firewallId: "q_co_07", visual_color: "#2ecc8a", visual_symbol: `2ⁿ`, points: 0,
       question: `Vypočtěte \\(2^{- 2} \\cdot 2^{20}\\).`,
       formula: `$$2^{- 2} \\cdot 2^{20} = \\,?$$`,
@@ -714,14 +707,14 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Dosazení`,
-          content: `\\(2^{-2} \\cdot 2^{20} = 2^{-2+20}\\). Kolik je \\(-2 + 20\\)?`
+          content: `Pravidlo z Kroku 1: exponenty se sčítají. Dosaď \\(m = -2\\) a \\(n = 20\\) — jaký je výsledný exponent?`
         },
       ],
       choices: [
         {
           label: `\\(2^{18}\\)`,
           value: "A",
-          feedback: `Logika potvrzena. \\(-2 + 20 = 18\\). V hlavní úloze použij stejný princip s \\(2^{-2} \\cdot 2^{800}\\).`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(2^{22}\\)`,
@@ -741,12 +734,12 @@ const GameData = {
       ],
       hints: [
         `\\(a^m \\cdot a^n = a^{m+n}\\) — exponenty se sčítají.`,
-        `Pozor na záporný exponent: \\(-2 + 20 = 18\\), ne \\(2 + 20 = 22\\).`,
+        `Při sčítání exponentů dávej pozor na znaménko — \\(-2\\) je záporné číslo.`,
       ],
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "t_co_07c", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00I: Součin mocnin`,
+      id: "t_co_07c", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00E-3: Součin mocnin`,
       isTraining: true, firewallId: "q_co_07", visual_color: "#2ecc8a", visual_symbol: `2ⁿ`, points: 0,
       question: `Vypočtěte \\(2^3 \\cdot 2^6\\).`,
       formula: `$$2^3 \\cdot 2^6 = \\,?$$`,
@@ -758,7 +751,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Dosazení`,
-          content: `\\(2^3 \\cdot 2^6 = 2^{3+6}\\). Kolik je \\(3 + 6\\)?`
+          content: `Pravidlo z Kroku 1: exponenty se sčítají. Dosaď \\(m = 3\\) a \\(n = 6\\) — jaký je výsledný exponent?`
         },
       ],
       choices: [
@@ -770,7 +763,7 @@ const GameData = {
         {
           label: `\\(2^{9}\\)`,
           value: "B",
-          feedback: `Logika potvrzena. \\(3 + 6 = 9\\), takže \\(2^3 \\cdot 2^6 = 2^9 = 512\\).`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(4^{9}\\)`,
@@ -785,7 +778,7 @@ const GameData = {
       ],
       hints: [
         `\\(a^m \\cdot a^n = a^{m+n}\\).`,
-        `\\(3 + 6 = ?\\)`,
+        `Sečti exponenty podle pravidla z kroku 1.`,
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
@@ -804,7 +797,7 @@ const GameData = {
         {
           label: `\\(( - 5;\\, 5)\\)`,
           value: "B",
-          feedback: `Kritická chyba. Ignoroval/a jsi podmínku \\(x \\geq -2\\). Výsledek je průnik \\((-5;5)\\) a \\(\\langle -2;+\\infty)\\), tedy \\(\\langle -2;5)\\).`
+          feedback: `Kritická chyba. Ignoroval/a jsi druhou podmínku \\(x \\geq -2\\). Obě podmínky musí platit současně.`
         },
         {
           label: `\\(\\langle - 2;\\, 5)\\)`,
@@ -819,13 +812,13 @@ const GameData = {
       ],
       hints: [
         `\\(|x| < 5\\) → \\(-5 < x < 5\\) → interval \\((-5;\\, 5)\\).`,
-        `Výsledek je průnik \\((-5;5)\\) s podmínkou \\(x \\geq -2\\), tedy \\(\\langle -2;\\, 5)\\).`,
-        `Závorka u \\(-2\\): podmínka \\(x \\geq -2\\) je neostré \\(\\geq\\), číslo \\(-2\\) <b>patří</b> do M.`,
+        `Máš dvě podmínky: \\(|x| < 5\\) a \\(x \\geq -2\\). Hledáš jejich průnik.`,
+        `Zkontroluj typ nerovnosti u každé podmínky — ostrá nebo neostrá? To určuje závorky.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_co_09", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00J: Absolutní hodnota jako interval`,
+      id: "t_co_09", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00F: Absolutní hodnota jako interval`,
       isTraining: true, firewallId: "q_co_09", visual_color: "#2ecc8a", visual_symbol: ``, points: 0,
       question: `Pro která reálná čísla platí \\(|x| < 4\\)? Zapište intervalem.`,
       formula: `$$|x| < 4$$`,
@@ -833,7 +826,7 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Rozepsání absolutní hodnoty`,
-          content: `\\(|x| < 4\\) znamená vzdálenost \\(x\\) od nuly je menší než \\(4\\). Jinými slovy: \\(-4 < x < 4\\).`
+          content: `\\(|x| < 4\\) znamená vzdálenost \\(x\\) od nuly je menší než \\(4\\). Jaké hodnoty to splňují?`
         },
         {
           trigger: `> Krok 2: Zápis intervalem`,
@@ -863,7 +856,7 @@ const GameData = {
         {
           label: `\\(( - 4;\\, 4)\\)`,
           value: "D",
-          feedback: `Přístup povolen. \\(|x|<4 \\Rightarrow -4<x<4\\) → interval \\((-4;4)\\).`
+          feedback: `Přístup povolen.`
         },
       ],
       hints: [
@@ -921,7 +914,7 @@ const GameData = {
         {
           label: `\\(\\{ 1,\\, 6,\\, 7\\}\\)`,
           value: "B",
-          feedback: `Logika potvrzena. Průnik \\(A \\cap B = \\{2,3,4,5\\}\\). Prvky \\(B\\) mimo průnik: \\(\\{1,6,7\\}\\).`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(\\{ 1,\\, 2,\\, 3,\\, 4,\\, 5,\\, 6,\\, 7\\}\\)`,
@@ -935,14 +928,14 @@ const GameData = {
         },
       ],
       hints: [
-        `Interval \\((1; 6)\\) je otevřený — čísla \\(1\\) ani \\(6\\) do A <b>nepatří</b>.`,
+        `Zkontroluj typ závorek intervalu \\((1; 6)\\) — které krajní body do intervalu patří a které ne?`,
         `Průnik \\(A \\cap B\\) = prvky B, které zároveň leží v otevřeném intervalu \\((1; 6)\\).`,
         `Hledáme prvky B, které do průniku <b>nepatří</b> — tzn. mimo interval nebo na krajích.`,
       ],
       correctAnswer: "B", reward: { xp: 10 }
     },
     {
-      id: "t_co_10", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00K: Otevřený interval a jeho prvky`,
+      id: "t_co_10", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00G: Otevřený interval a jeho prvky`,
       isTraining: true, firewallId: "q_co_10", visual_color: "#2ecc8a", visual_symbol: `∖`, points: 0,
       question: `Patří číslo \\(3\\) do intervalu \\((3;\\, 7)\\)?`,
       instruction: `Rozhodněte, zda \\(3 \\in (3;7)\\).`,
@@ -953,7 +946,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Závěr`,
-          content: `Protože \\(3 \\notin (3;7)\\), číslo \\(3\\) také nepatří do žádného průniku \\((3;7)\\) s jinou množinou.`
+          content: `Pokud číslo neleží v intervalu \\(A\\), může ležet v doplňku \\(A'\\)?`
         },
       ],
       choices: [
@@ -1008,7 +1001,7 @@ const GameData = {
         {
           label: `\\(\\frac{3}{7}\\)`,
           value: "D",
-          feedback: `Logika potvrzena. \\(\\tfrac{3}{7} \\in \\mathbb{Q}\\) (zlomek dvou celých čísel). \\(\\tfrac{3}{7} \\notin \\mathbb{Z}\\). Správná volba.`
+          feedback: `Logika potvrzena.`
         },
       ],
       hints: [
@@ -1019,7 +1012,7 @@ const GameData = {
       correctAnswer: "D", reward: { xp: 10 }
     },
     {
-      id: "t_co_16", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00L: Číselné obory — hierarchie`,
+      id: "t_co_16", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00H: Číselné obory — hierarchie`,
       isTraining: true, firewallId: "q_co_16", visual_color: "#2ecc8a", visual_symbol: `ℚ`, points: 0,
       question: `Platí \\(\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}\\)? Patří číslo \\(4\\) do \\(\\mathbb{Q}\\)?`,
       instruction: `Rozhodněte, zda \\(4 \\in \\mathbb{Q}\\).`,
@@ -1046,7 +1039,7 @@ const GameData = {
         {
           label: `Ano, \\(4 \\in \\mathbb{Q}\\)`,
           value: "B",
-          feedback: `Správně. \\(4 \\in \\mathbb{N} \\subset \\mathbb{Q}\\). Každé přirozené číslo je racionální.`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(4 \\in \\mathbb{Q}\\) jen pokud \\(4 \\notin \\mathbb{Z}\\)`,
@@ -1074,7 +1067,7 @@ const GameData = {
         {
           label: `\\(( - \\infty;\\, - 3) \\cup \\langle 5;\\, + \\infty)\\)`,
           value: "A",
-          feedback: `Přístup povolen. Doplněk vylučuje \\(\\langle -3;5)\\). Levá část: \\((-\\infty;-3)\\) otevřeně (\\(-3 \\in A\\)). Pravá část: \\(\\langle 5;+\\infty)\\) uzavřeně (\\(5 \\notin A\\)).`
+          feedback: `Přístup povolen.`
         },
         {
           label: `\\(( - \\infty;\\, - 3\\rangle \\cup (5;\\, + \\infty)\\)`,
@@ -1100,7 +1093,7 @@ const GameData = {
       correctAnswer: "A", reward: { xp: 15 }
     },
     {
-      id: "t_co_17", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00M: Doplněk — co chybí`,
+      id: "t_co_17", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00I: Doplněk — co chybí`,
       isTraining: true, firewallId: "q_co_17", visual_color: "#2ecc8a", visual_symbol: `Aᶜ`, points: 0,
       question: `Je dána množina \\(A = (2;\\, 8)\\) v základní množině \\(\\mathbb{R}\\). Patří číslo \\(2\\) do doplňku \\(A'\\)?`,
       instruction: `Rozhodněte, zda \\(2 \\in A'\\).`,
@@ -1111,7 +1104,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 2: Je 2 v A?`,
-          content: `\\(A = (2;8)\\) je <b>otevřený</b> interval. Číslo \\(2\\) do \\(A\\) <b>nepatří</b> (kulatá závorka).`
+          content: `Zkontroluj, jaký typ závorky má interval \\(A = (2;8)\\) u čísla \\(2\\).`
         },
         {
           trigger: `> Krok 3: Závěr s obrázkem`,
@@ -1132,7 +1125,7 @@ const GameData = {
         {
           label: `Ano, \\(2 \\in A'\\)`,
           value: "C",
-          feedback: `Logika potvrzena. \\(2 \\notin (2;8)\\), tedy \\(2 \\in A'\\).`
+          feedback: `Logika potvrzena.`
         },
         {
           label: `\\(2\\) leží na hranici, nelze určit`,
@@ -1166,7 +1159,7 @@ const GameData = {
         {
           label: `\\(\\langle - 3;\\, 7\\rangle\\)`,
           value: "C",
-          feedback: `Přístup povolen. \\(|x-2| \\leq 5 \\Rightarrow -5 \\leq x-2 \\leq 5 \\Rightarrow -3 \\leq x \\leq 7\\). Obě závorky uzavřené \\((\\leq)\\).`
+          feedback: `Přístup povolen.`
         },
         {
           label: `\\(( - 3;\\, 7)\\)`,
@@ -1176,13 +1169,13 @@ const GameData = {
       ],
       hints: [
         `Geometricky: \\(|x - 2| \\leq 5\\) znamená, že \\(x\\) je od \\(2\\) vzdáleno <b>maximálně</b> \\(5\\) jednotek.`,
-        `Hledáme čísla \\(x\\) vzdálená od \\(2\\) o nejvýše \\(5\\). Nejdřív rozepíšeme bez absolutní hodnoty: \\(-5 \\leq x - 2 \\leq 5\\). Co vychází, když přičteš \\(2\\)?`,
+        `\\(|\\text{výraz}| \\leq k\\) se přepíše na \\(-k \\leq \\text{výraz} \\leq k\\). Dosaď a dopočítej.`,
         `Neostré \\(\\leq\\) → uzavřené závorky ⟨ ⟩.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_co_19", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00N: Rozepsání absolutní hodnoty`,
+      id: "t_co_19", regionId: "ciselne_obory", type: "closed", monsterName: `SIM_00J: Rozepsání absolutní hodnoty`,
       isTraining: true, firewallId: "q_co_19", visual_color: "#2ecc8a", visual_symbol: ``, points: 0,
       question: `Rozepište nerovnici \\(|x - 3| \\leq 4\\) bez absolutní hodnoty.`,
       formula: `$$|x - 3| \\leq 4$$`,
@@ -1198,7 +1191,7 @@ const GameData = {
         },
         {
           trigger: `> Krok 3: Výpočet a obrázek`,
-          content: `\\(-4 \\leq x - 3 \\leq 4\\). Přičteme \\(3\\) ke všem stranám. Co vyjde? Na ose: jaký je to interval?`
+          content: `Po dosazení máš dvojitou nerovnici. Jak izoluješ \\(x\\)? Na ose vidíš uzavřený interval s plnými kolečky.`
         },
       ],
       choices: [
@@ -1210,7 +1203,7 @@ const GameData = {
         {
           label: `\\(- 1 \\leq x \\leq 7\\)`,
           value: "B",
-          feedback: `Přístup povolen. \\(-4 \\leq x-3 \\leq 4 \\Rightarrow -1 \\leq x \\leq 7\\).`
+          feedback: `Přístup povolen.`
         },
         {
           label: `\\(x \\leq 7\\text{ nebo\\ }x \\geq - 1\\)`,
@@ -1298,8 +1291,8 @@ const GameData = {
         },
       ],
       hints: [
-        `Všimni si, že \\(x^2 - 1 = (x-1)(x+1)\\). To je společný jmenovatel. Určete podmínky dřív, než začneš počítat.`,
-        `Vynásob celou rovnici \\((x-1)(x+1)\\). Vznikne kvadratická rovnice — oba kořeny ověř vůči podmínkám.`,
+        `Jmenovatel třetího zlomku lze rozložit na součin. Co to prozradí o společném jmenovateli?`,
+        `Kvadratická rovnice může mít dva kořeny. Oba je třeba ověřit vůči podmínkám.`,
       ],
       correctAnswer: "B", reward: { xp: 30 }
     },
@@ -1312,11 +1305,11 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Podmínky`,
-          content: `Jmenovatelé nesmí být nula: \\(x \\neq 1\\) a \\(x \\neq -1\\).`
+          content: `Jaké hodnoty \\(x\\) vynulují jmenovatele? Tyto hodnoty jsou zakázané.`
         },
         {
           trigger: `> Krok 2: Násobení společným jmenovatelem`,
-          content: `Násobíme \\((x-1)(x+1)\\): \\(3(x+1) + 1(x-1) = 0\\) → zjednoduš a vyřeš rovnici.`
+          content: `Po vynásobení společným jmenovatelem obě strany zjednoduš. Vznikne jednoduchá lineární rovnice.`
         },
       ],
       choices: [
@@ -1353,7 +1346,7 @@ const GameData = {
         {
           label: `\\(\\{ - 4\\}\\)`,
           value: "A",
-          feedback: `Jedno ze dvou platných řešení. Rovnice má ještě druhý kořen.`
+          feedback: `Nekompletní. Toto je jen jeden z kořenů.`
         },
         {
           label: `\\(\\{ 2;\\, 4\\}\\)`,
@@ -1368,12 +1361,12 @@ const GameData = {
         {
           label: `\\(\\{ 1\\}\\)`,
           value: "D",
-          feedback: `Jedno ze dvou platných řešení. Rovnice má ještě druhý kořen.`
+          feedback: `Nekompletní. Toto je jen jeden z kořenů.`
         },
       ],
       hints: [
-        `\\(x^2 - 4 = (x-2)(x+2)\\) — to je společný jmenovatel. Podmínky: \\(x \\neq 2\\) a \\(x \\neq -2\\).`,
-        `Po vynásobení jmenovatelem vznikne kvadratická rovnice se dvěma kořeny. Oba musíš ověřit vůči podmínkám.`,
+        `Jmenovatel posledního zlomku se dá rozložit pomocí vzorce \\(a^2 - b^2\\). Jaké podmínky to přinese?`,
+        `Po převedení na společného jmenovatele vznikne kvadratická rovnice. Oba kořeny ověř vůči podmínkám.`,
       ],
       correctAnswer: "C", reward: { xp: 25 }
     },
@@ -1386,11 +1379,11 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Rozklad a podmínky`,
-          content: `Jmenovatel \\(x^2-1=(x-1)(x+1)\\). Podmínky: \\(x\\neq1\\) a \\(x\\neq-1\\).`
+          content: `Rozlož \\(x^2 - 1\\) na součin podle vzorce \\(a^2 - b^2 = (a-b)(a+b)\\). Jaké podmínky z toho vyplývají?`
         },
         {
           trigger: `> Krok 2: Násobení (x-1)(x+1)`,
-          content: `\\((x+2)(x+1) - x(x-1) = 2\\) → zjednoduš a vyřeš lineární rovnici.`
+          content: `Po vynásobení společným jmenovatelem rozevři závorky a zjednoduš. Co vyjde?`
         },
       ],
       choices: [
@@ -1446,8 +1439,8 @@ const GameData = {
         },
       ],
       hints: [
-        `Převeď výraz na jeden zlomek: \\(\\frac{4x}{x+2} - 4 = \\frac{4x - 4(x+2)}{x+2}\\). Zjednoduš čitatel.`,
-        `Po zjednodušení dostaneš zlomek s konstantním čitatelem. Kdy je záporný záleží jen na znaménku jmenovatele.`,
+        `Převeď levou stranu na společný jmenovatel. V žádném případě nesmíš násobit (x+2). Nevíš, jestli násobíš kladným nebo záporným číslem.`,
+        `Znaménko zlomku závisí na znaménku čitatele a jmenovatele. Rozhodni, kdy je celý zlomek záporný.`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
@@ -1460,7 +1453,7 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Čitatel je kladný`,
-          content: `Čitatel \\(2 > 0\\) vždy. Znaménko zlomku závisí pouze na jmenovateli.`
+          content: `Jaké znaménko má čitatel? Je konstantní, nebo závisí na \\(x\\)?`
         },
         {
           trigger: `> Krok 2: Kdy je jmenovatel kladný?`,
@@ -1520,8 +1513,8 @@ const GameData = {
         },
       ],
       hints: [
-        `Čitatel \\(2x^2 - 6x = 2x(x-3)\\). Jmenovatel \\((x-3)^2\\). Zkrať zlomek pro \\(x \\neq 3\\) — co zůstane?`,
-        `Po zkrácení proveď znaménkový rozbor. Nezapomeň, že \\(x=3\\) je vyloučena i z výsledku.`,
+        `Rozlož čitatele i jmenovatele na součin. Dá se zlomek zkrátit?`,
+        `Po zjednodušení proveď znaménkový rozbor. Bod, kde jmenovatel původně nulový, zůstává vyloučený.`,
       ],
       correctAnswer: "D", reward: { xp: 30 }
     },
@@ -1534,7 +1527,7 @@ const GameData = {
       steps: [
         {
           trigger: `> Krok 1: Zkrácení zlomku`,
-          content: `Pro \\(x \\neq 4\\): \\(\\frac{x(x-4)}{(x-4)^2} = \\frac{x}{x-4}\\). Podmínka \\(x\\neq4\\) zůstává.`
+          content: `Čitatel i jmenovatel obsahují činitel \\((x-4)\\). Dá se zkrátit? Za jaké podmínky?`
         },
         {
           trigger: `> Krok 2: Znaménkový rozbor`,
@@ -1593,8 +1586,8 @@ const GameData = {
         },
       ],
       hints: [
-        `Vynásob jednu rovnici tak, aby měla stejné koeficienty u proměnných jako druhá. Co pak platí pro pravé strany?`,
-        `Pokud po úpravě vznikne výraz tvaru „číslo = jiné číslo" (např. \\(8 = 9\\)), jde o spor — soustava nemá žádné řešení.`,
+        `Uprav rovnice tak, aby levé strany měly stejné koeficienty. Porovnej pravé strany.`,
+        `Soustava nemá řešení, pokud po úpravě vznikne spor — dva různé výsledky pro stejný výraz.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
@@ -1610,7 +1603,7 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Vynásobení první rovnice`,
-          content: `Vynásobíme první rovnici číslem 2: \\(2x + 4y = 8\\).`
+          content: `Čím musíš vynásobit první rovnici, aby levé strany obou rovnic byly stejné?`
         },
         {
           trigger: `> Krok 2: Porovnání s druhou rovnicí`,
@@ -1670,8 +1663,8 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Přesuň vše s \\(x\\) na levou stranu: \\((k-2)x = 1-k\\). Co se stane, pokud je koeficient u \\(x\\) roven nule?`,
-        `Pokud koeficient u \\(x\\) je \\(0\\), nevyplývá z toho hodnota \\(x\\) — porovnej levou a pravou stranu. Vyjde spor (jako \\(0=-1\\)), nebo totožnost?`,
+        `Přesuň členy s \\(x\\) na jednu stranu. Kdy bude koeficient u \\(x\\) nulový?`,
+        `Rovnice tvaru \\(0 \\cdot x = c\\) — záleží na tom, jestli \\(c = 0\\) nebo \\(c \\neq 0\\).`,
       ],
       correctAnswer: "B", reward: { xp: 20 }
     },
@@ -1684,11 +1677,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Kdy lze rovnici vyřešit?`,
-          content: `Rovnici \\(kx = 6\\) lze vyřešit dělením: \\(x = 6/k\\) — ale jen pokud \\(k \\neq 0\\). Co se stane, když \\(k = 0\\)?`
+          content: `Rovnici \\(kx = 6\\) řešíš dělením — ale kdy to nejde? Jaká hodnota \\(k\\) znemožní dělení?`
         },
         {
-          trigger: `> Krok 2: Dosaď k = 0`,
-          content: `Pro \\(k=0\\): rovnice se změní na \\(0 \\cdot x = 6\\), tedy \\(0 = 6\\). Je tato rovnost pravdivá? Co z toho plyne pro řešení?`
+          trigger: `> Krok 2: Dosaď tu problematickou hodnotu k`,
+          content: `Dosaď tu problematickou hodnotu \\(k\\). Je výsledná rovnost pravdivá? Co to znamená pro existenci řešení?`
         },
       ],
       choices: [
@@ -1713,7 +1706,7 @@ x + 2y = 4 \\\\
           feedback: `Kritická chyba. Pro \\(k=0\\) dostaneme \\(0=6\\) — spor, který znamená, že rovnice nemá žádné řešení.`
         },
       ],
-      correctAnswer: "C", reward: { xp: 5 }
+      correctAnswer: "B", reward: { xp: 5 }
     },
     {
       id: "q_rov_08", regionId: "rovnice", type: "closed", monsterName: `FW_02H: Prázdná množina řešení`,
@@ -1756,12 +1749,12 @@ x + 2y = 4 \\\\
       instruction: `Vyberte správnou množinu řešení.`,
       steps: [
         {
-          trigger: `> Krok 1: Vlastnost druhé mocniny`,
-          content: `Čtverec libovolného reálného čísla je vždy nezáporný: \\(A^2 \\geq 0\\) pro každé \\(A \\in \\mathbb{R}\\).`
+          trigger: `> Krok 1: Co víš o druhé mocnině`,
+          content: `Co víš o znaménku druhé mocniny libovolného reálného čísla?`
         },
         {
           trigger: `> Krok 2: Závěr`,
-          content: `\\((x+2)^2 \\geq 0\\) platí pro která \\(x\\)? Vyber ze čtyř nabízených možností.`
+          content: `Může existovat \\(x\\), pro které by \\((x+2)^2\\) bylo záporné?`
         },
       ],
       choices: [
@@ -1830,7 +1823,7 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Kořeny a tvar paraboly`,
-          content: `Kořeny jsou \\(x=1\\) a \\(x=-2\\). Koeficient \\(a=1>0\\) — parabola otevřená nahoru (∪-tvar).`
+          content: `Jaké jsou nulové body výrazu \\((x-1)(x+2)\\)? Jaký tvar má parabola s kladným vedoucím koeficientem?`
         },
         {
           trigger: `> Krok 2: Kde je výraz záporný?`,
@@ -1889,8 +1882,8 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Projdi každé tvrzení: \\((x+3)^2 \\geq 0\\) — co víš o čtverci libovolného reálného čísla?`,
-        `Pro tvrzení B: \\((x-1)(1-x) = -(x-1)^2\\). Může být záporný čtverec větší nebo roven nule?`,
+        `U každého tvrzení rozmysli: jaký obor hodnot má daný výraz? Co to znamená pro nerovnost?`,
+        `Výraz tvaru \\(-(A)^2\\) je vždy nekladný. Může být zároveň \\(\\geq 0\\)?`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
@@ -1903,11 +1896,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Co je x²?`,
-          content: `\\(x^2 = x \\cdot x\\). Součin dvou čísel se stejným znaménkem je vždy kladný (nebo nula pro \\(x=0\\)).`
+          content: `Co víš o znaménku druhé mocniny libovolného reálného čísla?`
         },
         {
           trigger: `> Krok 2: Závěr`,
-          content: `\\(x^2 \\geq 0\\) pro každé \\(x \\in \\mathbb{R}\\). Je tato nerovnice splněna pro všechna \\(x\\), nebo jen pro některá?`
+          content: `Existuje reálné číslo, jehož druhá mocnina by byla záporná?`
         },
       ],
       choices: [
@@ -1935,78 +1928,73 @@ x + 2y = 4 \\\\
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_rov_11", regionId: "rovnice", type: "closed", monsterName: `FW_02K: Lomená rovnice III`,
+      id: "q_rov_11", regionId: "rovnice", type: "closed", monsterName: `FW_02K: Nerovnice bez řešení`,
       visual_color: "#f7b84f", visual_symbol: `x=`, points: 5, trainingTasks: ["t_rov_11"],
-      question: `V oboru reálných čísel řešte rovnici:`,
-      formula: `$$\\frac{4}{x - 1} + \\frac{x + 1}{2x - 2} = \\frac{3}{2}$$`,
-      instruction: `Zvolte správnou množinu řešení.`,
+      question: `Která z následujících nerovnic nemá v oboru \\(\\mathbb{R}\\) žádné řešení?`,
+      formula: ``,
+      instruction: `Vyberte správnou nerovnici.`,
       choices: [
         {
-          label: `\\(\\{ 1\\}\\)`,
+          label: `\\(x^2 - 6x + 9 \\leq 0\\)`,
           value: "A",
-          feedback: `Kritická chyba. \\(x=1\\) vynuluje oba jmenovatele na levé straně.`
+          feedback: `Chyba. \\((x-3)^2 = 0\\) pro \\(x = 3\\) — nerovnost \\(\\leq\\) zahrnuje rovnost, takže řešení existuje.`
         },
         {
-          label: `\\(\\{ 6\\}\\)`,
+          label: `\\(x^2 - 4 < 0\\)`,
           value: "B",
-          feedback: `Přístup povolen. Jmenovatel \\(2x-2=2(x-1)\\). Po vynásobení \\(2(x-1)\\): \\(8+(x+1)=3(x-1)\\) → \\(x=6\\).`
+          feedback: `Nekompletní. Pro \\(|x| < 2\\) je \\(x^2 < 4\\), tedy \\(x^2 - 4 < 0\\). Interval \\((-2,\\, 2)\\) je neprázdný.`
         },
         {
-          label: `\\(\\{ - 6\\}\\)`,
+          label: `\\(x^2 - 4x + 3 < 0\\)`,
           value: "C",
-          feedback: `Chyba znaménka. Zkontroluj dosazení: \\(4/(-7)+(-5)/(-14)=-4/7+5/14=-3/14 \\neq 3/2\\).`
+          feedback: `Nekompletní. Trojčlen \\((x-1)(x-3) < 0\\) pro \\(x \\in (1,\\, 3)\\). Kvadratik může být záporný mezi svými kořeny.`
         },
         {
-          label: `\\(\\{ 3\\}\\)`,
+          label: `\\(x^2 + 2x + 5 < 0\\)`,
           value: "D",
-          feedback: `Chyba výpočtu. Dosaď: \\(4/2 + 4/4 = 2+1=3 \\neq 3/2\\).`
+          feedback: `Logika potvrzena. Výraz \\((x+1)^2 + 4 \\geq 4\\) pro všechna \\(x\\), proto nemůže být záporný.`
         },
       ],
       hints: [
-        `Všimni si, že \\(2x - 2 = 2(x-1)\\). Jaký je společný jmenovatel celé rovnice? Nezapomeň na podmínku.`,
-        `Po vynásobení společným jmenovatelem vznikne lineární rovnice. Ověř, že výsledek nesplňuje podmínku \\(x \\neq 1\\).`,
+        `Rozlišuj ostrou nerovnost (\\(<\\)) od neostré (\\(\\leq\\)). Čtverec může být roven nule.`,
+        `Zkus doplnit trojčlen na čtverec plus konstanta. Může být součet čtverce a kladného čísla záporný?`,
       ],
-      correctAnswer: "B", reward: { xp: 25 }
+      correctAnswer: "D", reward: { xp: 25 }
     },
     {
-      id: "t_rov_11", regionId: "rovnice", type: "closed", monsterName: `SIM_02K: Lomená rovnice bez čitatele`,
+      id: "t_rov_11", regionId: "rovnice", type: "closed", monsterName: `SIM_02K: Znaménko kvadratického výrazu`,
       isTraining: true, firewallId: "q_rov_11", visual_color: "#2ecc8a", visual_symbol: `x=`, points: 0,
-      question: `V oboru reálných čísel řešte rovnici:`,
-      formula: `$$\\frac{3}{x - 2} - \\frac{1}{x + 2} = 0$$`,
-      instruction: `Vyberte správnou množinu řešení.`,
+      question: `Může být výraz \\(x^2 + 4x + 8\\) záporný pro nějaké \\(x \\in \\mathbb{R}\\)?`,
+      formula: `$$x^2 + 4x + 8$$`,
+      instruction: `Vyberte správnou odpověď.`,
       steps: [
         {
-          trigger: `> Krok 1: Podmínky a násobení`,
-          content: `Podmínky: \\(x\\neq2\\), \\(x\\neq-2\\). Násobím \\((x-2)(x+2)\\): \\(3(x+2) - (x-2) = 0\\).`
+          trigger: `> Krok 1: Doplnění na čtverec`,
+          content: `Zapiš \\(x^2 + 4x + 8\\) ve tvaru \\((x + a)^2 + b\\). Jaká čísla \\(a\\) a \\(b\\) vyjdou?`
         },
         {
-          trigger: `> Krok 2: Lineární rovnice`,
-          content: `\\(3x+6-x+2=0\\) → \\(2x+8=0\\). Vyřeš tuto rovnici. Splňuje výsledek podmínky?`
+          trigger: `> Krok 2: Nejmenší hodnota`,
+          content: `Čtverec je vždy \\(\\geq 0\\). Jaká je tedy nejmenší možná hodnota celého výrazu?`
         },
       ],
       choices: [
         {
-          label: `\\(\\{ 4\\}\\)`,
+          label: `Ne, výraz je vždy kladný`,
           value: "A",
-          feedback: `Chyba znaménka. \\(2x+8=0\\) → \\(x=-4\\), ne \\(+4\\).`
+          feedback: `Přístup povolen. \\((x+2)^2 + 4 \\geq 4 > 0\\) pro všechna \\(x\\).`
         },
         {
-          label: `\\(\\{ 2;\\, - 2\\}\\)`,
+          label: `Ano, pro \\(x = -2\\)`,
           value: "B",
-          feedback: `Kritická chyba. Toto jsou zakázané hodnoty jmenovatelů.`
+          feedback: `Chyba. Dosaď: \\((-2)^2 + 4 \\cdot (-2) + 8 = 4\\). Kladné, ne záporné.`
         },
         {
-          label: `\\(\\{ - 4\\}\\)`,
+          label: `Ano, pro \\(x = -4\\)`,
           value: "C",
-          feedback: `Přístup povolen. Teď zkus firewall se třemi jmenovateli a pravou stranou \\(3/2\\).`
-        },
-        {
-          label: `Rovnice nemá řešení`,
-          value: "D",
-          feedback: `Chyba. \\(x=-4\\) splňuje podmínky i rovnici: \\(3/(-6) - 1/(-2) = -1/2+1/2=0\\) ✓.`
+          feedback: `Chyba. Dosaď: \\((-4)^2 + 4 \\cdot (-4) + 8 = 8\\). Kladné, ne záporné.`
         },
       ],
-      correctAnswer: "C", reward: { xp: 5 }
+      correctAnswer: "A", reward: { xp: 5 }
     },
 
     // ==========================================
@@ -2042,8 +2030,8 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Použijte pravidlo \\(\\log_a m + \\log_a n = \\log_a(m \\cdot n)\\). Rovnici převeďte do tvaru \\(\\log_4(\\ldots) = 2\\).`,
-        `Z definice logaritmu dostanete kvadratickou rovnici. Oba kořeny ověřte v definiční podmínce: \\(x+3>0\\) a \\(x-3>0\\).`,
+        `Jak se sloučí součet dvou logaritmů se stejným základem do jednoho?`,
+        `Nezapomeňte: každé řešení musí splňovat definiční podmínky obou logaritmů.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -2056,7 +2044,7 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Odlogaritmovat rovnici`,
-          content: `Rovnice \\(\\log_a(M) = b\\) je ekvivalentní s \\(M = a^b\\). Zde: \\(x + 1 = 2^3 = 8\\).`
+          content: `Rovnice \\(\\log_a(M) = b\\) je ekvivalentní s \\(M = a^b\\). Zde: \\(x + 1 = 2^3\\). Kolik je \\(2^3\\)?`
         },
         {
           trigger: `> Krok 2: Dopočítat x`,
@@ -2067,12 +2055,12 @@ x + 2y = 4 \\\\
         {
           label: `\\(x = 9\\)`,
           value: "A",
-          feedback: `Chyba. \\(2^3 = 8\\), ne 9. Odlogaritmování dává \\(x + 1 = 8\\), tedy \\(x = 7\\).`
+          feedback: `Chyba. Zkontroluj, kolik je \\(2^3\\) — to není 9.`
         },
         {
           label: `\\(x = 8\\)`,
           value: "B",
-          feedback: `Chyba. Zapomněl(a) jsi odečíst 1: z \\(x + 1 = 8\\) plyne \\(x = 7\\).`
+          feedback: `Chyba. Odlogaritmování ti dá hodnotu výrazu \\(x + 1\\), ne samotného \\(x\\).`
         },
         {
           label: `\\(x = 7\\)`,
@@ -2082,7 +2070,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(x = 3\\)`,
           value: "D",
-          feedback: `Chyba. Výsledkem není exponent, ale hodnota \\(x\\). Odlogaritmuj: \\(2^3 = 8\\), pak \\(x = 7\\).`
+          feedback: `Chyba. Výsledkem rovnice není exponent ze zadání. Nejdřív odlogaritmuj, pak dořeš.`
         },
       ],
       correctAnswer: "C", reward: { xp: 5 }
@@ -2112,12 +2100,12 @@ x + 2y = 4 \\\\
         {
           label: `\\(y = \\frac{x^{3}}{100}\\)`,
           value: "D",
-          feedback: `Chyba konstanty. Z \\(1 = \\log 10\\) plyne dělení číslem 10, nikoliv 100.`
+          feedback: `Chyba konstanty. Kolik je \\(\\log 10\\)? Tím se řídí, čím se dělí.`
         },
       ],
       hints: [
-        `Použijte pravidlo \\(c \\cdot \\log_a x = \\log_a x^c\\) na výraz \\(3 \\log x\\). Pak upravte pravou stranu na tvar \\(\\log(\\ldots)\\).`,
-        `Využijte, že \\(\\log 10 = 1\\), takže \\(3\\log x - 1 = \\log x^3 - \\log 10 = \\log\\tfrac{x^3}{10}\\). Porovnejte s levou stranou.`,
+        `Jaké pravidlo umožní přepsat násobek logaritmu jako logaritmus mocniny?`,
+        `Připomeňte si: \\(\\log 10 = 1\\). Jak tedy přepíšete konstantu 1 jako logaritmus?`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
@@ -2130,11 +2118,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Logaritmus mocniny`,
-          content: `Platí: \\(\\log_a(a^n) = n\\). Tedy \\(\\log_a(a^5) = 5\\) a \\(\\log_a(a^2) = 2\\).`
+          content: `Platí: \\(\\log_a(a^n) = n\\). Tedy \\(\\log_a(a^5) = 5\\) a \\(\\log_a(a^2) = 2\\). Teď odečti.`
         },
         {
           trigger: `> Krok 2: Dokončení`,
-          content: `Vypočítej \\(5 - 2\\). Výsledek nezávisí na konkrétní hodnotě základu \\(a\\).`
+          content: `Odečti výsledky obou členů. Závisí výsledek na hodnotě základu \\(a\\)?`
         },
       ],
       choices: [
@@ -2146,12 +2134,12 @@ x + 2y = 4 \\\\
         {
           label: `\\(7\\)`,
           value: "B",
-          feedback: `Chyba znaménka. Sčítáš místo odčítáš: \\(\\log_a(a^5) = 5\\), \\(\\log_a(a^2) = 2\\), výsledek je \\(5 - 2 = 3\\).`
+          feedback: `Chyba znaménka. Mezi logaritmy je mínus, ne plus. Přepočítej.`
         },
         {
           label: `\\(2\\)`,
           value: "C",
-          feedback: `Chyba. Nezapomeň na první člen: \\(\\log_a(a^5) = 5\\), ne 0. Výsledek: \\(5 - 2 = 3\\).`
+          feedback: `Chyba. Nezapomeň na první člen — \\(\\log_a(a^5)\\) není nula.`
         },
         {
           label: `\\(3\\)`,
@@ -2162,36 +2150,36 @@ x + 2y = 4 \\\\
       correctAnswer: "D", reward: { xp: 5 }
     },
     {
-      id: "q_log_03", regionId: "logaritmy", type: "closed", monsterName: `FW_09C: Definiční obor — součin`,
+      id: "q_log_03", regionId: "logaritmy", type: "closed", monsterName: `FW_09C: Definiční obor — trojčlen`,
       visual_color: "#f7b84f", visual_symbol: `log`, points: 4, trainingTasks: ["t_log_03"],
       question: `Je dána logaritmická funkce:`,
-      formula: `$$f:\\, y = \\log_5\\bigl((2 - x)(x + 4)\\bigr)$$`,
+      formula: `$$f:\\, y = \\log_5(-x^2 - 2x + 8)$$`,
       instruction: `Určete definiční obor funkce \\(f\\).`,
       choices: [
         {
           label: `\\((-4;\\, 2)\\)`,
           value: "A",
-          feedback: `Přístup povolen. Podmínka \\((2-x)(x+4)>0\\): kritické body \\(x=-4\\) a \\(x=2\\). Pro \\(x\\in(-4;\\,2)\\) jsou oba činitelé kladní. \\(D(f)=(-4;\\,2)\\).`
+          feedback: `Přístup povolen. Podmínka \\(-x^2-2x+8>0\\): rozložíme na \\(-(x+4)(x-2)>0\\), tedy \\((x+4)(x-2)<0\\). Kořeny \\(x=-4\\) a \\(x=2\\), parabola otvírá dolů — trojčlen je kladný právě na \\((-4;\\,2)\\).`
         },
         {
           label: `\\((-\\infty;\\,-4)\\cup(2;\\,+\\infty)\\)`,
           value: "B",
-          feedback: `Chyba. Tento interval odpovídá podmínce \\((2-x)(x+4)<0\\) — záměna nerovnosti. Argument logaritmu musí být kladný.`
+          feedback: `Chyba. Zapomněl(a) sis na záporný vedoucí koeficient \\(-x^2\\). Parabola otvírá dolů, takže trojčlen je kladný uvnitř kořenů, ne vně.`
         },
         {
           label: `\\(\\langle-4;\\, 2\\rangle\\)`,
           value: "C",
-          feedback: `Chyba. Uzavřený interval zahrnuje \\(x=-4\\) a \\(x=2\\), kde součin je nula — \\(\\log_5 0\\) není definován.`
+          feedback: `Chyba. Uzavřený interval zahrnuje \\(x=-4\\) a \\(x=2\\), kde je trojčlen nula — \\(\\log_5 0\\) není definován.`
         },
         {
           label: `\\((-2;\\, 4)\\)`,
           value: "D",
-          feedback: `Chyba. Záměna znaménka u kořenů: z \\((2-x)=0\\) plyne \\(x=2\\), ne \\(-2\\); z \\((x+4)=0\\) plyne \\(x=-4\\), ne \\(4\\).`
+          feedback: `Chyba syntaxe. Kořeny trojčlenu \\(-x^2-2x+8=0\\) jsou \\(x=-4\\) a \\(x=2\\), ne \\(-2\\) a \\(4\\). Zkontroluj výpočet diskriminantu.`
         },
       ],
       hints: [
-        `Argument logaritmu musí být kladný. Zapište podmínku \\((2-x)(x+4)>0\\) a najděte kritické body (kořeny závorek).`,
-        `Nakreslete znaménkové schéma: pro \\(x\\in(-4;\\,2)\\) jsou oba činitelé kladní, mimo tento interval je součin záporný.`,
+        `Argument logaritmu musí být kladný. Zapište podmínku \\(-x^2-2x+8>0\\) a najděte kořeny trojčlenu (např. přes diskriminant nebo rozklad).`,
+        `Koeficient u \\(x^2\\) je záporný — parabola otvírá dolů. Kde je tedy trojčlen kladný — uvnitř kořenů, nebo vně?`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
@@ -2225,7 +2213,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(( - \\infty;\\, - 2)\\)`,
           value: "C",
-          feedback: `Chyba směru. Potřebujeme \\(x + 2 > 0\\), tedy \\(x > -2\\), ne \\(x < -2\\).`
+          feedback: `Chyba směru. Nerovnost \\(x + 2 > 0\\) ukazuje opačným směrem, než jsi zvolil(a).`
         },
         {
           label: `\\(( - \\infty;\\, + \\infty)\\)`,
@@ -2250,17 +2238,17 @@ x + 2y = 4 \\\\
         {
           label: `\\(a = \\sqrt{2}\\)`,
           value: "B",
-          feedback: `Chyba. \\((\\sqrt{2})^4 = 4\\) by znamenalo \\(h(4) = 4\\), ale bod A má \\(y = 2\\). Základ musí splňovat \\(a^2 = 4\\).`
+          feedback: `Chyba. Zkontroluj: jakou \\(y\\)-ovou souřadnici má bod A? Základ musí splňovat podmínku z tohoto bodu.`
         },
         {
           label: `\\(a = 4\\)`,
           value: "C",
-          feedback: `Chyba. \\(\\log_4(4) = 1\\), nikoliv 2. Základ musí splňovat \\(a^2 = 4\\).`
+          feedback: `Chyba. Dosaď \\(a = 4\\) do podmínky z bodu A — souhlasí \\(y\\)-ová souřadnice?`
         },
         {
           label: `\\(a = 8\\)`,
           value: "D",
-          feedback: `Kritická chyba. \\(\\log_8(4) < 1\\). Vycházej z podmínky \\(a^2 = 4\\).`
+          feedback: `Kritická chyba. Dosaď \\(a = 8\\) — je výsledek konzistentní s bodem A na grafu?`
         },
       ],
       hints: [
@@ -2278,7 +2266,7 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Z bodu na rovnici`,
-          content: `Bod [8; 3] leží na grafu — dosadíme: \\(\\log_a 8 = 3\\), tedy \\(a^3 = 8\\).`
+          content: `Bod [8; 3] leží na grafu — dosadíme: \\(\\log_a 8 = 3\\), tedy \\(a^3 = 8\\). Jaký je základ \\(a\\)?`
         },
         {
           trigger: `> Krok 2: Určení základu`,
@@ -2289,7 +2277,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(a = 3\\)`,
           value: "A",
-          feedback: `Chyba. Z podmínky \\(a^3 = 8\\) plyne \\(a = \\sqrt[3]{8} = 2\\), ne 3.`
+          feedback: `Chyba. Dosaď \\(a = 3\\): je \\(3^3 = 8\\)? Spočítej správně.`
         },
         {
           label: `\\(a = 2\\)`,
@@ -2310,78 +2298,78 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_log_05", regionId: "logaritmy", type: "closed", monsterName: `FW_09E: Odvozená rovnost`,
+      id: "q_log_05", regionId: "logaritmy", type: "closed", monsterName: `FW_09E: Odvozená rovnost — klesající`,
       visual_color: "#f7b84f", visual_symbol: `log`, points: 2, trainingTasks: ["t_log_05"],
       question: `V kartézské soustavě souřadnic Oxy je sestrojen graf funkce g: y = log_a(x) s definičním oborem (0; +∞). Z grafu je patrné, že funkce prochází vyznačeným bodem B.`,
-      diagram: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="90" y1="20" x2="90" y2="215" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="120" y1="20" x2="120" y2="215" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="150" y1="20" x2="150" y2="215" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="180" y1="20" x2="180" y2="215" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="210" y1="20" x2="210" y2="215" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="240" y1="20" x2="240" y2="215" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="50" y1="155" x2="310" y2="155" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="50" y1="115" x2="310" y2="115" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="50" y1="75" x2="310" y2="75" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="55" y1="195" x2="312" y2="195" stroke="#e2e8f0" stroke-width="2"/> <polygon points="312,191 319,195 312,199" fill="#e2e8f0"/> <text x="316" y="199" font-size="12" fill="#e2e8f0">x</text> <line x1="60" y1="235" x2="60" y2="8" stroke="#e2e8f0" stroke-width="2"/> <polygon points="56,12 60,5 64,12" fill="#e2e8f0"/> <text x="52" y="8" font-size="12" fill="#e2e8f0">y</text> <text x="90" y="211" font-size="11" text-anchor="middle" fill="#e2e8f0">1</text> <text x="120" y="211" font-size="11" text-anchor="middle" fill="#e2e8f0">2</text> <text x="150" y="211" font-size="11" text-anchor="middle" fill="#e2e8f0">3</text> <text x="180" y="211" font-size="11" text-anchor="middle" fill="#e2e8f0">4</text> <text x="210" y="211" font-size="11" text-anchor="middle" fill="#e2e8f0">5</text> <text x="240" y="211" font-size="11" text-anchor="middle" fill="#e2e8f0">6</text> <text x="54" y="159" font-size="11" text-anchor="end" fill="#e2e8f0">1</text> <text x="54" y="119" font-size="11" text-anchor="end" fill="#e2e8f0">2</text> <text x="54" y="79" font-size="11" text-anchor="end" fill="#e2e8f0">3</text> <text x="54" y="199" font-size="11" text-anchor="end" fill="#e2e8f0">0</text> <line x1="150" y1="75" x2="150" y2="195" stroke="#cc4400" stroke-width="1.5" stroke-dasharray="5,3"/><line x1="60" y1="75" x2="150" y2="75" stroke="#cc4400" stroke-width="1.5" stroke-dasharray="5,3"/> <polyline points="88.4,200.8 89.0,198.6 89.6,196.5 90.2,194.4 90.7,192.3 91.3,190.3 91.9,188.3 92.5,186.4 93.0,184.5 93.6,182.6 94.2,180.8 94.7,178.9 95.3,177.2 95.9,175.4 96.5,173.7 97.0,172.0 97.6,170.3 98.2,168.6 98.8,167.0 99.3,165.4 99.9,163.8 100.5,162.3 101.1,160.7 101.6,159.2 102.2,157.7 102.8,156.3 103.3,154.8 103.9,153.4 104.5,152.0 105.1,150.6 105.6,149.2 106.2,147.8 106.8,146.5 107.4,145.1 107.9,143.8 108.5,142.5 109.1,141.3 109.6,140.0 110.2,138.7 110.8,137.5 111.4,136.3 111.9,135.1 112.5,133.9 113.1,132.7 113.7,131.5 114.2,130.3 114.8,129.2 115.4,128.1 115.9,126.9 116.5,125.8 117.1,124.7 117.7,123.6 118.2,122.5 118.8,121.5 119.4,120.4 120.0,119.4 120.5,118.3 121.1,117.3 121.7,116.3 122.2,115.3 122.8,114.3 123.4,113.3 124.0,112.3 124.5,111.3 125.1,110.4 125.7,109.4 126.3,108.5 126.8,107.5 127.4,106.6 128.0,105.7 128.5,104.7 129.1,103.8 129.7,102.9 130.3,102.0 130.8,101.1 131.4,100.3 132.0,99.4 132.6,98.5 133.1,97.7 133.7,96.8 134.3,96.0 134.8,95.1 135.4,94.3 136.0,93.5 136.6,92.7 137.1,91.8 137.7,91.0 138.3,90.2 138.9,89.4 139.4,88.6 140.0,87.9 140.6,87.1 141.2,86.3 141.7,85.5 142.3,84.8 142.9,84.0 143.4,83.3 144.0,82.5 144.6,81.8 145.2,81.0 145.7,80.3 146.3,79.6 146.9,78.9 147.5,78.1 148.0,77.4 148.6,76.7 149.2,76.0 149.7,75.3 150.3,74.6 150.9,73.9 151.5,73.2 152.0,72.6 152.6,71.9 153.2,71.2 153.8,70.5 154.3,69.9 154.9,69.2 155.5,68.6 156.0,67.9 156.6,67.2 157.2,66.6 157.8,66.0 158.3,65.3 158.9,64.7 159.5,64.1 160.1,63.4 160.6,62.8 161.2,62.2 161.8,61.6 162.3,61.0 162.9,60.3 163.5,59.7 164.1,59.1 164.6,58.5 165.2,57.9 165.8,57.3 166.4,56.8 166.9,56.2 167.5,55.6 168.1,55.0 168.6,54.4 169.2,53.9 169.8,53.3 170.4,52.7 170.9,52.2 171.5,51.6 172.1,51.0 172.7,50.5 173.2,49.9 173.8,49.4 174.4,48.8 174.9,48.3 175.5,47.7 176.1,47.2 176.7,46.7 177.2,46.1 177.8,45.6 178.4,45.1 179.0,44.5 179.5,44.0 180.1,43.5 180.7,43.0 181.3,42.4 181.8,41.9 182.4,41.4 183.0,40.9 183.5,40.4 184.1,39.9 184.7,39.4 185.3,38.9 185.8,38.4 186.4,37.9 187.0,37.4 187.6,36.9 188.1,36.4 188.7,35.9 189.3,35.4 189.8,35.0 190.4,34.5 191.0,34.0 191.6,33.5 192.1,33.1 192.7,32.6 193.3,32.1 193.9,31.6 194.4,31.2 195.0,30.7" fill="none" stroke="#7733aa" stroke-width="2.5" stroke-linejoin="round"/> <text x="193" y="31" font-size="12" fill="#7733aa" font-style="italic">g</text> <circle cx="150" cy="75" r="5" fill="#cc4400" stroke="#e2e8f0" stroke-width="1.5"/> <text x="138" y="65" font-size="11" fill="#cc4400" font-weight="bold" text-anchor="end">B[3; 3]</text> </svg>`,
+      diagram: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="90" y1="25" x2="90" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="120" y1="25" x2="120" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="150" y1="25" x2="150" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="180" y1="25" x2="180" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="210" y1="25" x2="210" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="240" y1="25" x2="240" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="270" y1="25" x2="270" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="300" y1="25" x2="300" y2="222" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="65" y1="210" x2="310" y2="210" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="65" y1="170" x2="310" y2="170" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="65" y1="130" x2="310" y2="130" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="65" y1="50" x2="310" y2="50" stroke="#64748b" stroke-width="1" opacity="0.5"/> <line x1="55" y1="90" x2="313" y2="90" stroke="#e2e8f0" stroke-width="2"/> <polygon points="313,86 320,90 313,94" fill="#e2e8f0"/> <text x="317" y="94" font-size="12" fill="#e2e8f0">x</text> <line x1="60" y1="225" x2="60" y2="10" stroke="#e2e8f0" stroke-width="2"/> <polygon points="56,14 60,7 64,14" fill="#e2e8f0"/> <text x="52" y="10" font-size="12" fill="#e2e8f0">y</text> <text x="90" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">1</text> <text x="120" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">2</text> <text x="150" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">3</text> <text x="180" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">4</text> <text x="210" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">5</text> <text x="240" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">6</text> <text x="270" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">7</text> <text x="300" y="106" font-size="11" text-anchor="middle" fill="#e2e8f0">8</text> <text x="53" y="54" font-size="11" text-anchor="end" fill="#e2e8f0">1</text> <text x="53" y="134" font-size="11" text-anchor="end" fill="#e2e8f0">&#x2212;1</text> <text x="53" y="174" font-size="11" text-anchor="end" fill="#e2e8f0">&#x2212;2</text> <text x="53" y="214" font-size="11" text-anchor="end" fill="#e2e8f0">&#x2212;3</text> <text x="53" y="94" font-size="11" text-anchor="end" fill="#e2e8f0">0</text> <line x1="180" y1="90" x2="180" y2="170" stroke="#cc4400" stroke-width="1.5" stroke-dasharray="5,3"/> <line x1="60" y1="170" x2="180" y2="170" stroke="#cc4400" stroke-width="1.5" stroke-dasharray="5,3"/> <polyline points="70.2,27.7 71.1,32.6 72.0,37.1 72.9,41.3 73.8,45.2 74.7,48.8 75.6,52.3 78.6,62.4 81.6,71.0 84.6,78.5 87.6,85.2 90.6,91.1 93.6,96.5 96.6,101.5 99.6,106.0 102.6,110.2 105.6,114.2 108.6,117.8 111.6,121.3 114.6,124.6 117.6,127.6 120.6,130.6 126.6,136.0 132.6,141.0 138.6,145.6 144.6,149.8 150.6,153.8 156.6,157.5 162.6,161.0 168.6,164.2 174.6,167.3 180.6,170.3 186.6,173.1 192.6,175.8 198.6,178.3 204.6,180.8 210.6,183.1 216.6,185.4 222.6,187.5 228.6,189.6 234.6,191.6 240.6,193.6 246.6,195.5 252.6,197.3 258.6,199.1 264.6,200.8 270.6,202.5 276.6,204.1 282.6,205.7 288.6,207.2 294.6,208.7 300.6,210.1" fill="none" stroke="#0077bb" stroke-width="2.5" stroke-linejoin="round"/> <text x="296" y="222" font-size="12" fill="#0077bb" font-style="italic">g</text> <circle cx="180" cy="170" r="5" fill="#cc4400" stroke="#e2e8f0" stroke-width="1.5"/> <text x="190" y="164" font-size="11" fill="#cc4400" font-weight="bold">B[4; &#x2212;2]</text> </svg>`,
       instruction: `Která z následujících rovností platí pro funkci g?`,
       choices: [
         {
-          label: `\\(\\text{log}_{a}9 = 9\\)`,
+          label: `\\(\\text{log}_{a}16 = 4\\)`,
           value: "A",
-          feedback: `Chyba. \\(\\log_a 9 = \\log_a 3^2 = 2 \\cdot \\log_a 3 = 2 \\cdot 3 = 6\\), nikoliv 9.`
+          feedback: `Chyba. Z bodu B víme \\(\\log_a 4 = -2\\). Platí \\(\\log_a 16 = \\log_a 4^2 = 2 \\cdot (-2) = -4\\). Záporné znaménko nelze ignorovat — funkce je klesající.`
         },
         {
-          label: `\\(\\text{log}_{a}9 = 6\\)`,
+          label: `\\(\\text{log}_{a}16 = -2\\)`,
           value: "B",
-          feedback: `Přístup povolen. Protože \\(\\log_a 3 = 3\\): \\(\\log_a 9 = \\log_a 3^2 = 2 \\cdot 3 = 6\\).`
+          feedback: `Chyba. Pravidlo logaritmu mocniny: \\(\\log_a 16 = \\log_a 4^2 = 2 \\cdot \\log_a 4 = 2 \\cdot (-2) = -4\\). Nestačí jen přečíst hodnotu z bodu B.`
         },
         {
-          label: `\\(\\text{log}_{a}\\sqrt{3} = 3\\)`,
+          label: `\\(\\text{log}_{a}16 = -4\\)`,
           value: "C",
-          feedback: `Chyba. \\(\\log_a \\sqrt{3} = \\tfrac{1}{2} \\cdot \\log_a 3 = \\tfrac{3}{2}\\), nikoliv 3.`
+          feedback: `Přístup povolen. \\(16 = 4^2\\), tedy \\(\\log_a 16 = 2 \\cdot \\log_a 4 = 2 \\cdot (-2) = -4\\). Správně jsi zachoval(a) záporné znaménko.`
         },
         {
-          label: `\\(\\text{log}_{a}27 = 6\\)`,
+          label: `\\(\\text{log}_{a}\\!\\sqrt{4} = -4\\)`,
           value: "D",
-          feedback: `Chyba. \\(\\log_a 27 = \\log_a 3^3 = 3 \\cdot \\log_a 3 = 9\\), nikoliv 6.`
+          feedback: `Chyba. \\(\\sqrt{4} = 4^{1/2}\\), takže \\(\\log_a \\sqrt{4} = \\tfrac{1}{2} \\cdot (-2) = -1\\), nikoliv \\(-4\\). Odmocnina exponent dělí, nemásobí.`
         },
       ],
       hints: [
-        `Z grafu odečtěte souřadnice bodu — dvojici \\([x_0;\\, y_0]\\), kde platí \\(\\log_a x_0 = y_0\\). To je výchozí bod pro ověření tvrzení.`,
-        `Pomocí pravidel logaritmů (mocnina, odmocnina) převeďte každý z nabízených výrazů na tvar \\(\\log_a x_0\\) a porovnejte s odečtenou hodnotou.`,
+        `Z grafu odečtěte souřadnice bodu B — dostanete dvojici \\([x_0;\\, y_0]\\), kde \\(\\log_a x_0 = y_0\\). Pozor: funkce je klesající, takže \\(y_0\\) je záporné.`,
+        `Vyjádřete argument každé možnosti jako mocninu \\(x_0^n\\) a použijte pravidlo \\(\\log_a x_0^n = n \\cdot \\log_a x_0\\). Zápornou hodnotu \\(\\log_a x_0\\) nezapomeňte dosadit se znaménkem.`,
       ],
-      correctAnswer: "B", reward: { xp: 10 }
+      correctAnswer: "C", reward: { xp: 10 }
     },
     {
       id: "t_log_05", regionId: "logaritmy", type: "closed", monsterName: `SIM_09E: Vlastnost logaritmu mocniny`,
       isTraining: true, firewallId: "q_log_05", visual_color: "#2ecc8a", visual_symbol: `log`, points: 0,
-      question: `Víme, že \\(\\text{log}_{a}5 = 2\\). Vypočítej \\(\\text{log}_{a}25\\).`,
-      formula: `$$\\text{log}_{a}5 = 2\\quad \\Rightarrow \\quad\\text{log}_{a}25 = \\,?$$`,
+      question: `Víme, že \\(\\text{log}_{a}5 = -3\\). Vypočítej \\(\\text{log}_{a}25\\).`,
+      formula: `$$\\text{log}_{a}5 = -3\\quad \\Rightarrow \\quad\\text{log}_{a}25 = \\,?$$`,
       instruction: `Vyberte správnou hodnotu.`,
       steps: [
         {
           trigger: `> Krok 1: Rozložit 25 na mocninu`,
-          content: `\\(25 = 5^2\\), tedy \\(\\log_a 25 = \\log_a 5^2\\).`
+          content: `\\(25 = 5^2\\), tedy \\(\\log_a 25 = \\log_a 5^2\\). Jak upravíš mocninu v argumentu?`
         },
         {
           trigger: `> Krok 2: Použít logaritmus mocniny`,
-          content: `\\(\\log_a 5^2 = 2 \\cdot \\log_a 5\\). Kolik je \\(2 \\cdot 2\\)?`
+          content: `Pravidlo: \\(\\log_a b^n = n \\cdot \\log_a b\\). Víš, že \\(\\log_a 5 = -3\\). Dosaď a dopočítej.`
         },
       ],
       choices: [
         {
-          label: `\\(10\\)`,
+          label: `\\(-6\\)`,
           value: "A",
-          feedback: `Chyba. Logaritmus se nesčítá: \\(\\log_a 25 = \\log_a 5^2 = 2 \\cdot 2 = 4\\).`
+          feedback: `Logika potvrzena. \\(\\log_a 5^2 = 2 \\cdot (-3) = -6\\). Zkus nyní plný firewall.`
         },
         {
-          label: `\\(2\\)`,
+          label: `\\(6\\)`,
           value: "B",
-          feedback: `Chyba. To je \\(\\log_a 5\\), ale my hledáme \\(\\log_a 25 = \\log_a 5^2 = 2 \\cdot 2 = 4\\).`
+          feedback: `Chyba znaménka. Funkce je klesající — neztrať záporné znaménko při násobení.`
         },
         {
-          label: `\\(5\\)`,
+          label: `\\(-3\\)`,
           value: "C",
-          feedback: `Chyba. Výsledek není základ. \\(\\log_a 25 = 2 \\cdot \\log_a 5 = 4\\).`
+          feedback: `Chyba. To je \\(\\log_a 5\\), ne \\(\\log_a 25\\). Ještě jsi nepoužil(a) pravidlo mocniny.`
         },
         {
-          label: `\\(4\\)`,
+          label: `\\(-9\\)`,
           value: "D",
-          feedback: `Logika potvrzena. \\(\\log_a 5^2 = 2 \\cdot 2 = 4\\). Zkus nyní plný firewall.`
+          feedback: `Chyba. \\(25 = 5^2\\), takže exponent je 2, ne 3. Přepočítej s tím.`
         },
       ],
-      correctAnswer: "D", reward: { xp: 5 }
+      correctAnswer: "A", reward: { xp: 5 }
     },
     {
       id: "q_log_06", regionId: "logaritmy", type: "closed", monsterName: `FW_09F: Porovnání základů`,
@@ -2486,8 +2474,8 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Průsečík s osou \\(x\\) nastane pro \\(y=0\\). Dosaďte a řešte: \\(6-2\\cdot\\log_3 x=0\\).`,
-        `Upravte: \\(\\log_3 x=3\\). Připomeňte si definici: \\(\\log_a b=c\\Leftrightarrow a^c=b\\).`,
+        `Průsečík s osou \\(x\\) nastane pro \\(y = 0\\). Dosaďte do funkčního předpisu.`,
+        `Připomeňte si definici: \\(\\log_a b = c \\Leftrightarrow a^c = b\\). Jak ji použijete po izolování logaritmu?`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -2499,18 +2487,18 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Podmínka průsečíku`,
-          content: `Průsečík s osou \\(x\\) nastane pro \\(y=0\\). Rovnice: \\(4-\\log_2 x=0\\).`
+          content: `Průsečík s osou \\(x\\) nastane pro \\(y = 0\\). Dosadíme: \\(4 - \\log_2 x = 0\\). Izoluj logaritmus.`
         },
         {
           trigger: `> Krok 2: Výpočet`,
-          content: `\\(\\log_2 x=4\\). Definice logaritmu: \\(x=2^4\\). Vypočítejte a vyberte výsledek z nabídky.`
+          content: `\\(\\log_2 x = 4\\). Definice logaritmu: \\(b = a^c\\). Jaké \\(x\\) vyjde?`
         },
       ],
       choices: [
         {
           label: `\\(P[2;\\, 0]\\)`,
           value: "A",
-          feedback: `Chyba. Záměna: \\(x=\\log_2 4=2\\) místo \\(x=2^4\\).`
+          feedback: `Chyba. Záměna směru: z definice logaritmu nedostaneš \\(x\\) jako logaritmus, ale jako mocninu základu.`
         },
         {
           label: `\\(P[16;\\, 0]\\)`,
@@ -2525,81 +2513,81 @@ x + 2y = 4 \\\\
         {
           label: `\\(P\\!\\left[\\tfrac{1}{16};\\, 0\\right]\\)`,
           value: "D",
-          feedback: `Chyba. Záporný exponent: \\(x=2^{-4}\\) místo \\(2^4\\). Zkontrolujte znaménko v rovnici.`
+          feedback: `Chyba. Záporný exponent — zkontroluj, s jakým znaménkem ti vyšel logaritmus z rovnice.`
         },
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_log_08", regionId: "logaritmy", type: "closed", monsterName: `FW_09H: Logaritmická rovnice`,
+      id: "q_log_08", regionId: "logaritmy", type: "closed", monsterName: `FW_09H: Zjednodušení výrazu`,
       visual_color: "#f7b84f", visual_symbol: `log`, points: 4, trainingTasks: ["t_log_08"],
-      question: `V oboru reálných čísel řešte rovnici:`,
-      formula: `$$\\log_2(6 - x) - \\log_2 x = 1$$`,
-      instruction: `Vyberte správné řešení rovnice.`,
+      question: `Pro \\(a \\in (0;\\, +\\infty) \\setminus \\{1\\}\\) vypočtěte:`,
+      formula: `$$\\log_a(4a^3) - \\log_a(4\\sqrt{a})$$`,
+      instruction: `Vyberte správný výsledek.`,
       choices: [
         {
-          label: `\\(x = 2\\)`,
+          label: `\\(3\\)`,
           value: "A",
-          feedback: `Přístup povolen. \\(\\log_2\\tfrac{6-x}{x}=1\\;\\Rightarrow\\;\\tfrac{6-x}{x}=2\\;\\Rightarrow\\;6-x=2x\\;\\Rightarrow\\;x=2\\). Ověření \\(D(f)\\): \\(x\\in(0;6)\\), hodnota \\(2\\in(0;6)\\) ✓.`
+          feedback: `Nekompletní. Zapomněl(a) jsi odečíst příspěvek od \\(\\sqrt{a}\\) ve jmenovateli.`
         },
         {
-          label: `\\(x = 6\\)`,
+          label: `\\(\\dfrac{5}{2}\\)`,
           value: "B",
-          feedback: `Chyba. Hodnota \\(x=6\\) leží na hranici definičního oboru: \\(6-x=0\\), logaritmus nuly není definován.`
+          feedback: `Přístup povolen. Čtverky se zkrátily: \\(\\log_a\\!\\tfrac{4a^3}{4\\sqrt{a}} = \\log_a a^{5/2} = \\tfrac{5}{2}\\).`
         },
         {
-          label: `\\(x = 3\\)`,
+          label: `\\(\\dfrac{7}{2}\\)`,
           value: "C",
-          feedback: `Chyba. Tato hodnota vznikne, pokud v čitateli zapomenete odečíst \\(x\\): \\(\\tfrac{6}{x}=2\\;\\Rightarrow\\;x=3\\). Správně je \\(\\tfrac{6-x}{x}=2\\).`
+          feedback: `Chyba syntaxe. Při odčítání logaritmů se exponenty odečítají, ne sčítají. Přepočítej.`
         },
         {
-          label: `\\(x = -2\\)`,
+          label: `\\(2\\)`,
           value: "D",
-          feedback: `Chyba. \\(x=-2\\) leží mimo definiční obor \\((0;6)\\) — logaritmus záporného čísla není definován.`
+          feedback: `Přetečení. \\(\\sqrt{a} = a^{1/2}\\), ne \\(a^1\\). Oprav exponent a přepočítej.`
         },
       ],
       hints: [
-        `Použijte pravidlo \\(\\log_a m-\\log_a n=\\log_a\\tfrac{m}{n}\\). Rovnici převeďte do tvaru \\(\\log_2(\\ldots)=1\\).`,
-        `Z definice: \\(\\tfrac{6-x}{x}=2^1=2\\). Vyřešte lineární rovnici a ověřte, zda výsledek leží v \\(D(f)=(0;6)\\).`,
+        `Použijte pravidlo \\(\\log_a M - \\log_a N = \\log_a\\tfrac{M}{N}\\). Co zbude po zkrácení ve zlomku?`,
+        `Přepište \\(\\sqrt{a} = a^{1/2}\\) a pracujte s exponenty základu \\(a\\).`,
       ],
-      correctAnswer: "A", reward: { xp: 20 }
+      correctAnswer: "B", reward: { xp: 20 }
     },
     {
-      id: "t_log_08", regionId: "logaritmy", type: "closed", monsterName: `SIM_09H: Logaritmická rovnice (jednodušší)`,
+      id: "t_log_08", regionId: "logaritmy", type: "closed", monsterName: `SIM_09H: Mocniny v logaritmu`,
       isTraining: true, firewallId: "q_log_08", visual_color: "#2ecc8a", visual_symbol: `log`, points: 0,
-      question: `V oboru reálných čísel řešte rovnici:`,
-      formula: `$$\\log_2(2x + 4) - \\log_2 x = 2$$`,
-      instruction: `Vyberte správné řešení rovnice.`,
+      question: `Pro \\(a \\in (0;\\, +\\infty) \\setminus \\{1\\}\\) zjednodušte:`,
+      formula: `$$\\log_a\\!\\left(a^2 \\cdot \\sqrt{a}\\right)$$`,
+      instruction: `Vyberte správný výsledek.`,
       steps: [
         {
-          trigger: `> Krok 1: Sloučení logaritmů`,
-          content: `\\(\\log_2\\tfrac{2x+4}{x}=2\\;\\Rightarrow\\;\\tfrac{2x+4}{x}=2^2=4\\).`
+          trigger: `> Krok 1: √a jako mocnina`,
+          content: `\\(\\sqrt{a} = a^{1/2}\\). Jak teď zapíšeš celý výraz \\(a^2 \\cdot \\sqrt{a}\\) pomocí jedné mocniny?`
         },
         {
-          trigger: `> Krok 2: Lineární rovnice`,
-          content: `\\(2x+4=4x\\;\\Rightarrow\\;4=2x\\;\\Rightarrow\\;x=2\\). Ověřte, že \\(x=2\\) leží v \\(D(f)\\), a vyberte výsledek z nabídky.`
+          trigger: `> Krok 2: Sečti exponenty`,
+          content: `\\(a^2 \\cdot a^{1/2} = a^{?}\\). Jaký exponent vyjde? Pak použij \\(\\log_a a^n = n\\).`
         },
       ],
       choices: [
         {
-          label: `\\(x = 2\\)`,
+          label: `\\(\\dfrac{5}{2}\\)`,
           value: "A",
-          feedback: `Přístup povolen. \\(x=2\\): \\(\\log_2 8-\\log_2 2=3-1=2\\) ✓.`
+          feedback: `Logika potvrzena. \\(a^2 \\cdot a^{1/2} = a^{5/2}\\), tedy \\(\\log_a a^{5/2} = \\tfrac{5}{2}\\).`
         },
         {
-          label: `\\(x = 4\\)`,
+          label: `\\(2\\)`,
           value: "B",
-          feedback: `Chyba. Záměna: z \\(\\tfrac{2x+4}{x}=4\\) plyne \\(2+\\tfrac{4}{x}=4\\;\\Rightarrow\\;x=2\\), ne 4.`
+          feedback: `Chyba. Zapomněl(a) jsi na \\(\\sqrt{a}\\) — přidej její příspěvek k exponentu.`
         },
         {
-          label: `\\(x = 1\\)`,
+          label: `\\(3\\)`,
           value: "C",
-          feedback: `Chyba. Pro \\(x=1\\): \\(\\log_2 6-\\log_2 1=\\log_2 6\\approx2{,}58\\neq2\\).`
+          feedback: `Chyba. \\(\\sqrt{a} = a^{1/2}\\), ne \\(a^1\\). Oprav exponent a sečti znovu.`
         },
         {
-          label: `\\(x = -2\\)`,
+          label: `\\(1\\)`,
           value: "D",
-          feedback: `Chyba. \\(x=-2\\) je mimo definiční obor — logaritmus záporného čísla neexistuje.`
+          feedback: `Kritická chyba. Výsledek \\(\\log_a a^n = n\\), ne 1. Spočítej správný exponent.`
         },
       ],
       correctAnswer: "A", reward: { xp: 5 }
@@ -2634,7 +2622,7 @@ x + 2y = 4 \\\\
         {
           label: `Žádný z uvedených výrazů není s daným výrazem ekvivalentní.`,
           value: "E",
-          feedback: `Chyba. Výsledek je 6 — ověřitelná konstanta. Čitatel \\(8\\cdot15=120\\), jmenovatel \\(4\\cdot5=20\\), podíl \\(=6\\).`
+          feedback: `Chyba. Výsledek je ověřitelná číselná konstanta — použij pravidla a dopočítej.`
         },
       ],
       hints: [
@@ -2652,11 +2640,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Čitatel`,
-          content: `\\(\\log_a a^6=6\\), tedy čitatel \\(=6\\cdot2=12\\).`
+          content: `\\(\\log_a a^6 = 6\\). Čitatel je tedy \\(6 \\cdot 2 = 12\\). Teď spočítej jmenovatel.`
         },
         {
           trigger: `> Krok 2: Jmenovatel a výsledek`,
-          content: `\\(\\log_2 8=\\log_2 2^3=3\\). Vydělte čitatel jmenovatelem a vyberte výsledek z nabídky.`
+          content: `\\(8 = 2^3\\), takže \\(\\log_2 8 = 3\\). Jmenovatel je 3. Vyděl čitatel jmenovatelem.`
         },
       ],
       choices: [
@@ -2678,7 +2666,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(2\\)`,
           value: "D",
-          feedback: `Chyba. \\(12/6=2\\) by platilo pro jmenovatel 6, ale \\(\\log_2 8=3\\).`
+          feedback: `Chyba. Zkontroluj jmenovatel — kolikátá mocnina 2 dává 8?`
         },
       ],
       correctAnswer: "A", reward: { xp: 5 }
@@ -2687,7 +2675,7 @@ x + 2y = 4 \\\\
       id: "q_log_10", regionId: "logaritmy", type: "closed", monsterName: `FW_09J: Rovnice s exponenciálou a logaritmem`,
       visual_color: "#f7b84f", visual_symbol: `log`, points: 3, trainingTasks: ["t_log_10"],
       question: `V oboru reálných čísel řešte rovnici:`,
-      formula: `$$4^{3x} - \\log_2 4 = 0$$`,
+      formula: `$$4^{3x} = \\log_2 4$$`,
       instruction: `Vyberte správné řešení rovnice.`,
       choices: [
         {
@@ -2713,7 +2701,7 @@ x + 2y = 4 \\\\
       ],
       hints: [
         `Nejdříve vypočítejte \\(\\log_2 4\\) a rovnici přepište jako \\(4^{3x}=c\\).`,
-        `Převeďte základ: \\(4=2^2\\), takže \\(4^{3x}=(2^2)^{3x}=2^{6x}\\). Porovnejte exponenty s pravou stranou.`,
+        `Převeďte obě strany na stejný základ (mocninu 2) a porovnejte exponenty.`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
@@ -2726,11 +2714,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Hodnota logaritmu`,
-          content: `\\(\\log_4 16=\\log_4 4^2=2\\). Rovnice se stává \\(4^x=2\\).`
+          content: `\\(\\log_4 16 = \\log_4 4^2 = 2\\). Rovnice se zjednoduší na \\(4^x = 2\\). Jak dál?`
         },
         {
           trigger: `> Krok 2: Převod základu`,
-          content: `\\((2^2)^x=2^{2x}\\). Rovnice: \\(2^{2x}=2^1\\;\\Rightarrow\\;2x=1\\). Vyřešte a vyberte výsledek z nabídky.`
+          content: `\\((2^2)^x = 2^{2x}\\). Rovnice: \\(2^{2x} = 2^1\\). Porovnej exponenty a vyřeš pro \\(x\\).`
         },
       ],
       choices: [
@@ -2763,82 +2751,88 @@ x + 2y = 4 \\\\
     // ==========================================
 
     {
-      id: "q_funkce_02", regionId: "funkce", type: "closed", monsterName: `FW_05B: Identifikace predpisu z grafu`,
-      visual_color: "#4fc3f7", visual_symbol: `f(x)`, points: 3, trainingTasks: ["t_funkce_02"],
-      question: `V kartézské soustavě souřadnic je zobrazen graf funkce f s definičním oborem \\(\\mathbb{R}\\).`,
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="35" y1="0" x2="35" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="75" y1="0" x2="75" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="115" y1="0" x2="115" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="155" y1="0" x2="155" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="195" y1="0" x2="195" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="235" y1="0" x2="235" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="275" y1="0" x2="275" y2="220" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="211" x2="300" y2="211" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="183" x2="300" y2="183" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="155" x2="300" y2="155" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="127" x2="300" y2="127" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="99" x2="300" y2="99" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="71" x2="300" y2="71" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="43" x2="300" y2="43" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="15" x2="300" y2="15" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="155" x2="300" y2="155" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="300,155 293,151 293,159" fill="#e2e8f0"/> <text x="295" y="147" fill="#e2e8f0" font-size="12" font-style="italic">x</text> <line x1="75" y1="220" x2="75" y2="0" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="75,0 71,10 79,10" fill="#e2e8f0"/> <text x="81" y="14" fill="#e2e8f0" font-size="12" font-style="italic">y</text> <text x="61" y="169" fill="#e2e8f0" font-size="11">O</text> <line x1="35" y1="152" x2="35" y2="158" stroke="#e2e8f0" stroke-width="1"/> <text x="35" y="170" fill="#e2e8f0" font-size="10" text-anchor="middle">-1</text> <line x1="115" y1="152" x2="115" y2="158" stroke="#e2e8f0" stroke-width="1"/> <text x="115" y="170" fill="#e2e8f0" font-size="10" text-anchor="middle">1</text> <line x1="155" y1="152" x2="155" y2="158" stroke="#e2e8f0" stroke-width="1"/> <text x="155" y="170" fill="#e2e8f0" font-size="10" text-anchor="middle">2</text> <line x1="195" y1="152" x2="195" y2="158" stroke="#e2e8f0" stroke-width="1"/> <text x="195" y="170" fill="#e2e8f0" font-size="10" text-anchor="middle">3</text> <line x1="235" y1="152" x2="235" y2="158" stroke="#e2e8f0" stroke-width="1"/> <text x="235" y="170" fill="#e2e8f0" font-size="10" text-anchor="middle">4</text> <line x1="275" y1="152" x2="275" y2="158" stroke="#e2e8f0" stroke-width="1"/> <text x="275" y="170" fill="#e2e8f0" font-size="10" text-anchor="middle">5</text> <line x1="72" y1="211" x2="78" y2="211" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="215" fill="#e2e8f0" font-size="10" text-anchor="end">-2</text> <line x1="72" y1="183" x2="78" y2="183" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="187" fill="#e2e8f0" font-size="10" text-anchor="end">-1</text> <line x1="72" y1="127" x2="78" y2="127" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="131" fill="#e2e8f0" font-size="10" text-anchor="end">1</text> <line x1="72" y1="99" x2="78" y2="99" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="103" fill="#e2e8f0" font-size="10" text-anchor="end">2</text> <line x1="72" y1="71" x2="78" y2="71" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="75" fill="#e2e8f0" font-size="10" text-anchor="end">3</text> <line x1="72" y1="43" x2="78" y2="43" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="47" fill="#e2e8f0" font-size="10" text-anchor="end">4</text> <line x1="72" y1="15" x2="78" y2="15" stroke="#e2e8f0" stroke-width="1"/> <text x="67" y="19" fill="#e2e8f0" font-size="10" text-anchor="end">5</text> <polyline points="14.6,219.4 15.9,214.8 17.2,210.3 18.5,205.9 19.8,201.5 21.1,197.2 22.4,192.9 23.7,188.7 25.1,184.6 26.4,180.5 27.7,176.5 29.0,172.5 30.3,168.6 31.6,164.8 32.9,161.0 34.2,157.3 35.5,153.6 36.8,150.0 38.1,146.4 39.4,143.0 40.7,139.5 42.0,136.2 43.3,132.9 44.6,129.6 46.0,126.4 47.3,123.3 48.6,120.2 49.9,117.2 51.2,114.3 52.5,111.4 53.8,108.6 55.1,105.8 56.4,103.1 57.7,100.4 59.0,97.8 60.3,95.3 61.6,92.8 62.9,90.4 64.2,88.1 65.6,85.8 66.9,83.6 68.2,81.4 69.5,79.3 70.8,77.2 72.1,75.2 73.4,73.3 74.7,71.4 76.0,69.6 77.3,67.9 78.6,66.2 79.9,64.5 81.2,63.0 82.5,61.4 83.8,60.0 85.2,58.6 86.5,57.3 87.8,56.0 89.1,54.8 90.4,53.6 91.7,52.5 93.0,51.5 94.3,50.5 95.6,49.6 96.9,48.7 98.2,47.9 99.5,47.2 100.8,46.5 102.1,45.9 103.4,45.3 104.7,44.8 106.1,44.4 107.4,44.0 108.7,43.7 110.0,43.4 111.3,43.2 112.6,43.1 113.9,43.0 115.2,43.0 116.5,43.0 117.8,43.1 119.1,43.3 120.4,43.5 121.7,43.8 123.0,44.1 124.3,44.5 125.7,45.0 127.0,45.5 128.3,46.1 129.6,46.7 130.9,47.4 132.2,48.2 133.5,49.0 134.8,49.9 136.1,50.8 137.4,51.8 138.7,52.8 140.0,54.0 141.3,55.1 142.6,56.4 143.9,57.7 145.3,59.0 146.6,60.4 147.9,61.9 149.2,63.4 150.5,65.0 151.8,66.7 153.1,68.4 154.4,70.2 155.7,72.0 157.0,73.9 158.3,75.8 159.6,77.8 160.9,79.9 162.2,82.0 163.5,84.2 164.8,86.5 166.2,88.8 167.5,91.2 168.8,93.6 170.1,96.1 171.4,98.6 172.7,101.2 174.0,103.9 175.3,106.6 176.6,109.4 177.9,112.3 179.2,115.2 180.5,118.1 181.8,121.2 183.1,124.3 184.4,127.4 185.8,130.6 187.1,133.9 188.4,137.2 189.7,140.6 191.0,144.0 192.3,147.5 193.6,151.1 194.9,154.7 196.2,158.4 197.5,162.1 198.8,165.9 200.1,169.8 201.4,173.7 202.7,177.7 204.0,181.8 205.4,185.9 206.7,190.0 208.0,194.2 209.3,198.5 210.6,202.9 211.9,207.3 213.2,211.7 214.5,216.2" fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/> <circle cx="35.0" cy="155.0" r="5" fill="#cc4400" stroke="#111827" stroke-width="1.5"/> <circle cx="195.0" cy="155.0" r="5" fill="#cc4400" stroke="#111827" stroke-width="1.5"/> <text x="35" y="173" fill="#cc4400" font-size="11" text-anchor="middle">-1</text> <text x="195" y="173" fill="#cc4400" font-size="11" text-anchor="middle">3</text> <circle cx="115.0" cy="43.0" r="4" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/> <line x1="115" y1="43" x2="115" y2="155" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/> <line x1="75" y1="43" x2="115" y2="43" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/> <text x="123" y="38" fill="#fbbf24" font-size="10" text-anchor="start">V(1; 4)</text> <text x="150" y="216" fill="#e2e8f0" font-size="10" text-anchor="middle">f(x) = ?</text> </svg>`,
-      instruction: `Vyberte předpis funkce f v obecném tvaru, jehož graf odpovídá zobrazené parabole.`,
+      id: "q_funk_02", regionId: "funkce", type: "closed", monsterName: `FW_05B: Vlastnosti hyperboly`,
+      visual_color: "#4fc3f7", visual_symbol: `f(x)`, points: 3, trainingTasks: ["t_funk_02"],
+      question: `Je d\u00e1na funkce \\(f\\) s defini\u010dn\u00edm oborem \\(\\mathbb{R} \\setminus \\{1\\}\\):`,
+      formula: `$$f(x) = \\dfrac{3x - 6}{x - 1}$$`,
+      diagram: null,
+      instruction: `Kter\u00e9 z n\u00e1sleduj\u00edc\u00edch tvrzen\u00ed je nepravdiv\u00e9?`,
       choices: [
         {
-          label: `\\(y = x^{2} - 2x - 3\\)`,
+          label: `Svislá asymptota funkce \\(f\\) m\u00e1 rovnici \\(x = 1\\).`,
           value: "A",
-          feedback: `Kritická chyba. Kladná parabola — ramena jsou otevřená nahoru, zatímco z grafu plyne záporný koeficient u \\(x^2\\).`
+          feedback: `Chyba. Tvrzen\u00ed A je pravdiv\u00e9: jmenovatel \\(x - 1 = 0\\) pro \\(x = 1\\), to je svislá asymptota.`
         },
         {
-          label: `\\(y = -x^{2} + 2x + 3\\)`,
+          label: `Graf funkce \\(f\\) prot\u00edn\u00e1 osu \\(y\\) v bod\u011b \\((0;\;6)\\).`,
           value: "B",
-          feedback: `Přístup povolen. Rozvinutím \\(-(x+1)(x-3) = -x^2+2x+3\\). Záporná parabola, kořeny \\(-1\\) a \\(3\\), vrchol \\(V(1;\,4)\\). ✓`
+          feedback: `Chyba. Tvrzen\u00ed B je pravdiv\u00e9: \\(f(0) = \\dfrac{3 \\cdot 0 - 6}{0 - 1} = \\dfrac{-6}{-1} = 6\\).`
         },
         {
-          label: `\\(y = -x^{2} - 2x + 3\\)`,
+          label: `Obor hodnot funkce \\(f\\) je \\(H_f = \\mathbb{R} \\setminus \\{3\\}\\).`,
           value: "C",
-          feedback: `Chyba. Tento předpis má kořeny \\(x = 1\\) a \\(x = -3\\), osa souměrnosti \\(x = -1\\) — neshoda s grafem.`
+          feedback: `Chyba. Tvrzen\u00ed C je pravdiv\u00e9: vyd\u011blen\u00edm \\(f(x) = -\\tfrac{3}{x-1} + 3\\), vodorovná asymptota \\(y = 3\\) chyb\u00ed z oboru hodnot.`
         },
         {
-          label: `\\(y = -x^{2} + 2x - 3\\)`,
+          label: `Funkce \\(f\\) nem\u00e1 pr\u016fse\u010dn\u00edk s osou \\(x\\).`,
           value: "D",
-          feedback: `Chyba. Diskriminant: \\(4 - 12 = -8 < 0\\) — tato parabola nemá průsečík s osou \\(x\\). Neodpovídá grafu.`
+          feedback: `P\u0159\u00edstup povolen. Tvrzen\u00ed D je nepravdiv\u00e9: \\(3x - 6 = 0 \\Rightarrow x = 2\\), pr\u016fse\u010dn\u00edk s osou \\(x\\) v bod\u011b \\((2;\;0)\\) existuje.`
         },
       ],
-      correctAnswer: "B", reward: { xp: 15 },
+      correctAnswer: "D", reward: { xp: 15 },
       hints: [
-        `Záporná parabola s kořeny \\(x_1 = -1\\), \\(x_2 = 3\\): obecný tvar dostaneš rozvinutím \\(a(x - x_1)(x - x_2)\\). Jaké je \\(a\\)?`,
-        `Dosaď vrchol \\(V(1;\\,4)\\) pro určení \\(a\\): \\(4 = a(1+1)(1-3)\\). Vyřeš a rozviň součin.`
+        `U lomen\u00e9 funkce se pr\u016fse\u010dn\u00edky s osami hledaj\u00ed dosazen\u00edm \u2014 \\(y = 0\\) pro osu \\(x\\), \\(x = 0\\) pro osu \\(y\\).`,
+        `Vyd\u011blen\u00edm \u010ditatele jmenovatelem dosta\u0148 tvar \\(k/(x-a) + b\\) \u2014 z n\u011bj snadno p\u0159e\u010dte\u0161 obor hodnot i asymptoty.`
       ]
     },
     {
-      id: "t_funkce_02", regionId: "funkce", type: "closed", monsterName: `SIM_05B: Rozvoj na obecny tvar`,
-      isTraining: true, firewallId: "q_funkce_02", visual_color: "#2ecc8a", visual_symbol: `f(x)`, points: 0, showDiagramImmediately: true,
-      question: `Záporná parabola má kořeny \\(x_1 = -1\\) a \\(x_2 = 3\\). Předpis v kořenovém tvaru je \\(f(x) = -(x+1)(x-3)\\). Jaký je koeficient u \\(x\\) v obecném tvaru?`,
-      instruction: `Rozviňte součin a vyberte správný koeficient u \\(x\\).`,
+      id: "t_funk_02", regionId: "funkce", type: "closed", monsterName: `SIM_05B: Vlastnosti lomen\u00e9 funkce`,
+      isTraining: true, firewallId: "q_funk_02", visual_color: "#2ecc8a", visual_symbol: `f(x)`, points: 0,
+      question: `Funkce \\(g\\) je zad\u00e1na p\u0159edpisem \\(g(x) = \\dfrac{2}{x + 1}\\). Kter\u00e9 z n\u00e1sleduj\u00edc\u00edch tvrzen\u00ed je nepravdiv\u00e9?`,
+      formula: null,
+      diagram: null,
+      instruction: `Vyberte nepravdiv\u00e9 tvrzen\u00ed.`,
       steps: [
         {
-          trigger: `> Krok 1: Rozviň závorky`,
-          content: `Rozviňte \\((x+1)(x-3) = x^2 - 3x + x - 3 = x^2 - 2x - 3\\). Záporné znaménko teprve přijde.`
+          trigger: `> Krok 1: Svislá asymptota`,
+          content: `Kde se jmenovatel \\(x + 1\\) rovn\u00e1 nule? Jak\u00e1 hodnota \\(x\\) je z defini\u010dn\u00edho oboru vylou\u010dena \u2014 a jakou svislou asymptotu to ur\u010duje?`
         },
         {
-          trigger: `> Krok 2: Aplikuj záporné znaménko`,
-          content: `Vynásob celý výraz záporným znaménkem: \\(-(x^2 - 2x - 3) = -x^2 + ?x + 3\\). Jaký koeficient získáš u \\(x\\)?`
+          trigger: `> Krok 2: Pr\u016fse\u010dn\u00edky s osami`,
+          content: `Dosa\u010f \\(x = 0\\) pro pr\u016fse\u010dn\u00edk s osou \\(y\\). Pak zkus vy\u0159e\u0161it \\(g(x) = 0\\) \u2014 m\u016f\u017ee b\u00fdt \u010ditatel \\(2\\) roven nule?`
+        },
+        {
+          trigger: `> Krok 3: Obor hodnot`,
+          content: `M\u016f\u017ee v\u00fdraz \\(\\tfrac{2}{x+1}\\) nab\u00fdt hodnoty \\(0\\)? Co to \u0159\u00edk\u00e1 o oboru hodnot funkce \\(g\\)?`
         },
       ],
       choices: [
         {
-          label: `\\(-2\\)`,
+          label: `Obor hodnot funkce \\(g\\) je \\(H_g = \\mathbb{R} \\setminus \\{0\\}\\).`,
           value: "A",
-          feedback: `Chyba. Záporné znaménko mění znaménka všech členů: \\(-(-2x) = +2x\\). Koeficient je \\(+2\\).`
+          feedback: `Chyba. Tvrzen\u00ed A je pravdiv\u00e9: \\(\\tfrac{2}{x+1} = 0\\) nem\u00e1 \u0159e\u0161en\u00ed \u2014 hodnota \\(0\\) chyb\u00ed z oboru hodnot.`
         },
         {
-          label: `\\(+2\\)`,
+          label: `Graf funkce \\(g\\) prot\u00edn\u00e1 osu \\(y\\) v bod\u011b \\((0;\;2)\\).`,
           value: "B",
-          feedback: `Přístup povolen. \\(-(x^2-2x-3) = -x^2+2x+3\\). Obecný tvar je \\(y = -x^2+2x+3\\). ✓`
+          feedback: `Chyba. Tvrzen\u00ed B je pravdiv\u00e9: \\(g(0) = \\tfrac{2}{0+1} = 2\\).`
         },
         {
-          label: `\\(x_{v} = 0\\)`,
+          label: `Svislá asymptota funkce \\(g\\) m\u00e1 rovnici \\(x = 1\\).`,
           value: "C",
-          feedback: `Chyba. Nula by byla osa souměrnosti pro parabolu s kořeny \\(-a\\) a \\(+a\\). Zde kořeny nejsou souměrné kolem \\(0\\).`
+          feedback: `P\u0159\u00edstup povolen. Asymptota je \\(x = -1\\) (kde \\(x + 1 = 0\\)), ne \\(x = 1\\). Z\u00e1m\u011bna znam\u00e9nka.`
         },
         {
-          label: `\\(x_{v} = - 1\\)`,
+          label: `Funkce \\(g\\) nem\u00e1 pr\u016fse\u010dn\u00edk s osou \\(x\\).`,
           value: "D",
-          feedback: `Záměna. \\(-1\\) je kořen \\(x_1\\), ne souřadnice vrcholu. Vrchol leží mezi kořeny.`
+          feedback: `Chyba. Tvrzen\u00ed D je pravdiv\u00e9: \\(\\tfrac{2}{x+1} = 0\\) nem\u00e1 \u0159e\u0161en\u00ed \u2014 \u010ditatel \\(2\\) je nenulov\u00fd.`
         },
       ],
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 185" style="width:100%;max-width:260px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="29" y1="0" x2="29" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="65" y1="0" x2="65" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="101" y1="0" x2="101" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="137" y1="0" x2="137" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="173" y1="0" x2="173" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="209" y1="0" x2="209" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="245" y1="0" x2="245" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="178" x2="260" y2="178" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="154" x2="260" y2="154" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="130" x2="260" y2="130" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="106" x2="260" y2="106" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="82" x2="260" y2="82" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="58" x2="260" y2="58" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="34" x2="260" y2="34" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="10" x2="260" y2="10" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="130" x2="260" y2="130" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="260,130 253,126 253,134" fill="#e2e8f0"/> <text x="255" y="122" fill="#e2e8f0" font-size="12" font-style="italic">x</text> <line x1="65" y1="185" x2="65" y2="0" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="65,0 61,10 69,10" fill="#e2e8f0"/> <text x="71" y="14" fill="#e2e8f0" font-size="12" font-style="italic">y</text> <text x="51" y="144" fill="#e2e8f0" font-size="11">O</text> <line x1="29" y1="127" x2="29" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="29" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">-1</text> <line x1="101" y1="127" x2="101" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="101" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">1</text> <line x1="137" y1="127" x2="137" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="137" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">2</text> <line x1="173" y1="127" x2="173" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="173" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">3</text> <line x1="209" y1="127" x2="209" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="209" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">4</text> <line x1="245" y1="127" x2="245" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="245" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">5</text> <line x1="62" y1="154" x2="68" y2="154" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="158" fill="#e2e8f0" font-size="10" text-anchor="end">-1</text> <line x1="62" y1="106" x2="68" y2="106" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="110" fill="#e2e8f0" font-size="10" text-anchor="end">1</text> <line x1="62" y1="82" x2="68" y2="82" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="86" fill="#e2e8f0" font-size="10" text-anchor="end">2</text> <line x1="62" y1="58" x2="68" y2="58" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="62" fill="#e2e8f0" font-size="10" text-anchor="end">3</text> <line x1="62" y1="34" x2="68" y2="34" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="38" fill="#e2e8f0" font-size="10" text-anchor="end">4</text> <line x1="62" y1="10" x2="68" y2="10" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="14" fill="#e2e8f0" font-size="10" text-anchor="end">5</text> <polyline points="11.5,182.5 12.5,178.9 13.6,175.4 14.7,171.9 15.8,168.4 16.9,165.0 18.0,161.7 19.1,158.4 20.1,155.1 21.2,151.9 22.3,148.7 23.4,145.5 24.5,142.4 25.6,139.4 26.6,136.4 27.7,133.4 28.8,130.5 29.9,127.6 31.0,124.8 32.1,122.0 33.2,119.2 34.2,116.5 35.3,113.9 36.4,111.2 37.5,108.7 38.6,106.1 39.7,103.6 40.8,101.2 41.8,98.8 42.9,96.4 44.0,94.1 45.1,91.9 46.2,89.6 47.3,87.5 48.4,85.3 49.4,83.2 50.5,81.2 51.6,79.2 52.7,77.2 53.8,75.3 54.9,73.4 56.0,71.6 57.0,69.8 58.1,68.0 59.2,66.3 60.3,64.7 61.4,63.1 62.5,61.5 63.6,60.0 64.6,58.5 65.7,57.0 66.8,55.6 67.9,54.3 69.0,53.0 70.1,51.7 71.2,50.5 72.2,49.3 73.3,48.2 74.4,47.1 75.5,46.0 76.6,45.0 77.7,44.1 78.7,43.2 79.8,42.3 80.9,41.5 82.0,40.7 83.1,39.9 84.2,39.2 85.3,38.6 86.3,38.0 87.4,37.4 88.5,36.9 89.6,36.4 90.7,36.0 91.8,35.6 92.9,35.2 93.9,34.9 95.0,34.7 96.1,34.4 97.2,34.3 98.3,34.1 99.4,34.0 100.5,34.0 101.5,34.0 102.6,34.0 103.7,34.1 104.8,34.3 105.9,34.4 107.0,34.7 108.1,34.9 109.1,35.2 110.2,35.6 111.3,36.0 112.4,36.4 113.5,36.9 114.6,37.4 115.7,38.0 116.7,38.6 117.8,39.2 118.9,39.9 120.0,40.7 121.1,41.5 122.2,42.3 123.3,43.2 124.3,44.1 125.4,45.0 126.5,46.0 127.6,47.1 128.7,48.2 129.8,49.3 130.8,50.5 131.9,51.7 133.0,53.0 134.1,54.3 135.2,55.6 136.3,57.0 137.4,58.5 138.4,60.0 139.5,61.5 140.6,63.1 141.7,64.7 142.8,66.3 143.9,68.0 145.0,69.8 146.0,71.6 147.1,73.4 148.2,75.3 149.3,77.2 150.4,79.2 151.5,81.2 152.6,83.2 153.6,85.3 154.7,87.5 155.8,89.6 156.9,91.9 158.0,94.1 159.1,96.4 160.2,98.8 161.2,101.2 162.3,103.6 163.4,106.1 164.5,108.7 165.6,111.2 166.7,113.9 167.8,116.5 168.8,119.2 169.9,122.0 171.0,124.8 172.1,127.6 173.2,130.5 174.3,133.4 175.4,136.4 176.4,139.4 177.5,142.4 178.6,145.5 179.7,148.7 180.8,151.9 181.9,155.1 182.9,158.4 184.0,161.7 185.1,165.0 186.2,168.4 187.3,171.9 188.4,175.4 189.5,178.9 190.5,182.5" fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/> <circle cx="29.0" cy="130.0" r="5" fill="#cc4400" stroke="#111827" stroke-width="1.5"/> <circle cx="173.0" cy="130.0" r="5" fill="#cc4400" stroke="#111827" stroke-width="1.5"/> <text x="29" y="145" fill="#cc4400" font-size="10" text-anchor="middle">x1=-1</text> <text x="173" y="145" fill="#cc4400" font-size="10" text-anchor="middle">x2=3</text> <circle cx="101.0" cy="34.0" r="5" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/> <text x="109" y="38" fill="#fbbf24" font-size="14" font-weight="bold">?</text> <text x="101" y="21" fill="#fbbf24" font-size="10" text-anchor="middle">V(xv; ?)</text> </svg>`,
-      correctAnswer: "B", reward: { xp: 5 }
+      correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_03", regionId: "funkce", type: "closed", monsterName: `FW_05C: Identifikace predpisu hyperboly`,
-      visual_color: "#4fc3f7", visual_symbol: `1/x`, points: 3, trainingTasks: ["t_funkce_03"],
+      id: "q_funk_03", regionId: "funkce", type: "closed", monsterName: `FW_05C: Identifikace predpisu hyperboly`,
+      visual_color: "#4fc3f7", visual_symbol: `1/x`, points: 3, trainingTasks: ["t_funk_03"],
       question: `V kartezske soustave souradnic je zobrazen graf funkce f s definicnim oborem \\(\\mathbb{R}\\backslash\\{ 1\\}\\).`,
       diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="0" y1="0" x2="0" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="40" y1="0" x2="40" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="80" y1="0" x2="80" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="120" y1="0" x2="120" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="160" y1="0" x2="160" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="200" y1="0" x2="200" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="240" y1="0" x2="240" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="280" y1="0" x2="280" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="320" y1="0" x2="320" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="226" x2="320" y2="226" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="202" x2="320" y2="202" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="178" x2="320" y2="178" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="154" x2="320" y2="154" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="130" x2="320" y2="130" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="106" x2="320" y2="106" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="82" x2="320" y2="82" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="58" x2="320" y2="58" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="34" x2="320" y2="34" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="10" x2="320" y2="10" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="130" x2="320" y2="130" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="320,130 313,126 313,134" fill="#e2e8f0"/> <text x="315" y="122" fill="#e2e8f0" font-size="12" font-style="italic">x</text> <line x1="120" y1="240" x2="120" y2="0" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="120,0 116,10 124,10" fill="#e2e8f0"/> <text x="126" y="14" fill="#e2e8f0" font-size="12" font-style="italic">y</text> <text x="106" y="144" fill="#e2e8f0" font-size="11">O</text> <line x1="40" y1="127" x2="40" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="40" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">-2</text> <line x1="80" y1="127" x2="80" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="80" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">-1</text> <line x1="160" y1="127" x2="160" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="160" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">1</text> <line x1="200" y1="127" x2="200" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="200" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">2</text> <line x1="240" y1="127" x2="240" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="240" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">3</text> <line x1="280" y1="127" x2="280" y2="133" stroke="#e2e8f0" stroke-width="1"/> <text x="280" y="145" fill="#e2e8f0" font-size="10" text-anchor="middle">4</text> <line x1="117" y1="226" x2="123" y2="226" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="230" fill="#e2e8f0" font-size="10" text-anchor="end">-4</text> <line x1="117" y1="202" x2="123" y2="202" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="206" fill="#e2e8f0" font-size="10" text-anchor="end">-3</text> <line x1="117" y1="178" x2="123" y2="178" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="182" fill="#e2e8f0" font-size="10" text-anchor="end">-2</text> <line x1="117" y1="154" x2="123" y2="154" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="158" fill="#e2e8f0" font-size="10" text-anchor="end">-1</text> <line x1="117" y1="106" x2="123" y2="106" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="110" fill="#e2e8f0" font-size="10" text-anchor="end">1</text> <line x1="117" y1="82" x2="123" y2="82" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="86" fill="#e2e8f0" font-size="10" text-anchor="end">2</text> <line x1="117" y1="58" x2="123" y2="58" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="62" fill="#e2e8f0" font-size="10" text-anchor="end">3</text> <line x1="117" y1="34" x2="123" y2="34" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="38" fill="#e2e8f0" font-size="10" text-anchor="end">4</text> <line x1="117" y1="10" x2="123" y2="10" stroke="#e2e8f0" stroke-width="1"/> <text x="112" y="14" fill="#e2e8f0" font-size="10" text-anchor="end">5</text> <line x1="160" y1="0" x2="160" y2="240" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.85"/> <line x1="0" y1="178" x2="320" y2="178" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.85"/> <rect x="164" y="5" width="28" height="15" rx="2" fill="#111827" opacity="0.75"/> <text x="165" y="17" fill="#fbbf24" font-size="9" text-anchor="start">x=1</text> <rect x="272" y="162" width="44" height="14" rx="2" fill="#111827" opacity="0.75"/> <text x="274" y="173" fill="#fbbf24" font-size="9" text-anchor="start">y = -2</text> <polyline points="2.6,190.2 3.2,190.2 3.8,190.3 4.5,190.3 5.1,190.4 5.8,190.4 6.4,190.5 7.1,190.6 7.7,190.6 8.3,190.7 9.0,190.7 9.6,190.8 10.3,190.8 10.9,190.9 11.5,190.9 12.2,191.0 12.8,191.0 13.5,191.1 14.1,191.2 14.7,191.2 15.4,191.3 16.0,191.3 16.7,191.4 17.3,191.5 18.0,191.5 18.6,191.6 19.2,191.6 19.9,191.7 20.5,191.8 21.2,191.8 21.8,191.9 22.4,192.0 23.1,192.0 23.7,192.1 24.4,192.2 25.0,192.2 25.7,192.3 26.3,192.4 26.9,192.4 27.6,192.5 28.2,192.6 28.9,192.6 29.5,192.7 30.1,192.8 30.8,192.9 31.4,192.9 32.1,193.0 32.7,193.1 33.3,193.2 34.0,193.2 34.6,193.3 35.3,193.4 35.9,193.5 36.6,193.6 37.2,193.6 37.8,193.7 38.5,193.8 39.1,193.9 39.8,194.0 40.4,194.1 41.0,194.1 41.7,194.2 42.3,194.3 43.0,194.4 43.6,194.5 44.2,194.6 44.9,194.7 45.5,194.8 46.2,194.9 46.8,195.0 47.5,195.1 48.1,195.2 48.7,195.3 49.4,195.4 50.0,195.5 50.7,195.6 51.3,195.7 51.9,195.8 52.6,195.9 53.2,196.0 53.9,196.1 54.5,196.2 55.2,196.3 55.8,196.4 56.4,196.5 57.1,196.7 57.7,196.8 58.4,196.9 59.0,197.0 59.6,197.1 60.3,197.3 60.9,197.4 61.6,197.5 62.2,197.6 62.8,197.8 63.5,197.9 64.1,198.0 64.8,198.2 65.4,198.3 66.1,198.4 66.7,198.6 67.3,198.7 68.0,198.9 68.6,199.0 69.3,199.2 69.9,199.3 70.5,199.5 71.2,199.6 71.8,199.8 72.5,199.9 73.1,200.1 73.7,200.3 74.4,200.4 75.0,200.6 75.7,200.8 76.3,200.9 77.0,201.1 77.6,201.3 78.2,201.5 78.9,201.7 79.5,201.9 80.2,202.0 80.8,202.2 81.4,202.4 82.1,202.6 82.7,202.8 83.4,203.1 84.0,203.3 84.6,203.5 85.3,203.7 85.9,203.9 86.6,204.1 87.2,204.4 87.9,204.6 88.5,204.9 89.1,205.1 89.8,205.3 90.4,205.6 91.1,205.9 91.7,206.1 92.3,206.4 93.0,206.7 93.6,206.9 94.3,207.2 94.9,207.5 95.6,207.8 96.2,208.1 96.8,208.4 97.5,208.7 98.1,209.0 98.8,209.4 99.4,209.7 100.0,210.0 100.7,210.4 101.3,210.7 102.0,211.1 102.6,211.5 103.2,211.8 103.9,212.2 104.5,212.6 105.2,213.0 105.8,213.4 106.5,213.9 107.1,214.3 107.7,214.7 108.4,215.2 109.0,215.7 109.7,216.1 110.3,216.6 110.9,217.1 111.6,217.7 112.2,218.2 112.9,218.7 113.5,219.3 114.1,219.9 114.8,220.5 115.4,221.1 116.1,221.7 116.7,222.4 117.4,223.0 118.0,223.7 118.6,224.4 119.3,225.1 119.9,225.9 120.6,226.7 121.2,227.5 121.8,228.3 122.5,229.2 123.1,230.1 123.8,231.0 124.4,231.9 125.1,232.9 125.7,234.0 126.3,235.0 127.0,236.1 127.6,237.3" fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/> <polyline points="171.2,6.9 171.9,16.2 172.5,24.5 173.1,32.0 173.8,38.7 174.4,44.9 175.1,50.6 175.7,55.8 176.4,60.6 177.0,65.0 177.6,69.1 178.3,72.9 178.9,76.5 179.6,79.8 180.2,83.0 180.8,85.9 181.5,88.6 182.1,91.2 182.8,93.7 183.4,96.0 184.0,98.2 184.7,100.2 185.3,102.2 186.0,104.1 186.6,105.9 187.3,107.6 187.9,109.2 188.5,110.7 189.2,112.2 189.8,113.6 190.5,115.0 191.1,116.3 191.7,117.5 192.4,118.7 193.0,119.9 193.7,121.0 194.3,122.0 194.9,123.1 195.6,124.1 196.2,125.0 196.9,125.9 197.5,126.8 198.2,127.7 198.8,128.5 199.4,129.3 200.1,130.1 200.7,130.9 201.4,131.6 202.0,132.3 202.6,133.0 203.3,133.6 203.9,134.3 204.6,134.9 205.2,135.5 205.9,136.1 206.5,136.7 207.1,137.3 207.8,137.8 208.4,138.3 209.1,138.9 209.7,139.4 210.3,139.9 211.0,140.3 211.6,140.8 212.3,141.3 212.9,141.7 213.5,142.1 214.2,142.6 214.8,143.0 215.5,143.4 216.1,143.8 216.8,144.2 217.4,144.5 218.0,144.9 218.7,145.3 219.3,145.6 220.0,146.0 220.6,146.3 221.2,146.6 221.9,147.0 222.5,147.3 223.2,147.6 223.8,147.9 224.4,148.2 225.1,148.5 225.7,148.8 226.4,149.1 227.0,149.3 227.7,149.6 228.3,149.9 228.9,150.1 229.6,150.4 230.2,150.7 230.9,150.9 231.5,151.1 232.1,151.4 232.8,151.6 233.4,151.9 234.1,152.1 234.7,152.3 235.4,152.5 236.0,152.7 236.6,152.9 237.3,153.2 237.9,153.4 238.6,153.6 239.2,153.8 239.8,154.0 240.5,154.1 241.1,154.3 241.8,154.5 242.4,154.7 243.0,154.9 243.7,155.1 244.3,155.2 245.0,155.4 245.6,155.6 246.3,155.7 246.9,155.9 247.5,156.1 248.2,156.2 248.8,156.4 249.5,156.5 250.1,156.7 250.7,156.8 251.4,157.0 252.0,157.1 252.7,157.3 253.3,157.4 253.9,157.6 254.6,157.7 255.2,157.8 255.9,158.0 256.5,158.1 257.2,158.2 257.8,158.4 258.4,158.5 259.1,158.6 259.7,158.7 260.4,158.9 261.0,159.0 261.6,159.1 262.3,159.2 262.9,159.3 263.6,159.5 264.2,159.6 264.8,159.7 265.5,159.8 266.1,159.9 266.8,160.0 267.4,160.1 268.1,160.2 268.7,160.3 269.3,160.4 270.0,160.5 270.6,160.6 271.3,160.7 271.9,160.8 272.5,160.9 273.2,161.0 273.8,161.1 274.5,161.2 275.1,161.3 275.8,161.4 276.4,161.5 277.0,161.6 277.7,161.7 278.3,161.8 279.0,161.9 279.6,161.9 280.2,162.0 280.9,162.1 281.5,162.2 282.2,162.3 282.8,162.4 283.4,162.4 284.1,162.5 284.7,162.6 285.4,162.7 286.0,162.8 286.7,162.8 287.3,162.9 287.9,163.0 288.6,163.1 289.2,163.1 289.9,163.2 290.5,163.3 291.1,163.4 291.8,163.4 292.4,163.5 293.1,163.6 293.7,163.6 294.3,163.7 295.0,163.8 295.6,163.8 296.3,163.9 296.9,164.0 297.6,164.0 298.2,164.1 298.8,164.2 299.5,164.2 300.1,164.3 300.8,164.4 301.4,164.4 302.0,164.5 302.7,164.5 303.3,164.6 304.0,164.7 304.6,164.7 305.3,164.8 305.9,164.8 306.5,164.9 307.2,165.0 307.8,165.0 308.5,165.1 309.1,165.1 309.7,165.2 310.4,165.2 311.0,165.3 311.7,165.3 312.3,165.4 312.9,165.4 313.6,165.5 314.2,165.6 314.9,165.6 315.5,165.7 316.2,165.7 316.8,165.8 317.4,165.8" fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/> <circle cx="200.0" cy="130.0" r="4" fill="#cc4400" stroke="#111827" stroke-width="1.5"/> <text x="200" y="122" fill="#cc4400" font-size="9" text-anchor="middle">(2; 0)</text> <text x="312" y="236" fill="#e2e8f0" font-size="10" text-anchor="end">f(x) = ?</text> </svg>`,
       instruction: `Vyberte predpis funkce f odpovidajici zobrazeneho grafu.`,
@@ -2866,20 +2860,20 @@ x + 2y = 4 \\\\
       ],
       correctAnswer: "B", reward: { xp: 15 },
       hints: [
-        `Svislá asymptota \\(x = 1\\) plyne z jmenovatele \\((x-1)\\). Vodorovná asymptota \\(y = -2\\) je hodnota, k níž funkce tíhne pro \\(x \\to \\pm\\infty\\).`,
-        `Obecný tvar: \\(\\frac{k}{x-1} - 2\\). Průsečík s osou \\(x\\) je bod \\((2;\\, 0)\\): dosaď a vyřeš pro \\(k\\).`
+        `Svislá asymptota plyne ze jmenovatele, vodorovná z chování funkce pro \\(x \\to \\pm\\infty\\). Jak je z grafu odečteš?`,
+        `Znáš-li asymptoty, víš i tvar předpisu. Zbývá určit parametr z jednoho bodu na grafu.`
       ]
     },
     {
-      id: "t_funkce_03", regionId: "funkce", type: "closed", monsterName: `SIM_05C: Asymptoty hyperboly`,
-      isTraining: true, firewallId: "q_funkce_03", visual_color: "#2ecc8a", visual_symbol: `1/x`, points: 0, showDiagramImmediately: true,
+      id: "t_funk_03", regionId: "funkce", type: "closed", monsterName: `SIM_05C: Asymptoty hyperboly`,
+      isTraining: true, firewallId: "q_funk_03", visual_color: "#2ecc8a", visual_symbol: `1/x`, points: 0, showDiagramImmediately: true,
       question: `Hyperbola \\(f\\) je zobrazena na grafu. Jaké jsou její asymptoty?`,
       formula: null,
       instruction: `Vyberte spravnou dvojici asymptot.`,
       steps: [
         {
           trigger: `> Krok 1: Svisle asymptota`,
-          content: `Svislá asymptota nastává tam, kde <b>jmenovatel = 0</b>. Zde \\(x - 1 = 0 \\Rightarrow x = 1\\).`
+          content: `Svislá asymptota nastává tam, kde jmenovatel = 0. Pro jakou hodnotu \\(x\\) to nastane?`
         },
         {
           trigger: `> Krok 2: Vodorovna asymptota`,
@@ -2912,66 +2906,71 @@ x + 2y = 4 \\\\
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_04", regionId: "funkce", type: "closed", monsterName: `FW_05D: P\u0159edpis line\u00e1rn\u00ed funkce z grafu`,
-      visual_color: "#4fc3f7", visual_symbol: `y=kx+q`, points: 2, trainingTasks: ["t_funkce_04"],
-      question: `Grafem line\u00e1rn\u00ed funkce \\(g\\) je p\u0159\u00edmka zobrazen\u00e1 v obr\u00e1zku.`,
+      id: "q_funk_04", regionId: "funkce", type: "closed", monsterName: `FW_05D: Pr\u016fse\u010d\u00edk dvou p\u0159\u00edmek`,
+      visual_color: "#4fc3f7", visual_symbol: `y=kx+q`, points: 2, trainingTasks: ["t_funk_04"],
+      question: `Grafem funkc\u00ed \\(f\\) a \\(g\\) jsou p\u0159\u00edmky zobrazen\u00e9 v obr\u00e1zku. Pr\u016fse\u010dn\u00edky p\u0159\u00edmek s osami sou\u0159adnic jsou vyzna\u010deny.`,
       formula: null,
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 210" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:\'Segoe UI\',Arial,sans-serif;"> <line x1="20" y1="0" x2="20" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="50" y1="0" x2="50" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="110" y1="0" x2="110" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="140" y1="0" x2="140" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="170" y1="0" x2="170" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="200" y1="0" x2="200" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="65" x2="300" y2="65" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="95" x2="300" y2="95" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="125" x2="300" y2="125" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="155" x2="300" y2="155" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="185" x2="293" y2="185" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="293,185 286,181 286,189" fill="#e2e8f0"/> <text x="288" y="178" fill="#e2e8f0" font-size="11" font-style="italic">x</text> <line x1="80" y1="210" x2="80" y2="7" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="80,7 76,17 84,17" fill="#e2e8f0"/> <text x="87" y="16" fill="#e2e8f0" font-size="11" font-style="italic">y</text> <text x="67" y="199" fill="#e2e8f0" font-size="11">O</text> <line x1="20" y1="182" x2="20" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="20" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">-2</text> <line x1="50" y1="182" x2="50" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="50" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">-1</text> <line x1="110" y1="182" x2="110" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="110" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">1</text> <line x1="140" y1="182" x2="140" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="140" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">2</text> <line x1="170" y1="182" x2="170" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="170" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">3</text> <line x1="200" y1="182" x2="200" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="200" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">4</text> <line x1="77" y1="155" x2="83" y2="155" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="159" fill="#e2e8f0" font-size="10" text-anchor="end">1</text> <line x1="77" y1="125" x2="83" y2="125" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="129" fill="#e2e8f0" font-size="10" text-anchor="end">2</text> <line x1="77" y1="95" x2="83" y2="95" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="99" fill="#e2e8f0" font-size="10" text-anchor="end">3</text> <line x1="77" y1="65" x2="83" y2="65" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="69" fill="#e2e8f0" font-size="10" text-anchor="end">4</text> <line x1="20" y1="65" x2="165" y2="210" stroke="#f97316" stroke-width="2.5"/> <text x="16" y="57" fill="#f97316" font-size="13" font-style="italic">g</text> <circle cx="80" cy="125" r="4" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/> <circle cx="140" cy="185" r="4" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/></svg>`,
-      instruction: `Zapi\u0161te p\u0159edpis funkce \\(g\\).`,
+      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 210" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="20" y1="0" x2="20" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="50" y1="0" x2="50" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="110" y1="0" x2="110" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="140" y1="0" x2="140" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="170" y1="0" x2="170" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="200" y1="0" x2="200" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="65" x2="300" y2="65" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="95" x2="300" y2="95" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="125" x2="300" y2="125" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="155" x2="300" y2="155" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="185" x2="293" y2="185" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="293,185 286,181 286,189" fill="#e2e8f0"/> <text x="288" y="178" fill="#e2e8f0" font-size="11" font-style="italic">x</text> <line x1="80" y1="210" x2="80" y2="7" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="80,7 76,17 84,17" fill="#e2e8f0"/> <text x="87" y="16" fill="#e2e8f0" font-size="11" font-style="italic">y</text> <text x="67" y="199" fill="#e2e8f0" font-size="11">O</text> <line x1="20" y1="182" x2="20" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="20" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">-2</text> <line x1="50" y1="182" x2="50" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="50" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">-1</text> <line x1="110" y1="182" x2="110" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="110" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">1</text> <line x1="140" y1="182" x2="140" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="140" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">2</text> <line x1="170" y1="182" x2="170" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="170" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">3</text> <line x1="200" y1="182" x2="200" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="200" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">4</text> <line x1="77" y1="155" x2="83" y2="155" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="159" fill="#e2e8f0" font-size="10" text-anchor="end">1</text> <line x1="77" y1="125" x2="83" y2="125" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="129" fill="#e2e8f0" font-size="10" text-anchor="end">2</text> <line x1="77" y1="95" x2="83" y2="95" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="99" fill="#e2e8f0" font-size="10" text-anchor="end">3</text> <line x1="77" y1="65" x2="83" y2="65" stroke="#e2e8f0" stroke-width="1"/> <text x="72" y="69" fill="#e2e8f0" font-size="10" text-anchor="end">4</text> <line x1="17" y1="191" x2="86" y2="53" stroke="#4fc3f7" stroke-width="2.5"/> <text x="89" y="49" fill="#4fc3f7" font-size="13" font-style="italic">f</text> <line x1="20" y1="65" x2="155" y2="200" stroke="#f97316" stroke-width="2.5"/> <text x="16" y="57" fill="#f97316" font-size="13" font-style="italic">g</text> <circle cx="80" cy="125" r="4" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/> <circle cx="140" cy="185" r="4" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/> <circle cx="20" cy="185" r="4" fill="#4fc3f7" stroke="#111827" stroke-width="1.5"/> <circle cx="80" cy="65" r="4" fill="#4fc3f7" stroke="#111827" stroke-width="1.5"/></svg>`,
+      instruction: `Ur\u010dete sou\u0159adnice pr\u016fse\u010dn\u00edku funkc\u00ed \\(f\\) a \\(g\\).`,
       choices: [
         {
-          label: `\\(g\\colon y = -x + 2\\)`,
+          label: `\\(\\left(-\\tfrac{2}{3};\;\\tfrac{8}{3}\\right)\\)`,
           value: "A",
-          feedback: `P\u0159\u00edstup povolen. P\u0159\u00edmka prot\u00edn\u00e1 osu \\(y\\) v \\((0;\\, 2)\\), tedy \\(q = 2\\). Sm\u011brnice \\(k = \\Delta y / \\Delta x = (0-2)/(2-0) = -1\\).`
+          feedback: `P\u0159\u00edstup povolen. Soustava \\(-x+2 = 2x+4\\) d\u00e1 \\(-3x = 2\\), tedy \\(x = -\\tfrac{2}{3}\\) a \\(y = \\tfrac{8}{3}\\).`
         },
         {
-          label: `\\(g\\colon y = x + 2\\)`,
+          label: `\\(\\left(\\tfrac{2}{3};\;\\tfrac{4}{3}\\right)\\)`,
           value: "B",
-          feedback: `Chyba. P\u0159\u00edmka na grafu kles\u00e1 (jde zleva doprava dol\u016f) \u2014 sm\u011brnice mus\u00ed b\u00fdt z\u00e1porn\u00e1. \\(k > 0\\) by znamenalo rostoucí p\u0159\u00edmku.`
+          feedback: `Chyba syntaxe. Znam\u00e9nko: \\(-x+2 = 2x+4 \\Rightarrow -3x = 2 \\Rightarrow x = -\\tfrac{2}{3}\\) (z\u00e1porn\u00e9), ne kladn\u00e9.`
         },
         {
-          label: `\\(g\\colon y = -2x + 2\\)`,
+          label: `\\(\\left(-2;\;0\\right)\\)`,
           value: "C",
-          feedback: `Chyba. Sm\u011brnice \\(k = -2\\) by znamenala pokles o 2 jednotky na jeden krok doprava. Z grafu: p\u0159\u00edmka klesne o 2 za 2 kroky (z \\((0;2)\\) do \\((2;0)\\)) \u2014 tedy \\(k = -2/2 = -1\\).`
+          feedback: `Nekompletní. Bod \\((-2;\\,0)\\) je pr\u016fse\u010dn\u00edk p\u0159\u00edmky \\(f\\) s osou \\(x\\) \u2014 nikoliv pr\u016fse\u010dn\u00edk obou p\u0159\u00edmek.`
         },
         {
-          label: `\\(g\\colon y = -x - 2\\)`,
+          label: `\\(\\left(-1;\;3\\right)\\)`,
           value: "D",
-          feedback: `Chyba. Absolutn\u00ed \u010dlen \\(q\\) odečti z pr\u016fse\u010dn\u00edku s osou \\(y\\). P\u0159\u00edmka prot\u00edn\u00e1 osu \\(y\\) v bod\u011b \\((0;\\, 2)\\), tedy \\(q = +2\\), ne \\(-2\\).`
+          feedback: `Chyba syntaxe. Sm\u011brnice \\(f\\): body \\((-2;\\,0)\\) a \\((0;\\,4)\\) daj\u00ed \\(k = \\tfrac{4-0}{0-(-2)} = \\tfrac{4}{2} = 2\\), ne \\(1\\).`
         },
       ],
       correctAnswer: "A", reward: { xp: 10 },
       hints: [
-        `Odečti ze grafu dva body, kde p\u0159\u00edmka p\u0159esn\u011b proch\u00e1z\u00ed \u2014 nejl\u00e9pe pr\u016fse\u010dn\u00edky s osami souřadnic.`,
-        `Sm\u011brnice \\(k = \\Delta y / \\Delta x\\). Absolutn\u00ed \u010dlen \\(q\\) je hodnota \\(y\\) v bod\u011b \\(x = 0\\) (pr\u016fse\u010dn\u00edk s osou \\(y\\)).`
+        `Průsečíky přímky s osami souřadnic plně určují lineární funkci — jak?`,
+        `Pr\u016fse\u010dn\u00edk p\u0159\u00edmek nastane, kdy\u017e ob\u011b funkce daj\u00ed stejnou hodnotu \\(y\\) \u2014 nastav rovnici a vy\u0159e\u0161.`
       ]
     },
     {
-      id: "t_funkce_04", regionId: "funkce", type: "closed", monsterName: `SIM_05D: Sm\u011brnice p\u0159\u00edmky ze dvou bod\u016f`,
-      isTraining: true, firewallId: "q_funkce_04", visual_color: "#2ecc8a", visual_symbol: `k`, points: 0,
-      question: `P\u0159\u00edmka \\(h\\) proch\u00e1z\u00ed body \\((0;\\, 4)\\) a \\((2;\\, 0)\\). Jak\u00e1 je sm\u011brnice \\(h\\)?`,
+      id: "t_funk_04", regionId: "funkce", type: "closed", monsterName: `SIM_05D: Pr\u016fse\u010d\u00edk p\u0159\u00edmek algebraicky`,
+      isTraining: true, firewallId: "q_funk_04", visual_color: "#2ecc8a", visual_symbol: `y=kx+q`, points: 0,
+      question: `Funkce \\(p\\) a \\(r\\) jsou zad\u00e1ny p\u0159edpisy \\(p\\colon y = -x + 3\\) a \\(r\\colon y = 2x\\). Ur\u010dete sou\u0159adnice jejich pr\u016fse\u010dn\u00edku.`,
       formula: null,
-      instruction: `Vyberte spr\u00e1vnou hodnotu sm\u011brnice.`,
+      instruction: `Vyberte spr\u00e1vn\u00e9 sou\u0159adnice pr\u016fse\u010dn\u00edku.`,
       steps: [
         {
-          trigger: `> Krok 1: Vzorec pro sm\u011brnici`,
-          content: `Sm\u011brnice \\(k = \\dfrac{\\Delta y}{\\Delta x} = \\dfrac{y_2 - y_1}{x_2 - x_1}\\). Dosa\u010f body \\((0;\\, 4)\\) a \\((2;\\, 0)\\): \\(k = \\dfrac{0-4}{2-0}\\). Vypo\u010dti.`
+          trigger: `> Krok 1: Kdy se p\u0159\u00edmky prot\u00edn\u00e1j\u00ed?`,
+          content: `Pr\u016fse\u010dn\u00edk nastane, kdy\u017e ob\u011b funkce daj\u00ed stejnou hodnotu \\(y\\). Jak zap\u00ed\u0161e\u0161 rovnici z p\u0159edpis\u016f \\(p\\) a \\(r\\)?`
         },
         {
-          trigger: `> Krok 2: Sestav p\u0159edpis`,
-          content: `Z vypo\u010dten\u00e9ho \\(k\\) a absolutn\u00edho \u010dlenu \\(q\\) (kde p\u0159\u00edmka prot\u00edn\u00e1 osu \\(y\\)) sestavíš p\u0159edpis \\(y = kx + q\\).`
+          trigger: `> Krok 2: Vy\u0159e\u0161 rovnici`,
+          content: `Napiš rovnici pro průsečík a vyřeš ji. Jaká vyjde hodnota \\(x\\)?`
+        },
+        {
+          trigger: `> Krok 3: Dosa\u010f a ov\u011b\u0159`,
+          content: `Pro nalezen\u00e9 \\(x\\) dosa\u010f do p\u0159edpisu \\(r\\) i \\(p\\) \u2014 ob\u011b mus\u00ed d\u00e1t stejn\u00e9 \\(y\\). Jak\u00e9 jsou v\u00fdsledn\u00e9 sou\u0159adnice pr\u016fse\u010dn\u00edku?`
         },
       ],
       choices: [
-        { label: `\\(k = -2\\)`, value: "A", feedback: `Logika potvrzena. \\(\\dfrac{0-4}{2-0} = \\dfrac{-4}{2} = -2\\).` },
-        { label: `\\(k = 2\\)`, value: "B", feedback: `Chyba. Zn\u00e9menko: \\(y\\) kles\u00e1 o 4 za 2 kroky, tedy \\(k = -4/2 = -2\\), ne \\(+2\\).` },
-        { label: `\\(k = -\\dfrac{1}{2}\\)`, value: "C", feedback: `Chyba. Obr\u00e1cen\u00fd zlomek. \\(k = \\Delta y / \\Delta x = -4/2 = -2\\), ne \\(-2/4\\).` },
+        { label: `\\((1;\;2)\\)`, value: "A", feedback: `Logika potvrzena. \\(-x+3 = 2x \\Rightarrow 3 = 3x \\Rightarrow x = 1,\; y = 2\\cdot 1 = 2\\).` },
+        { label: `\\((3;\;6)\\)`, value: "B", feedback: `Chyba. \\(x = 3\\) je pr\u016fse\u010dn\u00edk p\u0159\u00edmky \\(p\\) s osou \\(x\\). Pr\u016fse\u010dn\u00edk p\u0159\u00edmek se hled\u00e1 rovnic\u00ed \\(-x+3 = 2x\\).` },
+        { label: `\\((3;\;0)\\)`, value: "C", feedback: `Nekompletní. Bod \\((3;\\,0)\\) le\u017e\u00ed na p\u0159\u00edmce \\(p\\), ale nikoliv na \\(r\\) \u2014 nejedn\u00e1 se o pr\u016fse\u010dn\u00edk obou p\u0159\u00edmek.` },
+        { label: `\\((-1;\;-2)\\)`, value: "D", feedback: `Chyba syntaxe. \\(-x+3 = 2x \\Rightarrow 3 = 3x \\Rightarrow x = +1\\) (kladn\u00e9), ne \\(-1\\).` },
       ],
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_05", regionId: "funkce", type: "closed", monsterName: `FW_05E: Definicni obor odmocniny`,
-      visual_color: "#4fc3f7", visual_symbol: `D(f)`, points: 3, trainingTasks: ["t_funkce_05"],
+      id: "q_funk_05", regionId: "funkce", type: "closed", monsterName: `FW_05E: Definicni obor odmocniny`,
+      visual_color: "#4fc3f7", visual_symbol: `D(f)`, points: 3, trainingTasks: ["t_funk_05"],
       question: `Funkce \\(f\\) je definována předpisem:`,
       formula: `$$f(x) = \\sqrt{x^{2} - 9}$$`,
       instruction: `Vyberte definiční obor funkce f.`,
@@ -2999,13 +2998,13 @@ x + 2y = 4 \\\\
       ],
       correctAnswer: "C", reward: { xp: 15 },
       hints: [
-        `Odmocnina je definována tehdy, když výraz pod ní je nezáporný: \\(x^2 - 9 \\geq 0\\), tedy \\(x^2 \\geq 9\\), tedy \\(|x| \\geq 3\\).`,
-        `\\(|x| \\geq 3\\) platí pro \\(x \\leq -3\\) nebo \\(x \\geq 3\\). Krajní body \\(\\pm 3\\) patří do \\(D(f)\\), protože \\(\\sqrt{0} = 0\\) je definováno.`
+        `Odmocnina je definována, když výraz pod ní je nezáporný. Jakou nerovnici pro \\(x\\) to dává?`,
+        `Výsledná nerovnice má tvar \\(|x| \\geq c\\). Kdy platí absolutní hodnota \\(\\geq\\) konstanta?`
       ]
     },
     {
-      id: "t_funkce_05", regionId: "funkce", type: "closed", monsterName: `SIM_05E: Podminka odmocniny`,
-      isTraining: true, firewallId: "q_funkce_05", visual_color: "#2ecc8a", visual_symbol: `D(f)`, points: 0,
+      id: "t_funk_05", regionId: "funkce", type: "closed", monsterName: `SIM_05E: Podminka odmocniny`,
+      isTraining: true, firewallId: "q_funk_05", visual_color: "#2ecc8a", visual_symbol: `D(f)`, points: 0,
       question: `Pro jaké hodnoty \\(x\\) je výraz \\(\\sqrt{x + 5}\\) definovaný?`,
       formula: null,
       instruction: `Vyberte spravnou podminu definovanosti.`,
@@ -3044,8 +3043,8 @@ x + 2y = 4 \\\\
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_06", regionId: "funkce", type: "closed", monsterName: `FW_05F: Soucet souradnic vrcholu paraboly`,
-      visual_color: "#4fc3f7", visual_symbol: `V(x,y)`, points: 3, trainingTasks: ["t_funkce_06"],
+      id: "q_funk_06", regionId: "funkce", type: "closed", monsterName: `FW_05F: Soucet souradnic vrcholu paraboly`,
+      visual_color: "#4fc3f7", visual_symbol: `V(x,y)`, points: 3, trainingTasks: ["t_funk_06"],
       question: `Kvadratická funkce \\(f\\) je definována předpisem:`,
       formula: `$$f(x) = x^{2} - 10x + 16$$`,
       instruction: `Určete součet souřadnic vrcholu V funkce f.`,
@@ -3073,20 +3072,20 @@ x + 2y = 4 \\\\
       ],
       correctAnswer: "D", reward: { xp: 15 },
       hints: [
-        `Pro parabolu \\(y = ax^2+bx+c\\): \\(x_v = -\\frac{b}{2a}\\). Zde \\(a=1\\), \\(b=-10\\) → \\(x_v = 5\\).`,
-        `Dosaď \\(x_v = 5\\) do předpisu: \\(y_v = 25 - 50 + 16 = -9\\). Součet souřadnic vrcholu: \\(x_v + y_v = ?\\)`
+        `Pro parabolu \\(y = ax^2+bx+c\\) platí vzorec pro x-souřadnici vrcholu. Znáš ho?`,
+        `Máš-li \\(x_v\\), dosaď ho do předpisu funkce a spočítej \\(y_v\\). Pak urči, co zadání žádá.`
       ]
     },
     {
-      id: "t_funkce_06", regionId: "funkce", type: "closed", monsterName: `SIM_05F: Y-souradnice vrcholu paraboly`,
-      isTraining: true, firewallId: "q_funkce_06", visual_color: "#2ecc8a", visual_symbol: `V(x,y)`, points: 0,
+      id: "t_funk_06", regionId: "funkce", type: "closed", monsterName: `SIM_05F: Y-souradnice vrcholu paraboly`,
+      isTraining: true, firewallId: "q_funk_06", visual_color: "#2ecc8a", visual_symbol: `V(x,y)`, points: 0,
       question: `Kvadratická funkce \\(f\\colon y = x^2 - 6x + 5\\). Jaká je \\(y\\)-souřadnice vrcholu \\(V\\)?`,
       formula: null,
       instruction: `Vyberte y-souradnici vrcholu.`,
       steps: [
         {
           trigger: `> Krok 1: Najdi x-souradnici vrcholu`,
-          content: `Pro parabolu \\(y = ax^2+bx+c\\): \\(x_v = -b/(2a)\\). Zde \\(a=1,\; b=-6\\): \\(x_v = -(-6)/(2 \\cdot 1) = 6/2 = 3\\).`
+          content: `Pro parabolu \\(y = ax^2+bx+c\\) platí \\(x_v = -b/(2a)\\). Jaká je hodnota \\(x_v\\) pro tuto funkci?`
         },
         {
           trigger: `> Krok 2: Dosaď do predpisu`,
@@ -3118,8 +3117,8 @@ x + 2y = 4 \\\\
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_07", regionId: "funkce", type: "closed", monsterName: `FW_05G: Tvrzeni o parabole`,
-      visual_color: "#4fc3f7", visual_symbol: `f(x)`, points: 3, trainingTasks: ["t_funkce_07"],
+      id: "q_funk_07", regionId: "funkce", type: "closed", monsterName: `FW_05G: Tvrzeni o parabole`,
+      visual_color: "#4fc3f7", visual_symbol: `f(x)`, points: 3, trainingTasks: ["t_funk_07"],
       question: `Funkce f je definována předpisem:`,
       formula: `$$f(x) = x^{2} + 2x + 1$$`,
       diagram: null,
@@ -3153,8 +3152,8 @@ x + 2y = 4 \\\\
       ]
     },
     {
-      id: "t_funkce_07", regionId: "funkce", type: "closed", monsterName: `SIM_05G: Doplneni na ctverec`,
-      isTraining: true, firewallId: "q_funkce_07", visual_color: "#2ecc8a", visual_symbol: `f(x)`, points: 0,
+      id: "t_funk_07", regionId: "funkce", type: "closed", monsterName: `SIM_05G: Doplneni na ctverec`,
+      isTraining: true, firewallId: "q_funk_07", visual_color: "#2ecc8a", visual_symbol: `f(x)`, points: 0,
       question: `Funkce \\(g: y = x^{2} - 4x + 4\\). Doplňte na čtverec a určete souřadnice vrcholu.`,
       instruction: `Vyberte správný vrchol paraboly \\(g\\).`,
       steps: [
@@ -3193,8 +3192,8 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_08", regionId: "funkce", type: "closed", monsterName: `FW_05H: Predpis paraboly z vrcholu a bodu`,
-      visual_color: "#4fc3f7", visual_symbol: `V+B`, points: 3, trainingTasks: ["t_funkce_08"],
+      id: "q_funk_08", regionId: "funkce", type: "closed", monsterName: `FW_05H: Predpis paraboly z vrcholu a bodu`,
+      visual_color: "#4fc3f7", visual_symbol: `V+B`, points: 3, trainingTasks: ["t_funk_08"],
       question: `V kartézské soustavě souřadnic jsou vyznačeny dva mřížové body \\(A\\), \\(B\\). Grafem funkce \\(h\\) je parabola s vrcholem \\(A\\) procházející bodem \\(B\\).`,
       diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 290" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="25" y1="0" x2="25" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="65" y1="0" x2="65" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="105" y1="0" x2="105" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="145" y1="0" x2="145" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="185" y1="0" x2="185" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="225" y1="0" x2="225" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="265" y1="0" x2="265" y2="290" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="285" x2="300" y2="285" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="265" x2="300" y2="265" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="245" x2="300" y2="245" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="225" x2="300" y2="225" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="205" x2="300" y2="205" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="185" x2="300" y2="185" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="165" x2="300" y2="165" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="145" x2="300" y2="145" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="125" x2="300" y2="125" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="105" x2="300" y2="105" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="85" x2="300" y2="85" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="65" x2="300" y2="65" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="45" x2="300" y2="45" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="25" x2="300" y2="25" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="5" x2="300" y2="5" stroke="#64748b" stroke-width="0.5" opacity="0.45"/> <line x1="0" y1="185" x2="300" y2="185" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="300,185 293,181 293,189" fill="#e2e8f0"/> <text x="295" y="177" fill="#e2e8f0" font-size="12" font-style="italic">x</text> <line x1="65" y1="290" x2="65" y2="0" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="65,0 61,10 69,10" fill="#e2e8f0"/> <text x="71" y="14" fill="#e2e8f0" font-size="12" font-style="italic">y</text> <text x="51" y="199" fill="#e2e8f0" font-size="11">O</text> <line x1="25" y1="182" x2="25" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="25" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">-1</text> <line x1="105" y1="182" x2="105" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="105" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">1</text> <line x1="145" y1="182" x2="145" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="145" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">2</text> <line x1="185" y1="182" x2="185" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="185" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">3</text> <line x1="225" y1="182" x2="225" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="225" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">4</text> <line x1="265" y1="182" x2="265" y2="188" stroke="#e2e8f0" stroke-width="1"/> <text x="265" y="200" fill="#e2e8f0" font-size="10" text-anchor="middle">5</text> <line x1="62" y1="265" x2="68" y2="265" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="269" fill="#e2e8f0" font-size="10" text-anchor="end">-4</text> <line x1="62" y1="245" x2="68" y2="245" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="249" fill="#e2e8f0" font-size="10" text-anchor="end">-3</text> <line x1="62" y1="225" x2="68" y2="225" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="229" fill="#e2e8f0" font-size="10" text-anchor="end">-2</text> <line x1="62" y1="205" x2="68" y2="205" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="209" fill="#e2e8f0" font-size="10" text-anchor="end">-1</text> <line x1="62" y1="165" x2="68" y2="165" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="169" fill="#e2e8f0" font-size="10" text-anchor="end">1</text> <line x1="62" y1="145" x2="68" y2="145" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="149" fill="#e2e8f0" font-size="10" text-anchor="end">2</text> <line x1="62" y1="125" x2="68" y2="125" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="129" fill="#e2e8f0" font-size="10" text-anchor="end">3</text> <line x1="62" y1="105" x2="68" y2="105" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="109" fill="#e2e8f0" font-size="10" text-anchor="end">4</text> <line x1="62" y1="85" x2="68" y2="85" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="89" fill="#e2e8f0" font-size="10" text-anchor="end">5</text> <line x1="62" y1="65" x2="68" y2="65" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="69" fill="#e2e8f0" font-size="10" text-anchor="end">6</text> <line x1="62" y1="45" x2="68" y2="45" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="49" fill="#e2e8f0" font-size="10" text-anchor="end">7</text> <line x1="62" y1="25" x2="68" y2="25" stroke="#e2e8f0" stroke-width="1"/> <text x="57" y="29" fill="#e2e8f0" font-size="10" text-anchor="end">8</text> <polyline points="40.1,2.4 41.1,6.0 42.1,9.6 43.1,13.2 44.1,16.7 45.1,20.2 46.1,23.7 47.1,27.2 48.1,30.7 49.1,34.1 50.1,37.5 51.1,40.8 52.1,44.2 53.1,47.5 54.1,50.8 55.1,54.1 56.1,57.3 57.1,60.5 58.1,63.7 59.1,66.9 60.1,70.1 61.1,73.2 62.1,76.3 63.1,79.3 64.1,82.4 65.1,85.4 66.1,88.4 67.1,91.4 68.1,94.3 69.1,97.2 70.2,100.1 71.2,103.0 72.2,105.8 73.2,108.6 74.2,111.4 75.2,114.2 76.2,117.0 77.2,119.7 78.2,122.4 79.2,125.0 80.2,127.7 81.2,130.3 82.2,132.9 83.2,135.4 84.2,138.0 85.2,140.5 86.2,143.0 87.2,145.5 88.2,147.9 89.2,150.3 90.2,152.7 91.2,155.1 92.2,157.4 93.2,159.7 94.2,162.0 95.2,164.3 96.2,166.5 97.2,168.7 98.2,170.9 99.2,173.1 100.3,175.2 101.3,177.3 102.3,179.4 103.3,181.5 104.3,183.5 105.3,185.5 106.3,187.5 107.3,189.5 108.3,191.4 109.3,193.3 110.3,195.2 111.3,197.1 112.3,198.9 113.3,200.7 114.3,202.5 115.3,204.3 116.3,206.0 117.3,207.7 118.3,209.4 119.3,211.1 120.3,212.7 121.3,214.3 122.3,215.9 123.3,217.5 124.3,219.0 125.3,220.5 126.3,222.0 127.3,223.4 128.3,224.9 129.3,226.3 130.4,227.7 131.4,229.0 132.4,230.4 133.4,231.7 134.4,233.0 135.4,234.2 136.4,235.4 137.4,236.6 138.4,237.8 139.4,239.0 140.4,240.1 141.4,241.2 142.4,242.3 143.4,243.4 144.4,244.4 145.4,245.4 146.4,246.4 147.4,247.3 148.4,248.3 149.4,249.2 150.4,250.1 151.4,250.9 152.4,251.7 153.4,252.5 154.4,253.3 155.4,254.1 156.4,254.8 157.4,255.5 158.4,256.2 159.4,256.8 160.5,257.5 161.5,258.1 162.5,258.6 163.5,259.2 164.5,259.7 165.5,260.2 166.5,260.7 167.5,261.2 168.5,261.6 169.5,262.0 170.5,262.4 171.5,262.7 172.5,263.0 173.5,263.3 174.5,263.6 175.5,263.9 176.5,264.1 177.5,264.3 178.5,264.5 179.5,264.6 180.5,264.7 181.5,264.8 182.5,264.9 183.5,265.0 184.5,265.0 185.5,265.0 186.5,265.0 187.5,264.9 188.5,264.8 189.5,264.7 190.6,264.6 191.6,264.5 192.6,264.3 193.6,264.1 194.6,263.9 195.6,263.6 196.6,263.3 197.6,263.0 198.6,262.7 199.6,262.3 200.6,262.0 201.6,261.6 202.6,261.1 203.6,260.7 204.6,260.2 205.6,259.7 206.6,259.2 207.6,258.6 208.6,258.0 209.6,257.4 210.6,256.8 211.6,256.1 212.6,255.5 213.6,254.8 214.6,254.0 215.6,253.3 216.6,252.5 217.6,251.7 218.6,250.8 219.6,250.0 220.7,249.1 221.7,248.2 222.7,247.3 223.7,246.3 224.7,245.3 225.7,244.3 226.7,243.3 227.7,242.2 228.7,241.2 229.7,240.0 230.7,238.9 231.7,237.8 232.7,236.6 233.7,235.4 234.7,234.1 235.7,232.9 236.7,231.6 237.7,230.3 238.7,228.9 239.7,227.6 240.7,226.2 241.7,224.8 242.7,223.3 243.7,221.9 244.7,220.4 245.7,218.9 246.7,217.4 247.7,215.8 248.7,214.2 249.7,212.6 250.8,211.0 251.8,209.3 252.8,207.6 253.8,205.9 254.8,204.2 255.8,202.4 256.8,200.6 257.8,198.8 258.8,197.0 259.8,195.1 260.8,193.2 261.8,191.3 262.8,189.4 263.8,187.4 264.8,185.4 265.8,183.4 266.8,181.3 267.8,179.3 268.8,177.2 269.8,175.1 270.8,172.9 271.8,170.8 272.8,168.6 273.8,166.4 274.8,164.1 275.8,161.9 276.8,159.6 277.8,157.3 278.8,154.9 279.8,152.5 280.9,150.2 281.9,147.7 282.9,145.3 283.9,142.8 284.9,140.3 285.9,137.8 286.9,135.3 287.9,132.7 288.9,130.1 289.9,127.5 290.9,124.9 291.9,122.2 292.9,119.5 293.9,116.8 294.9,114.0 295.9,111.3 296.9,108.5 297.9,105.6" fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/> <circle cx="185.0" cy="265.0" r="6" fill="#cc4400" stroke="#111827" stroke-width="1.5"/> <text x="193" y="269" fill="#cc4400" font-size="10" text-anchor="start">A(3; -4)</text> <text x="101" y="175" fill="#fbbf24" font-size="10" text-anchor="middle">B</text> <circle cx="105.0" cy="185.0" r="5" fill="#fbbf24" stroke="#111827" stroke-width="1.5"/> <line x1="185" y1="185" x2="185" y2="265" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/> <text x="150" y="286" fill="#e2e8f0" font-size="10" text-anchor="middle">h(x) = ?</text> </svg>`,
       instruction: `Jaky je predpis funkce h?`,
@@ -3222,23 +3221,23 @@ x + 2y = 4 \\\\
       ],
       correctAnswer: "A", reward: { xp: 15 },
       hints: [
-        `Vrcholový tvar paraboly: \\(y = a(x - x_v)^2 + y_v\\). Dosaď vrchol \\(A(3;\\,-4)\\): \\(h(x) = a(x-3)^2 - 4\\).`,
-        `Parabola prochází bodem \\(B(1;\\, 0)\\). Dosaď \\(x=1\\), \\(y=0\\) do vrcholového tvaru a vyřeš pro \\(a\\). Pak rozpiš.`
+        `Vrcholový tvar paraboly: \\(y = a(x - x_v)^2 + y_v\\). Dosaď souřadnice vrcholu.`,
+        `Parametr \\(a\\) určíš dosazením bodu, kterým parabola prochází. Co z toho vyjde?`
       ]
     },
     {
-      id: "t_funkce_08", regionId: "funkce", type: "closed", monsterName: `SIM_05H: Koeficient a z bodu paraboly`,
-      isTraining: true, firewallId: "q_funkce_08", visual_color: "#2ecc8a", visual_symbol: `V+B`, points: 0,
+      id: "t_funk_08", regionId: "funkce", type: "closed", monsterName: `SIM_05H: Koeficient a z bodu paraboly`,
+      isTraining: true, firewallId: "q_funk_08", visual_color: "#2ecc8a", visual_symbol: `V+B`, points: 0,
       question: `Parabola ma vrchol \\(V(2;\\mspace{6mu} - 1)\\) a prochazi bodem \\((0;\\mspace{6mu} 3)\\). Predpis: \\(y = a(x - 2)^{2} - 1\\).`,
       instruction: `Urcete koeficient a dosazenim bodu (0; 3).`,
       steps: [
         {
           trigger: `> Krok 1: Dosadte bod (0; 3)`,
-          content: `\\(x = 0,\; y = 3\\) → \\(3 = a(0-2)^2 - 1 = 4a - 1\\).`
+          content: `Dosaď bod \\((0; 3)\\) do vrcholového tvaru \\(y = a(x-2)^2 - 1\\) a sestav rovnici pro \\(a\\).`
         },
         {
           trigger: `> Krok 2: Resen rovnice`,
-          content: `\\(4a - 1 = 3\\). Vyřeš pro \\(a\\) a dosaď do vrcholového tvaru \\(y = (x-2)^2 - 1\\).`
+          content: `Vyřeš rovnici pro \\(a\\). Jaká je výsledná hodnota?`
         },
       ],
       choices: [
@@ -3267,8 +3266,8 @@ x + 2y = 4 \\\\
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_09", regionId: "funkce", type: "closed", monsterName: `FW_05I: Nepravdive tvrzeni o parabole`,
-      visual_color: "#4fc3f7", visual_symbol: `A/N`, points: 3, trainingTasks: ["t_funkce_09"],
+      id: "q_funk_09", regionId: "funkce", type: "closed", monsterName: `FW_05I: Nepravdive tvrzeni o parabole`,
+      visual_color: "#4fc3f7", visual_symbol: `A/N`, points: 3, trainingTasks: ["t_funk_09"],
       question: `Je dana funkce \\(f:y = 4 - x^{2}\\) pro \\(x \\in \\mathbb{R}\\).`,
       instruction: `Ktere z nasledujicich tvrzeni o funkci f je NEPRAVDIVE?`,
       choices: [
@@ -3295,13 +3294,13 @@ x + 2y = 4 \\\\
       ],
       correctAnswer: "D", reward: { xp: 15 },
       hints: [
-        `Záporná parabola (\\(-x^2\\)) má MAXIMUM ve vrcholu \\(V(0;\\, 4)\\), ne minimum. Ramena jdou dolů — obor hodnot je omezen shora.`,
+        `Záporná parabola má maximum, ne minimum — kde leží a co to říká o oboru hodnot?`,
         `Obor hodnot sahá od \\(-\\infty\\) do maxima paraboly. Dosahuje parabola vrcholu, nebo se k němu jen blíží? Od toho závisí, zda interval bude otevřený nebo uzavřený.`
       ]
     },
     {
-      id: "t_funkce_09", regionId: "funkce", type: "closed", monsterName: `SIM_05I: Obor hodnot zaporne paraboly`,
-      isTraining: true, firewallId: "q_funkce_09", visual_color: "#2ecc8a", visual_symbol: `A/N`, points: 0,
+      id: "t_funk_09", regionId: "funkce", type: "closed", monsterName: `SIM_05I: Obor hodnot zaporne paraboly`,
+      isTraining: true, firewallId: "q_funk_09", visual_color: "#2ecc8a", visual_symbol: `A/N`, points: 0,
       question: `Funkce \\(f:y = 9 - x^{2}\\) je zaporna parabola s vrcholem \\(V(0;\\mspace{6mu} 9)\\).`,
       instruction: `Jaky je obor hodnot funkce f?`,
       steps: [
@@ -3339,8 +3338,8 @@ x + 2y = 4 \\\\
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_10", regionId: "funkce", type: "closed", monsterName: `FW_05J: Obor hodnot exponencialni funkce`,
-      visual_color: "#4fc3f7", visual_symbol: `a^x`, points: 3, trainingTasks: ["t_funkce_10"],
+      id: "q_funk_10", regionId: "funkce", type: "closed", monsterName: `FW_05J: Obor hodnot exponencialni funkce`,
+      visual_color: "#4fc3f7", visual_symbol: `a^x`, points: 3, trainingTasks: ["t_funk_10"],
       question: `Funkce \\(f:y = \\left( \\frac{3}{2} \\right)^{x}\\) je definována pro všechna \\(x \\in \\mathbb{R}\\).`,
       instruction: `Ze souboru \\(\\left\\{\\,\\dfrac{2}{3};\\quad 0;\\quad \\dfrac{3}{2};\\quad \\dfrac{4}{9};\\quad \\dfrac{9}{4}\\,\\right\\}\\) vyberte číslo, které NEPATŘÍ do oboru hodnot funkce \\(f\\).`,
       choices: [
@@ -3368,12 +3367,12 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 15 },
       hints: [
         `Exponenciální funkce \\(\\left(\\tfrac{3}{2}\\right)^x > 0\\) pro všechna \\(x \\in \\mathbb{R}\\). Záporná čísla a nula nemohou být hodnotami.`,
-        `Obor hodnot exponenciální funkce je \\(H_f = (0;\\, +\\infty)\\). Porovnej každé číslo z nabídky s touto množinou.`
+        `Exponenciální funkce \\(a^x\\) pro \\(a > 0,\\, a \\neq 1\\) je vždy kladná. Co to říká o číslech, která do oboru hodnot nepatří?`
       ]
     },
     {
-      id: "t_funkce_10", regionId: "funkce", type: "closed", monsterName: `SIM_05J: Pati 0 do oboru hodnot (3/2)^x?`,
-      isTraining: true, firewallId: "q_funkce_10", visual_color: "#2ecc8a", visual_symbol: `a^x`, points: 0,
+      id: "t_funk_10", regionId: "funkce", type: "closed", monsterName: `SIM_05J: Pati 0 do oboru hodnot (3/2)^x?`,
+      isTraining: true, firewallId: "q_funk_10", visual_color: "#2ecc8a", visual_symbol: `a^x`, points: 0,
       question: `Funkce \\(f:y = \\left( \\frac{3}{2} \\right)^{x}\\) je definovana pro vsechna \\(x \\in \\mathbb{R}\\).`,
       instruction: `Pati cislo 0 do oboru hodnot funkce f?`,
       steps: [
@@ -3411,8 +3410,8 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_funkce_11", regionId: "funkce", type: "closed", monsterName: `FW_05K: Rozpoznani sude funkce`,
-      visual_color: "#4fc3f7", visual_symbol: `f(-x)`, points: 3, trainingTasks: ["t_funkce_11"],
+      id: "q_funk_11", regionId: "funkce", type: "closed", monsterName: `FW_05K: Rozpoznani sude funkce`,
+      visual_color: "#4fc3f7", visual_symbol: `f(-x)`, points: 3, trainingTasks: ["t_funk_11"],
       question: `Jsou dany ctyri funkce s definicnim oborem \\(\\mathbb{R}\\).`,
       instruction: `Která z následujících funkcí je sudá?`,
       choices: [
@@ -3444,14 +3443,14 @@ x + 2y = 4 \\\\
       ]
     },
     {
-      id: "t_funkce_11", regionId: "funkce", type: "closed", monsterName: `SIM_05K: Je f(x) = x^2 + 3 suda?`,
-      isTraining: true, firewallId: "q_funkce_11", visual_color: "#2ecc8a", visual_symbol: `f(-x)`, points: 0,
+      id: "t_funk_11", regionId: "funkce", type: "closed", monsterName: `SIM_05K: Je f(x) = x^2 + 3 suda?`,
+      isTraining: true, firewallId: "q_funk_11", visual_color: "#2ecc8a", visual_symbol: `f(-x)`, points: 0,
       question: `Funkce \\(f:y = x^{2} + 3\\) definovana pro vsechna \\(x \\in \\mathbb{R}\\).`,
       instruction: `Je tato funkce suda? Vypocti f(-x) a porovnej s f(x).`,
       steps: [
         {
           trigger: `> Krok 1: Vypocti f(-x)`,
-          content: `Dosaďte \\(-x\\) místo \\(x\\): \\(f(-x) = (-x)^2 + 3 = x^2 + 3\\).`
+          content: `Dosaď \\(-x\\) místo \\(x\\) do předpisu. Co vyjde?`
         },
         {
           trigger: `> Krok 2: Porovnej s f(x)`,
@@ -3485,8 +3484,8 @@ x + 2y = 4 \\\\
 
 
     {
-      id: "q_funkce_12", regionId: "funkce", type: "closed", monsterName: `FW_05L: Analyza linearnich funkci`,
-      visual_color: "#4fc3f7", visual_symbol: `f(x)`, points: 2, trainingTasks: ["t_funkce_12"],
+      id: "q_funk_12", regionId: "funkce", type: "closed", monsterName: `FW_05L: Analyza linearnich funkci`,
+      visual_color: "#4fc3f7", visual_symbol: `f(x)`, points: 2, trainingTasks: ["t_funk_12"],
       question: `Jsou dány funkce \\(f\\), \\(g\\) s definičním oborem \\(\\mathbb{R}\\).`,
       formula: `$$f\\colon\\ y = -2 - x \\qquad g\\colon\\ y = x - 2$$`,
       diagram: null,
@@ -3516,22 +3515,22 @@ x + 2y = 4 \\\\
       correctAnswer: "D", reward: { xp: 10 },
       hints: [
         `Dosaď konkrétní hodnoty \\(x\\) do obou předpisů a porovnej výsledky. Směrnice (koeficient u \\(x\\)) určuje, zda funkce roste nebo klesá.`,
-        `Společný bod nastane, když \\(f(x_0) = g(x_0)\\). Zkus \\(x_0 = 0\\) — spočítej \\(f(0)\\) a \\(g(0)\\).`
+        `Společný bod nastane, když \\(f(x_0) = g(x_0)\\). Jak takový bod najdeš?`
       ]
     },
     {
-      id: "t_funkce_12", regionId: "funkce", type: "closed", monsterName: `SIM_05L: Prusecik dvou primek`,
-      isTraining: true, firewallId: "q_funkce_12", visual_color: "#2ecc8a", visual_symbol: `f(x)`, points: 0,
+      id: "t_funk_12", regionId: "funkce", type: "closed", monsterName: `SIM_05L: Prusecik dvou primek`,
+      isTraining: true, firewallId: "q_funk_12", visual_color: "#2ecc8a", visual_symbol: `f(x)`, points: 0,
       question: `Funkce \\(f: y = x + 1\\) a \\(g: y = 3 - x\\). Nalezněte jejich společný bod (průsečík grafů).`,
       instruction: `Vyberte správný průsečík.`,
       steps: [
         {
           trigger: `> Krok 1: Sestav rovnici`,
-          content: `Společný bod nastane, když \\(f(x) = g(x)\\). Napiš rovnici: \\(x + 1 = 3 - x\\).`
+          content: `Společný bod nastane, když \\(f(x) = g(x)\\). Napiš rovnici a vyřeš ji.`
         },
         {
           trigger: `> Krok 2: Vyres a dosaď`,
-          content: `Z rovnice \\(x + 1 = 3 - x\\) odvoď hodnotu \\(x\\). Pak dosaď zpět do jednoho z předpisů a získej \\(y\\).`
+          content: `Máš hodnotu \\(x\\). Dosaď do jednoho z předpisů a zjisti \\(y\\).`
         },
       ],
       choices: [
@@ -3564,49 +3563,53 @@ x + 2y = 4 \\\\
     // ==========================================
 
     {
-      id: "q_gon_01", regionId: "goniometrie", type: "closed", monsterName: `FW_10A: Tangens ze sinu`,
-      visual_color: "#e040fb", visual_symbol: `sin`, points: 2, trainingTasks: ["t_gon_01"],
+      id: "q_gon_01", regionId: "goniometrie", type: "closed", monsterName: `FW_10A: Cotangens ze sinu`,
+      visual_color: "#e040fb", visual_symbol: `cotg`, points: 2, trainingTasks: ["t_gon_01"],
       question: `Pro \\(x \\in (\\pi;\\, \\tfrac{3\\pi}{2})\\) platí:`,
       formula: `$$\\text{sin}x = - \\frac{\\sqrt{3}}{2}$$`,
-      instruction: `Vyberte správnou hodnotu tg x.`,
+      instruction: `Vyberte správnou hodnotu cotg x.`,
       choices: [
         {
-          label: `\\(- \\sqrt{3}\\)`,
+          label: `\\(\\sqrt{3}\\)`,
           value: "A",
-          feedback: `Chyba syntaxe. Ve 3. kvadrantu jsou obě funkce záporné — tangens je kladný: \\(\\tfrac{(-)}{(-)} = +\\).`
+          feedback: `Chyba syntaxe. Výsledek odpovídá \\(\\operatorname{tg} x\\), ne cotangensu.`
         },
         {
           label: `\\(- \\frac{\\sqrt{3}}{3}\\)`,
           value: "B",
-          feedback: `Kritická chyba. Záměna podílu \\(\\sin/\\cos\\) — výsledek by odpovídal \\(-\\operatorname{cotg} x\\).`
+          feedback: `Chyba znaménka. Ve 3. kvadrantu mají \\(\\sin x\\) i \\(\\cos x\\) stejné znaménko — jejich podíl vychází kladný.`
         },
         {
-          label: `\\(\\sqrt{3}\\)`,
+          label: `\\(\\frac{\\sqrt{3}}{3}\\)`,
           value: "C",
-          feedback: `Přístup povolen. Ve 3. kvadrantu: \\(\\sin x < 0,\\; \\cos x < 0\\) → \\(\\tan x = \\tfrac{-\\sqrt{3}/2}{-1/2} = \\sqrt{3}\\). ✓`
+          feedback: `Přístup povolen. Obě souřadnice ve 3. kvadrantu záporné → podíl kladný. ✓`
         },
         {
           label: `hodnota neexistuje`,
           value: "D",
-          feedback: `Chyba. \\(\\tan x\\) neexistuje jen pro \\(\\cos x = 0\\). Zde \\(\\cos x = -\\tfrac{1}{2} \\neq 0\\).`
+          feedback: `Chyba. \\(\\operatorname{cotg} x\\) neexistuje jen pro \\(\\sin x = 0\\). Zde \\(\\sin x = -\\tfrac{\\sqrt{3}}{2} \\neq 0\\).`
         },
+      ],
+      hints: [
+        `Jaká je definice cotangensu pomocí sinu a kosinu? Na jednotkové kružnici odpovídají \\(\\sin x\\) a \\(\\cos x\\) konkrétním souřadnicím bodu — určete je pro bod ve 3. kvadrantu.`,
+        `Obě souřadnice bodu ve 3. kvadrantu mají stejné znaménko. Co to říká o znaménku jejich podílu?`,
       ],
       correctAnswer: "C", reward: { xp: 10 }
     },
     {
       id: "t_gon_01", regionId: "goniometrie", type: "closed", monsterName: `SIM_10A: Znaménka ve 3. kvadrantu`,
-      isTraining: true, firewallId: "q_gon_01", visual_color: "#2ecc8a", visual_symbol: `sin`, points: 0,
+      isTraining: true, firewallId: "q_gon_01", visual_color: "#2ecc8a", visual_symbol: `cotg`, points: 0,
       question: `Číslo \\(x\\) leží ve 3. kvadrantu: \\(x \\in (\\pi;\\, \\tfrac{3\\pi}{2})\\). Jaká jsou znaménka \\(\\sin x\\) a \\(\\cos x\\)?`,
       formula: `$$x \\in \\left( \\pi;\\mspace{6mu}\\frac{3\\pi}{2} \\right)$$`,
       instruction: `Vyberte správnou kombinaci znamének.`,
       steps: [
         {
-          trigger: `> Krok 1: Kvadranty a osy`,
-          content: `Osa \\(x\\) dělí rovinu na horní (\\(\\sin > 0\\)) a dolní (\\(\\sin < 0\\)). Osa \\(y\\) dělí na pravou (\\(\\cos > 0\\)) a levou (\\(\\cos < 0\\)).`
+          trigger: `> Krok 1: Jednotková kružnice`,
+          content: `Na jednotkové kružnici je \\(\\cos x\\) x-souřadnice a \\(\\sin x\\) y-souřadnice bodu. Pravá polokružnice: \\(\\cos > 0\\). Levá: \\(\\cos < 0\\). Horní: \\(\\sin > 0\\). Dolní: \\(\\sin < 0\\).`
         },
         {
-          trigger: `> Krok 2: Lokalizace 3. kvadrantu`,
-          content: `3. kvadrant je <b>vlevo dole</b> — obě souřadnice záporné: \\(\\sin x < 0,\\; \\cos x < 0\\).`
+          trigger: `> Krok 2: Lokalizace ve 3. kvadrantu`,
+          content: `3. kvadrant = bod <b>vlevo dole</b> na kružnici. Určete znaménka obou souřadnic pro tuto polohu.`
         },
       ],
       choices: [
@@ -3634,71 +3637,75 @@ x + 2y = 4 \\\\
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_gon_02", regionId: "goniometrie", type: "closed", monsterName: `FW_10B: Rovnice sekans`,
-      visual_color: "#e040fb", visual_symbol: `cos`, points: 2, trainingTasks: ["t_gon_02"],
+      id: "q_gon_02", regionId: "goniometrie", type: "closed", monsterName: `FW_10B: Rovnice cotangens`,
+      visual_color: "#e040fb", visual_symbol: `cotg`, points: 2, trainingTasks: ["t_gon_02"],
       question: `V intervalu \\((0;\\, 2\\pi)\\) je řešena rovnice:`,
-      formula: `$$\\frac{1}{\\text{cos}x} = - 2$$`,
+      formula: `$$\\frac{1}{\\operatorname{tg}x} - \\sqrt{3} = 0$$`,
       instruction: `Která z množin obsahuje všechna řešení dané rovnice?`,
       choices: [
         {
-          label: `\\(\\left\\{ \\frac{\\pi}{3};\\,\\frac{5\\pi}{3} \\right\\}\\)`,
+          label: `\\(\\left\\{ \\frac{\\pi}{6};\\,\\frac{7\\pi}{6} \\right\\}\\)`,
           value: "A",
-          feedback: `Chyba znaménka. Tato řešení odpovídají \\(\\cos x = +\\tfrac{1}{2}\\), ne \\(-\\tfrac{1}{2}\\).`
+          feedback: `Přístup povolen. \\(\\operatorname{cotg} x = \\sqrt{3}\\) → \\(\\operatorname{tg} x = \\tfrac{1}{\\sqrt{3}}\\). Ref. úhel \\(\\tfrac{\\pi}{6}\\), 1. a 3. kvadrant. ✓`
         },
         {
-          label: `\\(\\left\\{ \\frac{2\\pi}{3};\\,\\frac{4\\pi}{3} \\right\\}\\)`,
+          label: `\\(\\left\\{ \\frac{\\pi}{3};\\,\\frac{4\\pi}{3} \\right\\}\\)`,
           value: "B",
-          feedback: `Logika potvrzena. \\(\\cos\\tfrac{2\\pi}{3} = \\cos\\tfrac{4\\pi}{3} = -\\tfrac{1}{2}\\). Ref. úhel \\(\\tfrac{\\pi}{3}\\), 2. a 3. kvadrant. ✓`
+          feedback: `Chyba syntaxe. Záměna \\(\\operatorname{tg} x\\) a \\(\\operatorname{cotg} x\\) — jsou to převrácené hodnoty, ne totéž.`
         },
         {
-          label: `\\(\\left\\{ \\frac{\\pi}{6};\\,\\frac{5\\pi}{6} \\right\\}\\)`,
+          label: `\\(\\left\\{ \\frac{5\\pi}{6};\\,\\frac{11\\pi}{6} \\right\\}\\)`,
           value: "C",
-          feedback: `Kritická chyba. Tato řešení platí pro \\(\\sin x = \\tfrac{1}{2}\\) — jiná goniometrická funkce.`
+          feedback: `Chyba znaménka. \\(\\sqrt{3}\\) je kladné — cotangens je kladný ve stejných kvadrantech jako tangens.`
         },
         {
-          label: `\\(\\left\\{ \\frac{5\\pi}{6};\\,\\frac{7\\pi}{6} \\right\\}\\)`,
+          label: `\\(\\left\\{ \\frac{\\pi}{6} \\right\\}\\)`,
           value: "D",
-          feedback: `Chyba syntaxe. Nesprávný ref. úhel — \\(\\arccos(\\tfrac{1}{2}) = \\tfrac{\\pi}{3}\\), nikoli \\(\\tfrac{\\pi}{6}\\).`
+          feedback: `Nekompletní. Perioda \\(\\operatorname{tg} x\\) je \\(\\pi\\) — v intervalu \\((0;\\, 2\\pi)\\) jsou vždy dvě řešení.`
         },
       ],
-      correctAnswer: "B", reward: { xp: 10 }
+      hints: [
+        `Jaký vztah platí mezi \\(\\operatorname{cotg} x\\) a \\(\\operatorname{tg} x\\)? V jakých kvadrantech je cotangens kladný?`,
+        `Jaká je perioda \\(\\operatorname{tg} x\\) a kolik řešení to dává v intervalu \\((0;\\, 2\\pi)\\)?`,
+      ],
+      correctAnswer: "A", reward: { xp: 10 }
     },
     {
-      id: "t_gon_02", regionId: "goniometrie", type: "closed", monsterName: `SIM_10B: Referenční úhel pro cos`,
-      isTraining: true, firewallId: "q_gon_02", visual_color: "#2ecc8a", visual_symbol: `cos`, points: 0,
-      question: `Jaký je referenční (ostrý) úhel pro rovnici \\(\\cos x = -\\tfrac{1}{2}\\)?`,
-      formula: `$$\\text{cos}x = - \\frac{1}{2}$$`,
+      id: "t_gon_02", regionId: "goniometrie", type: "closed", monsterName: `SIM_10B: Referenční úhel pro cotg`,
+      isTraining: true, firewallId: "q_gon_02", visual_color: "#2ecc8a", visual_symbol: `cotg`, points: 0,
+      question: `Jaký je referenční (ostrý) úhel pro rovnici \\(\\operatorname{cotg} x = \\sqrt{3}\\)?`,
+      formula: `$$\\operatorname{cotg}x = \\sqrt{3}$$`,
       instruction: `Vyberte správný referenční úhel.`,
       steps: [
         {
-          trigger: `> Krok 1: Ignoruj znaménko`,
-          content: `Referenční úhel hledáme pro \\(|\\cos x| = \\tfrac{1}{2}\\). Ptáme se: jaký ostrý úhel \\(\\alpha\\) splňuje \\(\\cos \\alpha = \\tfrac{1}{2}\\)?`
+          trigger: `> Krok 1: Přepis na tg`,
+          content: `\\(\\operatorname{cotg} x = \\sqrt{3}\\) znamená \\(\\operatorname{tg} x = \\tfrac{1}{\\sqrt{3}}\\). Ptáme se: jaký ostrý úhel \\(\\alpha\\) splňuje \\(\\operatorname{tg}\\alpha = \\tfrac{1}{\\sqrt{3}}\\)?`
         },
         {
-          trigger: `> Krok 2: Základní hodnoty`,
-          content: `Pamatuj: \\(\\cos(\\tfrac{\\pi}{3}) = \\tfrac{1}{2}\\), \\(\\cos(\\tfrac{\\pi}{4}) = \\tfrac{\\sqrt{2}}{2}\\), \\(\\cos(\\tfrac{\\pi}{6}) = \\tfrac{\\sqrt{3}}{2}\\). Hledáme \\(\\tfrac{1}{2}\\) → referenční úhel je <b>\\(\\tfrac{\\pi}{3}\\)</b>.`
+          trigger: `> Krok 2: Základní hodnoty tg`,
+          content: `Vzpomeňte si na základní hodnoty \\(\\operatorname{tg}\\) pro ostrý úhel \\(\\tfrac{\\pi}{6}\\), \\(\\tfrac{\\pi}{4}\\) a \\(\\tfrac{\\pi}{3}\\). Která z nich odpovídá hodnotě \\(\\tfrac{1}{\\sqrt{3}}\\)?`
         },
       ],
       choices: [
         {
-          label: `\\(\\frac{\\pi}{3}\\)`,
+          label: `\\(\\frac{\\pi}{6}\\)`,
           value: "A",
-          feedback: `Přístup povolen. \\(\\cos(\\tfrac{\\pi}{3}) = \\tfrac{1}{2}\\). ✓`
+          feedback: `Přístup povolen. \\(\\operatorname{tg}(\\tfrac{\\pi}{6}) = \\tfrac{1}{\\sqrt{3}}\\). ✓`
+        },
+        {
+          label: `\\(\\frac{\\pi}{3}\\)`,
+          value: "B",
+          feedback: `Chyba. \\(\\operatorname{tg}(\\tfrac{\\pi}{3}) = \\sqrt{3}\\) — to by byl referenční úhel pro \\(\\operatorname{cotg} x = \\tfrac{1}{\\sqrt{3}}\\), ne \\(\\sqrt{3}\\).`
         },
         {
           label: `\\(\\frac{\\pi}{4}\\)`,
-          value: "B",
-          feedback: `Chyba. \\(\\cos(\\tfrac{\\pi}{4}) = \\tfrac{\\sqrt{2}}{2} \\approx 0{,}71 \\neq \\tfrac{1}{2}\\).`
-        },
-        {
-          label: `\\(\\frac{\\pi}{6}\\)`,
           value: "C",
-          feedback: `Chyba. \\(\\cos(\\tfrac{\\pi}{6}) = \\tfrac{\\sqrt{3}}{2} \\approx 0{,}87 \\neq \\tfrac{1}{2}\\).`
+          feedback: `Chyba. \\(\\operatorname{tg}(\\tfrac{\\pi}{4}) = 1 \\neq \\tfrac{1}{\\sqrt{3}}\\).`
         },
         {
           label: `\\(\\frac{\\pi}{2}\\)`,
           value: "D",
-          feedback: `Chyba. \\(\\cos(\\tfrac{\\pi}{2}) = 0 \\neq \\tfrac{1}{2}\\).`
+          feedback: `Chyba. \\(\\operatorname{tg}(\\tfrac{\\pi}{2})\\) neexistuje.`
         },
       ],
       correctAnswer: "A", reward: { xp: 5 }
@@ -3731,6 +3738,10 @@ x + 2y = 4 \\\\
           feedback: `Chyba syntaxe. \\(\\tan 150° = -\\tfrac{\\sqrt{3}}{3} \\neq \\tfrac{1}{\\sqrt{3}}\\). Špatný kvadrant.`
         },
       ],
+      hints: [
+        `Na jednotkové kružnici je \\(\\operatorname{tg} x\\) poměr y-souřadnice k x-souřadnici bodu. V jakých kvadrantech leží body, kde je tento poměr roven \\(\\tfrac{1}{\\sqrt{3}}\\)?`,
+        `Jaká je perioda tangensu a kolik řešení to dává v intervalu \\((0°;\\, 360°)\\)?`,
+      ],
       correctAnswer: "A", reward: { xp: 15 }
     },
     {
@@ -3741,12 +3752,12 @@ x + 2y = 4 \\\\
       instruction: `Vyberte správný počet.`,
       steps: [
         {
-          trigger: `> Krok 1: Perioda tangensu`,
-          content: `Funkce \\(\\tan x\\) má periodu <b>\\(180°\\)</b> (na rozdíl od \\(\\sin\\) a \\(\\cos\\), které mají periodu \\(360°\\)).`
+          trigger: `> Krok 1: Tg jako sklon na kružnici`,
+          content: `Na jednotkové kružnici je \\(\\operatorname{tg} x = \\tfrac{y}{x}\\) — sklon přímky vedené z počátku k bodu. Každý sklon odpovídá <b>dvěma protilehlým bodům</b> na kružnici (1. a 3. nebo 2. a 4. kvadrant).`
         },
         {
-          trigger: `> Krok 2: Počet period v intervalu`,
-          content: `V intervalu \\((0°;\\, 360°)\\) se vejdou <b>dvě periody</b> tangensu → každá hodnota \\(k\\) je dosažena právě dvakrát.`
+          trigger: `> Krok 2: Kolik oběhů kružnicí na periodu`,
+          content: `Protilehlé body jsou od sebe o \\(180°\\). Stejná hodnota \\(\\operatorname{tg}\\) se tedy opakuje každých \\(180°\\). Kolik protilehlých párů tak v intervalu \\((0°;\\, 360°)\\) získáte?`
         },
       ],
       choices: [
@@ -3774,146 +3785,6 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_gon_04", regionId: "goniometrie", type: "closed", monsterName: `FW_10D: Nejmenší kladné x`,
-      visual_color: "#e040fb", visual_symbol: `sin`, points: 2, trainingTasks: ["t_gon_04"],
-      question: `Určete nejmenší kladné číslo \\(x\\), pro které platí:`,
-      formula: `$$\\text{sin}\\left( x - \\frac{\\pi}{6} \\right) = 1$$`,
-      instruction: `Vyberte správný výsledek.`,
-      choices: [
-        {
-          label: `\\(\\frac{\\pi}{3}\\)`,
-          value: "A",
-          feedback: `Chyba znaménka. \\(x = \\tfrac{\\pi}{2} - \\tfrac{\\pi}{6} = \\tfrac{\\pi}{3}\\) — fázový posun byl odečten místo přičten.`
-        },
-        {
-          label: `\\(\\frac{\\pi}{2}\\)`,
-          value: "B",
-          feedback: `Chyba. Fázový posun byl ignorován — rovnice \\(\\sin(x) = 1\\) dává \\(x = \\tfrac{\\pi}{2}\\), ale posun \\(-\\tfrac{\\pi}{6}\\) výsledek mění.`
-        },
-        {
-          label: `\\(\\frac{7\\pi}{6}\\)`,
-          value: "C",
-          feedback: `Kritická chyba. Záměna: \\(\\sin = 1\\) nastává pro \\(\\tfrac{\\pi}{2}\\), ne pro \\(\\pi\\). Správně: \\(x = \\tfrac{\\pi}{2} + \\tfrac{\\pi}{6} = \\tfrac{2\\pi}{3}\\).`
-        },
-        {
-          label: `\\(\\frac{2\\pi}{3}\\)`,
-          value: "D",
-          feedback: `Přístup povolen. \\(\\sin(\\alpha) = 1 \\Rightarrow \\alpha = \\tfrac{\\pi}{2}\\), tedy \\(x - \\tfrac{\\pi}{6} = \\tfrac{\\pi}{2} \\Rightarrow x = \\tfrac{2\\pi}{3}\\). ✓`
-        },
-      ],
-      correctAnswer: "D", reward: { xp: 10 }
-    },
-    {
-      id: "t_gon_04", regionId: "goniometrie", type: "closed", monsterName: `SIM_10D: Kdy nastává sin = 1`,
-      isTraining: true, firewallId: "q_gon_04", visual_color: "#2ecc8a", visual_symbol: `sin`, points: 0,
-      question: `Pro která \\(\\alpha\\) (obecně) platí \\(\\sin \\alpha = 1\\)?`,
-      formula: `$$\\text{sin}\\alpha = 1$$`,
-      instruction: `Vyberte správné obecné řešení.`,
-      steps: [
-        {
-          trigger: `> Krok 1: Maximum sinu na kružnici`,
-          content: `Na jednotkové kružnici je \\(\\sin \\alpha\\) souřadnice \\(y\\). Maximum \\(\\sin = 1\\) nastane v <b>nejvyšším bodě kružnice</b>.`
-        },
-        {
-          trigger: `> Krok 2: Úhel nejvyššího bodu`,
-          content: `Nejvyšší bod \\((0, 1)\\) odpovídá úhlu <b>\\(\\tfrac{\\pi}{2}\\)</b>. S periodou \\(2\\pi\\): \\(\\alpha = \\tfrac{\\pi}{2} + 2k\\pi,\\; k \\in \\mathbb{Z}\\).`
-        },
-      ],
-      choices: [
-        {
-          label: `\\(\\alpha = 2k\\pi;\\mspace{6mu} k \\in \\mathbb{Z}\\)`,
-          value: "A",
-          feedback: `Chyba. Pro \\(\\alpha = 0\\) je \\(\\sin 0 = 0\\), ne \\(1\\).`
-        },
-        {
-          label: `\\(\\alpha = \\pi + 2k\\pi;\\mspace{6mu} k \\in \\mathbb{Z}\\)`,
-          value: "B",
-          feedback: `Chyba. \\(\\sin \\pi = 0\\), ne \\(1\\).`
-        },
-        {
-          label: `\\(\\alpha = \\frac{\\pi}{2} + 2k\\pi;\\mspace{6mu} k \\in \\mathbb{Z}\\)`,
-          value: "C",
-          feedback: `Přístup povolen. \\(\\sin(\\tfrac{\\pi}{2}) = 1\\). ✓`
-        },
-        {
-          label: `\\(\\alpha = \\frac{3\\pi}{2} + 2k\\pi;\\mspace{6mu} k \\in \\mathbb{Z}\\)`,
-          value: "D",
-          feedback: `Chyba. \\(\\sin(\\tfrac{3\\pi}{2}) = -1\\), ne \\(+1\\).`
-        },
-      ],
-      correctAnswer: "C", reward: { xp: 5 }
-    },
-    {
-      id: "q_gon_05", regionId: "goniometrie", type: "closed", monsterName: `FW_10E: Identita dvojného úhlu`,
-      visual_color: "#e040fb", visual_symbol: `cos`, points: 3, trainingTasks: ["t_gon_05"],
-      question: `Zjednodušte výraz pro \\(x \\in \\mathbb{R}\\):`,
-      formula: `$$\\frac{1 - \\text{cos}2x}{2}$$`,
-      instruction: `Vyberte ekvivalentní výraz.`,
-      choices: [
-        {
-          label: `\\(\\text{cos}^{2}x\\)`,
-          value: "A",
-          feedback: `Chyba syntaxe. Záměna: \\(1 + \\cos 2x = 2\\cos^2 x\\). Se znaménkem mínus to dává \\(\\sin^2 x\\), ne \\(\\cos^2 x\\).`
-        },
-        {
-          label: `\\(\\text{sin}^{2}x\\)`,
-          value: "B",
-          feedback: `Logika potvrzena. \\(\\cos 2x = 1 - 2\\sin^2 x\\) → \\(\\tfrac{1 - \\cos 2x}{2} = \\sin^2 x\\). ✓`
-        },
-        {
-          label: `\\(2\\text{sin}^{2}x\\)`,
-          value: "C",
-          feedback: `Chyba. Výsledek je \\(\\sin^2 x\\) — dělení jmenovatelem \\(2\\) bylo opomenuto.`
-        },
-        {
-          label: `\\(\\text{sin}x\\)`,
-          value: "D",
-          feedback: `Kritická chyba. Mocnina je nezbytná — výsledkem je \\(\\sin^2 x\\), nikoli \\(\\sin x\\).`
-        },
-      ],
-      correctAnswer: "B", reward: { xp: 15 }
-    },
-    {
-      id: "t_gon_05", regionId: "goniometrie", type: "closed", monsterName: `SIM_10E: Vzorec cos 2x přes sin`,
-      isTraining: true, firewallId: "q_gon_05", visual_color: "#2ecc8a", visual_symbol: `cos`, points: 0,
-      question: `Který vzorec pro \\(\\cos 2x\\) vyjádřený pomocí \\(\\sin x\\) je správný?`,
-      formula: `$$\\text{cos}2x = ?$$`,
-      instruction: `Vyberte správný vzorec.`,
-      steps: [
-        {
-          trigger: `> Krok 1: Základní tvar`,
-          content: `Výchozí vzorec pro dvojný úhel: \\(\\cos 2x = \\cos^2 x - \\sin^2 x\\).`
-        },
-        {
-          trigger: `> Krok 2: Eliminace cos²x`,
-          content: `Z Pythagorovy identity: \\(\\cos^2 x = 1 - \\sin^2 x\\). Dosadíme: \\(\\cos 2x = (1 - \\sin^2 x) - \\sin^2 x = \\mathbf{1 - 2\\sin^2 x}\\).`
-        },
-      ],
-      choices: [
-        {
-          label: `\\(\\text{cos}2x = 2\\text{sin}x\\)`,
-          value: "A",
-          feedback: `Chyba. Chybí mocnina i konstanta: \\(2\\sin x \\neq \\cos 2x\\).`
-        },
-        {
-          label: `\\(\\text{cos}2x = 1 + 2\\text{sin}^{2}x\\)`,
-          value: "B",
-          feedback: `Chyba syntaxe. Záměna znaménka — správně je \\(1 - 2\\sin^2 x\\), ne \\(1 + 2\\sin^2 x\\).`
-        },
-        {
-          label: `\\(\\text{cos}2x = 2\\text{sin}^{2}x - 1\\)`,
-          value: "C",
-          feedback: `Chyba. \\(2\\sin^2 x - 1 = -(1 - 2\\sin^2 x) = -\\cos 2x\\), nikoli \\(\\cos 2x\\).`
-        },
-        {
-          label: `\\(\\text{cos}2x = 1 - 2\\text{sin}^{2}x\\)`,
-          value: "D",
-          feedback: `Logika potvrzena. Přímé dosazení \\(\\cos^2 x = 1 - \\sin^2 x\\) dává \\(1 - 2\\sin^2 x\\). ✓`
-        },
-      ],
-      correctAnswer: "D", reward: { xp: 5 }
-    },
-    {
       id: "q_gon_06", regionId: "goniometrie", type: "closed", monsterName: `FW_10F: Amplituda a posun z grafu`,
       visual_color: "#e040fb", visual_symbol: `sin`, points: 2, trainingTasks: ["t_gon_06"],
       question: `Na obrázku je znázorněn graf funkce \\(f\\colon y = a\\cdot\\sin(x) + b\\). Z vyznačených souřadnic maxima a minima určete parametry \\(a\\) a \\(b\\).`,
@@ -3928,18 +3799,21 @@ x + 2y = 4 \\\\
         {
           label: `\\(a = 2,\\mspace{6mu} b = 0\\)`,
           value: "B",
-          feedback: `Chyba. Amplituda \\(a = 2\\) je správně, ale \\(b = 0\\) by znamenalo střed oscilace v \\(y = 0\\) — z grafu vidíš, že střed leží v \\(y = 1\\).`
+          feedback: `Chyba. Střed oscilace \\(b = 0\\) by znamenal symetrické kmitání kolem osy \\(x\\) — z grafu vidíš, že střed leží jinde.`
         },
         {
           label: `\\(a = 3,\\mspace{6mu} b = 1\\)`,
           value: "C",
-          feedback: `Chyba. \\(a = 3\\) je hodnota maxima, nikoli amplituda. Amplituda \\(= \\tfrac{\\max - \\min}{2} = \\tfrac{3-(-1)}{2} = 2\\).`
+          feedback: `Chyba. Amplituda není hodnota maxima — je to vzdálenost od střední hodnoty k maximu.`
         },
         {
           label: `\\(a = 1,\\mspace{6mu} b = 2\\)`,
           value: "D",
-          feedback: `Kritická chyba. Záměna \\(a\\) a \\(b\\) — amplituda (rozsah kmitu) je \\(2\\), vertikální posun je \\(1\\).`
+          feedback: `Kritická chyba. Záměna \\(a\\) a \\(b\\) — který parametr udává amplitudu a který vertikální posun?`
         },
+      ],
+      hints: [
+        `Amplituda (koeficient \\(a\\)) udává vzdálenost maxima od střední hodnoty. Střední hodnota (\\(b\\)) leží přesně uprostřed mezi maximem a minimem.`,
       ],
       correctAnswer: "A", reward: { xp: 10 }
     },
@@ -3956,7 +3830,7 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Dosazení`,
-          content: `\\(a = \\dfrac{5 - (-1)}{2} = \\dfrac{6}{2} = \\mathbf{3}\\). Střed oscilace: \\(b = \\dfrac{5 + (-1)}{2} = 2\\).`
+          content: `Máte \\(\\max = 5\\), \\(\\min = -1\\). Dosaďte do vzorce z Kroku 1. Kolik vyjde \\(a\\)?`
         },
       ],
       choices: [
@@ -3993,23 +3867,27 @@ x + 2y = 4 \\\\
         {
           label: `\\(y = \\text{sin}(2x)\\)`,
           value: "A",
-          feedback: `Chyba. Perioda \\(\\pi\\) je správná, ale amplituda grafu je \\(2\\), nikoli \\(1\\).`
+          feedback: `Chyba. Zkontrolujte amplitudu — kolik měří graf od středu k maximu?`
         },
         {
           label: `\\(y = 2 \\cdot \\text{sin}x\\)`,
           value: "B",
-          feedback: `Chyba. Amplituda \\(2\\) je správná, ale perioda je \\(2\\pi\\) — v grafu vidíš \\(2\\) celé kmity v \\((0;\\, 2\\pi)\\).`
+          feedback: `Chyba. Zkontrolujte periodu — kolik celých kmitů vidíte v intervalu \\((0;\\, 2\\pi)\\)?`
         },
         {
           label: `\\(y = 2 \\cdot \\text{cos}(2x)\\)`,
           value: "C",
-          feedback: `Chyba. Amplituda i perioda sedí, ale \\(\\cos\\) začíná v maximu (\\(y=2\\) pro \\(x=0\\)) — graf začíná v \\(0\\).`
+          feedback: `Chyba. Porovnejte chování v \\(x = 0\\): kde začíná graf — v maximu nebo v nule?`
         },
         {
           label: `\\(y = 2 \\cdot \\text{sin}(2x)\\)`,
           value: "D",
           feedback: `Přístup povolen. Amplituda \\(2\\) ✓, perioda \\(\\pi\\) ✓, začíná v \\(0\\) (sinus) ✓. ✓`
         },
+      ],
+      hints: [
+        `Určete z grafu tři věci: amplitudu (výška kmitu od středu), periodu (délka jednoho cyklu) a zda tvar odpovídá sinu nebo kosinu.`,
+        `Z periody \\(T\\) odvoďte koeficient \\(b\\) ve vzorci \\(y = A \\cdot \\sin(bx)\\) pomocí vztahu \\(T = \\tfrac{2\\pi}{b}\\). Amplituda odpovídá koeficientu \\(A\\).`,
       ],
       correctAnswer: "D", reward: { xp: 15 }
     },
@@ -4026,7 +3904,7 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Dosazení k = 2`,
-          content: `\\(T = \\dfrac{2\\pi}{2} = \\mathbf{\\pi}\\). Graf se zdvojnásobí — kmitá \\(2\\times\\) rychleji než \\(\\sin x\\).`
+          content: `Zde \\(k = 2\\). Dosaďte do vzorce \\(T = \\tfrac{2\\pi}{|k|}\\) — kolik vyjde perioda?`
         },
       ],
       choices: [
@@ -4057,13 +3935,13 @@ x + 2y = 4 \\\\
       id: "q_gon_08", regionId: "goniometrie", type: "closed", monsterName: `FW_10H: Fázový posun z grafu`,
       visual_color: "#e040fb", visual_symbol: `sin`, points: 2, trainingTasks: ["t_gon_08"],
       question: `Tučná křivka odpovídá funkci \\(g\\colon y = \\sin(x + \\varphi)\\), \\(\\varphi > 0\\). Šedá přerušovaná je referenční \\(\\sin x\\). Určete nejmenší kladné \\(\\varphi\\).`,
-      diagram: `<svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="77.4" y1="25" x2="77.4" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="128.2" y1="25" x2="128.2" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="204.5" y1="25" x2="204.5" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="280.8" y1="25" x2="280.8" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="357.0" y1="25" x2="357.0" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="37.0" x2="357" y2="37.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="177.0" x2="357" y2="177.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="44" y1="107" x2="369" y2="107" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="369,103 376,107 369,111" fill="#e2e8f0"/><text x="379" y="111" font-size="12" fill="#e2e8f0">x</text><line x1="52" y1="197" x2="52" y2="17" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="48,17 52,10 56,17" fill="#e2e8f0"/><text x="52" y="8" font-size="12" fill="#e2e8f0" text-anchor="middle">y</text><line x1="77.4" y1="104" x2="77.4" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="77.4" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π/6</text><line x1="128.2" y1="104" x2="128.2" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="128.2" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π/2</text><line x1="204.5" y1="104" x2="204.5" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="204.5" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π</text><line x1="280.8" y1="104" x2="280.8" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="280.8" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">3π/2</text><line x1="357.0" y1="104" x2="357.0" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="357.0" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">2π</text><line x1="49" y1="37.0" x2="55" y2="37.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="41.0" font-size="9" fill="#e2e8f0" text-anchor="end">1</text><line x1="49" y1="177.0" x2="55" y2="177.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="181.0" font-size="9" fill="#e2e8f0" text-anchor="end">-1</text><polyline points="52.0,107.0 52.8,105.9 53.5,104.8 54.3,103.7 55.0,102.6 55.8,101.5 56.6,100.4 57.3,99.3 58.1,98.2 58.9,97.1 59.6,96.0 60.4,95.0 61.1,93.9 61.9,92.8 62.7,91.7 63.4,90.7 64.2,89.6 65.0,88.5 65.7,87.5 66.5,86.4 67.2,85.4 68.0,84.3 68.8,83.3 69.5,82.3 70.3,81.2 71.1,80.2 71.8,79.2 72.6,78.2 73.3,77.2 74.1,76.2 74.9,75.2 75.6,74.2 76.4,73.3 77.2,72.3 77.9,71.4 78.7,70.4 79.5,69.5 80.2,68.6 81.0,67.7 81.7,66.7 82.5,65.9 83.3,65.0 84.0,64.1 84.8,63.2 85.5,62.4 86.3,61.5 87.1,60.7 87.8,59.9 88.6,59.1 89.4,58.3 90.1,57.5 90.9,56.7 91.7,56.0 92.4,55.2 93.2,54.5 93.9,53.8 94.7,53.1 95.5,52.4 96.2,51.7 97.0,51.0 97.8,50.4 98.5,49.7 99.3,49.1 100.0,48.5 100.8,47.9 101.6,47.3 102.3,46.7 103.1,46.2 103.9,45.7 104.6,45.1 105.4,44.6 106.1,44.1 106.9,43.7 107.7,43.2 108.4,42.8 109.2,42.3 109.9,41.9 110.7,41.5 111.5,41.1 112.2,40.8 113.0,40.4 113.8,40.1 114.5,39.8 115.3,39.5 116.1,39.2 116.8,38.9 117.6,38.7 118.3,38.5 119.1,38.2 119.9,38.0 120.6,37.9 121.4,37.7 122.1,37.6 122.9,37.4 123.7,37.3 124.4,37.2 125.2,37.1 126.0,37.1 126.7,37.0 127.5,37.0 128.2,37.0 129.0,37.0 129.8,37.0 130.5,37.1 131.3,37.1 132.1,37.2 132.8,37.3 133.6,37.4 134.3,37.6 135.1,37.7 135.9,37.9 136.6,38.0 137.4,38.2 138.2,38.5 138.9,38.7 139.7,38.9 140.4,39.2 141.2,39.5 142.0,39.8 142.7,40.1 143.5,40.4 144.3,40.8 145.0,41.1 145.8,41.5 146.6,41.9 147.3,42.3 148.1,42.8 148.8,43.2 149.6,43.7 150.4,44.1 151.1,44.6 151.9,45.1 152.7,45.7 153.4,46.2 154.2,46.7 154.9,47.3 155.7,47.9 156.5,48.5 157.2,49.1 158.0,49.7 158.8,50.4 159.5,51.0 160.3,51.7 161.0,52.4 161.8,53.1 162.6,53.8 163.3,54.5 164.1,55.2 164.9,56.0 165.6,56.7 166.4,57.5 167.1,58.3 167.9,59.1 168.7,59.9 169.4,60.7 170.2,61.5 170.9,62.4 171.7,63.2 172.5,64.1 173.2,65.0 174.0,65.9 174.8,66.7 175.5,67.7 176.3,68.6 177.0,69.5 177.8,70.4 178.6,71.4 179.3,72.3 180.1,73.3 180.9,74.2 181.6,75.2 182.4,76.2 183.2,77.2 183.9,78.2 184.7,79.2 185.4,80.2 186.2,81.2 187.0,82.3 187.7,83.3 188.5,84.3 189.2,85.4 190.0,86.4 190.8,87.5 191.5,88.5 192.3,89.6 193.1,90.7 193.8,91.7 194.6,92.8 195.4,93.9 196.1,95.0 196.9,96.0 197.6,97.1 198.4,98.2 199.2,99.3 199.9,100.4 200.7,101.5 201.4,102.6 202.2,103.7 203.0,104.8 203.7,105.9 204.5,107.0 205.3,108.1 206.0,109.2 206.8,110.3 207.6,111.4 208.3,112.5 209.1,113.6 209.8,114.7 210.6,115.8 211.4,116.9 212.1,118.0 212.9,119.0 213.7,120.1 214.4,121.2 215.2,122.3 215.9,123.3 216.7,124.4 217.5,125.5 218.2,126.5 219.0,127.6 219.8,128.6 220.5,129.7 221.3,130.7 222.0,131.7 222.8,132.8 223.6,133.8 224.3,134.8 225.1,135.8 225.8,136.8 226.6,137.8 227.4,138.8 228.1,139.8 228.9,140.7 229.7,141.7 230.4,142.6 231.2,143.6 231.9,144.5 232.7,145.4 233.5,146.3 234.2,147.3 235.0,148.1 235.8,149.0 236.5,149.9 237.3,150.8 238.1,151.6 238.8,152.5 239.6,153.3 240.3,154.1 241.1,154.9 241.9,155.7 242.6,156.5 243.4,157.3 244.2,158.0 244.9,158.8 245.7,159.5 246.4,160.2 247.2,160.9 248.0,161.6 248.7,162.3 249.5,163.0 250.2,163.6 251.0,164.3 251.8,164.9 252.5,165.5 253.3,166.1 254.1,166.7 254.8,167.3 255.6,167.8 256.4,168.3 257.1,168.9 257.9,169.4 258.6,169.9 259.4,170.3 260.2,170.8 260.9,171.2 261.7,171.7 262.5,172.1 263.2,172.5 264.0,172.9 264.7,173.2 265.5,173.6 266.3,173.9 267.0,174.2 267.8,174.5 268.6,174.8 269.3,175.1 270.1,175.3 270.8,175.5 271.6,175.8 272.4,176.0 273.1,176.1 273.9,176.3 274.6,176.4 275.4,176.6 276.2,176.7 276.9,176.8 277.7,176.9 278.5,176.9 279.2,177.0 280.0,177.0 280.8,177.0 281.5,177.0 282.3,177.0 283.0,176.9 283.8,176.9 284.6,176.8 285.3,176.7 286.1,176.6 286.9,176.4 287.6,176.3 288.4,176.1 289.1,176.0 289.9,175.8 290.7,175.5 291.4,175.3 292.2,175.1 293.0,174.8 293.7,174.5 294.5,174.2 295.2,173.9 296.0,173.6 296.8,173.2 297.5,172.9 298.3,172.5 299.0,172.1 299.8,171.7 300.6,171.2 301.3,170.8 302.1,170.3 302.9,169.9 303.6,169.4 304.4,168.9 305.2,168.3 305.9,167.8 306.7,167.3 307.4,166.7 308.2,166.1 309.0,165.5 309.7,164.9 310.5,164.3 311.2,163.6 312.0,163.0 312.8,162.3 313.5,161.6 314.3,160.9 315.1,160.2 315.8,159.5 316.6,158.8 317.3,158.0 318.1,157.3 318.9,156.5 319.6,155.7 320.4,154.9 321.2,154.1 321.9,153.3 322.7,152.5 323.5,151.6 324.2,150.8 325.0,149.9 325.7,149.0 326.5,148.1 327.3,147.3 328.0,146.3 328.8,145.4 329.6,144.5 330.3,143.6 331.1,142.6 331.8,141.7 332.6,140.7 333.4,139.8 334.1,138.8 334.9,137.8 335.6,136.8 336.4,135.8 337.2,134.8 337.9,133.8 338.7,132.8 339.5,131.7 340.2,130.7 341.0,129.7 341.8,128.6 342.5,127.6 343.3,126.5 344.0,125.5 344.8,124.4 345.6,123.3 346.3,122.3 347.1,121.2 347.9,120.1 348.6,119.0 349.4,118.0 350.1,116.9 350.9,115.8 351.7,114.7 352.4,113.6 353.2,112.5 354.0,111.4 354.7,110.3 355.5,109.2 356.2,108.1 357.0,107.0" fill="none" stroke="#4a5568" stroke-width="1.5" stroke-dasharray="7,5" opacity="0.6"/><text x="265.5" y="189.6" font-size="10" fill="#4a5568" opacity="0.7" font-style="italic">sin x</text><polyline points="52.0,46.4 52.8,45.8 53.5,45.3 54.3,44.8 55.0,44.3 55.8,43.8 56.6,43.4 57.3,42.9 58.1,42.5 58.9,42.1 59.6,41.6 60.4,41.3 61.1,40.9 61.9,40.5 62.7,40.2 63.4,39.9 64.2,39.6 65.0,39.3 65.7,39.0 66.5,38.8 67.2,38.5 68.0,38.3 68.8,38.1 69.5,37.9 70.3,37.8 71.1,37.6 71.8,37.5 72.6,37.3 73.3,37.2 74.1,37.2 74.9,37.1 75.6,37.0 76.4,37.0 77.2,37.0 77.9,37.0 78.7,37.0 79.5,37.1 80.2,37.1 81.0,37.2 81.7,37.3 82.5,37.4 83.3,37.5 84.0,37.6 84.8,37.8 85.5,38.0 86.3,38.2 87.1,38.4 87.8,38.6 88.6,38.8 89.4,39.1 90.1,39.4 90.9,39.7 91.7,40.0 92.4,40.3 93.2,40.7 93.9,41.0 94.7,41.4 95.5,41.8 96.2,42.2 97.0,42.6 97.8,43.1 98.5,43.5 99.3,44.0 100.0,44.5 100.8,45.0 101.6,45.5 102.3,46.0 103.1,46.6 103.9,47.1 104.6,47.7 105.4,48.3 106.1,48.9 106.9,49.5 107.7,50.2 108.4,50.8 109.2,51.5 109.9,52.1 110.7,52.8 111.5,53.5 112.2,54.3 113.0,55.0 113.8,55.7 114.5,56.5 115.3,57.2 116.1,58.0 116.8,58.8 117.6,59.6 118.3,60.4 119.1,61.3 119.9,62.1 120.6,62.9 121.4,63.8 122.1,64.7 122.9,65.6 123.7,66.5 124.4,67.4 125.2,68.3 126.0,69.2 126.7,70.1 127.5,71.1 128.2,72.0 129.0,73.0 129.8,73.9 130.5,74.9 131.3,75.9 132.1,76.9 132.8,77.9 133.6,78.9 134.3,79.9 135.1,80.9 135.9,81.9 136.6,82.9 137.4,84.0 138.2,85.0 138.9,86.1 139.7,87.1 140.4,88.2 141.2,89.2 142.0,90.3 142.7,91.4 143.5,92.4 144.3,93.5 145.0,94.6 145.8,95.7 146.6,96.8 147.3,97.9 148.1,99.0 148.8,100.0 149.6,101.1 150.4,102.2 151.1,103.3 151.9,104.4 152.7,105.5 153.4,106.6 154.2,107.7 154.9,108.8 155.7,109.9 156.5,111.0 157.2,112.1 158.0,113.2 158.8,114.3 159.5,115.4 160.3,116.5 161.0,117.6 161.8,118.7 162.6,119.8 163.3,120.8 164.1,121.9 164.9,123.0 165.6,124.1 166.4,125.1 167.1,126.2 167.9,127.2 168.7,128.3 169.4,129.3 170.2,130.4 170.9,131.4 171.7,132.4 172.5,133.4 173.2,134.5 174.0,135.5 174.8,136.5 175.5,137.5 176.3,138.5 177.0,139.4 177.8,140.4 178.6,141.4 179.3,142.3 180.1,143.3 180.9,144.2 181.6,145.1 182.4,146.0 183.2,146.9 183.9,147.8 184.7,148.7 185.4,149.6 186.2,150.5 187.0,151.3 187.7,152.2 188.5,153.0 189.2,153.8 190.0,154.7 190.8,155.5 191.5,156.2 192.3,157.0 193.1,157.8 193.8,158.5 194.6,159.3 195.4,160.0 196.1,160.7 196.9,161.4 197.6,162.1 198.4,162.8 199.2,163.4 199.9,164.1 200.7,164.7 201.4,165.3 202.2,165.9 203.0,166.5 203.7,167.1 204.5,167.6 205.3,168.2 206.0,168.7 206.8,169.2 207.6,169.7 208.3,170.2 209.1,170.6 209.8,171.1 210.6,171.5 211.4,171.9 212.1,172.4 212.9,172.7 213.7,173.1 214.4,173.5 215.2,173.8 215.9,174.1 216.7,174.4 217.5,174.7 218.2,175.0 219.0,175.2 219.8,175.5 220.5,175.7 221.3,175.9 222.0,176.1 222.8,176.2 223.6,176.4 224.3,176.5 225.1,176.7 225.8,176.8 226.6,176.8 227.4,176.9 228.1,177.0 228.9,177.0 229.7,177.0 230.4,177.0 231.2,177.0 231.9,176.9 232.7,176.9 233.5,176.8 234.2,176.7 235.0,176.6 235.8,176.5 236.5,176.4 237.3,176.2 238.1,176.0 238.8,175.8 239.6,175.6 240.3,175.4 241.1,175.2 241.9,174.9 242.6,174.6 243.4,174.3 244.2,174.0 244.9,173.7 245.7,173.3 246.4,173.0 247.2,172.6 248.0,172.2 248.7,171.8 249.5,171.4 250.2,170.9 251.0,170.5 251.8,170.0 252.5,169.5 253.3,169.0 254.1,168.5 254.8,168.0 255.6,167.4 256.4,166.9 257.1,166.3 257.9,165.7 258.6,165.1 259.4,164.5 260.2,163.8 260.9,163.2 261.7,162.5 262.5,161.9 263.2,161.2 264.0,160.5 264.7,159.7 265.5,159.0 266.3,158.3 267.0,157.5 267.8,156.8 268.6,156.0 269.3,155.2 270.1,154.4 270.8,153.6 271.6,152.7 272.4,151.9 273.1,151.1 273.9,150.2 274.6,149.3 275.4,148.4 276.2,147.5 276.9,146.6 277.7,145.7 278.5,144.8 279.2,143.9 280.0,142.9 280.8,142.0 281.5,141.0 282.3,140.1 283.0,139.1 283.8,138.1 284.6,137.1 285.3,136.1 286.1,135.1 286.9,134.1 287.6,133.1 288.4,132.1 289.1,131.1 289.9,130.0 290.7,129.0 291.4,127.9 292.2,126.9 293.0,125.8 293.7,124.8 294.5,123.7 295.2,122.6 296.0,121.6 296.8,120.5 297.5,119.4 298.3,118.3 299.0,117.2 299.8,116.1 300.6,115.0 301.3,114.0 302.1,112.9 302.9,111.8 303.6,110.7 304.4,109.6 305.2,108.5 305.9,107.4 306.7,106.3 307.4,105.2 308.2,104.1 309.0,103.0 309.7,101.9 310.5,100.8 311.2,99.7 312.0,98.6 312.8,97.5 313.5,96.4 314.3,95.3 315.1,94.2 315.8,93.2 316.6,92.1 317.3,91.0 318.1,89.9 318.9,88.9 319.6,87.8 320.4,86.8 321.2,85.7 321.9,84.7 322.7,83.6 323.5,82.6 324.2,81.6 325.0,80.6 325.7,79.5 326.5,78.5 327.3,77.5 328.0,76.5 328.8,75.5 329.6,74.6 330.3,73.6 331.1,72.6 331.8,71.7 332.6,70.7 333.4,69.8 334.1,68.9 334.9,68.0 335.6,67.1 336.4,66.2 337.2,65.3 337.9,64.4 338.7,63.5 339.5,62.7 340.2,61.8 341.0,61.0 341.8,60.2 342.5,59.3 343.3,58.5 344.0,57.8 344.8,57.0 345.6,56.2 346.3,55.5 347.1,54.7 347.9,54.0 348.6,53.3 349.4,52.6 350.1,51.9 350.9,51.2 351.7,50.6 352.4,49.9 353.2,49.3 354.0,48.7 354.7,48.1 355.5,47.5 356.2,46.9 357.0,46.4" fill="none" stroke="#0077bb" stroke-width="2.5"/><line x1="77.4" y1="107" x2="77.4" y2="37" stroke="#cc4400" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.85"/><circle cx="77.4" cy="37.0" r="4" fill="#cc4400"/><text x="70.3" y="23.8" font-size="13" fill="#0077bb" font-style="italic">g</text></svg>`,
-      instruction: `Vyberte správnou hodnotu φ.`,
+      diagram: `<svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="77.4" y1="25" x2="77.4" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="128.2" y1="25" x2="128.2" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="204.5" y1="25" x2="204.5" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="280.8" y1="25" x2="280.8" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="357.0" y1="25" x2="357.0" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="37.0" x2="357" y2="37.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="177.0" x2="357" y2="177.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="44" y1="107" x2="369" y2="107" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="369,103 376,107 369,111" fill="#e2e8f0"/><text x="379" y="111" font-size="12" fill="#e2e8f0">x</text><line x1="52" y1="197" x2="52" y2="17" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="48,17 52,10 56,17" fill="#e2e8f0"/><text x="52" y="8" font-size="12" fill="#e2e8f0" text-anchor="middle">y</text><line x1="77.4" y1="104" x2="77.4" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="77.4" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π/6</text><line x1="128.2" y1="104" x2="128.2" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="128.2" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π/2</text><line x1="204.5" y1="104" x2="204.5" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="204.5" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π</text><line x1="280.8" y1="104" x2="280.8" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="280.8" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">3π/2</text><line x1="357.0" y1="104" x2="357.0" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="357.0" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">2π</text><line x1="49" y1="37.0" x2="55" y2="37.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="41.0" font-size="9" fill="#e2e8f0" text-anchor="end">1</text><line x1="49" y1="177.0" x2="55" y2="177.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="181.0" font-size="9" fill="#e2e8f0" text-anchor="end">-1</text><polyline points="52.0,107.0 52.8,105.9 53.5,104.8 54.3,103.7 55.0,102.6 55.8,101.5 56.6,100.4 57.3,99.3 58.1,98.2 58.9,97.1 59.6,96.0 60.4,95.0 61.1,93.9 61.9,92.8 62.7,91.7 63.4,90.7 64.2,89.6 65.0,88.5 65.7,87.5 66.5,86.4 67.2,85.4 68.0,84.3 68.8,83.3 69.5,82.3 70.3,81.2 71.1,80.2 71.8,79.2 72.6,78.2 73.3,77.2 74.1,76.2 74.9,75.2 75.6,74.2 76.4,73.3 77.2,72.3 77.9,71.4 78.7,70.4 79.5,69.5 80.2,68.6 81.0,67.7 81.7,66.7 82.5,65.9 83.3,65.0 84.0,64.1 84.8,63.2 85.5,62.4 86.3,61.5 87.1,60.7 87.8,59.9 88.6,59.1 89.4,58.3 90.1,57.5 90.9,56.7 91.7,56.0 92.4,55.2 93.2,54.5 93.9,53.8 94.7,53.1 95.5,52.4 96.2,51.7 97.0,51.0 97.8,50.4 98.5,49.7 99.3,49.1 100.0,48.5 100.8,47.9 101.6,47.3 102.3,46.7 103.1,46.2 103.9,45.7 104.6,45.1 105.4,44.6 106.1,44.1 106.9,43.7 107.7,43.2 108.4,42.8 109.2,42.3 109.9,41.9 110.7,41.5 111.5,41.1 112.2,40.8 113.0,40.4 113.8,40.1 114.5,39.8 115.3,39.5 116.1,39.2 116.8,38.9 117.6,38.7 118.3,38.5 119.1,38.2 119.9,38.0 120.6,37.9 121.4,37.7 122.1,37.6 122.9,37.4 123.7,37.3 124.4,37.2 125.2,37.1 126.0,37.1 126.7,37.0 127.5,37.0 128.2,37.0 129.0,37.0 129.8,37.0 130.5,37.1 131.3,37.1 132.1,37.2 132.8,37.3 133.6,37.4 134.3,37.6 135.1,37.7 135.9,37.9 136.6,38.0 137.4,38.2 138.2,38.5 138.9,38.7 139.7,38.9 140.4,39.2 141.2,39.5 142.0,39.8 142.7,40.1 143.5,40.4 144.3,40.8 145.0,41.1 145.8,41.5 146.6,41.9 147.3,42.3 148.1,42.8 148.8,43.2 149.6,43.7 150.4,44.1 151.1,44.6 151.9,45.1 152.7,45.7 153.4,46.2 154.2,46.7 154.9,47.3 155.7,47.9 156.5,48.5 157.2,49.1 158.0,49.7 158.8,50.4 159.5,51.0 160.3,51.7 161.0,52.4 161.8,53.1 162.6,53.8 163.3,54.5 164.1,55.2 164.9,56.0 165.6,56.7 166.4,57.5 167.1,58.3 167.9,59.1 168.7,59.9 169.4,60.7 170.2,61.5 170.9,62.4 171.7,63.2 172.5,64.1 173.2,65.0 174.0,65.9 174.8,66.7 175.5,67.7 176.3,68.6 177.0,69.5 177.8,70.4 178.6,71.4 179.3,72.3 180.1,73.3 180.9,74.2 181.6,75.2 182.4,76.2 183.2,77.2 183.9,78.2 184.7,79.2 185.4,80.2 186.2,81.2 187.0,82.3 187.7,83.3 188.5,84.3 189.2,85.4 190.0,86.4 190.8,87.5 191.5,88.5 192.3,89.6 193.1,90.7 193.8,91.7 194.6,92.8 195.4,93.9 196.1,95.0 196.9,96.0 197.6,97.1 198.4,98.2 199.2,99.3 199.9,100.4 200.7,101.5 201.4,102.6 202.2,103.7 203.0,104.8 203.7,105.9 204.5,107.0 205.3,108.1 206.0,109.2 206.8,110.3 207.6,111.4 208.3,112.5 209.1,113.6 209.8,114.7 210.6,115.8 211.4,116.9 212.1,118.0 212.9,119.0 213.7,120.1 214.4,121.2 215.2,122.3 215.9,123.3 216.7,124.4 217.5,125.5 218.2,126.5 219.0,127.6 219.8,128.6 220.5,129.7 221.3,130.7 222.0,131.7 222.8,132.8 223.6,133.8 224.3,134.8 225.1,135.8 225.8,136.8 226.6,137.8 227.4,138.8 228.1,139.8 228.9,140.7 229.7,141.7 230.4,142.6 231.2,143.6 231.9,144.5 232.7,145.4 233.5,146.3 234.2,147.3 235.0,148.1 235.8,149.0 236.5,149.9 237.3,150.8 238.1,151.6 238.8,152.5 239.6,153.3 240.3,154.1 241.1,154.9 241.9,155.7 242.6,156.5 243.4,157.3 244.2,158.0 244.9,158.8 245.7,159.5 246.4,160.2 247.2,160.9 248.0,161.6 248.7,162.3 249.5,163.0 250.2,163.6 251.0,164.3 251.8,164.9 252.5,165.5 253.3,166.1 254.1,166.7 254.8,167.3 255.6,167.8 256.4,168.3 257.1,168.9 257.9,169.4 258.6,169.9 259.4,170.3 260.2,170.8 260.9,171.2 261.7,171.7 262.5,172.1 263.2,172.5 264.0,172.9 264.7,173.2 265.5,173.6 266.3,173.9 267.0,174.2 267.8,174.5 268.6,174.8 269.3,175.1 270.1,175.3 270.8,175.5 271.6,175.8 272.4,176.0 273.1,176.1 273.9,176.3 274.6,176.4 275.4,176.6 276.2,176.7 276.9,176.8 277.7,176.9 278.5,176.9 279.2,177.0 280.0,177.0 280.8,177.0 281.5,177.0 282.3,177.0 283.0,176.9 283.8,176.9 284.6,176.8 285.3,176.7 286.1,176.6 286.9,176.4 287.6,176.3 288.4,176.1 289.1,176.0 289.9,175.8 290.7,175.5 291.4,175.3 292.2,175.1 293.0,174.8 293.7,174.5 294.5,174.2 295.2,173.9 296.0,173.6 296.8,173.2 297.5,172.9 298.3,172.5 299.0,172.1 299.8,171.7 300.6,171.2 301.3,170.8 302.1,170.3 302.9,169.9 303.6,169.4 304.4,168.9 305.2,168.3 305.9,167.8 306.7,167.3 307.4,166.7 308.2,166.1 309.0,165.5 309.7,164.9 310.5,164.3 311.2,163.6 312.0,163.0 312.8,162.3 313.5,161.6 314.3,160.9 315.1,160.2 315.8,159.5 316.6,158.8 317.3,158.0 318.1,157.3 318.9,156.5 319.6,155.7 320.4,154.9 321.2,154.1 321.9,153.3 322.7,152.5 323.5,151.6 324.2,150.8 325.0,149.9 325.7,149.0 326.5,148.1 327.3,147.3 328.0,146.3 328.8,145.4 329.6,144.5 330.3,143.6 331.1,142.6 331.8,141.7 332.6,140.7 333.4,139.8 334.1,138.8 334.9,137.8 335.6,136.8 336.4,135.8 337.2,134.8 337.9,133.8 338.7,132.8 339.5,131.7 340.2,130.7 341.0,129.7 341.8,128.6 342.5,127.6 343.3,126.5 344.0,125.5 344.8,124.4 345.6,123.3 346.3,122.3 347.1,121.2 347.9,120.1 348.6,119.0 349.4,118.0 350.1,116.9 350.9,115.8 351.7,114.7 352.4,113.6 353.2,112.5 354.0,111.4 354.7,110.3 355.5,109.2 356.2,108.1 357.0,107.0" fill="none" stroke="#4a5568" stroke-width="1.5" stroke-dasharray="7,5" opacity="0.6"/><text x="265.5" y="189.6" font-size="10" fill="#4a5568" opacity="0.7" font-style="italic">sin x</text><polyline points="52.0,46.4 52.8,45.8 53.5,45.3 54.3,44.8 55.0,44.3 55.8,43.8 56.6,43.4 57.3,42.9 58.1,42.5 58.9,42.1 59.6,41.6 60.4,41.3 61.1,40.9 61.9,40.5 62.7,40.2 63.4,39.9 64.2,39.6 65.0,39.3 65.7,39.0 66.5,38.8 67.2,38.5 68.0,38.3 68.8,38.1 69.5,37.9 70.3,37.8 71.1,37.6 71.8,37.5 72.6,37.3 73.3,37.2 74.1,37.2 74.9,37.1 75.6,37.0 76.4,37.0 77.2,37.0 77.9,37.0 78.7,37.0 79.5,37.1 80.2,37.1 81.0,37.2 81.7,37.3 82.5,37.4 83.3,37.5 84.0,37.6 84.8,37.8 85.5,38.0 86.3,38.2 87.1,38.4 87.8,38.6 88.6,38.8 89.4,39.1 90.1,39.4 90.9,39.7 91.7,40.0 92.4,40.3 93.2,40.7 93.9,41.0 94.7,41.4 95.5,41.8 96.2,42.2 97.0,42.6 97.8,43.1 98.5,43.5 99.3,44.0 100.0,44.5 100.8,45.0 101.6,45.5 102.3,46.0 103.1,46.6 103.9,47.1 104.6,47.7 105.4,48.3 106.1,48.9 106.9,49.5 107.7,50.2 108.4,50.8 109.2,51.5 109.9,52.1 110.7,52.8 111.5,53.5 112.2,54.3 113.0,55.0 113.8,55.7 114.5,56.5 115.3,57.2 116.1,58.0 116.8,58.8 117.6,59.6 118.3,60.4 119.1,61.3 119.9,62.1 120.6,62.9 121.4,63.8 122.1,64.7 122.9,65.6 123.7,66.5 124.4,67.4 125.2,68.3 126.0,69.2 126.7,70.1 127.5,71.1 128.2,72.0 129.0,73.0 129.8,73.9 130.5,74.9 131.3,75.9 132.1,76.9 132.8,77.9 133.6,78.9 134.3,79.9 135.1,80.9 135.9,81.9 136.6,82.9 137.4,84.0 138.2,85.0 138.9,86.1 139.7,87.1 140.4,88.2 141.2,89.2 142.0,90.3 142.7,91.4 143.5,92.4 144.3,93.5 145.0,94.6 145.8,95.7 146.6,96.8 147.3,97.9 148.1,99.0 148.8,100.0 149.6,101.1 150.4,102.2 151.1,103.3 151.9,104.4 152.7,105.5 153.4,106.6 154.2,107.7 154.9,108.8 155.7,109.9 156.5,111.0 157.2,112.1 158.0,113.2 158.8,114.3 159.5,115.4 160.3,116.5 161.0,117.6 161.8,118.7 162.6,119.8 163.3,120.8 164.1,121.9 164.9,123.0 165.6,124.1 166.4,125.1 167.1,126.2 167.9,127.2 168.7,128.3 169.4,129.3 170.2,130.4 170.9,131.4 171.7,132.4 172.5,133.4 173.2,134.5 174.0,135.5 174.8,136.5 175.5,137.5 176.3,138.5 177.0,139.4 177.8,140.4 178.6,141.4 179.3,142.3 180.1,143.3 180.9,144.2 181.6,145.1 182.4,146.0 183.2,146.9 183.9,147.8 184.7,148.7 185.4,149.6 186.2,150.5 187.0,151.3 187.7,152.2 188.5,153.0 189.2,153.8 190.0,154.7 190.8,155.5 191.5,156.2 192.3,157.0 193.1,157.8 193.8,158.5 194.6,159.3 195.4,160.0 196.1,160.7 196.9,161.4 197.6,162.1 198.4,162.8 199.2,163.4 199.9,164.1 200.7,164.7 201.4,165.3 202.2,165.9 203.0,166.5 203.7,167.1 204.5,167.6 205.3,168.2 206.0,168.7 206.8,169.2 207.6,169.7 208.3,170.2 209.1,170.6 209.8,171.1 210.6,171.5 211.4,171.9 212.1,172.4 212.9,172.7 213.7,173.1 214.4,173.5 215.2,173.8 215.9,174.1 216.7,174.4 217.5,174.7 218.2,175.0 219.0,175.2 219.8,175.5 220.5,175.7 221.3,175.9 222.0,176.1 222.8,176.2 223.6,176.4 224.3,176.5 225.1,176.7 225.8,176.8 226.6,176.8 227.4,176.9 228.1,177.0 228.9,177.0 229.7,177.0 230.4,177.0 231.2,177.0 231.9,176.9 232.7,176.9 233.5,176.8 234.2,176.7 235.0,176.6 235.8,176.5 236.5,176.4 237.3,176.2 238.1,176.0 238.8,175.8 239.6,175.6 240.3,175.4 241.1,175.2 241.9,174.9 242.6,174.6 243.4,174.3 244.2,174.0 244.9,173.7 245.7,173.3 246.4,173.0 247.2,172.6 248.0,172.2 248.7,171.8 249.5,171.4 250.2,170.9 251.0,170.5 251.8,170.0 252.5,169.5 253.3,169.0 254.1,168.5 254.8,168.0 255.6,167.4 256.4,166.9 257.1,166.3 257.9,165.7 258.6,165.1 259.4,164.5 260.2,163.8 260.9,163.2 261.7,162.5 262.5,161.9 263.2,161.2 264.0,160.5 264.7,159.7 265.5,159.0 266.3,158.3 267.0,157.5 267.8,156.8 268.6,156.0 269.3,155.2 270.1,154.4 270.8,153.6 271.6,152.7 272.4,151.9 273.1,151.1 273.9,150.2 274.6,149.3 275.4,148.4 276.2,147.5 276.9,146.6 277.7,145.7 278.5,144.8 279.2,143.9 280.0,142.9 280.8,142.0 281.5,141.0 282.3,140.1 283.0,139.1 283.8,138.1 284.6,137.1 285.3,136.1 286.1,135.1 286.9,134.1 287.6,133.1 288.4,132.1 289.1,131.1 289.9,130.0 290.7,129.0 291.4,127.9 292.2,126.9 293.0,125.8 293.7,124.8 294.5,123.7 295.2,122.6 296.0,121.6 296.8,120.5 297.5,119.4 298.3,118.3 299.0,117.2 299.8,116.1 300.6,115.0 301.3,114.0 302.1,112.9 302.9,111.8 303.6,110.7 304.4,109.6 305.2,108.5 305.9,107.4 306.7,106.3 307.4,105.2 308.2,104.1 309.0,103.0 309.7,101.9 310.5,100.8 311.2,99.7 312.0,98.6 312.8,97.5 313.5,96.4 314.3,95.3 315.1,94.2 315.8,93.2 316.6,92.1 317.3,91.0 318.1,89.9 318.9,88.9 319.6,87.8 320.4,86.8 321.2,85.7 321.9,84.7 322.7,83.6 323.5,82.6 324.2,81.6 325.0,80.6 325.7,79.5 326.5,78.5 327.3,77.5 328.0,76.5 328.8,75.5 329.6,74.6 330.3,73.6 331.1,72.6 331.8,71.7 332.6,70.7 333.4,69.8 334.1,68.9 334.9,68.0 335.6,67.1 336.4,66.2 337.2,65.3 337.9,64.4 338.7,63.5 339.5,62.7 340.2,61.8 341.0,61.0 341.8,60.2 342.5,59.3 343.3,58.5 344.0,57.8 344.8,57.0 345.6,56.2 346.3,55.5 347.1,54.7 347.9,54.0 348.6,53.3 349.4,52.6 350.1,51.9 350.9,51.2 351.7,50.6 352.4,49.9 353.2,49.3 354.0,48.7 354.7,48.1 355.5,47.5 356.2,46.9 357.0,46.4" fill="none" stroke="#0077bb" stroke-width="2.5"/><circle cx="52" cy="46.4" r="4" fill="#cc4400"/><line x1="49" y1="46.4" x2="55" y2="46.4" stroke="#cc4400" stroke-width="1.5"/><text x="58" y="43" font-size="9" fill="#cc4400">P</text><text x="70.3" y="23.8" font-size="13" fill="#0077bb" font-style="italic">g</text></svg>`,
+      instruction: `Pomocí průsečíku P grafu g s osou y určete nejmenší kladné φ.`,
       choices: [
         {
           label: `\\(\\frac{\\pi}{6}\\)`,
           value: "A",
-          feedback: `Chyba. \\(\\tfrac{\\pi}{6}\\) je poloha maxima na ose \\(x\\) — to není \\(\\varphi\\). Správně: \\(\\varphi = \\tfrac{\\pi}{2} - \\tfrac{\\pi}{6} = \\tfrac{\\pi}{3}\\).`
+          feedback: `Chyba. \\(\\tfrac{\\pi}{6}\\) je poloha maxima na ose \\(x\\), ne hodnota \\(\\varphi\\). Jaký je vztah mezi polohou maxima a fázovým posunem?`
         },
         {
           label: `\\(\\frac{\\pi}{2}\\)`,
@@ -4078,8 +3956,12 @@ x + 2y = 4 \\\\
         {
           label: `\\(\\frac{2\\pi}{3}\\)`,
           value: "D",
-          feedback: `Chyba. \\(\\varphi = \\tfrac{\\pi}{2} + \\tfrac{\\pi}{6}\\) místo \\(\\tfrac{\\pi}{2} - \\tfrac{\\pi}{6}\\) — přičetl(a) jsi polohu maxima místo odečetl(a).`
+          feedback: `Chyba. Záměna operace — sčítáte místo odčítáte. Zkuste znovu: kde leží maximum \\(\\sin x\\) a kam se posunulo?`
         },
+      ],
+      hints: [
+        `Průsečík P grafu g s osou y je při \\(x = 0\\). Dosaďte \\(x = 0\\) do vzorce \\(y = \\sin(x + \\varphi)\\) — co z toho plyne pro y-souřadnici bodu P?`,
+        `Porovnejte odečtenou y-souřadnici P s hodnotami \\(\\sin(\\tfrac{\\pi}{6})\\), \\(\\sin(\\tfrac{\\pi}{3})\\), \\(\\sin(\\tfrac{\\pi}{2})\\), \\(\\sin(\\tfrac{2\\pi}{3})\\). Která odpovídá?`,
       ],
       correctAnswer: "C", reward: { xp: 10 }
     },
@@ -4092,7 +3974,7 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Pravidlo posunu`,
-          content: `\\(y = \\sin(x + \\varphi)\\): kladné \\(\\varphi\\) uvnitř argumentu posouvá graf <b>doleva</b> o \\(\\varphi\\). (Paradox: \\(+\\) v argumentu = pohyb grafu doleva.)`
+          content: `Na jednotkové kružnici: \\(\\sin(x + \\tfrac{\\pi}{3})\\) = bod, který je o \\(\\tfrac{\\pi}{3}\\) napřed oproti standardnímu sinusu. „Napřed" znamená, že maxima nastávají při menší hodnotě \\(x\\). Jakým směrem se graf posouvá?`
         },
         {
           trigger: `> Krok 2: Aplikace`,
@@ -4124,34 +4006,38 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_gon_09", regionId: "goniometrie", type: "closed", monsterName: `FW_10I: Perioda z grafu`,
-      visual_color: "#e040fb", visual_symbol: `cos`, points: 2, trainingTasks: ["t_gon_09"],
-      question: `Na obrázku je znázorněn graf funkce \\(h\\colon y = \\cos(kx)\\) pro \\(k > 0\\). Odečtěte periodu z grafu.`,
+      id: "q_gon_09", regionId: "goniometrie", type: "closed", monsterName: `FW_10I: Koeficient k z grafu`,
+      visual_color: "#e040fb", visual_symbol: `cos`, points: 3, trainingTasks: ["t_gon_09"],
+      question: `Na obrázku je znázorněn graf funkce \\(h\\colon y = \\cos(kx)\\) pro \\(k > 0\\). Určete hodnotu koeficientu \\(k\\).`,
       diagram: `<svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="128.2" y1="25" x2="128.2" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="204.5" y1="25" x2="204.5" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="280.8" y1="25" x2="280.8" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="357.0" y1="25" x2="357.0" y2="192" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="37.0" x2="357" y2="37.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="177.0" x2="357" y2="177.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="44" y1="107" x2="369" y2="107" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="369,103 376,107 369,111" fill="#e2e8f0"/><text x="379" y="111" font-size="12" fill="#e2e8f0">x</text><line x1="52" y1="197" x2="52" y2="17" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="48,17 52,10 56,17" fill="#e2e8f0"/><text x="52" y="8" font-size="12" fill="#e2e8f0" text-anchor="middle">y</text><line x1="128.2" y1="104" x2="128.2" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="128.2" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">π</text><line x1="204.5" y1="104" x2="204.5" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="204.5" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">2π</text><line x1="280.8" y1="104" x2="280.8" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="280.8" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">3π</text><line x1="357.0" y1="104" x2="357.0" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><text x="357.0" y="123" font-size="9" fill="#e2e8f0" text-anchor="middle">4π</text><line x1="49" y1="37.0" x2="55" y2="37.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="41.0" font-size="9" fill="#e2e8f0" text-anchor="end">1</text><line x1="49" y1="177.0" x2="55" y2="177.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="181.0" font-size="9" fill="#e2e8f0" text-anchor="end">-1</text><polyline points="52.0,37.0 52.8,37.0 53.5,37.0 54.3,37.1 55.0,37.1 55.8,37.2 56.6,37.3 57.3,37.4 58.1,37.6 58.9,37.7 59.6,37.9 60.4,38.0 61.1,38.2 61.9,38.5 62.7,38.7 63.4,38.9 64.2,39.2 65.0,39.5 65.7,39.8 66.5,40.1 67.2,40.4 68.0,40.8 68.8,41.1 69.5,41.5 70.3,41.9 71.1,42.3 71.8,42.8 72.6,43.2 73.3,43.7 74.1,44.1 74.9,44.6 75.6,45.1 76.4,45.7 77.2,46.2 77.9,46.7 78.7,47.3 79.5,47.9 80.2,48.5 81.0,49.1 81.7,49.7 82.5,50.4 83.3,51.0 84.0,51.7 84.8,52.4 85.5,53.1 86.3,53.8 87.1,54.5 87.8,55.2 88.6,56.0 89.4,56.7 90.1,57.5 90.9,58.3 91.7,59.1 92.4,59.9 93.2,60.7 93.9,61.5 94.7,62.4 95.5,63.2 96.2,64.1 97.0,65.0 97.8,65.9 98.5,66.7 99.3,67.7 100.0,68.6 100.8,69.5 101.6,70.4 102.3,71.4 103.1,72.3 103.9,73.3 104.6,74.2 105.4,75.2 106.1,76.2 106.9,77.2 107.7,78.2 108.4,79.2 109.2,80.2 109.9,81.2 110.7,82.3 111.5,83.3 112.2,84.3 113.0,85.4 113.8,86.4 114.5,87.5 115.3,88.5 116.1,89.6 116.8,90.7 117.6,91.7 118.3,92.8 119.1,93.9 119.9,95.0 120.6,96.0 121.4,97.1 122.1,98.2 122.9,99.3 123.7,100.4 124.4,101.5 125.2,102.6 126.0,103.7 126.7,104.8 127.5,105.9 128.2,107.0 129.0,108.1 129.8,109.2 130.5,110.3 131.3,111.4 132.1,112.5 132.8,113.6 133.6,114.7 134.3,115.8 135.1,116.9 135.9,118.0 136.6,119.0 137.4,120.1 138.2,121.2 138.9,122.3 139.7,123.3 140.4,124.4 141.2,125.5 142.0,126.5 142.7,127.6 143.5,128.6 144.3,129.7 145.0,130.7 145.8,131.7 146.6,132.8 147.3,133.8 148.1,134.8 148.8,135.8 149.6,136.8 150.4,137.8 151.1,138.8 151.9,139.8 152.7,140.7 153.4,141.7 154.2,142.6 154.9,143.6 155.7,144.5 156.5,145.4 157.2,146.3 158.0,147.3 158.8,148.1 159.5,149.0 160.3,149.9 161.0,150.8 161.8,151.6 162.6,152.5 163.3,153.3 164.1,154.1 164.9,154.9 165.6,155.7 166.4,156.5 167.1,157.3 167.9,158.0 168.7,158.8 169.4,159.5 170.2,160.2 170.9,160.9 171.7,161.6 172.5,162.3 173.2,163.0 174.0,163.6 174.8,164.3 175.5,164.9 176.3,165.5 177.0,166.1 177.8,166.7 178.6,167.3 179.3,167.8 180.1,168.3 180.9,168.9 181.6,169.4 182.4,169.9 183.2,170.3 183.9,170.8 184.7,171.2 185.4,171.7 186.2,172.1 187.0,172.5 187.7,172.9 188.5,173.2 189.2,173.6 190.0,173.9 190.8,174.2 191.5,174.5 192.3,174.8 193.1,175.1 193.8,175.3 194.6,175.5 195.4,175.8 196.1,176.0 196.9,176.1 197.6,176.3 198.4,176.4 199.2,176.6 199.9,176.7 200.7,176.8 201.4,176.9 202.2,176.9 203.0,177.0 203.7,177.0 204.5,177.0 205.3,177.0 206.0,177.0 206.8,176.9 207.6,176.9 208.3,176.8 209.1,176.7 209.8,176.6 210.6,176.4 211.4,176.3 212.1,176.1 212.9,176.0 213.7,175.8 214.4,175.5 215.2,175.3 215.9,175.1 216.7,174.8 217.5,174.5 218.2,174.2 219.0,173.9 219.8,173.6 220.5,173.2 221.3,172.9 222.0,172.5 222.8,172.1 223.6,171.7 224.3,171.2 225.1,170.8 225.8,170.3 226.6,169.9 227.4,169.4 228.1,168.9 228.9,168.3 229.7,167.8 230.4,167.3 231.2,166.7 231.9,166.1 232.7,165.5 233.5,164.9 234.2,164.3 235.0,163.6 235.8,163.0 236.5,162.3 237.3,161.6 238.1,160.9 238.8,160.2 239.6,159.5 240.3,158.8 241.1,158.0 241.9,157.3 242.6,156.5 243.4,155.7 244.2,154.9 244.9,154.1 245.7,153.3 246.4,152.5 247.2,151.6 248.0,150.8 248.7,149.9 249.5,149.0 250.2,148.1 251.0,147.3 251.8,146.3 252.5,145.4 253.3,144.5 254.1,143.6 254.8,142.6 255.6,141.7 256.4,140.7 257.1,139.8 257.9,138.8 258.6,137.8 259.4,136.8 260.2,135.8 260.9,134.8 261.7,133.8 262.5,132.8 263.2,131.7 264.0,130.7 264.7,129.7 265.5,128.6 266.3,127.6 267.0,126.5 267.8,125.5 268.6,124.4 269.3,123.3 270.1,122.3 270.8,121.2 271.6,120.1 272.4,119.0 273.1,118.0 273.9,116.9 274.6,115.8 275.4,114.7 276.2,113.6 276.9,112.5 277.7,111.4 278.5,110.3 279.2,109.2 280.0,108.1 280.8,107.0 281.5,105.9 282.3,104.8 283.0,103.7 283.8,102.6 284.6,101.5 285.3,100.4 286.1,99.3 286.9,98.2 287.6,97.1 288.4,96.0 289.1,95.0 289.9,93.9 290.7,92.8 291.4,91.7 292.2,90.7 293.0,89.6 293.7,88.5 294.5,87.5 295.2,86.4 296.0,85.4 296.8,84.3 297.5,83.3 298.3,82.3 299.0,81.2 299.8,80.2 300.6,79.2 301.3,78.2 302.1,77.2 302.9,76.2 303.6,75.2 304.4,74.2 305.2,73.3 305.9,72.3 306.7,71.4 307.4,70.4 308.2,69.5 309.0,68.6 309.7,67.7 310.5,66.7 311.2,65.9 312.0,65.0 312.8,64.1 313.5,63.2 314.3,62.4 315.1,61.5 315.8,60.7 316.6,59.9 317.3,59.1 318.1,58.3 318.9,57.5 319.6,56.7 320.4,56.0 321.2,55.2 321.9,54.5 322.7,53.8 323.5,53.1 324.2,52.4 325.0,51.7 325.7,51.0 326.5,50.4 327.3,49.7 328.0,49.1 328.8,48.5 329.6,47.9 330.3,47.3 331.1,46.7 331.8,46.2 332.6,45.7 333.4,45.1 334.1,44.6 334.9,44.1 335.6,43.7 336.4,43.2 337.2,42.8 337.9,42.3 338.7,41.9 339.5,41.5 340.2,41.1 341.0,40.8 341.8,40.4 342.5,40.1 343.3,39.8 344.0,39.5 344.8,39.2 345.6,38.9 346.3,38.7 347.1,38.5 347.9,38.2 348.6,38.0 349.4,37.9 350.1,37.7 350.9,37.6 351.7,37.4 352.4,37.3 353.2,37.2 354.0,37.1 354.7,37.1 355.5,37.0 356.2,37.0 357.0,37.0" fill="none" stroke="#0077bb" stroke-width="2.5"/><circle cx="204.5" cy="177.0" r="3" fill="#cc4400" opacity="0.9"/><text x="128.2" y="35.5" font-size="13" fill="#0077bb" font-style="italic">h</text></svg>`,
-      instruction: `Vyberte správnou periodu funkce h.`,
+      instruction: `Vyberte správnou hodnotu koeficientu k.`,
       choices: [
         {
-          label: `\\(\\pi\\)`,
+          label: `\\(k = \\dfrac{1}{2}\\)`,
           value: "A",
-          feedback: `Chyba. Perioda \\(\\pi\\) odpovídá \\(y = \\cos(2x)\\). V grafu jeden úplný kmit sahá do \\(4\\pi\\).`
+          feedback: `Přístup povolen. Z grafu \\(T = 4\\pi\\), proto \\(k = \\tfrac{2\\pi}{T} = \\tfrac{2\\pi}{4\\pi} = \\tfrac{1}{2}\\). ✓`
         },
         {
-          label: `\\(4\\pi\\)`,
+          label: `\\(k = 2\\)`,
           value: "B",
-          feedback: `Přístup povolen. Graf dokončí jeden celý kmit na \\(x = 4\\pi\\). \\(T = 4\\pi\\). ✓`
+          feedback: `Kritická chyba. Obrácený vzorec — spočítali jste \\(\\tfrac{T}{2\\pi}\\) místo \\(\\tfrac{2\\pi}{T}\\). Větší \\(k\\) znamená kratší periodu, ne delší.`
         },
         {
-          label: `\\(2\\pi\\)`,
+          label: `\\(k = 1\\)`,
           value: "C",
-          feedback: `Chyba. \\(2\\pi\\) je výchozí perioda \\(\\cos x\\) — ale koeficient \\(k\\) periodu mění.`
+          feedback: `Chyba. \\(k = 1\\) dává výchozí periodu \\(2\\pi\\) — z grafu však vidíte, že jeden kmit trvá \\(4\\pi\\).`
         },
         {
-          label: `\\(8\\pi\\)`,
+          label: `\\(k = 4\\)`,
           value: "D",
-          feedback: `Kritická chyba. Z grafu jasně vidíš, že kmit končí v \\(4\\pi\\), ne v \\(8\\pi\\).`
+          feedback: `Chyba. Zaměnili jste periodu za koeficient. Perioda a \\(k\\) nejsou totéž — jaký je mezi nimi vztah?`
         },
       ],
-      correctAnswer: "B", reward: { xp: 10 }
+      hints: [
+        `Perioda \\(T\\) a koeficient \\(k\\) jsou svázány vztahem \\(T = \\tfrac{2\\pi}{k}\\). Nejprve z grafu odečtěte, kde funkce dokončí první celý kmit (začíná v maximu na ose y).`,
+        `Máte-li periodu \\(T\\), vyjádřete \\(k\\): z \\(T = \\tfrac{2\\pi}{k}\\) dostanete \\(k = \\tfrac{2\\pi}{T}\\). Dosaďte odečtenou periodu.`,
+      ],
+      correctAnswer: "A", reward: { xp: 15 }
     },
     {
       id: "t_gon_09", regionId: "goniometrie", type: "closed", monsterName: `SIM_10I: Perioda y = cos(x/2)`,
@@ -4166,7 +4052,7 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Výpočet`,
-          content: `\\(T = \\dfrac{2\\pi}{|k|} = \\dfrac{2\\pi}{1/2} = 2\\pi \\cdot 2 = \\mathbf{4\\pi}\\). Menší \\(k\\) → delší perioda, pomalejší kmitání.`
+          content: `Na jednotkové kružnici: \\(k = \\tfrac{1}{2}\\) znamená, že bod obíhá <b>poloviční rychlostí</b>. Kolik radiánů potřebuje na celý oběh? Dosaďte \\(k\\) do vzorce \\(T = \\tfrac{2\\pi}{|k|}\\).`
         },
       ],
       choices: [
@@ -4197,7 +4083,7 @@ x + 2y = 4 \\\\
       id: "q_gon_10", regionId: "goniometrie", type: "closed", monsterName: `FW_10J: Porovnání sin a cos`,
       visual_color: "#e040fb", visual_symbol: `sin`, points: 3, trainingTasks: ["t_gon_10"],
       question: `Na obrázku jsou grafy \\(f\\colon y = \\sin x\\) (modrá) a \\(g\\colon y = \\cos x\\) (zelená) pro \\(x \\in (0;\\, 2\\pi)\\). Pro která \\(x \\in (0;\\, 2\\pi)\\) leží graf \\(f\\) nad grafem \\(g\\)?`,
-      diagram: `<svg viewBox="0 0 400 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="90.1" y1="28" x2="90.1" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="128.2" y1="28" x2="128.2" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="204.5" y1="28" x2="204.5" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="242.6" y1="28" x2="242.6" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="280.8" y1="28" x2="280.8" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="357.0" y1="28" x2="357.0" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="40.0" x2="357" y2="40.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="180.0" x2="357" y2="180.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="44" y1="110" x2="369" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="369,106 376,110 369,114" fill="#e2e8f0"/><text x="379" y="114" font-size="12" fill="#e2e8f0">x</text><line x1="52" y1="202" x2="52" y2="20" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="48,20 52,13 56,20" fill="#e2e8f0"/><text x="52" y="11" font-size="12" fill="#e2e8f0" text-anchor="middle">y</text><line x1="90.1" y1="107" x2="90.1" y2="113" stroke="#e2e8f0" stroke-width="1.5"/><text x="90.1" y="126" font-size="9" fill="#e2e8f0" text-anchor="middle">π/4</text><line x1="128.2" y1="107" x2="128.2" y2="113" stroke="#e2e8f0" stroke-width="1.5"/><text x="128.2" y="126" font-size="9" fill="#e2e8f0" text-anchor="middle">π/2</text><line x1="204.5" y1="107" x2="204.5" y2="113" stroke="#e2e8f0" stroke-width="1.5"/><text x="204.5" y="126" font-size="9" fill="#e2e8f0" text-anchor="middle">π</text><line x1="242.6" y1="107" x2="242.6" y2="113" stroke="#e2e8f0" stroke-width="1.5"/><text x="242.6" y="126" font-size="9" fill="#e2e8f0" text-anchor="middle">5π/4</text><line x1="280.8" y1="107" x2="280.8" y2="113" stroke="#e2e8f0" stroke-width="1.5"/><text x="280.8" y="126" font-size="9" fill="#e2e8f0" text-anchor="middle">3π/2</text><line x1="357.0" y1="107" x2="357.0" y2="113" stroke="#e2e8f0" stroke-width="1.5"/><text x="357.0" y="126" font-size="9" fill="#e2e8f0" text-anchor="middle">2π</text><line x1="49" y1="40.0" x2="55" y2="40.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="44.0" font-size="9" fill="#e2e8f0" text-anchor="end">1</text><line x1="49" y1="180.0" x2="55" y2="180.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="184.0" font-size="9" fill="#e2e8f0" text-anchor="end">-1</text><polyline points="52.0,40.0 52.8,40.0 53.5,40.0 54.3,40.1 55.0,40.1 55.8,40.2 56.6,40.3 57.3,40.4 58.1,40.6 58.9,40.7 59.6,40.9 60.4,41.0 61.1,41.2 61.9,41.5 62.7,41.7 63.4,41.9 64.2,42.2 65.0,42.5 65.7,42.8 66.5,43.1 67.2,43.4 68.0,43.8 68.8,44.1 69.5,44.5 70.3,44.9 71.1,45.3 71.8,45.8 72.6,46.2 73.3,46.7 74.1,47.1 74.9,47.6 75.6,48.1 76.4,48.7 77.2,49.2 77.9,49.7 78.7,50.3 79.5,50.9 80.2,51.5 81.0,52.1 81.7,52.7 82.5,53.4 83.3,54.0 84.0,54.7 84.8,55.4 85.5,56.1 86.3,56.8 87.1,57.5 87.8,58.2 88.6,59.0 89.4,59.7 90.1,60.5 90.9,61.3 91.7,62.1 92.4,62.9 93.2,63.7 93.9,64.5 94.7,65.4 95.5,66.2 96.2,67.1 97.0,68.0 97.8,68.9 98.5,69.7 99.3,70.7 100.0,71.6 100.8,72.5 101.6,73.4 102.3,74.4 103.1,75.3 103.9,76.3 104.6,77.2 105.4,78.2 106.1,79.2 106.9,80.2 107.7,81.2 108.4,82.2 109.2,83.2 109.9,84.2 110.7,85.3 111.5,86.3 112.2,87.3 113.0,88.4 113.8,89.4 114.5,90.5 115.3,91.5 116.1,92.6 116.8,93.7 117.6,94.7 118.3,95.8 119.1,96.9 119.9,98.0 120.6,99.0 121.4,100.1 122.1,101.2 122.9,102.3 123.7,103.4 124.4,104.5 125.2,105.6 126.0,106.7 126.7,107.8 127.5,108.9 128.2,110.0 129.0,111.1 129.8,112.2 130.5,113.3 131.3,114.4 132.1,115.5 132.8,116.6 133.6,117.7 134.3,118.8 135.1,119.9 135.9,121.0 136.6,122.0 137.4,123.1 138.2,124.2 138.9,125.3 139.7,126.3 140.4,127.4 141.2,128.5 142.0,129.5 142.7,130.6 143.5,131.6 144.3,132.7 145.0,133.7 145.8,134.7 146.6,135.8 147.3,136.8 148.1,137.8 148.8,138.8 149.6,139.8 150.4,140.8 151.1,141.8 151.9,142.8 152.7,143.7 153.4,144.7 154.2,145.6 154.9,146.6 155.7,147.5 156.5,148.4 157.2,149.3 158.0,150.3 158.8,151.1 159.5,152.0 160.3,152.9 161.0,153.8 161.8,154.6 162.6,155.5 163.3,156.3 164.1,157.1 164.9,157.9 165.6,158.7 166.4,159.5 167.1,160.3 167.9,161.0 168.7,161.8 169.4,162.5 170.2,163.2 170.9,163.9 171.7,164.6 172.5,165.3 173.2,166.0 174.0,166.6 174.8,167.3 175.5,167.9 176.3,168.5 177.0,169.1 177.8,169.7 178.6,170.3 179.3,170.8 180.1,171.3 180.9,171.9 181.6,172.4 182.4,172.9 183.2,173.3 183.9,173.8 184.7,174.2 185.4,174.7 186.2,175.1 187.0,175.5 187.7,175.9 188.5,176.2 189.2,176.6 190.0,176.9 190.8,177.2 191.5,177.5 192.3,177.8 193.1,178.1 193.8,178.3 194.6,178.5 195.4,178.8 196.1,179.0 196.9,179.1 197.6,179.3 198.4,179.4 199.2,179.6 199.9,179.7 200.7,179.8 201.4,179.9 202.2,179.9 203.0,180.0 203.7,180.0 204.5,180.0 205.3,180.0 206.0,180.0 206.8,179.9 207.6,179.9 208.3,179.8 209.1,179.7 209.8,179.6 210.6,179.4 211.4,179.3 212.1,179.1 212.9,179.0 213.7,178.8 214.4,178.5 215.2,178.3 215.9,178.1 216.7,177.8 217.5,177.5 218.2,177.2 219.0,176.9 219.8,176.6 220.5,176.2 221.3,175.9 222.0,175.5 222.8,175.1 223.6,174.7 224.3,174.2 225.1,173.8 225.8,173.3 226.6,172.9 227.4,172.4 228.1,171.9 228.9,171.3 229.7,170.8 230.4,170.3 231.2,169.7 231.9,169.1 232.7,168.5 233.5,167.9 234.2,167.3 235.0,166.6 235.8,166.0 236.5,165.3 237.3,164.6 238.1,163.9 238.8,163.2 239.6,162.5 240.3,161.8 241.1,161.0 241.9,160.3 242.6,159.5 243.4,158.7 244.2,157.9 244.9,157.1 245.7,156.3 246.4,155.5 247.2,154.6 248.0,153.8 248.7,152.9 249.5,152.0 250.2,151.1 251.0,150.3 251.8,149.3 252.5,148.4 253.3,147.5 254.1,146.6 254.8,145.6 255.6,144.7 256.4,143.7 257.1,142.8 257.9,141.8 258.6,140.8 259.4,139.8 260.2,138.8 260.9,137.8 261.7,136.8 262.5,135.8 263.2,134.7 264.0,133.7 264.7,132.7 265.5,131.6 266.3,130.6 267.0,129.5 267.8,128.5 268.6,127.4 269.3,126.3 270.1,125.3 270.8,124.2 271.6,123.1 272.4,122.0 273.1,121.0 273.9,119.9 274.6,118.8 275.4,117.7 276.2,116.6 276.9,115.5 277.7,114.4 278.5,113.3 279.2,112.2 280.0,111.1 280.8,110.0 281.5,108.9 282.3,107.8 283.0,106.7 283.8,105.6 284.6,104.5 285.3,103.4 286.1,102.3 286.9,101.2 287.6,100.1 288.4,99.0 289.1,98.0 289.9,96.9 290.7,95.8 291.4,94.7 292.2,93.7 293.0,92.6 293.7,91.5 294.5,90.5 295.2,89.4 296.0,88.4 296.8,87.3 297.5,86.3 298.3,85.3 299.0,84.2 299.8,83.2 300.6,82.2 301.3,81.2 302.1,80.2 302.9,79.2 303.6,78.2 304.4,77.2 305.2,76.3 305.9,75.3 306.7,74.4 307.4,73.4 308.2,72.5 309.0,71.6 309.7,70.7 310.5,69.7 311.2,68.9 312.0,68.0 312.8,67.1 313.5,66.2 314.3,65.4 315.1,64.5 315.8,63.7 316.6,62.9 317.3,62.1 318.1,61.3 318.9,60.5 319.6,59.7 320.4,59.0 321.2,58.2 321.9,57.5 322.7,56.8 323.5,56.1 324.2,55.4 325.0,54.7 325.7,54.0 326.5,53.4 327.3,52.7 328.0,52.1 328.8,51.5 329.6,50.9 330.3,50.3 331.1,49.7 331.8,49.2 332.6,48.7 333.4,48.1 334.1,47.6 334.9,47.1 335.6,46.7 336.4,46.2 337.2,45.8 337.9,45.3 338.7,44.9 339.5,44.5 340.2,44.1 341.0,43.8 341.8,43.4 342.5,43.1 343.3,42.8 344.0,42.5 344.8,42.2 345.6,41.9 346.3,41.7 347.1,41.5 347.9,41.2 348.6,41.0 349.4,40.9 350.1,40.7 350.9,40.6 351.7,40.4 352.4,40.3 353.2,40.2 354.0,40.1 354.7,40.1 355.5,40.0 356.2,40.0 357.0,40.0" fill="none" stroke="#228833" stroke-width="2.5"/><text x="66" y="30.1" font-size="12" fill="#228833" font-style="italic">g</text><polyline points="52.0,110.0 52.8,108.9 53.5,107.8 54.3,106.7 55.0,105.6 55.8,104.5 56.6,103.4 57.3,102.3 58.1,101.2 58.9,100.1 59.6,99.0 60.4,98.0 61.1,96.9 61.9,95.8 62.7,94.7 63.4,93.7 64.2,92.6 65.0,91.5 65.7,90.5 66.5,89.4 67.2,88.4 68.0,87.3 68.8,86.3 69.5,85.3 70.3,84.2 71.1,83.2 71.8,82.2 72.6,81.2 73.3,80.2 74.1,79.2 74.9,78.2 75.6,77.2 76.4,76.3 77.2,75.3 77.9,74.4 78.7,73.4 79.5,72.5 80.2,71.6 81.0,70.7 81.7,69.7 82.5,68.9 83.3,68.0 84.0,67.1 84.8,66.2 85.5,65.4 86.3,64.5 87.1,63.7 87.8,62.9 88.6,62.1 89.4,61.3 90.1,60.5 90.9,59.7 91.7,59.0 92.4,58.2 93.2,57.5 93.9,56.8 94.7,56.1 95.5,55.4 96.2,54.7 97.0,54.0 97.8,53.4 98.5,52.7 99.3,52.1 100.0,51.5 100.8,50.9 101.6,50.3 102.3,49.7 103.1,49.2 103.9,48.7 104.6,48.1 105.4,47.6 106.1,47.1 106.9,46.7 107.7,46.2 108.4,45.8 109.2,45.3 109.9,44.9 110.7,44.5 111.5,44.1 112.2,43.8 113.0,43.4 113.8,43.1 114.5,42.8 115.3,42.5 116.1,42.2 116.8,41.9 117.6,41.7 118.3,41.5 119.1,41.2 119.9,41.0 120.6,40.9 121.4,40.7 122.1,40.6 122.9,40.4 123.7,40.3 124.4,40.2 125.2,40.1 126.0,40.1 126.7,40.0 127.5,40.0 128.2,40.0 129.0,40.0 129.8,40.0 130.5,40.1 131.3,40.1 132.1,40.2 132.8,40.3 133.6,40.4 134.3,40.6 135.1,40.7 135.9,40.9 136.6,41.0 137.4,41.2 138.2,41.5 138.9,41.7 139.7,41.9 140.4,42.2 141.2,42.5 142.0,42.8 142.7,43.1 143.5,43.4 144.3,43.8 145.0,44.1 145.8,44.5 146.6,44.9 147.3,45.3 148.1,45.8 148.8,46.2 149.6,46.7 150.4,47.1 151.1,47.6 151.9,48.1 152.7,48.7 153.4,49.2 154.2,49.7 154.9,50.3 155.7,50.9 156.5,51.5 157.2,52.1 158.0,52.7 158.8,53.4 159.5,54.0 160.3,54.7 161.0,55.4 161.8,56.1 162.6,56.8 163.3,57.5 164.1,58.2 164.9,59.0 165.6,59.7 166.4,60.5 167.1,61.3 167.9,62.1 168.7,62.9 169.4,63.7 170.2,64.5 170.9,65.4 171.7,66.2 172.5,67.1 173.2,68.0 174.0,68.9 174.8,69.7 175.5,70.7 176.3,71.6 177.0,72.5 177.8,73.4 178.6,74.4 179.3,75.3 180.1,76.3 180.9,77.2 181.6,78.2 182.4,79.2 183.2,80.2 183.9,81.2 184.7,82.2 185.4,83.2 186.2,84.2 187.0,85.3 187.7,86.3 188.5,87.3 189.2,88.4 190.0,89.4 190.8,90.5 191.5,91.5 192.3,92.6 193.1,93.7 193.8,94.7 194.6,95.8 195.4,96.9 196.1,98.0 196.9,99.0 197.6,100.1 198.4,101.2 199.2,102.3 199.9,103.4 200.7,104.5 201.4,105.6 202.2,106.7 203.0,107.8 203.7,108.9 204.5,110.0 205.3,111.1 206.0,112.2 206.8,113.3 207.6,114.4 208.3,115.5 209.1,116.6 209.8,117.7 210.6,118.8 211.4,119.9 212.1,121.0 212.9,122.0 213.7,123.1 214.4,124.2 215.2,125.3 215.9,126.3 216.7,127.4 217.5,128.5 218.2,129.5 219.0,130.6 219.8,131.6 220.5,132.7 221.3,133.7 222.0,134.7 222.8,135.8 223.6,136.8 224.3,137.8 225.1,138.8 225.8,139.8 226.6,140.8 227.4,141.8 228.1,142.8 228.9,143.7 229.7,144.7 230.4,145.6 231.2,146.6 231.9,147.5 232.7,148.4 233.5,149.3 234.2,150.3 235.0,151.1 235.8,152.0 236.5,152.9 237.3,153.8 238.1,154.6 238.8,155.5 239.6,156.3 240.3,157.1 241.1,157.9 241.9,158.7 242.6,159.5 243.4,160.3 244.2,161.0 244.9,161.8 245.7,162.5 246.4,163.2 247.2,163.9 248.0,164.6 248.7,165.3 249.5,166.0 250.2,166.6 251.0,167.3 251.8,167.9 252.5,168.5 253.3,169.1 254.1,169.7 254.8,170.3 255.6,170.8 256.4,171.3 257.1,171.9 257.9,172.4 258.6,172.9 259.4,173.3 260.2,173.8 260.9,174.2 261.7,174.7 262.5,175.1 263.2,175.5 264.0,175.9 264.7,176.2 265.5,176.6 266.3,176.9 267.0,177.2 267.8,177.5 268.6,177.8 269.3,178.1 270.1,178.3 270.8,178.5 271.6,178.8 272.4,179.0 273.1,179.1 273.9,179.3 274.6,179.4 275.4,179.6 276.2,179.7 276.9,179.8 277.7,179.9 278.5,179.9 279.2,180.0 280.0,180.0 280.8,180.0 281.5,180.0 282.3,180.0 283.0,179.9 283.8,179.9 284.6,179.8 285.3,179.7 286.1,179.6 286.9,179.4 287.6,179.3 288.4,179.1 289.1,179.0 289.9,178.8 290.7,178.5 291.4,178.3 292.2,178.1 293.0,177.8 293.7,177.5 294.5,177.2 295.2,176.9 296.0,176.6 296.8,176.2 297.5,175.9 298.3,175.5 299.0,175.1 299.8,174.7 300.6,174.2 301.3,173.8 302.1,173.3 302.9,172.9 303.6,172.4 304.4,171.9 305.2,171.3 305.9,170.8 306.7,170.3 307.4,169.7 308.2,169.1 309.0,168.5 309.7,167.9 310.5,167.3 311.2,166.6 312.0,166.0 312.8,165.3 313.5,164.6 314.3,163.9 315.1,163.2 315.8,162.5 316.6,161.8 317.3,161.0 318.1,160.3 318.9,159.5 319.6,158.7 320.4,157.9 321.2,157.1 321.9,156.3 322.7,155.5 323.5,154.6 324.2,153.8 325.0,152.9 325.7,152.0 326.5,151.1 327.3,150.3 328.0,149.3 328.8,148.4 329.6,147.5 330.3,146.6 331.1,145.6 331.8,144.7 332.6,143.7 333.4,142.8 334.1,141.8 334.9,140.8 335.6,139.8 336.4,138.8 337.2,137.8 337.9,136.8 338.7,135.8 339.5,134.7 340.2,133.7 341.0,132.7 341.8,131.6 342.5,130.6 343.3,129.5 344.0,128.5 344.8,127.4 345.6,126.3 346.3,125.3 347.1,124.2 347.9,123.1 348.6,122.0 349.4,121.0 350.1,119.9 350.9,118.8 351.7,117.7 352.4,116.6 353.2,115.5 354.0,114.4 354.7,113.3 355.5,112.2 356.2,111.1 357.0,110.0" fill="none" stroke="#0077bb" stroke-width="2.5"/><text x="146.6" y="34.9" font-size="12" fill="#0077bb" font-style="italic">f</text><circle cx="90.1" cy="60.5" r="4" fill="#cc4400"/><circle cx="242.6" cy="159.5" r="4" fill="#cc4400"/><rect x="295" y="10" width="10" height="10" fill="#0077bb"/><text x="309" y="19" font-size="9" fill="#e2e8f0">f: sin x</text><rect x="295" y="24" width="10" height="10" fill="#228833"/><text x="309" y="33" font-size="9" fill="#e2e8f0">g: cos x</text></svg>`,
+      diagram: `<svg viewBox="0 0 400 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="90.1" y1="28" x2="90.1" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="128.2" y1="28" x2="128.2" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="204.5" y1="28" x2="204.5" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="242.6" y1="28" x2="242.6" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="280.8" y1="28" x2="280.8" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="357.0" y1="28" x2="357.0" y2="197" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="40.0" x2="357" y2="40.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="52" y1="180.0" x2="357" y2="180.0" stroke="#64748b" stroke-width="1" opacity="0.4"/><line x1="44" y1="110" x2="369" y2="110" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="369,106 376,110 369,114" fill="#e2e8f0"/><text x="379" y="114" font-size="12" fill="#e2e8f0">x</text><line x1="52" y1="202" x2="52" y2="20" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="48,20 52,13 56,20" fill="#e2e8f0"/><text x="52" y="11" font-size="12" fill="#e2e8f0" text-anchor="middle">y</text><line x1="49" y1="40.0" x2="55" y2="40.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="44.0" font-size="9" fill="#e2e8f0" text-anchor="end">1</text><line x1="49" y1="180.0" x2="55" y2="180.0" stroke="#e2e8f0" stroke-width="1.5"/><text x="46" y="184.0" font-size="9" fill="#e2e8f0" text-anchor="end">-1</text><polyline points="52.0,40.0 52.8,40.0 53.5,40.0 54.3,40.1 55.0,40.1 55.8,40.2 56.6,40.3 57.3,40.4 58.1,40.6 58.9,40.7 59.6,40.9 60.4,41.0 61.1,41.2 61.9,41.5 62.7,41.7 63.4,41.9 64.2,42.2 65.0,42.5 65.7,42.8 66.5,43.1 67.2,43.4 68.0,43.8 68.8,44.1 69.5,44.5 70.3,44.9 71.1,45.3 71.8,45.8 72.6,46.2 73.3,46.7 74.1,47.1 74.9,47.6 75.6,48.1 76.4,48.7 77.2,49.2 77.9,49.7 78.7,50.3 79.5,50.9 80.2,51.5 81.0,52.1 81.7,52.7 82.5,53.4 83.3,54.0 84.0,54.7 84.8,55.4 85.5,56.1 86.3,56.8 87.1,57.5 87.8,58.2 88.6,59.0 89.4,59.7 90.1,60.5 90.9,61.3 91.7,62.1 92.4,62.9 93.2,63.7 93.9,64.5 94.7,65.4 95.5,66.2 96.2,67.1 97.0,68.0 97.8,68.9 98.5,69.7 99.3,70.7 100.0,71.6 100.8,72.5 101.6,73.4 102.3,74.4 103.1,75.3 103.9,76.3 104.6,77.2 105.4,78.2 106.1,79.2 106.9,80.2 107.7,81.2 108.4,82.2 109.2,83.2 109.9,84.2 110.7,85.3 111.5,86.3 112.2,87.3 113.0,88.4 113.8,89.4 114.5,90.5 115.3,91.5 116.1,92.6 116.8,93.7 117.6,94.7 118.3,95.8 119.1,96.9 119.9,98.0 120.6,99.0 121.4,100.1 122.1,101.2 122.9,102.3 123.7,103.4 124.4,104.5 125.2,105.6 126.0,106.7 126.7,107.8 127.5,108.9 128.2,110.0 129.0,111.1 129.8,112.2 130.5,113.3 131.3,114.4 132.1,115.5 132.8,116.6 133.6,117.7 134.3,118.8 135.1,119.9 135.9,121.0 136.6,122.0 137.4,123.1 138.2,124.2 138.9,125.3 139.7,126.3 140.4,127.4 141.2,128.5 142.0,129.5 142.7,130.6 143.5,131.6 144.3,132.7 145.0,133.7 145.8,134.7 146.6,135.8 147.3,136.8 148.1,137.8 148.8,138.8 149.6,139.8 150.4,140.8 151.1,141.8 151.9,142.8 152.7,143.7 153.4,144.7 154.2,145.6 154.9,146.6 155.7,147.5 156.5,148.4 157.2,149.3 158.0,150.3 158.8,151.1 159.5,152.0 160.3,152.9 161.0,153.8 161.8,154.6 162.6,155.5 163.3,156.3 164.1,157.1 164.9,157.9 165.6,158.7 166.4,159.5 167.1,160.3 167.9,161.0 168.7,161.8 169.4,162.5 170.2,163.2 170.9,163.9 171.7,164.6 172.5,165.3 173.2,166.0 174.0,166.6 174.8,167.3 175.5,167.9 176.3,168.5 177.0,169.1 177.8,169.7 178.6,170.3 179.3,170.8 180.1,171.3 180.9,171.9 181.6,172.4 182.4,172.9 183.2,173.3 183.9,173.8 184.7,174.2 185.4,174.7 186.2,175.1 187.0,175.5 187.7,175.9 188.5,176.2 189.2,176.6 190.0,176.9 190.8,177.2 191.5,177.5 192.3,177.8 193.1,178.1 193.8,178.3 194.6,178.5 195.4,178.8 196.1,179.0 196.9,179.1 197.6,179.3 198.4,179.4 199.2,179.6 199.9,179.7 200.7,179.8 201.4,179.9 202.2,179.9 203.0,180.0 203.7,180.0 204.5,180.0 205.3,180.0 206.0,180.0 206.8,179.9 207.6,179.9 208.3,179.8 209.1,179.7 209.8,179.6 210.6,179.4 211.4,179.3 212.1,179.1 212.9,179.0 213.7,178.8 214.4,178.5 215.2,178.3 215.9,178.1 216.7,177.8 217.5,177.5 218.2,177.2 219.0,176.9 219.8,176.6 220.5,176.2 221.3,175.9 222.0,175.5 222.8,175.1 223.6,174.7 224.3,174.2 225.1,173.8 225.8,173.3 226.6,172.9 227.4,172.4 228.1,171.9 228.9,171.3 229.7,170.8 230.4,170.3 231.2,169.7 231.9,169.1 232.7,168.5 233.5,167.9 234.2,167.3 235.0,166.6 235.8,166.0 236.5,165.3 237.3,164.6 238.1,163.9 238.8,163.2 239.6,162.5 240.3,161.8 241.1,161.0 241.9,160.3 242.6,159.5 243.4,158.7 244.2,157.9 244.9,157.1 245.7,156.3 246.4,155.5 247.2,154.6 248.0,153.8 248.7,152.9 249.5,152.0 250.2,151.1 251.0,150.3 251.8,149.3 252.5,148.4 253.3,147.5 254.1,146.6 254.8,145.6 255.6,144.7 256.4,143.7 257.1,142.8 257.9,141.8 258.6,140.8 259.4,139.8 260.2,138.8 260.9,137.8 261.7,136.8 262.5,135.8 263.2,134.7 264.0,133.7 264.7,132.7 265.5,131.6 266.3,130.6 267.0,129.5 267.8,128.5 268.6,127.4 269.3,126.3 270.1,125.3 270.8,124.2 271.6,123.1 272.4,122.0 273.1,121.0 273.9,119.9 274.6,118.8 275.4,117.7 276.2,116.6 276.9,115.5 277.7,114.4 278.5,113.3 279.2,112.2 280.0,111.1 280.8,110.0 281.5,108.9 282.3,107.8 283.0,106.7 283.8,105.6 284.6,104.5 285.3,103.4 286.1,102.3 286.9,101.2 287.6,100.1 288.4,99.0 289.1,98.0 289.9,96.9 290.7,95.8 291.4,94.7 292.2,93.7 293.0,92.6 293.7,91.5 294.5,90.5 295.2,89.4 296.0,88.4 296.8,87.3 297.5,86.3 298.3,85.3 299.0,84.2 299.8,83.2 300.6,82.2 301.3,81.2 302.1,80.2 302.9,79.2 303.6,78.2 304.4,77.2 305.2,76.3 305.9,75.3 306.7,74.4 307.4,73.4 308.2,72.5 309.0,71.6 309.7,70.7 310.5,69.7 311.2,68.9 312.0,68.0 312.8,67.1 313.5,66.2 314.3,65.4 315.1,64.5 315.8,63.7 316.6,62.9 317.3,62.1 318.1,61.3 318.9,60.5 319.6,59.7 320.4,59.0 321.2,58.2 321.9,57.5 322.7,56.8 323.5,56.1 324.2,55.4 325.0,54.7 325.7,54.0 326.5,53.4 327.3,52.7 328.0,52.1 328.8,51.5 329.6,50.9 330.3,50.3 331.1,49.7 331.8,49.2 332.6,48.7 333.4,48.1 334.1,47.6 334.9,47.1 335.6,46.7 336.4,46.2 337.2,45.8 337.9,45.3 338.7,44.9 339.5,44.5 340.2,44.1 341.0,43.8 341.8,43.4 342.5,43.1 343.3,42.8 344.0,42.5 344.8,42.2 345.6,41.9 346.3,41.7 347.1,41.5 347.9,41.2 348.6,41.0 349.4,40.9 350.1,40.7 350.9,40.6 351.7,40.4 352.4,40.3 353.2,40.2 354.0,40.1 354.7,40.1 355.5,40.0 356.2,40.0 357.0,40.0" fill="none" stroke="#228833" stroke-width="2.5"/><text x="66" y="30.1" font-size="12" fill="#228833" font-style="italic">g</text><polyline points="52.0,110.0 52.8,108.9 53.5,107.8 54.3,106.7 55.0,105.6 55.8,104.5 56.6,103.4 57.3,102.3 58.1,101.2 58.9,100.1 59.6,99.0 60.4,98.0 61.1,96.9 61.9,95.8 62.7,94.7 63.4,93.7 64.2,92.6 65.0,91.5 65.7,90.5 66.5,89.4 67.2,88.4 68.0,87.3 68.8,86.3 69.5,85.3 70.3,84.2 71.1,83.2 71.8,82.2 72.6,81.2 73.3,80.2 74.1,79.2 74.9,78.2 75.6,77.2 76.4,76.3 77.2,75.3 77.9,74.4 78.7,73.4 79.5,72.5 80.2,71.6 81.0,70.7 81.7,69.7 82.5,68.9 83.3,68.0 84.0,67.1 84.8,66.2 85.5,65.4 86.3,64.5 87.1,63.7 87.8,62.9 88.6,62.1 89.4,61.3 90.1,60.5 90.9,59.7 91.7,59.0 92.4,58.2 93.2,57.5 93.9,56.8 94.7,56.1 95.5,55.4 96.2,54.7 97.0,54.0 97.8,53.4 98.5,52.7 99.3,52.1 100.0,51.5 100.8,50.9 101.6,50.3 102.3,49.7 103.1,49.2 103.9,48.7 104.6,48.1 105.4,47.6 106.1,47.1 106.9,46.7 107.7,46.2 108.4,45.8 109.2,45.3 109.9,44.9 110.7,44.5 111.5,44.1 112.2,43.8 113.0,43.4 113.8,43.1 114.5,42.8 115.3,42.5 116.1,42.2 116.8,41.9 117.6,41.7 118.3,41.5 119.1,41.2 119.9,41.0 120.6,40.9 121.4,40.7 122.1,40.6 122.9,40.4 123.7,40.3 124.4,40.2 125.2,40.1 126.0,40.1 126.7,40.0 127.5,40.0 128.2,40.0 129.0,40.0 129.8,40.0 130.5,40.1 131.3,40.1 132.1,40.2 132.8,40.3 133.6,40.4 134.3,40.6 135.1,40.7 135.9,40.9 136.6,41.0 137.4,41.2 138.2,41.5 138.9,41.7 139.7,41.9 140.4,42.2 141.2,42.5 142.0,42.8 142.7,43.1 143.5,43.4 144.3,43.8 145.0,44.1 145.8,44.5 146.6,44.9 147.3,45.3 148.1,45.8 148.8,46.2 149.6,46.7 150.4,47.1 151.1,47.6 151.9,48.1 152.7,48.7 153.4,49.2 154.2,49.7 154.9,50.3 155.7,50.9 156.5,51.5 157.2,52.1 158.0,52.7 158.8,53.4 159.5,54.0 160.3,54.7 161.0,55.4 161.8,56.1 162.6,56.8 163.3,57.5 164.1,58.2 164.9,59.0 165.6,59.7 166.4,60.5 167.1,61.3 167.9,62.1 168.7,62.9 169.4,63.7 170.2,64.5 170.9,65.4 171.7,66.2 172.5,67.1 173.2,68.0 174.0,68.9 174.8,69.7 175.5,70.7 176.3,71.6 177.0,72.5 177.8,73.4 178.6,74.4 179.3,75.3 180.1,76.3 180.9,77.2 181.6,78.2 182.4,79.2 183.2,80.2 183.9,81.2 184.7,82.2 185.4,83.2 186.2,84.2 187.0,85.3 187.7,86.3 188.5,87.3 189.2,88.4 190.0,89.4 190.8,90.5 191.5,91.5 192.3,92.6 193.1,93.7 193.8,94.7 194.6,95.8 195.4,96.9 196.1,98.0 196.9,99.0 197.6,100.1 198.4,101.2 199.2,102.3 199.9,103.4 200.7,104.5 201.4,105.6 202.2,106.7 203.0,107.8 203.7,108.9 204.5,110.0 205.3,111.1 206.0,112.2 206.8,113.3 207.6,114.4 208.3,115.5 209.1,116.6 209.8,117.7 210.6,118.8 211.4,119.9 212.1,121.0 212.9,122.0 213.7,123.1 214.4,124.2 215.2,125.3 215.9,126.3 216.7,127.4 217.5,128.5 218.2,129.5 219.0,130.6 219.8,131.6 220.5,132.7 221.3,133.7 222.0,134.7 222.8,135.8 223.6,136.8 224.3,137.8 225.1,138.8 225.8,139.8 226.6,140.8 227.4,141.8 228.1,142.8 228.9,143.7 229.7,144.7 230.4,145.6 231.2,146.6 231.9,147.5 232.7,148.4 233.5,149.3 234.2,150.3 235.0,151.1 235.8,152.0 236.5,152.9 237.3,153.8 238.1,154.6 238.8,155.5 239.6,156.3 240.3,157.1 241.1,157.9 241.9,158.7 242.6,159.5 243.4,160.3 244.2,161.0 244.9,161.8 245.7,162.5 246.4,163.2 247.2,163.9 248.0,164.6 248.7,165.3 249.5,166.0 250.2,166.6 251.0,167.3 251.8,167.9 252.5,168.5 253.3,169.1 254.1,169.7 254.8,170.3 255.6,170.8 256.4,171.3 257.1,171.9 257.9,172.4 258.6,172.9 259.4,173.3 260.2,173.8 260.9,174.2 261.7,174.7 262.5,175.1 263.2,175.5 264.0,175.9 264.7,176.2 265.5,176.6 266.3,176.9 267.0,177.2 267.8,177.5 268.6,177.8 269.3,178.1 270.1,178.3 270.8,178.5 271.6,178.8 272.4,179.0 273.1,179.1 273.9,179.3 274.6,179.4 275.4,179.6 276.2,179.7 276.9,179.8 277.7,179.9 278.5,179.9 279.2,180.0 280.0,180.0 280.8,180.0 281.5,180.0 282.3,180.0 283.0,179.9 283.8,179.9 284.6,179.8 285.3,179.7 286.1,179.6 286.9,179.4 287.6,179.3 288.4,179.1 289.1,179.0 289.9,178.8 290.7,178.5 291.4,178.3 292.2,178.1 293.0,177.8 293.7,177.5 294.5,177.2 295.2,176.9 296.0,176.6 296.8,176.2 297.5,175.9 298.3,175.5 299.0,175.1 299.8,174.7 300.6,174.2 301.3,173.8 302.1,173.3 302.9,172.9 303.6,172.4 304.4,171.9 305.2,171.3 305.9,170.8 306.7,170.3 307.4,169.7 308.2,169.1 309.0,168.5 309.7,167.9 310.5,167.3 311.2,166.6 312.0,166.0 312.8,165.3 313.5,164.6 314.3,163.9 315.1,163.2 315.8,162.5 316.6,161.8 317.3,161.0 318.1,160.3 318.9,159.5 319.6,158.7 320.4,157.9 321.2,157.1 321.9,156.3 322.7,155.5 323.5,154.6 324.2,153.8 325.0,152.9 325.7,152.0 326.5,151.1 327.3,150.3 328.0,149.3 328.8,148.4 329.6,147.5 330.3,146.6 331.1,145.6 331.8,144.7 332.6,143.7 333.4,142.8 334.1,141.8 334.9,140.8 335.6,139.8 336.4,138.8 337.2,137.8 337.9,136.8 338.7,135.8 339.5,134.7 340.2,133.7 341.0,132.7 341.8,131.6 342.5,130.6 343.3,129.5 344.0,128.5 344.8,127.4 345.6,126.3 346.3,125.3 347.1,124.2 347.9,123.1 348.6,122.0 349.4,121.0 350.1,119.9 350.9,118.8 351.7,117.7 352.4,116.6 353.2,115.5 354.0,114.4 354.7,113.3 355.5,112.2 356.2,111.1 357.0,110.0" fill="none" stroke="#0077bb" stroke-width="2.5"/><text x="146.6" y="34.9" font-size="12" fill="#0077bb" font-style="italic">f</text><circle cx="90.1" cy="60.5" r="4" fill="#cc4400"/><circle cx="242.6" cy="159.5" r="4" fill="#cc4400"/><rect x="295" y="10" width="10" height="10" fill="#0077bb"/><text x="309" y="19" font-size="9" fill="#e2e8f0">f: sin x</text><rect x="295" y="24" width="10" height="10" fill="#228833"/><text x="309" y="33" font-size="9" fill="#e2e8f0">g: cos x</text></svg>`,
       instruction: `Vyberte správný interval.`,
       choices: [
         {
@@ -4221,6 +4107,10 @@ x + 2y = 4 \\\\
           feedback: `Kritická chyba. Pro \\(x \\in (0;\\, \\tfrac{\\pi}{4})\\) platí \\(\\sin x < \\cos x\\) — analýza musí začít od průsečíku v \\(\\tfrac{\\pi}{4}\\).`
         },
       ],
+      hints: [
+        `Oba grafy se v \\((0;\\, 2\\pi)\\) protínají ve dvou bodech — kde platí \\(\\sin x = \\cos x\\)? Z průsečíků odvoďte, na jakých intervalech leží \\(f\\) nad \\(g\\).`,
+        `Na jednotkové kružnici: \\(\\sin x = \\cos x\\) odpovídá bodům na přímce \\(y = x\\). Kde tato přímka protíná kružnici? A ve které části kružnice je y-souřadnice větší než x-souřadnice?`,
+      ],
       correctAnswer: "A", reward: { xp: 15 }
     },
     {
@@ -4231,8 +4121,12 @@ x + 2y = 4 \\\\
       instruction: `Vyberte správné tvrzení pro x = π/3.`,
       steps: [
         {
+          trigger: `> Krok 0: Průsečík na kružnici`,
+          content: `Na jednotkové kružnici: \\(\\sin x = \\cos x\\) nastane, když y-souřadnice = x-souřadnice bodu. To odpovídá přímce \\(y = x\\) — diagonála 45°. Tato přímka protíná kružnici v úhlech \\(\\tfrac{\\pi}{4}\\) a \\(\\tfrac{5\\pi}{4}\\).`
+        },
+        {
           trigger: `> Krok 1: Výpočet v π/3`,
-          content: `\\(\\sin(\\tfrac{\\pi}{3}) = \\tfrac{\\sqrt{3}}{2} \\approx 0{,}866\\). \\(\\quad\\cos(\\tfrac{\\pi}{3}) = \\tfrac{1}{2} = 0{,}5\\).`
+          content: `Pro úhel \\(\\tfrac{\\pi}{3}\\) platí, že jeden z hodnot \\(\\sin\\) a \\(\\cos\\) je \\(\\tfrac{\\sqrt{3}}{2}\\) a druhý \\(\\tfrac{1}{2}\\). Který je který?`
         },
         {
           trigger: `> Krok 2: Porovnání`,
@@ -4296,8 +4190,8 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Ze směrového vektoru \\(\\overrightarrow{u} = (a;\\ b)\\) dostaneme normálový vektor otočením: \\(\\overrightarrow{n} = (b;\\ -a)\\) nebo \\(\\overrightarrow{n} = (-b;\\ a)\\). Ověř skalárním součinem \\(\\overrightarrow{n} \\cdot \\overrightarrow{u} = 0\\).`,
-        `Obecnou rovnici \\(ax + by + c = 0\\) sestav dosazením bodu \\(B\\) za \\([x;\\ y]\\). Výsledek musí být 0 — z toho dopočítáš konstantu \\(c\\).`,
+        `Pro získání obecného tvaru přímky potřebuješ normálový vektor. Ten je kolmý na směrový vektor. Složky tohoto vektoru získáš šikovným otočením jeho složek. Ověř skalárním součinem \\(\\overrightarrow{n} \\cdot \\overrightarrow{u} = 0\\) (kritérium kolmosti).`,
+        `Jak vypadá obecný tvar rovnice přímky? Známe nějaký bod na přímce p? Co musí takový bod splňovat vzhledem k rovnici přímky?`,
       ],
       correctAnswer: "C", reward: { xp: 10 }
     },
@@ -4309,15 +4203,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Co je normálový vektor?`,
-          content: `Normálový vektor přímky je <b>kolmý</b> ke směrovému vektoru. Podmínka kolmosti: skalární součin \\(\\vec{n} \\cdot \\vec{u} = 0\\).`
+          content: `Normálový vektor přímky je kolmý ke směrovému vektoru. Podmínka kolmosti: skalární součin \\(\\overrightarrow{n} \\cdot \\overrightarrow{u} = 0\\). Ze směrového vektoru \\(\\overrightarrow{u} = (a;\\ b)\\) tedy dostaneme normálový vektor otočením: \\(\\overrightarrow{n} = (b;\\ -a)\\) nebo \\(\\overrightarrow{n} = (-b;\\ a)\\).`
         },
         {
-          trigger: `> Krok 2: Testujte každou možnost`,
-          content: `Pro \\(\\vec{u} = (1; 2)\\) spočítejte skalární součin s každou možností. Hledáte výsledek 0.`
-        },
-        {
-          trigger: `> Krok 3: Výsledek`,
-          content: `Spočítej skalární součin pro každou z nabídnutých možností. Která dá výsledek \\(0\\)? Ověřovací podmínka je \\(\\vec{n} \\cdot \\vec{u} = 0\\).`
+          trigger: `> Krok 2: Ověření kolmosti`,
+          content: `Jak pomocí skalárního součinu ověříte, zda je konkrétní vektor kolmý na \\(\\vec{u}\\)?`
         },
       ],
       choices: [
@@ -4373,7 +4263,7 @@ x + 2y = 4 \\\\
       ],
       hints: [
         `Průsečík přímek splňuje obě rovnice najednou. Napiš soustavu dvou rovnic se dvěma neznámými \\(x\\) a \\(y\\) a vyřeš ji.`,
-        `Sečtením rovnic \\(x + y - 5 = 0\\) a \\(2x - y - 1 = 0\\) se proměnná \\(y\\) vyruší. Kolik vychází \\(x\\)?`,
+        `Soustavu dvou rovnic se dvěma neznámými lze řešit sčítací nebo dosazovací metodou. Podívejte se na koeficienty u \\(y\\) — napoví vám, která metoda je výhodnější.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -4384,16 +4274,12 @@ x + 2y = 4 \\\\
       instruction: `Jaké jsou souřadnice průsečíku P?`,
       steps: [
         {
-          trigger: `> Krok 1: Vyjádřit x`,
-          content: `Ze přímky s: \\(x - y = 2\\) → \\(x = y + 2\\).`
+          trigger: `> Krok 1: Dosazovací metoda`,
+          content: `Z jedné rovnice vyjádřete jednu neznámou a dosaďte do druhé. Která rovnice se k tomu hodí lépe?`
         },
         {
-          trigger: `> Krok 2: Dosadit do r`,
-          content: `Do \\(2x + y = 7\\): \\(2(y+2) + y = 7\\) → \\(3y + 4 = 7\\) → \\(y = 1\\).`
-        },
-        {
-          trigger: `> Krok 3: Dopočítat x`,
-          content: `Dosaď \\(y = 1\\) zpět do \\(x = y + 2\\). Jaké jsou souřadnice průsečíku \\(P\\)?`
+          trigger: `> Krok 2: Zpětné dosazení`,
+          content: `Po vyřešení jedné neznámé ji dosaďte zpět a dopočítejte druhou. Ověřte výsledek v obou rovnicích.`
         },
       ],
       choices: [
@@ -4410,7 +4296,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(P\\lbrack 1;\\ 3\\rbrack\\)`,
           value: "C",
-          feedback: `Přehozené souřadnice. Výsledek x = 3 a y = 1, nikoli naopak.`
+          feedback: `Přehozené souřadnice. Zkontrolujte, která hodnota odpovídá \\(x\\) a která \\(y\\).`
         },
         {
           label: `\\(P\\lbrack 3;\\ 1\\rbrack\\)`,
@@ -4421,74 +4307,74 @@ x + 2y = 4 \\\\
       correctAnswer: "D", reward: { xp: 5 }
     },
             {
-      id: "q_ana_03", regionId: "analytika", type: "closed", monsterName: `FW_06C: Vektory v šestiúhelníku`,
-      visual_color: "#e74c3c", visual_symbol: `v̄−ū`, points: 3, trainingTasks: ["t_ana_03"],
-    diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <polygon points="240.0,120.0 200.0,50.7 120.0,50.7 80.0,120.0 120.0,189.3 200.0,189.3" fill="none" stroke="#334155" stroke-width="1.5"/> <circle cx="160" cy="120" r="3" fill="#64748b"/> <text x="165" y="124" fill="#94a3b8" font-size="12">S</text> <text x="249" y="124" fill="#e2e8f0" font-size="13" font-weight="bold">A</text> <text x="202" y="43" fill="#e2e8f0" font-size="13" font-weight="bold">B</text> <text x="108" y="43" fill="#e2e8f0" font-size="13" font-weight="bold">C</text> <text x="61" y="124" fill="#e2e8f0" font-size="13" font-weight="bold">D</text> <text x="108" y="205" fill="#e2e8f0" font-size="13" font-weight="bold">E</text> <text x="202" y="205" fill="#e2e8f0" font-size="13" font-weight="bold">F</text> <defs><marker id="au" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0077bb"/></marker><marker id="av" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7733aa"/></marker><marker id="aAF" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e74c3c"/></marker></defs> <line x1="240.0" y1="120.0" x2="204.0" y2="57.6" stroke="#0077bb" stroke-width="2.5" marker-end="url(#au)"/> <text x="230" y="77" fill="#0077bb" font-size="12">ū</text> <line x1="200.0" y1="50.7" x2="128.0" y2="50.7" stroke="#7733aa" stroke-width="2.5" marker-end="url(#av)"/> <text x="140" y="43" fill="#7733aa" font-size="12">v̄</text> <line x1="240.0" y1="120.0" x2="204.0" y2="182.4" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#aAF)"/> <text x="228" y="159" fill="#e74c3c" font-size="12" font-weight="bold">AF̄</text> </svg>`,
-      question: `Je dán pravidelný šestiúhelník ABCDEF se středem S. Označme \\(\\overrightarrow{u} = \\overrightarrow{AB}\\), \\(\\overrightarrow{v} = \\overrightarrow{BC}\\).`,
-      instruction: `Vyberte výraz, který vyjadřuje vektor \\(\\overrightarrow{AF}\\).`,
+      id: "q_ana_03", regionId: "analytika", type: "closed", monsterName: `FW_06C: Vektory v trojúhelníku`,
+      visual_color: "#e74c3c", visual_symbol: `½(ū+v̄)`, points: 3, trainingTasks: ["t_ana_03"],
+    diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <polygon points="160,45 75,195 245,195" fill="none" stroke="#334155" stroke-width="1.5"/> <line x1="75" y1="195" x2="245" y2="195" stroke="#334155" stroke-width="1.5"/> <circle cx="160" cy="195" r="3" fill="#64748b"/> <text x="154" y="213" fill="#94a3b8" font-size="12">S</text> <text x="156" y="38" fill="#e2e8f0" font-size="13" font-weight="bold">A</text> <text x="57" y="200" fill="#e2e8f0" font-size="13" font-weight="bold">B</text> <text x="249" y="200" fill="#e2e8f0" font-size="13" font-weight="bold">C</text> <defs><marker id="mu" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0077bb"/></marker><marker id="mv" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7733aa"/></marker><marker id="mas" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e74c3c"/></marker></defs> <line x1="160" y1="45" x2="84" y2="182" stroke="#0077bb" stroke-width="2.5" marker-end="url(#mu)"/> <text x="100" y="118" fill="#0077bb" font-size="13">ū</text> <line x1="160" y1="45" x2="236" y2="182" stroke="#7733aa" stroke-width="2.5" marker-end="url(#mv)"/> <text x="212" y="118" fill="#7733aa" font-size="13">v̄</text> <line x1="160" y1="45" x2="160" y2="181" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#mas)"/> <text x="165" y="125" fill="#e74c3c" font-size="12" font-weight="bold">AS</text> </svg>`,
+      question: `Je dán rovnostranný trojúhelník ABC. Bod S je střed strany BC. Označme \\(\\overrightarrow{u} = \\overrightarrow{AB}\\), \\(\\overrightarrow{v} = \\overrightarrow{AC}\\).`,
+      instruction: `Vyberte výraz, který vyjadřuje vektor \\(\\overrightarrow{AS}\\).`,
       choices: [
       {
         label: `\\(\\overrightarrow{u} + \\overrightarrow{v}\\)`,
         value: "A",
-        feedback: `Chyba syntaxe. \\(\\overrightarrow{u} + \\overrightarrow{v} = \\overrightarrow{AB} + \\overrightarrow{BC} = \\overrightarrow{AC}\\) — to je vektor do vrcholu C, nikoli F.`
+        feedback: `Přetečení. \\(\\overrightarrow{u} + \\overrightarrow{v}\\) odpovídá bodu D takovému, že ABDC je rovnoběžník — překročili jste střed strany o celou polovinu.`
+      },
+      {
+        label: `\\(\\tfrac{1}{2}(\\overrightarrow{u} + \\overrightarrow{v})\\)`,
+        value: "B",
+        feedback: `Přístup povolen. \\(\\overrightarrow{AS} = \\overrightarrow{AB} + \\overrightarrow{BS} = \\overrightarrow{u} + \\tfrac{1}{2}(\\overrightarrow{v} - \\overrightarrow{u}) = \\tfrac{1}{2}(\\overrightarrow{u} + \\overrightarrow{v})\\) ✓`
       },
       {
         label: `\\(\\overrightarrow{v} - \\overrightarrow{u}\\)`,
-        value: "B",
-        feedback: `Přístup povolen. \\(\\overrightarrow{v} - \\overrightarrow{u} = (-1;0) - (-\\tfrac{1}{2}; \\tfrac{\\sqrt{3}}{2}) = (-\\tfrac{1}{2}; -\\tfrac{\\sqrt{3}}{2}) = \\overrightarrow{AF}\\) ✓`
-      },
-      {
-        label: `\\(\\overrightarrow{u} - \\overrightarrow{v}\\)`,
         value: "C",
-        feedback: `Kritická chyba. \\(\\overrightarrow{u} - \\overrightarrow{v} = \\overrightarrow{SB}\\) (vektor ze středu do B) — záměna pořadí ve výrazu otočí směr výsledku.`
+        feedback: `Chyba syntaxe. \\(\\overrightarrow{v} - \\overrightarrow{u} = \\overrightarrow{AC} - \\overrightarrow{AB} = \\overrightarrow{BC}\\) — dostali jste vektor podél strany, ne těžnici k jejímu středu.`
       },
       {
-        label: `\\(2\\overrightarrow{v} - \\overrightarrow{u}\\)`,
+        label: `\\(\\tfrac{1}{2}(\\overrightarrow{v} - \\overrightarrow{u})\\)`,
         value: "D",
-        feedback: `Chyba v koeficientu. \\(2\\overrightarrow{v} - \\overrightarrow{u} = \\overrightarrow{AE}\\) — dosáhnete vrcholu E, nikoli F.`
+        feedback: `Nekompletní. \\(\\tfrac{1}{2}(\\overrightarrow{v} - \\overrightarrow{u}) = \\overrightarrow{BS}\\) — dorazili jste do S, ale startovali z B, nikoli z A.`
       },
       ],
       hints: [
-      `Rozložte cestu A→F přes sousední vrcholy. Jaká posloupnost vektorů ū, v̄ vás z A dostane do F?`,
-      `F je sousedem A v šestiúhelníku. Zkuste cestu A→B→C→…→F nebo zkratku přes vztahy \\(\\overrightarrow{AF} = \\overrightarrow{AB} + \\overrightarrow{BF}\\) a vyjádřete \\(\\overrightarrow{BF}\\) pomocí ū a v̄.`,
+      `S leží uprostřed BC. Jak vyjádříte vektor \\(\\overrightarrow{BS}\\) pomocí vektoru \\(\\overrightarrow{BC}\\)?`,
+      `Zkuste cestu A → B → S. Vektor \\(\\overrightarrow{BC}\\) vyjádřete z ū a v̄, pak využijte, že \\(\\overrightarrow{BS} = \\tfrac{1}{2}\\overrightarrow{BC}\\).`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
             {
-      id: "t_ana_03", regionId: "analytika", type: "closed", monsterName: `SIM_06C: Vektory v šestiúhelníku`,
-      isTraining: true, firewallId: "q_ana_03", visual_color: "#2ecc8a", visual_symbol: `v̄`, points: 0,
-      question: `Je dán pravidelný šestiúhelník ABCDEF, \\(\\overrightarrow{u} = \\overrightarrow{AB}\\), \\(\\overrightarrow{v} = \\overrightarrow{BC}\\).`,
-      instruction: `Vyjádřete vektor \\(\\overrightarrow{AC}\\) pomocí ū a v̄.`,
+      id: "t_ana_03", regionId: "analytika", type: "closed", monsterName: `SIM_06C: Rozklad v trojúhelníku`,
+      isTraining: true, firewallId: "q_ana_03", visual_color: "#2ecc8a", visual_symbol: `v̄−ū`, points: 0,
+      question: `Je dán rovnostranný trojúhelník ABC, \\(\\overrightarrow{u} = \\overrightarrow{AB}\\), \\(\\overrightarrow{v} = \\overrightarrow{AC}\\).`,
+      instruction: `Vyjádřete vektor \\(\\overrightarrow{BC}\\) pomocí ū a v̄.`,
       steps: [
       {
-        trigger: `> Krok 1: Rozložit cestu`,
-        content: `\\(\\overrightarrow{AC} = \\overrightarrow{AB} + \\overrightarrow{BC}\\) — přechod A→B→C po hranách šestiúhelníku.`
+        trigger: `> Krok 1: Cesta přes A`,
+        content: `Z bodu B se chcete dostat do C. Přes který společný bod vede cesta pomocí vektorů ū a v̄? Zkuste B → A → C.`
       },
       {
-        trigger: `> Krok 2: Dosadit ū a v̄`,
-        content: `Nahraďte \\(\\overrightarrow{AB} = \\overrightarrow{u}\\) a \\(\\overrightarrow{BC} = \\overrightarrow{v}\\). Jaký výraz dostanete pro \\(\\overrightarrow{AC}\\)?`
+        trigger: `> Krok 2: Složení vektorů`,
+        content: `\\(\\overrightarrow{BC} = \\overrightarrow{BA} + \\overrightarrow{AC}\\). Jak zapíšete \\(\\overrightarrow{BA}\\) pomocí ū? Nezapomeňte na směr.`
       },
       ],
       choices: [
       {
-        label: `\\(\\overrightarrow{u} + \\overrightarrow{v}\\)`,
-        value: "A",
-        feedback: `Logika potvrzena. AC = AB + BC = ū + v̄ ✓`
-      },
-      {
         label: `\\(\\overrightarrow{v} - \\overrightarrow{u}\\)`,
-        value: "B",
-        feedback: `Chyba: toto je vektor AF (správná odpověď boss příkladu). Pro AC potřebujeme součet, ne rozdíl.`
+        value: "A",
+        feedback: `Logika potvrzena. \\(\\overrightarrow{BC} = \\overrightarrow{BA} + \\overrightarrow{AC} = -\\overrightarrow{u} + \\overrightarrow{v} = \\overrightarrow{v} - \\overrightarrow{u}\\) ✓`
       },
       {
         label: `\\(\\overrightarrow{u} - \\overrightarrow{v}\\)`,
-        value: "C",
-        feedback: `Chyba v znaménku. Přecházíte po hranách ve směru A→B→C, tedy sčítáte, nikoli odčítáte.`
+        value: "B",
+        feedback: `Chyba ve směru. \\(\\overrightarrow{u} - \\overrightarrow{v} = \\overrightarrow{CB}\\) — otočili jste vektor, míříte z C do B, ne z B do C.`
       },
       {
-        label: `\\(2\\overrightarrow{u} + \\overrightarrow{v}\\)`,
+        label: `\\(\\overrightarrow{u} + \\overrightarrow{v}\\)`,
+        value: "C",
+        feedback: `Chyba v operaci. \\(\\overrightarrow{u} + \\overrightarrow{v} = \\overrightarrow{AB} + \\overrightarrow{AC}\\) — to by vedlo do bodu D rovnoběžníku, nikoli do C z B.`
+      },
+      {
+        label: `\\(\\tfrac{1}{2}(\\overrightarrow{u} + \\overrightarrow{v})\\)`,
         value: "D",
-        feedback: `Kritická chyba. Cestu z A do C skládají přesně dva vektory ū (jedenkrát) a v̄ (jedenkrát).`
+        feedback: `Chyba kontextu. \\(\\tfrac{1}{2}(\\overrightarrow{u} + \\overrightarrow{v}) = \\overrightarrow{AS}\\) — to je těžnice z A ke středu BC, ne vektor podél celé strany.`
       },
       ],
       correctAnswer: "A", reward: { xp: 5 }
@@ -4521,7 +4407,7 @@ x + 2y = 4 \\\\
       },
       ],
       hints: [
-      `Bod C získáte jako \\(C = A + \\overrightarrow{u}\\). Sečtěte souřadnice bodu A a vektoru ū.`,
+      `Jak souvisí souřadnice koncového bodu orientované úsečky se souřadnicemi počátečního bodu a vektoru?`,
       `Zkontrolujte každé tvrzení samostatně: (B) délka AC vs. AB, (C) střed AC vs. střed AB, (D) směrový vs. normálový vektor.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
@@ -4534,12 +4420,12 @@ x + 2y = 4 \\\\
       instruction: `Jaké jsou souřadnice bodu C?`,
       steps: [
       {
-        trigger: `> Krok 1: Vzorec`,
-        content: `\\(C = A + \\overrightarrow{u} = [1;\\ 0] + (3;\\ 2)\\). Sečtěte souřadnice po složkách.`
+        trigger: `> Krok 1: Umístění vektoru`,
+        content: `Orientovaná úsečka \\(\\overrightarrow{AC}\\) je umístěním vektoru \\(\\overrightarrow{u}\\). Jak ze souřadnic bodu A a vektoru \\(\\overrightarrow{u}\\) získáte souřadnice bodu C?`
       },
       {
-        trigger: `> Krok 2: Výsledek`,
-        content: `\\(C_x = 1 + 3,\\quad C_y = 0 + 2\\). Jaké jsou výsledné souřadnice?`
+        trigger: `> Krok 2: Výpočet po složkách`,
+        content: `Sečtěte odpovídající souřadnice. Pozor na znaménka jednotlivých složek.`
       },
       ],
       choices: [
@@ -4567,78 +4453,78 @@ x + 2y = 4 \\\\
       correctAnswer: "B", reward: { xp: 5 }
     },
             {
-      id: "q_ana_05", regionId: "analytika", type: "closed", monsterName: `FW_06E: Normálový vektor z grafu`,
-      visual_color: "#e74c3c", visual_symbol: `n⃗`, points: 4, trainingTasks: ["t_ana_05"],
-    diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="30" y1="0" x2="30" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="60" y1="0" x2="60" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="90" y1="0" x2="90" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="120" y1="0" x2="120" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="150" y1="0" x2="150" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="180" y1="0" x2="180" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="210" y1="0" x2="210" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="240" y1="0" x2="240" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="270" y1="0" x2="270" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="240" x2="320" y2="240" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="210" x2="320" y2="210" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="180" x2="320" y2="180" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="150" x2="320" y2="150" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="120" x2="320" y2="120" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="90" x2="320" y2="90" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="60" x2="320" y2="60" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="30" x2="320" y2="30" stroke="#64748b" stroke-width="0.5" opacity="0.5"/> <line x1="0" y1="150" x2="320" y2="150" stroke="#e2e8f0" stroke-width="1.5"/> <line x1="150" y1="0" x2="150" y2="240" stroke="#e2e8f0" stroke-width="1.5"/> <polygon points="320,150 312,146 312,154" fill="#e2e8f0"/> <polygon points="150,2 146,10 154,10" fill="#e2e8f0"/> <text x="310" y="164" fill="#e2e8f0" font-size="13">x</text> <text x="155" y="14" fill="#e2e8f0" font-size="13">y</text> <line x1="180" y1="147" x2="180" y2="153" stroke="#e2e8f0" stroke-width="1"/> <text x="176" y="164" fill="#e2e8f0" font-size="11">1</text> <line x1="147" y1="120" x2="153" y2="120" stroke="#e2e8f0" stroke-width="1"/> <text x="155" y="124" fill="#e2e8f0" font-size="11">1</text> <defs><marker id="eu" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0077bb"/></marker><marker id="ev" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7733aa"/></marker></defs> <line x1="150" y1="150" x2="67.6" y2="122.5" stroke="#0077bb" stroke-width="2.5" marker-end="url(#eu)"/> <text x="20" y="112" fill="#0077bb" font-size="12">ū=(−3; 1)</text> <line x1="150" y1="150" x2="176.4" y2="97.2" stroke="#7733aa" stroke-width="2.5" marker-end="url(#ev)"/> <text x="186" y="86" fill="#7733aa" font-size="12">v̄=(1; 2)</text> <circle cx="150" cy="150" r="3" fill="#e2e8f0"/> </svg>`,
-      question: `V kartézské soustavě souřadnic jsou umístěny vektory \\(\\overrightarrow{u}\\) a \\(\\overrightarrow{v}\\) (počáteční i koncové body jsou v mřížových bodech, viz diagram). Směrovým vektorem přímky p je součet \\(\\overrightarrow{u} + \\overrightarrow{v}\\).`,
-      instruction: `Který z následujících vektorů je normálovým vektorem přímky p?`,
+      id: "q_ana_05", regionId: "analytika", type: "closed", monsterName: `FW_06E: Směrový vektor z normálového`,
+      visual_color: "#e74c3c", visual_symbol: `s⃗`, points: 4, trainingTasks: ["t_ana_05"],
+    diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="70" y1="20" x2="70" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="100" y1="20" x2="100" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="130" y1="20" x2="130" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="160" y1="20" x2="160" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="190" y1="20" x2="190" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="220" y1="20" x2="220" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="250" y1="20" x2="250" y2="200" stroke="#334155" stroke-width="0.5"/> <line x1="40" y1="170" x2="270" y2="170" stroke="#334155" stroke-width="0.5"/> <line x1="40" y1="140" x2="270" y2="140" stroke="#334155" stroke-width="0.5"/> <line x1="40" y1="110" x2="270" y2="110" stroke="#334155" stroke-width="0.5"/> <line x1="40" y1="80" x2="270" y2="80" stroke="#334155" stroke-width="0.5"/> <line x1="40" y1="50" x2="270" y2="50" stroke="#334155" stroke-width="0.5"/> <line x1="40" y1="200" x2="275" y2="200" stroke="#94a3b8" stroke-width="1.5"/> <polygon points="277,200 269,196 269,204" fill="#94a3b8"/> <line x1="40" y1="200" x2="40" y2="18" stroke="#94a3b8" stroke-width="1.5"/> <polygon points="40,16 36,24 44,24" fill="#94a3b8"/> <text x="280" y="204" fill="#94a3b8" font-size="11">x</text> <text x="44" y="14" fill="#94a3b8" font-size="11">y</text> <line x1="70" y1="197" x2="70" y2="203" stroke="#94a3b8" stroke-width="1"/> <text x="67" y="214" fill="#64748b" font-size="10">1</text> <line x1="100" y1="197" x2="100" y2="203" stroke="#94a3b8" stroke-width="1"/> <text x="97" y="214" fill="#64748b" font-size="10">2</text> <line x1="130" y1="197" x2="130" y2="203" stroke="#94a3b8" stroke-width="1"/> <text x="127" y="214" fill="#64748b" font-size="10">3</text> <line x1="160" y1="197" x2="160" y2="203" stroke="#94a3b8" stroke-width="1"/> <text x="157" y="214" fill="#64748b" font-size="10">4</text> <line x1="190" y1="197" x2="190" y2="203" stroke="#94a3b8" stroke-width="1"/> <text x="187" y="214" fill="#64748b" font-size="10">5</text> <line x1="220" y1="197" x2="220" y2="203" stroke="#94a3b8" stroke-width="1"/> <text x="217" y="214" fill="#64748b" font-size="10">6</text> <line x1="37" y1="170" x2="43" y2="170" stroke="#94a3b8" stroke-width="1"/> <text x="28" y="173" fill="#64748b" font-size="10">1</text> <line x1="37" y1="140" x2="43" y2="140" stroke="#94a3b8" stroke-width="1"/> <text x="28" y="143" fill="#64748b" font-size="10">2</text> <line x1="37" y1="110" x2="43" y2="110" stroke="#94a3b8" stroke-width="1"/> <text x="28" y="113" fill="#64748b" font-size="10">3</text> <line x1="37" y1="80" x2="43" y2="80" stroke="#94a3b8" stroke-width="1"/> <text x="28" y="83" fill="#64748b" font-size="10">4</text> <line x1="37" y1="50" x2="43" y2="50" stroke="#94a3b8" stroke-width="1"/> <text x="28" y="53" fill="#64748b" font-size="10">5</text> <defs><marker id="eu05" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0077bb"/></marker><marker id="ev05" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7733aa"/></marker></defs> <circle cx="70" cy="170" r="3" fill="#64748b"/> <circle cx="160" cy="140" r="3" fill="#64748b"/> <line x1="70" y1="170" x2="125" y2="88" stroke="#0077bb" stroke-width="2.5" marker-end="url(#eu05)"/> <text x="75" y="128" fill="#0077bb" font-size="13" font-weight="bold">ū</text> <line x1="160" y1="140" x2="186" y2="88" stroke="#7733aa" stroke-width="2.5" marker-end="url(#ev05)"/> <text x="178" y="115" fill="#7733aa" font-size="13" font-weight="bold">v̄</text> </svg>`,
+      question: `V kartézské soustavě souřadnic jsou umístěny vektory \\(\\overrightarrow{u}\\) a \\(\\overrightarrow{v}\\) (počáteční i koncové body leží v mřížových bodech, viz diagram). Normálovým vektorem přímky p je rozdíl \\(2\\overrightarrow{u} - \\overrightarrow{v}\\).`,
+      instruction: `Který z následujících vektorů je směrovým vektorem přímky p?`,
       choices: [
       {
-        label: `\\(\\overrightarrow{a} = (3;\\ 2)\\)`,
+        label: `\\((3;\\ 4)\\)`,
         value: "A",
-        feedback: `Přístup povolen. \\(\\overrightarrow{u}+\\overrightarrow{v} = (-2;\\ 3)\\). Skalární součin: \\((3;\\ 2)\\cdot(-2;\\ 3) = -6+6 = 0\\) ✓`
+        feedback: `Kritická chyba. \\((3;\\ 4)\\) je samotný normálový vektor přímky — tedy \\(2\\overrightarrow{u} - \\overrightarrow{v}\\). Směrový vektor musí být na normálový kolmý.`
       },
       {
-        label: `\\(\\overrightarrow{b} = (-2;\\ 3)\\)`,
+        label: `\\((4;\\ {-3})\\)`,
         value: "B",
-        feedback: `Kritická chyba. \\((-2;\\ 3)\\) je samotný součet \\(\\overrightarrow{u}+\\overrightarrow{v}\\) — tedy SMĚROVÝ vektor p. Normálový musí být na něj kolmý.`
+        feedback: `Přístup povolen. \\((3;\\ 4) \\cdot (4;\\ -3) = 12 - 12 = 0\\) — vektory jsou kolmé. ✓`
       },
       {
-        label: `\\(\\overrightarrow{c} = (2;\\ 3)\\)`,
+        label: `\\(({-3};\\ 4)\\)`,
         value: "C",
-        feedback: `Chyba syntaxe. \\((2;\\ 3)\\cdot(-2;\\ 3) = -4+9 = 5 \\neq 0\\). Záměna znaménka první složky.`
+        feedback: `Chyba v rotaci. \\((3;\\ 4) \\cdot (-3;\\ 4) = -9 + 16 = 7 \\neq 0\\). Negovali jste první složku, ale kolmost vyžaduje prohození a negaci jedné ze složek.`
       },
       {
-        label: `\\(\\overrightarrow{d} = (3;\\ -2)\\)`,
+        label: `\\((4;\\ 3)\\)`,
         value: "D",
-        feedback: `Chyba v souřadnicích. \\((3;\\ -2)\\cdot(-2;\\ 3) = -6-6 = -12 \\neq 0\\). Záměna znaménka druhé složky.`
+        feedback: `Nekompletní. \\((3;\\ 4) \\cdot (4;\\ 3) = 12 + 12 = 24 \\neq 0\\). Složky jste prohodili, ale nezměnili znaménko — rotace o 90° vyžaduje obojí.`
       },
       ],
       hints: [
-      `Nejdříve z grafu odečtěte složky vektorů ū a v̄ a vypočítejte jejich součet \\(\\overrightarrow{u}+\\overrightarrow{v}\\). To je směrový vektor p.`,
-      `Normálový vektor n přímky p musí splnit \\(\\overrightarrow{n} \\cdot (\\overrightarrow{u}+\\overrightarrow{v}) = 0\\). Dosaďte každou možnost a zkontrolujte skalární součin.`,
+      `Odečtěte z grafu složky vektorů ū a v̄ — pozor, ani jeden nezačíná v počátku. Pak vypočítejte \\(2\\overrightarrow{u} - \\overrightarrow{v}\\).`,
+      `Směrový vektor musí splnit \\(\\overrightarrow{n} \\cdot \\overrightarrow{s} = 0\\). Ze souřadnic \\(\\overrightarrow{n} = (a;\\ b)\\) dostanete směrový otočením: \\((-b;\\ a)\\) nebo \\((b;\\ -a)\\).`,
       ],
-      correctAnswer: "A", reward: { xp: 20 }
+      correctAnswer: "B", reward: { xp: 20 }
     },
             {
-      id: "t_ana_05", regionId: "analytika", type: "closed", monsterName: `SIM_06E: Normálový vektor ze směrového`,
-      isTraining: true, firewallId: "q_ana_05", visual_color: "#2ecc8a", visual_symbol: `n⃗`, points: 0,
+      id: "t_ana_05", regionId: "analytika", type: "closed", monsterName: `SIM_06E: Směrový ze normálového`,
+      isTraining: true, firewallId: "q_ana_05", visual_color: "#2ecc8a", visual_symbol: `s⃗`, points: 0,
     formula: `$$\\overrightarrow{n} \\cdot \\overrightarrow{s} = 0$$`,
-      question: `Přímka p má směrový vektor \\(\\overrightarrow{s} = (2;\\ -3)\\).`,
-      instruction: `Který vektor je normálovým vektorem přímky p?`,
+      question: `Přímka p má normálový vektor \\(\\overrightarrow{n} = (3;\\ 4)\\).`,
+      instruction: `Který vektor je směrovým vektorem přímky p?`,
       steps: [
       {
         trigger: `> Krok 1: Podmínka kolmosti`,
-        content: `Normálový vektor \\(\\overrightarrow{n} = (n_1;\\ n_2)\\) musí splnit \\(\\overrightarrow{n} \\cdot \\overrightarrow{s} = 0\\), tedy \\(2n_1 - 3n_2 = 0\\).`
+        content: `Směrový vektor \\(\\overrightarrow{s} = (s_1;\\ s_2)\\) musí splnit \\(\\overrightarrow{n} \\cdot \\overrightarrow{s} = 0\\). Co to znamená pro složky \\(s_1\\) a \\(s_2\\)?`
       },
       {
-        trigger: `> Krok 2: Odečíst ze složek`,
-        content: `Jednoduchý trik: ze směrového vektoru \\((a;\\ b)\\) dostaneme normálový otočením: \\((b;\\ -a)\\). Pro \\((2;\\ -3)\\) vyjde \\((-3;\\ -2)\\) nebo \\((3;\\ 2)\\). Ověřte skalárním součinem.`
+        trigger: `> Krok 2: Rotace složek`,
+        content: `Ze souřadnic normálového vektoru \\((a;\\ b)\\) dostanete směrový otočením o 90°: \\((-b;\\ a)\\) nebo \\((b;\\ -a)\\). Aplikujte na \\((3;\\ 4)\\) a ověřte skalárním součinem.`
       },
       ],
       choices: [
       {
-        label: `\\((2;\\ -3)\\)`,
+        label: `\\((4;\\ {-3})\\)`,
         value: "A",
-        feedback: `Chyba: to je samotný směrový vektor p. Normálový musí být k němu kolmý.`
+        feedback: `Logika potvrzena. \\((3;\\ 4) \\cdot (4;\\ -3) = 12 - 12 = 0\\) ✓`
       },
       {
-        label: `\\((-3;\\ 2)\\)`,
+        label: `\\((3;\\ 4)\\)`,
         value: "B",
-        feedback: `Ověřme: \\((-3;2)\\cdot(2;-3) = -6-6=-12 \\neq 0\\). Záměna znaménka — správný normálový je \\((3; 2)\\).`
+        feedback: `Chyba: to je normálový vektor p. Směrový musí být na něj kolmý.`
       },
       {
-        label: `\\((3;\\ 2)\\)`,
+        label: `\\(({-3};\\ 4)\\)`,
         value: "C",
-        feedback: `Přístup povolen. \\((3;\\ 2) \\cdot (2;\\ -3) = 6-6 = 0\\) ✓`
+        feedback: `Chyba v rotaci. \\((3;\\ 4) \\cdot (-3;\\ 4) = -9 + 16 = 7 \\neq 0\\). Negovali jste první složku, ale pro rotaci musíte prohodit a negovat jednu ze složek.`
       },
       {
-        label: `\\((2;\\ 3)\\)`,
+        label: `\\((4;\\ 3)\\)`,
         value: "D",
-        feedback: `Chyba: \\((2;\\ 3) \\cdot (2;\\ -3) = 4-9 = -5 \\neq 0\\). Špatné znaménko.`
+        feedback: `Nekompletní. \\((3;\\ 4) \\cdot (4;\\ 3) = 12 + 12 = 24 \\neq 0\\). Složky jste prohodili, ale nezměnili znaménko.`
       },
       ],
-      correctAnswer: "C", reward: { xp: 5 }
+      correctAnswer: "A", reward: { xp: 5 }
     },
     {
       id: "q_ana_06", regionId: "analytika", type: "closed", monsterName: `FW_06F: Rovnice z grafu`,
@@ -4669,7 +4555,7 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Z grafu odečti dva body na přímce a urči sklon \\(k = \\frac{\\Delta y}{\\Delta x}\\). Pak najdi y-průsečík (kde přímka kříží osu \\(y\\)).`,
+        `Přímka v rovině je jednoznačně určena sklonem a jedním bodem. Co můžete z grafu vyčíst?`,
         `Obecná rovnice \\(ax + by + c = 0\\) odpovídá \\(y = -\\frac{a}{b}x - \\frac{c}{b}\\). Porovnej se sklonem a y-průsečíkem z grafu.`,
       ],
       correctAnswer: "B", reward: { xp: 10 }
@@ -4682,12 +4568,12 @@ x + 2y = 4 \\\\
       instruction: `Určete směrový vektor přímky p.`,
       steps: [
         {
-          trigger: `> Krok 1: Vypočítat složky`,
-          content: `\\(\\Delta x = x_L - x_K = 2 - (-1) = 3\\). \\(\\Delta y = y_L - y_K = -3 - 3 = -6\\).`
+          trigger: `> Krok 1: Složky směrového vektoru`,
+          content: `Směrový vektor přímky procházející body K a L má složky \\((x_L - x_K;\\ y_L - y_K)\\). Pozor na pořadí odčítání a na záporné souřadnice.`
         },
         {
-          trigger: `> Krok 2: Zapsat vektor`,
-          content: `Směrový vektor je \\((\\Delta x;\\ \\Delta y)\\). Dosaďte vypočítané hodnoty a porovnejte s možnostmi.`
+          trigger: `> Krok 2: Znaménka`,
+          content: `Odčítáte-li zápornou souřadnici, znaménko se mění. Zkontrolujte obě složky zvlášť.`
         },
       ],
       choices: [
@@ -4724,27 +4610,27 @@ x + 2y = 4 \\\\
         {
           label: `\\(a:\\ x - 2y + 6 = 0\\)`,
           value: "A",
-          feedback: `Kritická chyba. Tato přímka je rovnoběžná s p (stejný sklon \\(1/2\\)), nikoli kolmá.`
+          feedback: `Kritická chyba. Tato přímka je rovnoběžná s p, nikoli kolmá.`
         },
         {
           label: `\\(b:\\ x + y - 4 = 0\\)`,
           value: "B",
-          feedback: `Chyba syntaxe. Sklon \\(-1\\) není kolmý ke sklonu \\(1/2\\). Kolmý sklon je \\(-2\\).`
+          feedback: `Chyba syntaxe. Normálový vektor této přímky má souřadnice (1; 1).`
         },
         {
           label: `\\(c:\\ 2x - y - 3 = 0\\)`,
           value: "C",
-          feedback: `Chyba v orientaci. Sklon \\(2\\) je kladný — kolmá přímka k p musí mít záporný sklon \\((-2)\\).`
+          feedback: `Chyba v orientaci. Normálový vektor této přímky má souřadnice (2; -1).`
         },
         {
           label: `\\(d:\\ 2x + y - 5 = 0\\)`,
           value: "D",
-          feedback: `Přístup povolen. Sklon \\(-2\\) je zápornou převrácenou hodnotou sklonu p \\((1/2)\\). Přímky jsou kolmé.`
+          feedback: `Přístup povolen.`
         },
       ],
       hints: [
-        `Z grafu urči sklon přímky \\(p\\): kolik jednotek roste \\(y\\) na jednu jednotku \\(x\\)? Sklon = \\(\\frac{\\Delta y}{\\Delta x}\\).`,
-        `Přímka kolmá k přímce se sklonem \\(k\\) má sklon \\(k_{\\perp} = -\\frac{1}{k}\\). Která z možností odpovídá tomuto sklonu?`,
+        `Z grafu můžeš určit souřadnice směrového vektoru přímky p.`,
+        `Dokážeš určit i souřadnice normálového vektoru?`,
       ],
       correctAnswer: "D", reward: { xp: 10 }
     },
@@ -4756,12 +4642,12 @@ x + 2y = 4 \\\\
       instruction: `Vypočtěte chybějící souřadnici u₂.`,
       steps: [
         {
-          trigger: `> Krok 1: Zapsat podmínku`,
-          content: `\\(\\vec{u} \\cdot \\vec{v} = 4 \\cdot (-3) + u_2 \\cdot 2 = 0\\).`
+          trigger: `> Krok 1: Podmínka kolmosti`,
+          content: `Dva vektory jsou kolmé, když je jejich skalární součin nulový. Zapište podmínku \\(\\vec{u} \\cdot \\vec{v} = 0\\) pro dané složky.`
         },
         {
-          trigger: `> Krok 2: Řešit rovnici`,
-          content: `\\(-12 + 2u_2 = 0\\). Přičti \\(12\\) k oběma stranám a vyděl. Kolik vychází \\(u_2\\)?`
+          trigger: `> Krok 2: Lineární rovnice`,
+          content: `Dostanete rovnici s jednou neznámou \\(u_2\\). Pozor na znaménko součinu u první dvojice složek.`
         },
       ],
       choices: [
@@ -4789,78 +4675,77 @@ x + 2y = 4 \\\\
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_ana_08", regionId: "analytika", type: "closed", monsterName: `FW_06H: Normálový vektor`,
-      visual_color: "#e74c3c", visual_symbol: `n⃗`, points: 3, trainingTasks: ["t_ana_08"],
-      question: `V souřadnicové soustavě Oxy je umístěna přímka p se směrovým vektorem \\(\\overrightarrow{u}\\).`,
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7733aa"/></marker></defs><line x1="62" y1="114" x2="62" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="90" y1="114" x2="90" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="118" y1="114" x2="118" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="146" y1="114" x2="146" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="174" y1="114" x2="174" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="202" y1="114" x2="202" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="230" y1="114" x2="230" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="258" y1="114" x2="258" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="286" y1="114" x2="286" y2="282" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="226" x2="286" y2="226" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="198" x2="286" y2="198" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="170" x2="286" y2="170" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="142" x2="286" y2="142" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="114" x2="286" y2="114" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="86" x2="286" y2="86" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="58" x2="286" y2="58" stroke="#64748b" stroke-width="0.5" opacity="0.5"/><line x1="62" y1="170" x2="286" y2="170" stroke="#e2e8f0" stroke-width="1.5"/><line x1="90" y1="114" x2="90" y2="282" stroke="#e2e8f0" stroke-width="1.5"/><polygon points="286,170 280,166 280,174" fill="#e2e8f0"/><polygon points="90,282 86,288 94,288" fill="#e2e8f0"/><text x="294" y="175" fill="#e2e8f0" font-size="13">x</text><text x="94" y="278" fill="#e2e8f0" font-size="13">y</text><line x1="118" y1="167" x2="118" y2="173" stroke="#e2e8f0" stroke-width="1"/><text x="114" y="184" fill="#e2e8f0" font-size="11">1</text><line x1="87" y1="142" x2="93" y2="142" stroke="#e2e8f0" stroke-width="1"/><text x="95" y="146" fill="#e2e8f0" font-size="11">1</text><line x1="62.0" y1="188.7" x2="258.0" y2="58.0" stroke="#0077bb" stroke-width="2.5"/><line x1="90" y1="170" x2="174" y2="114" stroke="#7733aa" stroke-width="2.5" marker-end="url(#arr)"/><text x="179" y="109" fill="#7733aa" font-size="12">ū = (3; 2)</text><text x="230" y="142.0" fill="#0077bb" font-size="13" font-style="italic">p</text></svg>`,
-      instruction: `Který z vektorů je normálový vektor přímky p?`,
+      id: "q_ana_08", regionId: "analytika", type: "closed", monsterName: `FW_06H: Kolmost a velikost vektoru`,
+      visual_color: "#e74c3c", visual_symbol: `|ā|`, points: 3, trainingTasks: ["t_ana_08"],
+      question: `Vektor \\(\\overrightarrow{a} = (a_1;\\ {-2})\\) je kolmý k vektoru \\(\\overrightarrow{b} = (1;\\ 3)\\).`,
+      instruction: `Jaká je velikost vektoru \\(\\overrightarrow{a}\\)?`,
       choices: [
-        {
-          label: `\\(\\overrightarrow{n} = (2;\\  - 3)\\)`,
-          value: "A",
-          feedback: `Přístup povolen. Skalární součin: \\((2;\\ -3) \\cdot (3;\\ 2) = 6-6 = 0\\) ✓. Vektory jsou na sebe kolmé.`
-        },
-        {
-          label: `\\(\\overrightarrow{n} = (3;\\ 2)\\)`,
-          value: "B",
-          feedback: `Kritická chyba. Tento vektor je totožný se směrovým vektorem ū — normálový musí být kolmý ke směrovému.`
-        },
-        {
-          label: `\\(\\overrightarrow{n} = (2;\\ 3)\\)`,
-          value: "C",
-          feedback: `Chyba syntaxe. Skalární součin: \\((2;\\ 3) \\cdot (3;\\ 2) = 6+6 = 12 \\neq 0\\). Vektory nejsou kolmé.`
-        },
-        {
-          label: `\\(\\overrightarrow{n} = ( - 3;\\ 2)\\)`,
-          value: "D",
-          feedback: `Chyba v souřadnicích. \\((-3;\\ 2) \\cdot (3;\\ 2) = -9+4 = -5 \\neq 0\\). Záměna x a y složky nestačí.`
-        },
+      {
+        label: `\\(2\\sqrt{10}\\)`,
+        value: "A",
+        feedback: `Přístup povolen. \\(a_1 = 6\\) z podmínky kolmosti, \\(|\\overrightarrow{a}| = \\sqrt{36+4} = 2\\sqrt{10}\\). ✓`
+      },
+      {
+        label: `\\(\\sqrt{10}\\)`,
+        value: "B",
+        feedback: `Chyba v rozkladu. \\(\\sqrt{10}\\) je velikost vektoru b̄, nikoli ā. Zkontrolujte, zda jste správně určili \\(a_1\\) a dosadili do vzorce pro velikost.`
+      },
+      {
+        label: `\\(40\\)`,
+        value: "C",
+        feedback: `Nekompletní. \\(40 = a_1^2 + a_2^2\\) — to je druhá mocnina velikosti, nikoli velikost sama. Chybí odmocnina.`
+      },
+      {
+        label: `\\(8\\)`,
+        value: "D",
+        feedback: `Kritická chyba. Velikost vektoru není součet absolutních hodnot složek. Vzorec je \\(|\\overrightarrow{a}| = \\sqrt{a_1^2 + a_2^2}\\).`
+      },
       ],
       hints: [
-        `Normálový vektor přímky je kolmý k jejímu směrovému vektoru. Podmínka kolmosti: skalární součin \\(\\overrightarrow{n} \\cdot \\overrightarrow{u} = 0\\).`,
-        `Pro \\(\\overrightarrow{u} = (3;\\ 2)\\) potřebuješ \\(\\overrightarrow{n} = (n_1;\\ n_2)\\) tak, aby \\(3n_1 + 2n_2 = 0\\). Která z nabídnutých možností tuto podmínku splní?`,
+      `Kolmé vektory mají nulový skalární součin. Jakou podmínku musí splnit \\(a_1\\)?`,
+      `Velikost vektoru se počítá z jeho složek — nezapomeňte na odmocninu.`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
     {
-      id: "t_ana_08", regionId: "analytika", type: "closed", monsterName: `SIM_06H: Skalární součin`,
-      isTraining: true, firewallId: "q_ana_08", visual_color: "#2ecc8a", visual_symbol: `n⃗`, points: 0,
-      question: `Jsou dány vektory \\(\\overrightarrow{a} = (3;\\  - 2)\\) a \\(\\overrightarrow{b} = (1;\\ 4)\\).`,
-      formula: `$$\\overrightarrow{a} \\cdot \\overrightarrow{b} = a_{1}b_{1} + a_{2}b_{2}$$`,
-      instruction: `Vypočtěte skalární součin vektorů ā a b̄.`,
+      id: "t_ana_08", regionId: "analytika", type: "closed", monsterName: `SIM_06H: Podmínka kolmosti`,
+      isTraining: true, firewallId: "q_ana_08", visual_color: "#2ecc8a", visual_symbol: `a₁`, points: 0,
+      formula: `$$\\overrightarrow{a} \\cdot \\overrightarrow{b} = a_1 b_1 + a_2 b_2 = 0$$`,
+      question: `Vektor \\(\\overrightarrow{a} = (a_1;\\ {-2})\\) je kolmý k vektoru \\(\\overrightarrow{b} = (1;\\ 3)\\).`,
+      instruction: `Určete hodnotu \\(a_1\\).`,
       steps: [
-        {
-          trigger: `> Krok 1: Dosadit složky`,
-          content: `\\(\\vec{a} \\cdot \\vec{b} = 3 \\cdot 1 + (-2) \\cdot 4\\).`
-        },
-        {
-          trigger: `> Krok 2: Spočítat`,
-          content: `\\(3 \\cdot 1 + (-2) \\cdot 4 = 3 + ?\\). Spočítej druhý člen a sečti. Jaký je výsledný skalární součin?`
-        },
+      {
+        trigger: `> Krok 1: Podmínka kolmosti`,
+        content: `Dva vektory jsou kolmé, když jejich skalární součin je nulový. Zapište podmínku \\(\\overrightarrow{a} \\cdot \\overrightarrow{b} = 0\\) pro dané složky.`
+      },
+      {
+        trigger: `> Krok 2: Řešení rovnice`,
+        content: `Z rovnice \\(a_1 \\cdot 1 + (-2) \\cdot 3 = 0\\) vyjádřete \\(a_1\\). Pozor na znaménko druhého členu.`
+      },
       ],
       choices: [
-        {
-          label: `\\(11\\)`,
-          value: "A",
-          feedback: `Chyba v znaménku. Skalární součin zahrnuje záporné číslo: 3·1+(−2)·4 = 3−8 = −5, nikoli 3+8.`
-        },
-        {
-          label: `\\(- 5\\)`,
-          value: "B",
-          feedback: `Logika potvrzena. 3·1+(−2)·4 = 3−8 = −5. ✓`
-        },
-        {
-          label: `\\(5\\)`,
-          value: "C",
-          feedback: `Chyba: správná absolutní hodnota, ale špatné znaménko. Výsledek je záporný.`
-        },
-        {
-          label: `\\(- 11\\)`,
-          value: "D",
-          feedback: `Kritická chyba. 3·1 = +3, nikoli −3. Znaménko prvního členu je kladné.`
-        },
+      {
+        label: `\\(6\\)`,
+        value: "A",
+        feedback: `Logika potvrzena. \\(a_1 - 6 = 0 \\Rightarrow a_1 = 6\\). ✓`
+      },
+      {
+        label: `\\(-6\\)`,
+        value: "B",
+        feedback: `Chyba v znaménku. \\((-2) \\cdot 3 = -6\\), takže rovnice je \\(a_1 - 6 = 0\\), ne \\(a_1 + 6 = 0\\).`
+      },
+      {
+        label: `\\(3\\)`,
+        value: "C",
+        feedback: `Chyba v dělení. Rovnice \\(a_1 - 6 = 0\\) dává přímo \\(a_1 = 6\\), nikoli 3.`
+      },
+      {
+        label: `\\(2\\)`,
+        value: "D",
+        feedback: `Chyba: záměna složek. Neznámá je první složka vektoru ā, ne druhá.`
+      },
       ],
-      correctAnswer: "B", reward: { xp: 5 }
+      correctAnswer: "A", reward: { xp: 5 }
     },
     {
       id: "q_ana_09", regionId: "analytika", type: "closed", monsterName: `FW_06I: Odchylka přímky`,
@@ -4872,66 +4757,66 @@ x + 2y = 4 \\\\
         {
           label: `\\(26{^\\circ}34\\prime\\)`,
           value: "A",
-          feedback: `Chyba ve čtení sklonu. \\(\\arctan(1/2) = 26°34'\\) odpovídá sklonu \\(1/2\\). Přímka p má sklon \\(2/3\\), ne \\(1/2\\).`
+          feedback: `Chyba ve čtení vektoru. Složky \\(\\overrightarrow{u}\\) neodpovídají vyznačeným bodům.`
         },
         {
           label: `\\(45{^\\circ}00\\prime\\)`,
           value: "B",
-          feedback: `Chyba syntaxe. \\(45°\\) odpovídá sklonu \\(1\\). Přečtěte sklon z grafu: \\(\\Delta y / \\Delta x = 2/3\\).`
+          feedback: `Chyba syntaxe. \\(45°\\) odpovídá směrovému vektoru \\((1;\\ 1)\\).`
         },
         {
           label: `\\(33{^\\circ}41\\prime\\)`,
           value: "C",
-          feedback: `Přístup povolen. Sklon \\(k = 2/3\\). Odchylka \\(\\varphi = \\arctan(2/3) \\approx 33{,}69° \\approx 33°41'\\). ✓`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(56{^\\circ}19\\prime\\)`,
           value: "D",
-          feedback: `Kritická chyba. \\(\\arctan(3/2) \\approx 56°19'\\) odpovídá sklonu \\(3/2\\) — převrácenou hodnotou sklonu p.`
+          feedback: `Kritická chyba. Složky směrového vektoru \\(\\overrightarrow{u}\\) jsou prohozeny.`
         },
       ],
       hints: [
-        `Z grafu urči sklon přímky \\(p\\) jako \\(k = \\frac{\\Delta y}{\\Delta x}\\) z dvou vyznačených bodů.`,
-        `Odchylka od osy \\(x\\) se spočítá jako \\(\\varphi = \\arctan(|k|)\\). Výsledek převeď na stupně a minuty pomocí kalkulátoru.`,
+        `Z grafu můžeš určit směrový vektor přímky p a zároveň směrový vektor osy x. Uvědom si, jak vznikají souřadnice vektoru.`,
+        `Jaký je vzorec pro výpočet odchylky dvou přímek?`,
       ],
       correctAnswer: "C", reward: { xp: 10 }
     },
     {
-      id: "t_ana_09", regionId: "analytika", type: "closed", monsterName: `SIM_06I: Sklon a odchylka`,
+      id: "t_ana_09", regionId: "analytika", type: "closed", monsterName: `SIM_06I: Odchylka — vektorový přístup`,
       isTraining: true, firewallId: "q_ana_09", visual_color: "#2ecc8a", visual_symbol: `φ`, points: 0,
-      question: `Přímka r má rovnici \\(x - 2y + 4 = 0\\). Vyjádřete sklon přímky a určete odchylku od osy x.`,
-      formula: `$$\\varphi = \\text{arctan}(k)$$`,
+      question: `Přímka r má rovnici \\(x - 2y + 4 = 0\\). Určete odchylku přímky r od osy x.`,
+      formula: `$$\\cos\\varphi = \\frac{|\\overrightarrow{u} \\cdot \\overrightarrow{v}|}{|\\overrightarrow{u}| \\cdot |\\overrightarrow{v}|}$$`,
       instruction: `Vyberte správnou odchylku přímky r od osy x. (Zaokrouhlete na celé minuty.)`,
       steps: [
         {
-          trigger: `> Krok 1: Vyjádřit sklon`,
-          content: `\\(x - 2y + 4 = 0\\) → \\(2y = x + 4\\) → \\(y = \\frac{1}{2}x + 2\\). Sklon \\(k = \\frac{1}{2}\\).`
+          trigger: `> Krok 1: Směrový vektor`,
+          content: `Jak získáš směrový vektor přímky zadané obecnou rovnicí \\(ax + by + c = 0\\)? Jak ho odvodíš z koeficientů \\(a\\) a \\(b\\)?`
         },
         {
-          trigger: `> Krok 2: Odchylka`,
-          content: `\\(\\varphi = \\arctan(k)\\). Dosaď sklon \\(k = \\frac{1}{2}\\) a přepočítej arkustangens na stupně a minuty pomocí kalkulátoru.`
+          trigger: `> Krok 2: Odchylka od osy x`,
+          content: `Osu x popisuje směrový vektor \\((1;\\ 0)\\). Jaký vzorec použiješ pro odchylku dvou přímek ze směrových vektorů?`
         },
       ],
       choices: [
         {
           label: `\\(63{^\\circ}26\\prime\\)`,
           value: "A",
-          feedback: `Kritická chyba. 63°26' je komplementární úhel k 26°34'. Odchylka od osy x, nikoli od osy y.`
+          feedback: `Kritická chyba. Použil jsi normálový vektor \\(\\overrightarrow{n}\\) místo směrového \\(\\overrightarrow{u}\\).`
         },
         {
           label: `\\(45{^\\circ}00\\prime\\)`,
           value: "B",
-          feedback: `Chyba: 45° odpovídá sklonu 1. Sklon přímky r je 1/2.`
+          feedback: `Chyba syntaxe. \\(45°\\) odpovídá směrovému vektoru \\((1;\\ 1)\\).`
         },
         {
           label: `\\(18{^\\circ}26\\prime\\)`,
           value: "C",
-          feedback: `Chyba ve sklonu. arctan(1/3) ≈ 18°26'. Přímka r má sklon 1/2, ne 1/3.`
+          feedback: `Chyba ve čtení vektoru. Ze složek rovnice \\(ax + by + c = 0\\) dostaneš \\(\\overrightarrow{u} = (-b;\\ a)\\).`
         },
         {
           label: `\\(26{^\\circ}34\\prime\\)`,
           value: "D",
-          feedback: `Přístup povolen. k = 1/2, φ = arctan(1/2) ≈ 26°34'. ✓`
+          feedback: `Přístup povolen. ✓`
         },
       ],
       correctAnswer: "D", reward: { xp: 5 }
@@ -4946,7 +4831,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(4\\sqrt{5}\\)`,
           value: "A",
-          feedback: `Chyba v násobení. Spočítali jste délku \\(|AS| = \\sqrt{25} = 5\\) a pak provedli jinou operaci. \\(|AB| = 2 \\cdot |AS|\\).`
+          feedback: `Chyba v násobení. Vzdálenost od koncového bodu ke středu není totéž co délka celé úsečky. Jaký je mezi nimi vztah?`
         },
         {
           label: `\\(10\\)`,
@@ -4956,7 +4841,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(5\\)`,
           value: "C",
-          feedback: `Logická chyba. Délka \\(5\\) odpovídá vzdálenosti \\(|AS|\\), nikoli \\(|AB|\\). Úsečka AB je dvakrát delší.`
+          feedback: `Nekompletní. Toto je vzdálenost od jednoho z krajních bodů ke středu, ne délka celé úsečky.`
         },
         {
           label: `\\(8\\)`,
@@ -4966,7 +4851,7 @@ x + 2y = 4 \\\\
       ],
       hints: [
         `Ze vzorce pro střed úsečky \\(S = \\left[\\frac{x_A + x_B}{2};\\ \\frac{y_A + y_B}{2}\\right]\\) vyjádři souřadnice bodu \\(B\\).`,
-        `Délku úsečky AB spočítej jako \\(|AB| = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}\\). Alternativně: \\(|AB| = 2 \\cdot |AS|\\).`,
+        `Jaký je vztah mezi délkou úsečky a vzdáleností od koncového bodu ke středu?`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -4978,12 +4863,12 @@ x + 2y = 4 \\\\
       instruction: `Vypočtěte souřadnice středu S úsečky AB.`,
       steps: [
         {
-          trigger: `> Krok 1: Průměr x-souřadnic`,
-          content: `\\(x_S = \\frac{-3 + 5}{2} = \\frac{2}{2} = 1\\).`
+          trigger: `> Krok 1: Vzorec pro střed`,
+          content: `Střed úsečky je aritmetický průměr souřadnic koncových bodů — zvlášť pro \\(x\\), zvlášť pro \\(y\\).`
         },
         {
-          trigger: `> Krok 2: Průměr y-souřadnic`,
-          content: `\\(y_S = \\frac{y_A + y_B}{2} = \\frac{2 + (-4)}{2}\\). Dopočítej a zapiš souřadnice středu \\(S[x_S;\\ y_S]\\).`
+          trigger: `> Krok 2: Záporné souřadnice`,
+          content: `Při sčítání kladné a záporné souřadnice dávejte pozor na znaménko výsledku.`
         },
       ],
       choices: [
@@ -5039,25 +4924,25 @@ x + 2y = 4 \\\\
       },
       ],
       hints: [
-      `Pro ověření, zda bod leží na přímce: dosaďte souřadnice bodu do parametrické rovnice, vypočítejte t z první rovnice a ověřte v druhé.`,
-      `Směrový vektor p je dvojice koeficientů u t: \\((3;\\ -1)\\). Normálový je k němu kolmý. Obecnou rovnici sestavíte jako \\(n_1(x - x_0) + n_2(y - y_0) = 0\\) pro libovolný bod přímky.`,
+      `Bod leží na parametrické přímce, pokud existuje hodnota parametru \\(t\\), která splní obě rovnice současně.`,
+      `V parametrické rovnici se směrový vektor čte z koeficientů u parametru \\(t\\). Normálový vektor je k němu kolmý.`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
     {
       id: "t_ana_11", regionId: "analytika", type: "closed", monsterName: `SIM_06K: Bod na parametrické přímce`,
       isTraining: true, firewallId: "q_ana_11", visual_color: "#2ecc8a", visual_symbol: `t`, points: 0,
-    formula: `$$\\text{Dosadit souřadnice M a ověřit konzistenci.}$$`,
+    formula: null,
       question: `Přímka p: \\(x = 2 + t,\\ y = 3 - 2t\\). Leží bod \\(M[4;\\ -1]\\) na přímce p?`,
       instruction: `Zjistěte, zda existuje t, pro které M ∈ p.`,
       steps: [
       {
-        trigger: `> Krok 1: Dosadit x-souřadnici`,
-        content: `\\(x = 2 + t = 4 \\Rightarrow t = 2\\).`
+        trigger: `> Krok 1: Najít parametr`,
+        content: `Dosaďte \\(x\\)-souřadnici bodu M do první parametrické rovnice. Jaká hodnota \\(t\\) z ní vyjde?`
       },
       {
-        trigger: `> Krok 2: Ověřit y`,
-        content: `Dosaďte \\(t = 2\\) do druhé rovnice: \\(y = 3 - 2 \\cdot t\\). Vychází \\(y = -1\\)? Pokud ano, M leží na p.`
+        trigger: `> Krok 2: Ověření v druhé rovnici`,
+        content: `Nalezené \\(t\\) dosaďte do druhé rovnice. Souhlasí výsledek s \\(y\\)-souřadnicí bodu M?`
       },
       ],
       choices: [
@@ -5084,200 +4969,177 @@ x + 2y = 4 \\\\
       ],
       correctAnswer: "C", reward: { xp: 5 }
     },
-    {
-      id: "t_ana_11", regionId: "analytika", type: "closed", monsterName: `SIM_06K: Podmínka kolmosti vektorů`,
-      isTraining: true, firewallId: "q_ana_11", visual_color: "#2ecc8a", visual_symbol: `⊥`, points: 0,
-    formula: `$$\\overrightarrow{u} \\cdot \\overrightarrow{w} = 0$$`,
-      question: `Vektor \\(\\overrightarrow{u} = (3;\\ u_2)\\) je kolmý k vektoru \\(\\overrightarrow{w} = (2;\\ -3)\\).`,
-      instruction: `Vypočtěte chybějící souřadnici u₂.`,
-      steps: [
-      {
-        trigger: `> Krok 1: Zapsat skalární součin`,
-        content: `\\(\\vec{u} \\cdot \\vec{w} = 3 \\cdot 2 + u_2 \\cdot (-3) = 0\\). Zjednodušíš na \\(6 - 3u_2 = 0\\).`
-      },
-      {
-        trigger: `> Krok 2: Řešit`,
-        content: `Přesuň \\(6\\) na druhou stranu: \\(3u_2 = 6\\). Vyděl 3. Kolik vyjde \\(u_2\\)?`
-      },
-      ],
-      choices: [
-      {
-        label: `\\(u_2 = -2\\)`,
-        value: "A",
-        feedback: `Chyba v znaménku: 3·2 = +6, takže 3u₂ = 6 → u₂ = +2, nikoli −2.`
-      },
-      {
-        label: `\\(u_2 = 2\\)`,
-        value: "B",
-        feedback: `Přístup povolen. 6−3·2=0 ✓`
-      },
-      {
-        label: `\\(u_2 = 6\\)`,
-        value: "C",
-        feedback: `Chyba: vypočítals první člen 3·2=6 a dal ho jako u₂. Ale rovnice říká 3u₂=6 → u₂=2.`
-      },
-      {
-        label: `\\(u_2 = 3\\)`,
-        value: "D",
-        feedback: `Kritická chyba: 6−3·3=6−9=−3≠0. Tato hodnota podmínku kolmosti nesplní.`
-      },
-      ],
-      correctAnswer: "B", reward: { xp: 5 }
-    },
 
     // ==========================================
     // POSLOUPNOSTI — NOVÉ PŘÍKLADY
     // ==========================================
 
     {
-      id: "q_posl_01", regionId: "posloupnosti", type: "closed", monsterName: `FW_11A: Součet aritmetické posloupnosti`,
+      id: "q_posl_01", regionId: "posloupnosti", type: "closed", monsterName: `FW_11A: Vlastnosti aritmetické posloupnosti`,
       visual_color: "#a78bfa", visual_symbol: `Σ`, points: 3, trainingTasks: ["t_posl_01"],
-      question: `V aritmetické posloupnosti platí vzorec pro \\(n\\)-tý člen:`,
-      formula: `$$a_{n} = 4n - 9$$`,
-      instruction: `Jaká je hodnota součtu prvních 12 členů této posloupnosti?`,
+      question: `Pro \\(n \\in \\mathbb{N}\\) je dána posloupnost vzorcem pro \\(n\\)-tý člen:`,
+      formula: `$$a_{n} = 5n - 13$$`,
+      instruction: `Jsou dána tato tvrzení:<br><br>
+        <b>15.1</b> První tři členy posloupnosti jsou \\(a_1 = -8;\\; a_2 = -3;\\; a_3 = 2\\).<br>
+        <b>15.2</b> Pro danou posloupnost platí \\(a_{n+8} - a_n = 8\\).<br>
+        <b>15.3</b> Součet prvních 20 členů dané posloupnosti je 790 \\((s_{20} = 790)\\).<br><br>
+        Vyberte, které tvrzení <b>není pravdivé</b>.`,
+      hints: [
+        `Hodnotu libovolného členu \\(a_n\\) získáš dosazením jeho pořadového čísla do vzorce.`,
+        `Součet prvních \\(n\\) členů aritmetické posloupnosti: $$S_n = \\frac{n}{2}(a_1 + a_n)$$`,
+        `Rozdíl dvou členů vzdálených o \\(k\\) pozic závisí na diferenci \\(d\\): platí \\(a_{n+k} - a_n = k \\cdot d\\).`
+      ],
       choices: [
         {
-          label: `\\(S_{12} = 204\\)`,
+          label: `Tvrzení 15.1 není pravdivé`,
           value: "A",
-          feedback: `Přístup povolen. \\(S_{12} = \\frac{12}{2}(2 \\cdot (-5) + 11 \\cdot 4) = 6 \\cdot 34 = 204\\)`
+          feedback: `Chyba syntaxe. Dosaď \\(n = 1\\): \\(a_1 = 5 \\cdot 1 - 13 = -8\\). Tvrzení 15.1 sedí.`
         },
         {
-          label: `\\(S_{12} = 192\\)`,
+          label: `Tvrzení 15.2 není pravdivé`,
           value: "B",
-          feedback: `Chyba syntaxe. Zkontroluj první člen: \\(a_1 = 4 \\cdot 1 - 9 = -5\\), ne 0.`
+          feedback: `Přístup povolen. Diference je \\(d = 5\\), skok o 8 pozic dává \\(8 \\cdot 5 = 40 \\neq 8\\).`
         },
         {
-          label: `\\(S_{12} = 228\\)`,
+          label: `Tvrzení 15.3 není pravdivé`,
           value: "C",
-          feedback: `Kritická chyba. Použil(a) jsi \\(n = 13\\) místo 12.`
+          feedback: `Nekompletní. Ověř vzorcem \\(S_n = \\frac{n}{2}(a_1 + a_n)\\) — součet 790 sedí.`
         },
         {
-          label: `\\(S_{12} = 168\\)`,
+          label: `Všechna tvrzení jsou pravdivá`,
           value: "D",
-          feedback: `Chyba protokolu. Zaměnil(a) jsi diferencí nebo počet členů.`
+          feedback: `Toto tvrzení platí. Hledej chybu v jiném vztahu.`
         },
       ],
-      correctAnswer: "A", reward: { xp: 15 }
+      correctAnswer: "B", reward: { xp: 15 }
     },
     {
       id: "t_posl_01", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11A: Dosazení do vzorce`,
       isTraining: true, firewallId: "q_posl_01", visual_color: "#2ecc8a", visual_symbol: `Σ`, points: 0,
-      question: `V aritmetické posloupnosti platí vzorec \\(a_{n} = 4n - 9\\). Jaká je hodnota třetího členu \\(a_{3}\\)?`,
-      formula: `$$a_{n} = 4n - 9$$`,
-      instruction: `Dosaď \\(n = 3\\) do vzorce.`,
+      question: `V aritmetické posloupnosti platí vzorec \\(a_{n} = 5n - 13\\). Jaká je hodnota pátého členu \\(a_{5}\\)?`,
+      formula: `$$a_{n} = 5n - 13$$`,
+      instruction: `Dosaď \\(n = 5\\) do vzorce.`,
       steps: [
         {
-          trigger: `> Krok 1: Identifikuj vzorec`,
-          content: `Vzorec \\(a_n = 4n - 9\\) říká: vezmi pořadové číslo \\(n\\), vynásob čtyřmi a odečti 9.`
+          trigger: `> Krok 1: Co vzorec říká?`,
+          content: `Vzorec \\(a_n = 5n - 13\\) přiřazuje každému pořadovému číslu \\(n\\) hodnotu členu. Co dosadíš za \\(n\\)?`
         },
         {
-          trigger: `> Krok 2: Dosaď n = 3`,
-          content: `\\(a_3 = 4 \\cdot 3 - 9 = 12 - 9 = 3\\). Protokol potvrzen.`
+          trigger: `> Krok 2: Výpočet`,
+          content: `Dosaď \\(n = 5\\): \\(a_5 = 5 \\cdot 5 - 13\\). Kolik vyjde?`
         },
       ],
       choices: [
         {
-          label: `\\(a_{3} = - 1\\)`,
+          label: `\\(a_{5} = 25\\)`,
           value: "A",
-          feedback: `Chyba: výsledek odpovídá \\(a_2 = 4 \\cdot 2 - 9 = -1\\), ne \\(a_3\\).`
+          feedback: `Nekompletní. Výraz má dva členy — co s tou třináctkou?`
         },
         {
-          label: `\\(a_{3} = 3\\)`,
+          label: `\\(a_{5} = 12\\)`,
           value: "B",
-          feedback: `Logika potvrzena. \\(4 \\cdot 3 - 9 = 3\\).`
+          feedback: `Logika potvrzena. \\(5 \\cdot 5 - 13 = 12\\).`
         },
         {
-          label: `\\(a_{3} = 5\\)`,
+          label: `\\(a_{5} = 2\\)`,
           value: "C",
-          feedback: `Kritická chyba. Pravděpodobně jsi zapomněl(a) odečíst 9.`
+          feedback: `Chyba indexu. Tohle je \\(a_3\\), ne \\(a_5\\).`
         },
         {
-          label: `\\(a_{3} = 7\\)`,
+          label: `\\(a_{5} = 17\\)`,
           value: "D",
-          feedback: `Chyba: výsledek odpovídá \\(a_4 = 4 \\cdot 4 - 9 = 7\\).`
+          feedback: `Přetečení. Dosadil(a) jsi \\(n = 6\\) místo \\(n = 5\\).`
         },
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_posl_02", regionId: "posloupnosti", type: "closed", monsterName: `FW_11B: Člen geometrické posloupnosti`,
+      id: "q_posl_02", regionId: "posloupnosti", type: "closed", monsterName: `FW_11B: AP a GP se společnými členy`,
       visual_color: "#a78bfa", visual_symbol: `q^n`, points: 3, trainingTasks: ["t_posl_02"],
-      question: `V geometrické posloupnosti je \\(a_{1} = 3\\) a \\(a_{5} = 48\\).`,
-      instruction: `Jaká je hodnota sedmého členu \\(a_7\\)?`,
+      question: `První dva členy aritmetické posloupnosti jsou zároveň prvními dvěma členy geometrické posloupnosti. Přitom první člen je o 9 menší než druhý a druhý člen je čtyřikrát větší než první.`,
+      instruction: `Kolikátý člen aritmetické posloupnosti je roven třetímu členu geometrické posloupnosti?`,
+      hints: [
+        `Z podmínek zadání urči první člen a diferenci AP i kvocient GP.`,
+        `Třetí člen GP: \\(a_1 \\cdot q^2\\). Pak hledej \\(n\\), pro které \\(a_1 + d(n-1)\\) dá stejnou hodnotu.`
+      ],
       choices: [
         {
-          label: `\\(a_{7} = 96\\)`,
+          label: `Žádný člen`,
           value: "A",
-          feedback: `Chyba indexování. \\(a_7 = a_1 \\cdot q^6\\), ale použil(a) jsi \\(q^5\\).`
+          feedback: `Chyba logiky. Obě posloupnosti sdílejí start — průsečík existuje.`
         },
         {
-          label: `\\(a_{7} = 144\\)`,
+          label: `Pátý člen`,
           value: "B",
-          feedback: `Kritická chyba. Špatně určen kvocient — ověř \\(q^4 = a_5/a_1\\).`
+          feedback: `Chyba indexu. Zkontroluj, zda řešíš \\(n\\), nebo \\(n-1\\).`
         },
         {
-          label: `\\(a_{7} = 192\\)`,
+          label: `Šestý člen`,
           value: "C",
-          feedback: `Logika potvrzena. \\(q = 2\\), \\(a_7 = 3 \\cdot 2^6 = 192\\).`
+          feedback: `Přístup povolen. \\(a_6 = \\text{GP}_3 = 48\\).`
         },
         {
-          label: `\\(a_{7} = 256\\)`,
+          label: `Sedmý člen`,
           value: "D",
-          feedback: `Chyba syntaxe. Zapomněl(a) jsi na \\(a_1\\): \\(256 = 2^8\\), ne \\(3 \\cdot 2^6\\).`
+          feedback: `Přetečení. Ověř dosazení — výsledek je o pozici nižší.`
         },
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_posl_02", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11B: Kvocient ze dvou členů`,
+      id: "t_posl_02", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11B: Třetí člen geometrické posloupnosti`,
       isTraining: true, firewallId: "q_posl_02", visual_color: "#2ecc8a", visual_symbol: `q^n`, points: 0,
-      question: `V geometrické posloupnosti je \\(a_{1} = 6\\) a \\(a_{3} = 24\\). Jaká je hodnota kvocientu \\(q\\) (pro \\(q > 0\\))?`,
-      formula: `$$a_{3} = a_{1} \\cdot q^{2}$$`,
-      instruction: `Vyjádři \\(q\\) ze vztahu \\(a_3 = a_1 \\cdot q^2\\).`,
+      question: `V geometrické posloupnosti je \\(a_1 = 3\\) a \\(q = 4\\). Jaká je hodnota třetího členu \\(a_3\\)?`,
+      formula: `$$a_n = a_1 \\cdot q^{n-1}$$`,
+      instruction: `Dosaď \\(n = 3\\) do vzorce.`,
       steps: [
         {
-          trigger: `> Krok 1: Vyjádři q²`,
-          content: `\\(q^2 = \\frac{a_3}{a_1} = \\frac{24}{6} = 4\\)`
+          trigger: `> Krok 1: Vzorec pro n-tý člen GP`,
+          content: `Obecný vzorec: \\(a_n = a_1 \\cdot q^{n-1}\\). Jaký exponent dosadíš pro třetí člen?`
         },
         {
-          trigger: `> Krok 2: Odmocni (q > 0)`,
-          content: `\\(q = \\sqrt{4} = 2\\). Přístup povolen.`
+          trigger: `> Krok 2: Dosazení`,
+          content: `\\(a_3 = 3 \\cdot 4^{2}\\). Kolik vyjde?`
         },
       ],
       choices: [
         {
-          label: `\\(q = 2\\)`,
+          label: `\\(a_3 = 16\\)`,
           value: "A",
-          feedback: `Logika potvrzena. \\(q^2 = 4\\), tedy \\(q = 2\\).`
+          feedback: `Nekompletní. Nezapomeň vynásobit prvním členem.`
         },
         {
-          label: `\\(q = 3\\)`,
+          label: `\\(a_3 = 48\\)`,
           value: "B",
-          feedback: `Chyba: ověř \\(6 \\cdot 3^2 = 54 \\neq 24\\).`
+          feedback: `Logika potvrzena. \\(3 \\cdot 16 = 48\\).`
         },
         {
-          label: `\\(q = 4\\)`,
+          label: `\\(a_3 = 36\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. \\(q = 4\\) platí pro jiné zadání — zde \\(q^2 = 4\\), ne \\(q = 4\\).`
+          feedback: `Chyba syntaxe. Vzorec je \\(a_1 \\cdot q^{n-1}\\), ne \\(a_1 \\cdot q \\cdot n\\).`
         },
         {
-          label: `\\(q = 6\\)`,
+          label: `\\(a_3 = 192\\)`,
           value: "D",
-          feedback: `Kritická chyba. \\(q \\neq a_3/a_1\\); nezapomeň na mocninu.`
+          feedback: `Přetečení. Exponent pro třetí člen je 2, ne 3.`
         },
       ],
-      correctAnswer: "A", reward: { xp: 5 }
+      correctAnswer: "B", reward: { xp: 5 }
     },
     {
       id: "q_posl_03", regionId: "posloupnosti", type: "closed", monsterName: `FW_11C: Diference aritmetické posloupnosti`,
       visual_color: "#a78bfa", visual_symbol: `d`, points: 3, trainingTasks: ["t_posl_03"],
       question: `V aritmetické posloupnosti je \\(a_{4} = 7\\) a \\(a_{8} = 19\\).`,
       instruction: `Jaká je diference \\(d\\) této posloupnosti?`,
+      hints: [
+        `Mezi \\(a_4\\) a \\(a_8\\) je určitý počet „kroků" o velikosti \\(d\\). Kolik?`,
+        `Platí \\(a_m - a_n = (m - n) \\cdot d\\). Vyjádři \\(d\\).`
+      ],
       choices: [
         {
           label: `\\(d = 2\\)`,
           value: "A",
-          feedback: `Chyba protokolu. Rozdíl indexů je 4, ne 6. \\(d = (19-7)/4 = 3\\).`
+          feedback: `Chyba protokolu. Zkontroluj, kolik kroků je mezi indexy 1 a 5. Není jich 6.`
         },
         {
           label: `\\(d = 3\\)`,
@@ -5310,14 +5172,14 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Výpočet`,
-          content: `\\(a_5 = 1 + 12 = 13\\). Protokol potvrzen.`
+          content: `\\(a_5 = 1 + 4 \\cdot 3 = ?\\). Dopočítej a vyber správnou volbu.`
         },
       ],
       choices: [
         {
           label: `\\(a_{5} = 9\\)`,
           value: "A",
-          feedback: `Chyba: toto je \\(a_3 = 1+2 \\cdot 3 = 7\\)... ne, \\(a_3=7\\). \\(9\\) neodpovídá žádnému členu.`
+          feedback: `Chyba indexu. Hodnota 9 neodpovídá žádnému členu této posloupnosti. Zkontroluj dosazení do vzorce.`
         },
         {
           label: `\\(a_{5} = 11\\)`,
@@ -5338,80 +5200,88 @@ x + 2y = 4 \\\\
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_posl_04", regionId: "posloupnosti", type: "closed", monsterName: `FW_11D: Šestý člen geometrické posloupnosti`,
+      id: "q_posl_04", regionId: "posloupnosti", type: "closed", monsterName: `FW_11D: Součet členů GP se záporným kvocientem`,
       visual_color: "#a78bfa", visual_symbol: `q²`, points: 4, trainingTasks: ["t_posl_04"],
-      question: `V geometrické posloupnosti je \\(a_{2} = 4\\) a \\(a_{4} = 16\\).`,
-      instruction: `Jaká je hodnota šestého členu \\(a_6\\)?`,
+      question: `V geometrické posloupnosti je třetí člen \\(a_3 = 9\\) a čtvrtý člen je o 12 menší než třetí člen.`,
+      instruction: `Jaký je součet prvních tří členů uvedené geometrické posloupnosti \\((a_1 + a_2 + a_3)\\)?`,
+      hints: [
+        `Kvocient GP najdeš jako podíl \\(q = \\frac{a_4}{a_3}\\). Jaké je znaménko?`,
+        `Předchozí členy získáš dělením: \\(a_2 = \\frac{a_3}{q}\\), \\(a_1 = \\frac{a_2}{q}\\).`
+      ],
       choices: [
         {
-          label: `\\(a_{6} = 32\\)`,
+          label: `7`,
           value: "A",
-          feedback: `Chyba protokolu. Použil(a) jsi \\(q\\) místo \\(q^2\\): \\(a_6 = a_4 \\cdot q^2\\).`
+          feedback: `Chyba syntaxe. Kvocient je \\(q = a_4/a_3\\), ne naopak.`
         },
         {
-          label: `\\(a_{6} = 48\\)`,
+          label: `63`,
           value: "B",
-          feedback: `Kritická chyba. Špatný výpočet — \\(q^2 = 16/4 = 4\\), ne 3.`
+          feedback: `Přístup povolen. \\(q = -\\frac{1}{3}\\), členy: 81, −27, 9.`
         },
         {
-          label: `\\(a_{6} = 56\\)`,
+          label: `117`,
           value: "C",
-          feedback: `Chyba syntaxe. Výsledek neodpovídá geometrické posloupnosti.`
+          feedback: `Přetečení. Kvocient musí být záporný — proč?`
         },
         {
-          label: `\\(a_{6} = 64\\)`,
+          label: `Jiný součet`,
           value: "D",
-          feedback: `Logika potvrzena. \\(q^2 = 4\\), \\(a_6 = a_4 \\cdot q^2 = 16 \\cdot 4 = 64\\).`
+          feedback: `Nekompletní. Z podmínek zadání jde kvocient jednoznačně určit.`
         },
       ],
-      correctAnswer: "D", reward: { xp: 20 }
+      correctAnswer: "B", reward: { xp: 20 }
     },
     {
-      id: "t_posl_04", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11D: Člen geometrické posloupnosti`,
+      id: "t_posl_04", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11D: Kvocient ze dvou sousedních členů`,
       isTraining: true, firewallId: "q_posl_04", visual_color: "#2ecc8a", visual_symbol: `q²`, points: 0,
-      question: `Geometrická posloupnost má \\(a_{1} = 5\\) a kvocient \\(q = 3\\). Jaká je hodnota čtvrtého členu \\(a_{4}\\)?`,
-      formula: `$$a_{n} = a_{1} \\cdot q^{n - 1}$$`,
-      instruction: `Dosaď \\(a_1 = 5\\), \\(q = 3\\), \\(n = 4\\).`,
+      question: `V geometrické posloupnosti je \\(a_3 = 9\\) a \\(a_4 = -3\\). Jaká je hodnota kvocientu \\(q\\)?`,
+      formula: `$$q = \\frac{a_{n+1}}{a_n}$$`,
+      instruction: `Vyjádři \\(q\\) z podílu dvou po sobě jdoucích členů.`,
       steps: [
         {
-          trigger: `> Krok 1: Mocnina kvocientu`,
-          content: `Pro \\(n = 4\\) počítáme \\(q^{n-1} = 3^3 = 27\\).`
+          trigger: `> Krok 1: Vztah mezi sousedními členy`,
+          content: `V GP platí \\(a_{n+1} = a_n \\cdot q\\). Jak z toho vyjádříš \\(q\\)?`
         },
         {
-          trigger: `> Krok 2: Výsledek`,
-          content: `\\(a_4 = 5 \\cdot 27 = 135\\). Protokol potvrzen.`
+          trigger: `> Krok 2: Dosazení`,
+          content: `\\(q = \\frac{a_4}{a_3} = \\frac{-3}{9}\\). Zkrať zlomek.`
         },
       ],
       choices: [
         {
-          label: `\\(a_{4} = 45\\)`,
+          label: `\\(q = -3\\)`,
           value: "A",
-          feedback: `Chyba protokolu. Použil(a) jsi \\(q^2 = 9\\) místo \\(q^3 = 27\\).`
+          feedback: `Chyba syntaxe. Dělíš \\(a_4\\) číslem \\(a_3\\), ne naopak.`
         },
         {
-          label: `\\(a_{4} = 90\\)`,
+          label: `\\(q = -\\frac{1}{3}\\)`,
           value: "B",
-          feedback: `Kritická chyba. Pravděpodobně chyba v mocnině nebo součinu.`
+          feedback: `Logika potvrzena. \\(\\frac{-3}{9} = -\\frac{1}{3}\\).`
         },
         {
-          label: `\\(a_{4} = 120\\)`,
+          label: `\\(q = \\frac{1}{3}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. Výsledek neodpovídá \\(5 \\cdot 3^3\\).`
+          feedback: `Přetečení. Podíl záporného a kladného čísla je záporný.`
         },
         {
-          label: `\\(a_{4} = 135\\)`,
+          label: `\\(q = 3\\)`,
           value: "D",
-          feedback: `Logika potvrzena. \\(5 \\cdot 3^3 = 5 \\cdot 27 = 135\\).`
+          feedback: `Kritická chyba. Dělíš špatně a ignoruješ znaménko.`
         },
       ],
-      correctAnswer: "D", reward: { xp: 5 }
+      correctAnswer: "B", reward: { xp: 5 }
     },
     {
       id: "q_posl_05", regionId: "posloupnosti", type: "closed", monsterName: `FW_11E: Interval pro diferenci`,
       visual_color: "#a78bfa", visual_symbol: `d∈?`, points: 4, trainingTasks: ["t_posl_05"],
       question: `V aritmetické posloupnosti s prvním členem \\(a_{1} = 9\\) platí: trojnásobek druhého členu se rovná součtu třetího a pátého členu.`,
-      formula: `$$3a_{2} = a_{3} + a_{5}$$`,
+      formula: null,
       instruction: `Do kterého intervalu patří diference \\(d\\) této posloupnosti?`,
+      hints: [
+        `Každý člen AP jde zapsat jako \\(a_n = a_1 + (n-1) \\cdot d\\). Rozpiš všechny členy z podmínky.`,
+        `Po dosazení dostaneš rovnici s jedinou neznámou \\(d\\). Vyřeš ji.`
+      ],
       choices: [
         {
           label: `\\((2,5;\\ 3,5)\\)`,
@@ -5421,7 +5291,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(( - 0,5;\\ 0,5)\\)`,
           value: "B",
-          feedback: `Kritická chyba. Výsledek d = 3, ne d ≈ 0.`
+          feedback: `Kritická chyba. Diference rozhodně není blízko nuly. Zkus rozepsat rovnici znovu.`
         },
         {
           label: `\\((0,5;\\ 1,5)\\)`,
@@ -5440,7 +5310,7 @@ x + 2y = 4 \\\\
       id: "t_posl_05", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11E: Diference z podmínky`,
       isTraining: true, firewallId: "q_posl_05", visual_color: "#2ecc8a", visual_symbol: `d∈?`, points: 0,
       question: `Aritmetická posloupnost má \\(a_{1} = 2\\). Platí: \\(a_{2} + a_{4} = 20\\). Jaká je diference \\(d\\)?`,
-      formula: `$$a_{2} + a_{4} = 20$$`,
+      formula: null,
       instruction: `Rozpiš oba členy pomocí \\(a_1\\) a \\(d\\).`,
       steps: [
         {
@@ -5449,7 +5319,7 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Řeš rovnici`,
-          content: `\\((2+d)+(2+3d) = 20\\) → \\(4+4d = 20\\) → \\(d = 4\\).`
+          content: `Sestav rovnici: \\((2+d)+(2+3d) = 20\\). Zjednodušíš na \\(4 + 4d = 20\\). Kolik vyjde \\(d\\)?`
         },
       ],
       choices: [
@@ -5481,6 +5351,10 @@ x + 2y = 4 \\\\
       visual_color: "#a78bfa", visual_symbol: `¬`, points: 3, trainingTasks: ["t_posl_06"],
       question: `V aritmetické posloupnosti \\((a_{n})\\) platí: \\(a_{1} = 3\\) a \\(a_{4} = 12\\).`,
       instruction: `Které z následujících tvrzení je <b>nepravdivé</b>?`,
+      hints: [
+        `Diferenci zjistíš z libovolných dvou členů, jejichž indexy znáš. Jak se obecně vyjádří \\(d\\) z \\(a_n\\) a \\(a_m\\)?`,
+        `S diferenci spočítej konkrétní členy a ověř každé tvrzení zvlášť.`
+      ],
       choices: [
         {
           label: `\\(a_{2} = 6\\)`,
@@ -5518,7 +5392,7 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Výsledek`,
-          content: `\\(a_5 = 2 + 20 = 22\\). Přístup povolen.`
+          content: `\\(a_5 = 2 + 4 \\cdot 5\\). Kolik to je? Vyber správnou volbu.`
         },
       ],
       choices: [
@@ -5549,29 +5423,33 @@ x + 2y = 4 \\\\
       id: "q_posl_07", regionId: "posloupnosti", type: "closed", monsterName: `FW_11G: Schodiště ze čtverečků`,
       visual_color: "#a78bfa", visual_symbol: `⬛`, points: 4, trainingTasks: ["t_posl_07"],
       question: `Schodišťový obrazec je tvořen sloupci čtverečků (1 cm × 1 cm). Sloupec s pořadovým číslem \\(k\\) obsahuje \\((2k - 1)\\) čtverečků.`,
-      formula: `$$a_{k} = 2k - 1$$`,
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 255" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><text x="160" y="20" fill="#e2e8f0" font-size="11" text-anchor="middle" font-weight="bold">k-tý sloupec má (2k−1) čtverečků</text><line x1="46" y1="215" x2="300" y2="215" stroke="#e2e8f0" stroke-width="1.5"/><rect x="50" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="72" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="72" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="72" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="147" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="130" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="147" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="130" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="113" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="96" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="147" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="130" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="113" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="96" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="79" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="62" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><text x="170" y="164" fill="#e2e8f0" font-size="18">…</text><text x="58" y="229" fill="#94a3b8" font-size="9" text-anchor="middle">1</text><text x="58" y="193" fill="#7dd3fc" font-size="9" text-anchor="middle">1</text><text x="80" y="229" fill="#94a3b8" font-size="9" text-anchor="middle">2</text><text x="80" y="159" fill="#7dd3fc" font-size="9" text-anchor="middle">3</text><text x="102" y="229" fill="#94a3b8" font-size="9" text-anchor="middle">3</text><text x="102" y="125" fill="#7dd3fc" font-size="9" text-anchor="middle">5</text><text x="124" y="229" fill="#94a3b8" font-size="9" text-anchor="middle">4</text><text x="124" y="91" fill="#7dd3fc" font-size="9" text-anchor="middle">7</text><text x="146" y="229" fill="#94a3b8" font-size="9" text-anchor="middle">5</text><text x="146" y="57" fill="#7dd3fc" font-size="9" text-anchor="middle">9</text><text x="102" y="241" fill="#94a3b8" font-size="9" text-anchor="middle">číslo sloupce k</text></svg>`,
-      instruction: `Kolik čtverečků celkem obsahuje schodiště se 7 sloupci?`,
+      formula: null,
+      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="46" y1="215" x2="300" y2="215" stroke="#e2e8f0" stroke-width="1.5"/><rect x="50" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="72" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="72" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="72" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="147" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="94" y="130" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="147" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="130" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="113" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="116" y="96" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="198" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="181" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="164" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="147" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="130" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="113" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="96" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="79" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><rect x="138" y="62" width="17" height="17" fill="#1a3a6e" stroke="#0077bb" stroke-width="1"/><text x="170" y="164" fill="#e2e8f0" font-size="18">…</text></svg>`,
+      instruction: `Kolik čtverečků celkem obsahuje schodiště s 20 sloupci?`,
+      hints: [
+        `Počty čtverečků ve sloupcích tvoří posloupnost lichých čísel: \\(1, 3, 5, \\ldots\\)`,
+        `Jaký je vzorec pro součet prvních \\(n\\) členů aritmetické posloupnosti?`
+      ],
       choices: [
         {
-          label: `36 čtverečků`,
+          label: `380 čtverečků`,
           value: "A",
-          feedback: `Chyba protokolu. \\(36 = 6^2\\) — počítal(a) jsi jen 6 sloupců.`
+          feedback: `Chyba protokolu. Výsledek odpovídá \\(n(n-1)\\) — zkontroluj vzorec pro součet.`
         },
         {
-          label: `49 čtverečků`,
+          label: `400 čtverečků`,
           value: "B",
-          feedback: `Logika potvrzena. \\(\\sum_{k=1}^{7}(2k-1) = 7^2 = 49\\).`
+          feedback: `Logika potvrzena. \\(\\sum_{k=1}^{20}(2k-1) = 20^2 = 400\\).`
         },
         {
-          label: `56 čtverečků`,
+          label: `420 čtverečků`,
           value: "C",
-          feedback: `Kritická chyba. Pravděpodobně jsi sečítal(a) špatné hodnoty.`
+          feedback: `Chyba syntaxe. Výsledek odpovídá \\(n(n+1)\\) — plete se s jiným součtem.`
         },
         {
-          label: `64 čtverečků`,
+          label: `441 čtverečků`,
           value: "D",
-          feedback: `Chyba syntaxe. \\(64 = 8^2\\) — počítal(a) jsi 8 sloupců místo 7.`
+          feedback: `Přetečení. \\(441 = 21^2\\) — počítal(a) jsi 21 sloupců místo 20.`
         },
       ],
       correctAnswer: "B", reward: { xp: 20 }
@@ -5589,7 +5467,7 @@ x + 2y = 4 \\\\
         },
         {
           trigger: `> Krok 2: Sečti`,
-          content: `\\(1+2+3+4 = 10\\). Nebo vzorcem: \\(\\frac{4 \\cdot 5}{2} = 10\\).`
+          content: `Sečti: \\(1+2+3+4 = ?\\). Nebo použij vzorec \\(\\frac{n(n+1)}{2}\\) pro \\(n = 4\\).`
         },
       ],
       choices: [
@@ -5617,215 +5495,229 @@ x + 2y = 4 \\\\
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_posl_08", regionId: "posloupnosti", type: "closed", monsterName: `FW_11H: Pyramida obdélníků`,
+      id: "q_posl_08", regionId: "posloupnosti", type: "closed", monsterName: `FW_11H: Pyramida lichoběžníků`,
       visual_color: "#a78bfa", visual_symbol: `▬`, points: 5, trainingTasks: ["t_posl_08"],
-      question: `Plakát je složen z obdélníků seřazených nad sebou. Každý obdélník má výšku 4 cm. Horní (první) obdélník má šířku 6 cm, každý další je o 4 cm širší. Plakát celkem obsahuje 8 obdélníků.`,
-      formula: `$$w_{n} = 6 + 4(n - 1)$$`,
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><text x="160" y="18" fill="#e2e8f0" font-size="11" text-anchor="middle" font-weight="bold">Pyramida obdélníků (každý o 4 cm širší)</text><rect x="139" y="35" width="42" height="22" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><rect x="126" y="60" width="68" height="22" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><rect x="113" y="85" width="94" height="22" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><rect x="100" y="110" width="120" height="22" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><rect x="87" y="135" width="146" height="22" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><text x="160" y="170" fill="#e2e8f0" font-size="16" text-anchor="middle">⋮</text><text x="160" y="190" fill="#e2e8f0" font-size="16" text-anchor="middle">⋮</text><text x="186" y="50" fill="#94a3b8" font-size="8">6 cm</text><text x="199" y="75" fill="#94a3b8" font-size="8">10 cm</text><text x="212" y="100" fill="#94a3b8" font-size="8">14 cm</text><text x="225" y="125" fill="#94a3b8" font-size="8">18 cm</text><text x="238" y="150" fill="#94a3b8" font-size="8">22 cm</text><line x1="129" y1="35" x2="129" y2="57" stroke="#f7b84f" stroke-width="1.2"/><line x1="125" y1="35" x2="133" y2="35" stroke="#f7b84f" stroke-width="1"/><line x1="125" y1="57" x2="133" y2="57" stroke="#f7b84f" stroke-width="1"/><text x="117" y="50" fill="#f7b84f" font-size="9" text-anchor="middle">4</text><text x="117" y="60" fill="#f7b84f" font-size="9" text-anchor="middle">cm</text><line x1="139" y1="25" x2="181" y2="25" stroke="#f7b84f" stroke-width="1.2"/><line x1="139" y1="21" x2="139" y2="29" stroke="#f7b84f" stroke-width="1"/><line x1="181" y1="21" x2="181" y2="29" stroke="#f7b84f" stroke-width="1"/><text x="160" y="21" fill="#f7b84f" font-size="9" text-anchor="middle">6 cm</text></svg>`,
-      instruction: `Jaká je šířka \\(w_8\\) nejspodnějšího (osmého) obdélníku?`,
+      question: `Obrazec je sestaven z podobných lichoběžníků seřazených nad sebou. Nejmenší (horní) lichoběžník má základny 3 cm a 1 cm a výšku 2 cm. Každý další lichoběžník má všechny rozměry dvakrát větší než předchozí. Obrazec celkem obsahuje 6 lichoběžníků.`,
+      formula: null,
+      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;"><polygon points="155,18 165,18 170,28 150,28" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><circle cx="160" cy="40" r="1.8" fill="#e2e8f0"/><circle cx="160" cy="48" r="1.8" fill="#e2e8f0"/><circle cx="160" cy="56" r="1.8" fill="#e2e8f0"/><polygon points="125,72 195,72 220,106 100,106" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><polygon points="90,116 230,116 278,182 42,182" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/></svg>`,
+      instruction: `Vypočtěte v cm² obsah největšího lichoběžníku.`,
+      hints: [
+        `Obsah lichoběžníku: \\(S = \\frac{a+c}{2} \\cdot v\\). Nejdřív urči rozměry šestého lichoběžníku.`,
+        `Rozměry rostou geometricky s kvocientem \\(q = 2\\). Kolikrát jsou rozměry šestého lichoběžníku větší než prvního?`
+      ],
       choices: [
         {
-          label: `\\(w_{8} = 26\\) cm`,
+          label: `1024 cm²`,
           value: "A",
-          feedback: `Chyba protokolu. Výsledek odpovídá \\(w_6\\), ne \\(w_8\\).`
+          feedback: `Chyba indexu. Ověř, zda počítáš šestý, ne pátý lichoběžník.`
         },
         {
-          label: `\\(w_{8} = 30\\) cm`,
+          label: `3072 cm²`,
           value: "B",
-          feedback: `Chyba syntaxe. Zkontroluj: \\(w_8 = 6 + 4 \\cdot 7\\).`
+          feedback: `Chyba syntaxe. Lichoběžník má dvě základny — použij vzorec \\(\\frac{a+c}{2} \\cdot v\\), ne \\(\\frac{a \\cdot v}{2}\\).`
         },
         {
-          label: `\\(w_{8} = 32\\) cm`,
+          label: `4096 cm²`,
           value: "C",
-          feedback: `Kritická chyba. Použil(a) jsi \\(n = 8\\) místo \\(n-1 = 7\\).`
+          feedback: `Přístup povolen. \\(\\frac{96+32}{2} \\cdot 64 = 4096\\) cm².`
         },
         {
-          label: `\\(w_{8} = 34\\) cm`,
+          label: `8192 cm²`,
           value: "D",
-          feedback: `Přístup povolen. \\(w_8 = 6 + 4 \\cdot 7 = 34\\) cm.`
+          feedback: `Přetečení. Ve vzorci pro obsah lichoběžníku se průměruje — dělíš dvěma.`
         },
       ],
-      correctAnswer: "D", reward: { xp: 25 }
+      correctAnswer: "C", reward: { xp: 25 }
     },
     {
-      id: "t_posl_08", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11H: Šířka obdélníku v pyramidě`,
+      id: "t_posl_08", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11H: Obsah lichoběžníku`,
       isTraining: true, firewallId: "q_posl_08", visual_color: "#2ecc8a", visual_symbol: `▬`, points: 0,
-      question: `Pyramida obdélníků: první obdélník (nahoře) má šířku 6 cm, každý další je o 4 cm širší. Jaká je šířka čtvrtého obdélníku?`,
-      formula: `$$w_{n} = 6 + 4(n - 1)$$`,
-      instruction: `Dosaď \\(n = 4\\) do vzorce.`,
+      question: `Lichoběžník má základny \\(a = 6\\) cm, \\(c = 2\\) cm a výšku \\(v = 4\\) cm. Jaký je jeho obsah?`,
+      formula: `$$S = \\frac{a + c}{2} \\cdot v$$`,
+      instruction: `Dosaď do vzorce pro obsah lichoběžníku.`,
       steps: [
         {
-          trigger: `> Krok 1: Identifikuj parametry`,
-          content: `\\(a_1 = 6\\) cm (první šířka), \\(d = 4\\) cm (přírůstek).`
+          trigger: `> Krok 1: Dosazení do vzorce`,
+          content: `Dosadíme \\(a = 6\\), \\(c = 2\\), \\(v = 4\\) do vzorce: \\(S = \\frac{a+c}{2} \\cdot v = \\frac{6+2}{2} \\cdot 4 = \\frac{8}{2} \\cdot 4 = 4 \\cdot 4\\). Kolik cm² vyjde?`
         },
         {
-          trigger: `> Krok 2: Vypočti w₄`,
-          content: `\\(w_4 = 6 + 4 \\cdot (4-1) = 6 + 12 = 18\\) cm.`
-        },
-      ],
-      choices: [
-        {
-          label: `\\(w_{4} = 14\\) cm`,
-          value: "A",
-          feedback: `Chyba: to je \\(w_3 = 6 + 4 \\cdot 2 = 14\\) cm.`
-        },
-        {
-          label: `\\(w_{4} = 16\\) cm`,
-          value: "B",
-          feedback: `Chyba protokolu. Použil(a) jsi \\(d = 3\\) nebo \\(n - 1 = 2.5\\)?`
-        },
-        {
-          label: `\\(w_{4} = 20\\) cm`,
-          value: "C",
-          feedback: `Chyba syntaxe. Použil(a) jsi \\(n = 4\\) místo \\(n-1 = 3\\) jako násobitel.`
-        },
-        {
-          label: `\\(w_{4} = 18\\) cm`,
-          value: "D",
-          feedback: `Logika potvrzena. \\(w_4 = 6 + 4 \\cdot 3 = 18\\) cm.`
-        },
-      ],
-      correctAnswer: "D", reward: { xp: 5 }
-    },
-    {
-      id: "q_posl_09", regionId: "posloupnosti", type: "closed", monsterName: `FW_11I: Věž z krychlí`,
-      visual_color: "#a78bfa", visual_symbol: `∑q`, points: 5, trainingTasks: ["t_posl_09"],
-      question: `Věž je postavena z 5 krychlí na sobě. Největší (spodní) krychle má délku hrany 16 cm, každá další krychle má hranu o polovinu kratší.`,
-      formula: `$$a_{n} = 16 \\cdot \\left( \\frac{1}{2} \\right)^{n - 1}$$`,
-      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 270" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><text x="160" y="18" fill="#e2e8f0" font-size="11" text-anchor="middle" font-weight="bold">Věž z krychlí (geometrická posloupnost)</text><rect x="157" y="239" width="6" height="6" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.9"/><rect x="155" y="225" width="11" height="11" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.1"/><rect x="149" y="200" width="22" height="22" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.2"/><rect x="138" y="153" width="44" height="44" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.4"/><rect x="116" y="62" width="88" height="88" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.5"/><text x="170" y="234" fill="#94a3b8" font-size="9">2 cm</text><text x="176" y="215" fill="#94a3b8" font-size="9">4 cm</text><text x="187" y="179" fill="#94a3b8" font-size="9">8 cm</text><text x="209" y="110" fill="#94a3b8" font-size="9">16 cm</text><line x1="106" y1="245" x2="106" y2="67" stroke="#f7b84f" stroke-width="1" stroke-dasharray="3,2"/><line x1="100" y1="245" x2="112" y2="245" stroke="#f7b84f" stroke-width="1"/><line x1="100" y1="67" x2="112" y2="67" stroke="#f7b84f" stroke-width="1"/><text x="88" y="157" fill="#f7b84f" font-size="11" text-anchor="middle" font-weight="bold">h?</text><text x="160" y="262" fill="#94a3b8" font-size="9" text-anchor="middle">a₁ = 16 cm, q = ½</text></svg>`,
-      instruction: `Jaká je celková výška \\(h\\) věže (v cm)?`,
-      choices: [
-        {
-          label: `\\(h = 31\\) cm`,
-          value: "A",
-          feedback: `Přístup povolen. \\(16 + 8 + 4 + 2 + 1 = 31\\) cm.`
-        },
-        {
-          label: `\\(h = 28\\) cm`,
-          value: "B",
-          feedback: `Chyba protokolu. Zapomněl(a) jsi na pátou (nejmenší) krychli s hranou 1 cm.`
-        },
-        {
-          label: `\\(h = 24\\) cm`,
-          value: "C",
-          feedback: `Kritická chyba. Sečítal(a) jsi jen první 4 krychle: \\(16+8+4+2 = 30\\) — ještě chybuje.`
-        },
-        {
-          label: `\\(h = 20\\) cm`,
-          value: "D",
-          feedback: `Chyba syntaxe. Zdá se, že jsi počítal(a) jen hrany, ne součet všech výšek.`
-        },
-      ],
-      correctAnswer: "A", reward: { xp: 25 }
-    },
-    {
-      id: "t_posl_09", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11I: Výška věže ze čtyř krychlí`,
-      isTraining: true, firewallId: "q_posl_09", visual_color: "#2ecc8a", visual_symbol: `∑q`, points: 0,
-      question: `Věž je tvořena 4 krychlemi. Spodní (největší) krychle má hranu 8 cm, každá další má hranu dvakrát kratší. Jaká je celková výška věže?`,
-      formula: `$$a_{n} = 8 \\cdot \\left( \\frac{1}{2} \\right)^{n - 1}$$`,
-      instruction: `Sečti výšky všech čtyř krychlí.`,
-      steps: [
-        {
-          trigger: `> Krok 1: Urči hrany krychlí`,
-          content: `Hrany od spodu: \\(8, 4, 2, 1\\) cm. Každá je polovinou předchozí.`
-        },
-        {
-          trigger: `> Krok 2: Sečti výšky`,
-          content: `Výška = hrana. Celkem: \\(8 + 4 + 2 + 1 = 15\\) cm.`
+          trigger: `> Krok 2: Šestý lichoběžník je kolikrát větší?`,
+          content: `V boss příkladu má každý lichoběžník rozměry dvakrát větší než předchozí (kvocient \\(q = 2\\)). Šestý je proto \\(2^{6-1} = 2^5 = 32\\)× větší než první.<br>Rozměry prvního: \\(a_1 = 3\\) cm, \\(c_1 = 1\\) cm, \\(v_1 = 2\\) cm.<br>Rozměry šestého: \\(a_6 = 96\\) cm, \\(c_6 = 32\\) cm, \\(v_6 = 64\\) cm.<br>Dosaď do vzorce pro obsah a vypočítej.`
         },
       ],
       choices: [
         {
-          label: `\\(h = 10\\) cm`,
+          label: `12 cm²`,
           value: "A",
-          feedback: `Kritická chyba. Pravděpodobně jsi sečítal(a) jen 3 krychle.`
+          feedback: `Nekompletní. Lichoběžník má dvě základny — obě patří do vzorce.`
         },
         {
-          label: `\\(h = 15\\) cm`,
+          label: `16 cm²`,
           value: "B",
-          feedback: `Přístup povolen. \\(8+4+2+1 = 15\\) cm.`
+          feedback: `Logika potvrzena. \\(\\frac{8}{2} \\cdot 4 = 16\\) cm².`
         },
         {
-          label: `\\(h = 18\\) cm`,
+          label: `24 cm²`,
           value: "C",
-          feedback: `Chyba protokolu. Zkontroluj hrany — druhá krychle má hranu 4, ne 5 cm.`
+          feedback: `Chyba syntaxe. Zapomněl(a) jsi na kratší základnu i na dělení.`
         },
         {
-          label: `\\(h = 20\\) cm`,
+          label: `32 cm²`,
           value: "D",
-          feedback: `Chyba syntaxe. To odpovídá \\(8+6+4+2\\), ne geometrické posloupnosti.`
+          feedback: `Přetečení. Ve vzorci pro obsah lichoběžníku se průměruje.`
         },
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_posl_10", regionId: "posloupnosti", type: "closed", monsterName: `FW_11J: Kvocient a člen geometrické posloupnosti`,
-      visual_color: "#a78bfa", visual_symbol: `q⁴`, points: 4, trainingTasks: ["t_posl_10"],
-      question: `V geometrické posloupnosti je třetí člen \\(a_{3} = 12\\) a sedmý člen \\(a_{7} = 192\\). Kvocient posloupnosti je kladný.`,
-      instruction: `Jaká je hodnota čtvrtého členu \\(a_4\\)?`,
+      id: "q_posl_09", regionId: "posloupnosti", type: "closed", monsterName: `FW_11I: Obrazec ze čtverců`,
+      visual_color: "#a78bfa", visual_symbol: `∑q`, points: 5, trainingTasks: ["t_posl_09"],
+      question: `Obrazec tvoří 7 čtverců seřazených nad sebou. Největší (spodní) čtverec má obsah \\(4096\\) cm², každý další čtverec má obsah čtyřikrát menší. Celkový obsah všech čtverců je \\(5461\\) cm².`,
+      formula: null,
+      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;"><rect x="156" y="18" width="8" height="8" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.9"/><circle cx="160" cy="38" r="1.8" fill="#e2e8f0"/><circle cx="160" cy="46" r="1.8" fill="#e2e8f0"/><circle cx="160" cy="54" r="1.8" fill="#e2e8f0"/><rect x="140" y="66" width="40" height="40" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.3"/><rect x="120" y="114" width="80" height="80" fill="#1a3a6e" stroke="#0077bb" stroke-width="1.5"/><line x1="108" y1="18" x2="108" y2="194" stroke="#f7b84f" stroke-width="1" stroke-dasharray="3,2"/><line x1="102" y1="18" x2="114" y2="18" stroke="#f7b84f" stroke-width="1"/><line x1="102" y1="194" x2="114" y2="194" stroke="#f7b84f" stroke-width="1"/><text x="90" y="110" fill="#f7b84f" font-size="11" text-anchor="middle" font-weight="bold">h?</text></svg>`,
+      instruction: `Jaká je celková výška \\(h\\) obrazce (v cm)?`,
+      hints: [
+        `Obsah čtverce a délka jeho strany jsou různé veličiny. Jak z obsahu vypočítáš stranu?`,
+        `Strany čtverců tvoří také geometrickou posloupnost. Urči stranu každého čtverce a sečti.`
+      ],
       choices: [
         {
-          label: `\\(a_{4} = 16\\)`,
+          label: `\\(h = 64\\) cm`,
           value: "A",
-          feedback: `Chyba syntaxe. Výsledek neodpovídá geometrické posloupnosti s \\(q = 2\\).`
+          feedback: `Neúplný přístup. \\(\\sqrt{4096} = 64\\) je strana jen největšího čtverce — obrazec jich má sedm.`
         },
         {
-          label: `\\(a_{4} = 20\\)`,
+          label: `\\(h = 126\\) cm`,
           value: "B",
-          feedback: `Kritická chyba. \\(a_4 = a_3 \\cdot q = 12 \\cdot 2 = 24\\), ne 20.`
+          feedback: `Chyba indexu. Zapomněl(a) jsi na nejmenší čtverec se stranou \\(\\sqrt{1} = 1\\) cm.`
         },
         {
-          label: `\\(a_{4} = 24\\)`,
+          label: `\\(h = 127\\) cm`,
           value: "C",
-          feedback: `Logika potvrzena. \\(q^4 = 192/12 = 16\\), \\(q = 2\\), \\(a_4 = 12 \\cdot 2 = 24\\).`
+          feedback: `Přístup povolen. \\(64+32+16+8+4+2+1 = 127\\) cm.`
         },
         {
-          label: `\\(a_{4} = 36\\)`,
+          label: `\\(h = 5461\\) cm`,
           value: "D",
-          feedback: `Chyba protokolu. Zdá se, že jsi kvocient zaměnil za 3.`
+          feedback: `Kritická chyba. 5461 cm² je celkový obsah, ne výška. Z obsahu nejdřív urči stranu: \\(a = \\sqrt{S}\\).`
         },
       ],
-      correctAnswer: "C", reward: { xp: 20 }
+      correctAnswer: "C", reward: { xp: 25 }
     },
     {
-      id: "t_posl_10", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11J: Pátý člen geometrické posloupnosti`,
-      isTraining: true, firewallId: "q_posl_10", visual_color: "#2ecc8a", visual_symbol: `q⁴`, points: 0,
-      question: `Geometrická posloupnost má \\(a_{1} = 3\\) a kvocient \\(q = 2\\). Jaká je hodnota pátého členu \\(a_{5}\\)?`,
-      formula: `$$a_{5} = a_{1} \\cdot q^{4}$$`,
-      instruction: `Dosaď do vzorce \\(a_n = a_1 \\cdot q^{n-1}\\) pro \\(n = 5\\).`,
+      id: "t_posl_09", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11I: Obsah čtverců na součet stran`,
+      isTraining: true, firewallId: "q_posl_09", visual_color: "#2ecc8a", visual_symbol: `∑q`, points: 0,
+      question: `Obrazec tvoří 3 čtverce seřazené nad sebou. Největší čtverec má obsah \\(64\\) cm², každý další má obsah čtyřikrát menší. Jaký je součet délek stran všech tří čtverců?`,
+      formula: null,
+      instruction: `Urči délku strany každého čtverce a sečti je.`,
       steps: [
         {
-          trigger: `> Krok 1: Mocnina kvocientu`,
-          content: `\\(q^{n-1} = 2^4 = 16\\). Exponent je \\(n-1 = 4\\), ne 5.`
+          trigger: `> Krok 1: Z obsahu na délku strany`,
+          content: `Délka strany čtverce = odmocnina z jeho obsahu: \\(a = \\sqrt{S}\\). Obsah 64 dá \\(\\sqrt{64} = 8\\) cm. Jaké strany dají obsah 16 cm² a obsah 4 cm²?`
         },
         {
-          trigger: `> Krok 2: Výsledek`,
-          content: `\\(a_5 = 3 \\cdot 16 = 48\\). Protokol potvrzen.`
+          trigger: `> Krok 2: Sečti délky stran`,
+          content: `Strany jsou \\(8, 4, 2\\) cm. Sečti: \\(8 + 4 + 2 = ?\\)`
         },
       ],
       choices: [
         {
-          label: `\\(a_{5} = 48\\)`,
+          label: `\\(14\\) cm`,
           value: "A",
-          feedback: `Logika potvrzena. \\(3 \\cdot 2^4 = 3 \\cdot 16 = 48\\).`
+          feedback: `Přístup povolen. \\(\\sqrt{64}+\\sqrt{16}+\\sqrt{4} = 8+4+2 = 14\\) cm.`
         },
         {
-          label: `\\(a_{5} = 32\\)`,
+          label: `\\(8\\) cm`,
           value: "B",
-          feedback: `Chyba: \\(32 = 2^5\\) — zapomněl(a) jsi na \\(a_1 = 3\\).`
+          feedback: `Neúplný přístup. Vypočítal(a) jsi hranu jen největšího čtverce.`
         },
         {
-          label: `\\(a_{5} = 64\\)`,
+          label: `\\(84\\) cm`,
           value: "C",
-          feedback: `Chyba protokolu. Použil(a) jsi exponent 5 místo 4.`
+          feedback: `Kritická chyba. Sčítal(a) jsi obsah místo délky strany: \\(64+16+4 = 84\\) cm² — to jsou cm², ne cm.`
         },
         {
-          label: `\\(a_{5} = 96\\)`,
+          label: `\\(12\\) cm`,
           value: "D",
-          feedback: `Chyba syntaxe. Zdá se, že jsi počítal(a) \\(3 \\cdot 2^5 = 96\\).`
+          feedback: `Chyba indexu. Sečítal(a) jsi jen první dva čtverce: \\(8+4 = 12\\). Chybí třetí.`
         },
       ],
       correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_posl_10", regionId: "posloupnosti", type: "closed", monsterName: `FW_11J: Šachovnicová mozaika`,
+      visual_color: "#a78bfa", visual_symbol: `◇`, points: 5, trainingTasks: ["t_posl_10"],
+      question: `Mozaika ze čtvercových dlaždic má tvar kosočtverce. V každé řadě se střídají tmavé a bílé dlaždice; každá řada začíná tmavou. Řady (odshora) mají 1, 3, 5, …, 21, …, 5, 3, 1 dlaždic. Nejdelší (střední) řada obsahuje 21 dlaždic.`,
+      formula: null,
+      diagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid #1a2544;border-radius:8px;"><rect x="155" y="10" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="143" y="22" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="155" y="22" width="10" height="10" rx="1" fill="#94a3b8" stroke="#cbd5e1" stroke-width="0.8"/><rect x="167" y="22" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="131" y="34" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="143" y="34" width="10" height="10" rx="1" fill="#94a3b8" stroke="#cbd5e1" stroke-width="0.8"/><rect x="155" y="34" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="167" y="34" width="10" height="10" rx="1" fill="#94a3b8" stroke="#cbd5e1" stroke-width="0.8"/><rect x="179" y="34" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="143" y="46" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="155" y="46" width="10" height="10" rx="1" fill="#94a3b8" stroke="#cbd5e1" stroke-width="0.8"/><rect x="167" y="46" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><rect x="155" y="58" width="10" height="10" rx="1" fill="#1a3a6e" stroke="#0077bb" stroke-width="0.8"/><text x="203" y="42" fill="#e2e8f0" font-size="11" font-family="'Segoe UI',Arial,sans-serif">→ …</text><text x="117" y="42" fill="#e2e8f0" font-size="11" text-anchor="end" font-family="'Segoe UI',Arial,sans-serif">… ←</text><text x="160" y="90" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif">Nejdelší řada: 21 dlaždic</text></svg>`,
+      instruction: `Kolik tmavých dlaždic obsahuje celá mozaika?`,
+      hints: [
+        `V řadě o \\(n\\) dlaždicích (\\(n\\) liché, začíná tmavou) je tmavých \\(\\frac{n+1}{2}\\). Vypiš počty tmavých pro každou řadu.`,
+        `Počty tmavých v řadách tvoří symetrickou posloupnost. Jaký součet dává taková „pyramida" čísel?`
+      ],
+      choices: [
+        {
+          label: `100`,
+          value: "A",
+          feedback: `Záměna barev. 100 je počet bílých dlaždic (\\(10^2\\)). Tmavých je v každé řadě o jednu víc.`
+        },
+        {
+          label: `121`,
+          value: "B",
+          feedback: `Přístup povolen. Tmavých: \\(1+2+\\ldots+11+\\ldots+2+1 = 11^2 = 121\\).`
+        },
+        {
+          label: `132`,
+          value: "C",
+          feedback: `Chyba indexu. Započítal(a) jsi střední řadu dvakrát: \\(2 \\times 66 = 132\\). Střed patří jen do jedné poloviny.`
+        },
+        {
+          label: `221`,
+          value: "D",
+          feedback: `Kritická chyba. 221 je celkový počet dlaždic (tmavých i bílých). Otázka je jen na tmavé.`
+        },
+      ],
+      correctAnswer: "B", reward: { xp: 25 }
+    },
+    {
+      id: "t_posl_10", regionId: "posloupnosti", type: "closed", monsterName: `SIM_11J: Šachovnicový kosočtverec`,
+      isTraining: true, firewallId: "q_posl_10", visual_color: "#2ecc8a", visual_symbol: `◇`, points: 0,
+      question: `Mozaika ve tvaru kosočtverce má řady: 1, 3, 5, 7, 5, 3, 1 dlaždic. V každé řadě se střídají tmavé a bílé; řada začíná tmavou. Kolik tmavých dlaždic je v celé mozaice?`,
+      formula: null,
+      instruction: `Urči počet tmavých v každé řadě a sečti.`,
+      steps: [
+        {
+          trigger: `> Krok 1: Tmavé v každé řadě`,
+          content: `Řada o \\(n\\) dlaždicích začíná tmavou → tmavých je \\(\\frac{n+1}{2}\\). Pro řady 1, 3, 5, 7, 5, 3, 1 vychází: 1, 2, 3, 4, 3, 2, 1 tmavých.`
+        },
+        {
+          trigger: `> Krok 2: Sečti`,
+          content: `\\(1+2+3+4+3+2+1 = ?\\). Horní polovina: \\(1+2+3+4 = 10\\). Dolní: \\(3+2+1 = 6\\).`
+        },
+      ],
+      choices: [
+        {
+          label: `9`,
+          value: "A",
+          feedback: `Záměna barev. 9 je počet bílých dlaždic. Tmavých je v každé řadě o jednu víc.`
+        },
+        {
+          label: `16`,
+          value: "B",
+          feedback: `Přístup povolen. \\(1+2+3+4+3+2+1 = 16\\).`
+        },
+        {
+          label: `20`,
+          value: "C",
+          feedback: `Chyba indexu. Zdvojil(a) jsi horní polovinu: \\(2 \\times 10 = 20\\), ale střed se nepočítá dvakrát.`
+        },
+        {
+          label: `25`,
+          value: "D",
+          feedback: `Nefiltrováno. 25 je celkový počet dlaždic (tmavých i bílých). Otázka je jen na tmavé.`
+        },
+      ],
+      correctAnswer: "B", reward: { xp: 5 }
     },
 
     // ==========================================
@@ -5853,7 +5745,7 @@ x + 2y = 4 \\\\
         {
           label: `\\(56\\)`,
           value: "C",
-          feedback: `Přístup povolen. Vybíráme 3 číslice k zakrytí z 8: \\(C(8, 3) = \\frac{8!}{3! \\cdot 5!} = 56\\). Zbylých 5 číslic zůstává v původním pořadí → 56 různých čísel. Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(336\\)`,
@@ -5862,8 +5754,8 @@ x + 2y = 4 \\\\
         },
       ],
       hints: [
-        `Každé pětimístné číslo jednoznačně odpovídá výběru tří číslic, které zakryjeme. Pořadí zbylých číslic je dáno pásem.`,
-        `Kolik existuje trojic číslic, které lze z pásu zakrýt? Záleží na pořadí zakrytých číslic?`,
+        `Každé pětimístné číslo jednoznačně odpovídá výběru tří číslic, které zakryjeme. Záleží na pořadí výběru?`,
+        `Kolik trojic číslic lze z pásu vybrat k zakrytí?`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
@@ -5877,11 +5769,11 @@ x + 2y = 4 \\\\
       steps: [
         {
           trigger: `> Krok 1: Co volíme?`,
-          content: `Volíme \\(2\\) číslice, které zakryjeme. Zbylé \\(4\\) zůstávají v&nbsp;pořadí daném pásem → číslo je jednoznačné.`
+          content: `Zakrýváme 2 číslice z 6. Na pořadí výběru nezáleží — zakrytí \\(\\{1,2\\}\\) a \\(\\{2,1\\}\\) dává totéž číslo. Jde tedy o kombinace. Zbylé číslice zůstávají v pořadí pásu.`
         },
         {
           trigger: `> Krok 2: Výpočet`,
-          content: `\\(C(6, 2) = \\dfrac{6!}{2! \\cdot 4!} = 15\\).`
+          content: `Kombinace: \\(C(n, k) = \\dfrac{n!}{k! \\cdot (n-k)!}\\). Jaké jsou hodnoty \\(n\\) a \\(k\\) v tomto příkladu?`
         },
       ],
       choices: [
@@ -5915,12 +5807,12 @@ x + 2y = 4 \\\\
       visual_color: "#e84393", visual_symbol: `×`, points: 3,
       trainingTasks: ["t_prav_12"],
       question: `V týmu A pracuje \\(6\\) mužů a \\(4\\) ženy. V týmu B pracují \\(3\\) muži a \\(5\\) žen.`,
-      instruction: `Kolika způsoby lze sestavit jednu smíšenou dvojici (chlapec a dívka) tak, aby chlapec a dívka nebyli ze stejného kroužku?`,
+      instruction: `Kolika způsoby lze sestavit jednu smíšenou dvojici (muž a žena) tak, aby nebyli ze stejného týmu?`,
       choices: [
         {
           label: `\\(42\\)`,
           value: "A",
-          feedback: `Přístup povolen. Chlapec z A + dívka z B: \\(6 \\times 5 = 30\\). Dívka z A + chlapec z B: \\(4 \\times 3 = 12\\). Celkem: \\(30 + 12 = 42\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(30\\)`,
@@ -5930,17 +5822,16 @@ x + 2y = 4 \\\\
         {
           label: `\\(54\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. Výsledek 54 neodpovídá správnému výpočtu \\(30 + 12 = 42\\).`
+          feedback: `Chyba syntaxe. Výsledek 54 nevznikne součtem dvou korektních dílčích případů.`
         },
         {
           label: `\\(44\\)`,
           value: "D",
-          feedback: `Kritická chyba. Přidaný člen nemá opodstatnění. Správný součet je \\(30 + 12 = 42\\).`
+          feedback: `Kritická chyba. Přidaný člen nemá opodstatnění — zkontrolujte, kolik případů skutečně existuje.`
         },
       ],
       hints: [
-        `Podmínka „z různých kroužků" znamená dva samostatné případy: (1) chlapec z A + dívka z B, (2) dívka z A + chlapec z B. Sečtěte oba.`,
-        `Případ 1: \\(6 \\times 5 = 30\\). Případ 2: \\(4 \\times 3 = 12\\). Celkem?`,
+        `Podmínka „z různých týmů" — jaké dva případy připadají v úvahu? Mohou nastat současně?`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
@@ -5949,17 +5840,16 @@ x + 2y = 4 \\\\
       monsterName: `SIM_08B: Smíšená dvojice — menší skupiny`,
       isTraining: true, firewallId: "q_prav_12",
       visual_color: "#2ecc8a", visual_symbol: `×`, points: 0,
-      question: `V oddíle A jsou \\(3\\) chlapci a \\(2\\) dívky. V oddíle B jsou \\(2\\) chlapci a \\(4\\) dívky.`,
-      instruction: `Kolika způsoby sestavíme smíšenou dvojici z různých tříd?`,
+      question: `V týmu A jsou \\(3\\) muži a \\(2\\) ženy. V týmu B jsou \\(2\\) muži a \\(4\\) ženy.`,
+      instruction: `Kolika způsoby sestavíme smíšenou dvojici (muž a žena) z různých týmů?`,
       steps: [
         {
           trigger: `> Krok 1: Rozpad na dva případy`,
-          content: `Případ 1: chlapec z A + dívka z B → \\(3 \\times 4 = 12\\).
-Případ 2: dívka z A + chlapec z B → \\(2 \\times 2 = 4\\).`
+          content: `Existují dva vzájemně se vylučující případy: muž z A + žena z B, nebo žena z A + muž z B. Pro každý případ násobíme počty (pravidlo součinu).`
         },
         {
           trigger: `> Krok 2: Celkem`,
-          content: `Oba případy se vylučují → sčítáme: \\(12 + 4 = 16\\).`
+          content: `Výsledky obou případů sečtěte — vylučují se. Dosaďte správné počty mužů a žen z každého týmu.`
         },
       ],
       choices: [
@@ -6014,12 +5904,12 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(400\\)`,
           value: "D",
-          feedback: `Přístup povolen. \\(d_1\\): 5 možností (\\(\\neq 0\\)). \\(d_2\\): 5 (\\(\\neq d_1\\)). \\(d_3\\): 4 (\\(\\neq d_1, \\neq d_2\\)). \\(d_4\\): 4 (\\(\\neq d_2, \\neq d_3\\)). Celkem: \\(5 \\times 5 \\times 4 \\times 4 = 400\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
       ],
       hints: [
-        `Podmínka: trojice \\((d_1, d_2, d_3)\\) i trojice \\((d_2, d_3, d_4)\\) musí mít tři různé prvky. To neznamená, že všechny 4 číslice musí být různé — \\(d_1\\) může být rovno \\(d_4\\).`,
-        `Postupujte zleva: \\(d_1 \\neq 0\\) → 5 možností. \\(d_2 \\neq d_1\\) → 5. \\(d_3 \\neq d_1, d_3 \\neq d_2\\) → 4. \\(d_4 \\neq d_2, d_4 \\neq d_3\\) → 4.`,
+        `Podmínka: trojice \\((d_1, d_2, d_3)\\) i trojice \\((d_2, d_3, d_4)\\) musí mít tři různé prvky. To neznamená, že všechny 4 číslice musí být různé — \\(d_1\\) může být rovno \\(d_4\\). Nejde o klasické kombinace ani variace — číslice se mohou opakovat na nesousedních pozicích.`,
+        `Kolik číslic je zakázaných na každé pozici? Závisí omezení jen na sousedech, nebo na všech předchozích?`,
       ],
       correctAnswer: "D", reward: { xp: 25 }
     },
@@ -6033,11 +5923,11 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
       steps: [
         {
           trigger: `> Krok 1: Podmínky`,
-          content: `\\(d_1 \\neq d_2\\) a \\(d_2 \\neq d_3\\). Ale \\(d_1\\) může být rovno \\(d_3\\) (např. číslo 121 je OK).`
+          content: `\\(d_1 \\neq d_2\\) a \\(d_2 \\neq d_3\\). Ale \\(d_1\\) může být rovno \\(d_3\\) (např. číslo 121 je OK). Záleží na pořadí — tvoříme uspořádanou posloupnost číslic.`
         },
         {
           trigger: `> Krok 2: Počítání pozic`,
-          content: `\\(d_1\\): 4 možnosti. \\(d_2\\): 3 (cokoliv kromě \\(d_1\\)). \\(d_3\\): 3 (cokoliv kromě \\(d_2\\)). Celkem: \\(4 \\times 3 \\times 3 = 36\\).`
+          content: `Pro každou pozici spočítejte počet povolených číslic: \\(d_1\\) — kolik? \\(d_2\\) — od koho se musí lišit? \\(d_3\\) — od koho? Výsledky vynásobte.`
         },
       ],
       choices: [
@@ -6081,7 +5971,7 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(\\dfrac{5}{8}\\)`,
           value: "B",
-          feedback: `Přístup povolen. Celkem: \\(4 \\times 4 \\times 3 = 48\\) čísel. Sudých: koncová 0 dává \\(4 \\times 3 = 12\\), koncová 2 dává \\(3 \\times 3 = 9\\), koncová 4 dává \\(3 \\times 3 = 9\\). Sudých: 30. \\(P = \\frac{30}{48} = \\frac{5}{8}\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(\\dfrac{1}{2}\\)`,
@@ -6091,12 +5981,12 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(\\dfrac{7}{12}\\)`,
           value: "D",
-          feedback: `Kritická chyba. \\(7/12\\) neodpovídá správnému poměru \\(30/48 = 5/8\\).`
+          feedback: `Kritická chyba. \\(7/12\\) nevznikne korektním rozkladem na případy podle koncové číslice.`
         },
       ],
       hints: [
-        `Číslo je sudé ↔ poslední číslice je 0, 2 nebo 4. Spočítejte počet trojmístných čísel zvlášť pro každou z těchto koncových číslic (pozor na podmínku \\(d_1 \\neq 0\\)).`,
-        `Koncová 0: \\(d_1\\) ze \\(\\{1,2,3,4\\}\\) = 4, \\(d_2\\) ze zbylých 3 → 12. Koncová 2: \\(d_1\\) ze \\(\\{1,3,4\\}\\) = 3, \\(d_2\\) ze zbylých 3 → 9. Koncová 4: analogicky 9. Celkem sudých = 30 z 48.`,
+        `Číslo je sudé, právě když poslední číslice je 0, 2 nebo 4. Chovají se všechny tři případy stejně vzhledem k podmínce na první číslici?`,
+        `Proč se případ „koncová 0" liší od „koncová 2" nebo „koncová 4"?`,
       ],
       correctAnswer: "B", reward: { xp: 20 }
     },
@@ -6110,12 +6000,11 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
       steps: [
         {
           trigger: `> Krok 1: Celkový počet`,
-          content: `\\(d_1\\): 4 možnosti, \\(d_2\\): 3 (jiné než \\(d_1\\)). Celkem: \\(4 \\times 3 = 12\\) čísel.`
+          content: `Záleží na pořadí číslic — variace bez opakování. Celkový počet dvojmístných čísel: \\(d_1\\) má 4 možnosti, \\(d_2\\) má 3 zbývající.`
         },
         {
           trigger: `> Krok 2: Sudá čísla`,
-          content: `Sudé ↔ \\(d_2 \\in \\{2, 4\\}\\). Pro \\(d_2 = 2\\): \\(d_1 \\in \\{1,3,4\\}\\) → 3. Pro \\(d_2 = 4\\): \\(d_1 \\in \\{1,2,3\\}\\) → 3. Sudých: 6.
-\\(P = \\dfrac{6}{12} = \\dfrac{1}{2}\\).`
+          content: `Sudé číslo musí končit sudou číslicí. Sudé číslice z množiny \\(\\{1,2,3,4\\}\\) jsou 2 a 4. Pro každou zvlášť spočítejte, kolik prvních číslic připadá v úvahu, a výsledky sečtěte.`
         },
       ],
       choices: [
@@ -6154,7 +6043,7 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(7\\,200\\)`,
           value: "A",
-          feedback: `Přístup povolen. Výběr 2 písmen z 4: \\(C(4,2) = 6\\). Výběr 3 číslic z 5: \\(C(5,3) = 10\\). Uspořádání 5 různých znaků: \\(5! = 120\\). Celkem: \\(6 \\times 10 \\times 120 = 7\\,200\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(720\\)`,
@@ -6173,8 +6062,8 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         },
       ],
       hints: [
-        `Rozložte do tří kroků: (1) vyberte 2 písmena z A,B,C,D, (2) vyberte 3 číslice z 1–5, (3) uspořádejte všech 5 vybraných znaků na 5 pozicích hesla.`,
-        `\\(C(4,2) \\times C(5,3) \\times 5! = 6 \\times 10 \\times 120\\).`,
+        `Úloha má tři fáze: výběr písmen, výběr číslic a uspořádání. Záleží na pořadí při výběru, nebo až při sestavení hesla?`,
+        `Kolik způsoby lze vybrat 2 písmena z dané množiny? Kolik způsoby 3 číslice? Kolik různých pořadí má 5 různých znaků?`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
@@ -6188,11 +6077,11 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
       steps: [
         {
           trigger: `> Krok 1: Výběr znaků`,
-          content: `Písmena: \\(C(3,2) = 3\\) dvojice. Číslice: \\(C(2,1) = 2\\) možnosti.`
+          content: `Nejprve vybereme znaky — na pořadí výběru nezáleží, kombinace: \\(C(3,2) = 3\\) dvojice písmen, 2 volby číslice.`
         },
         {
           trigger: `> Krok 2: Uspořádání`,
-          content: `3 různé znaky na 3 pozice: \\(3! = 6\\). Celkem: \\(3 \\times 2 \\times 6 = 36\\).`
+          content: `Vybrané 3 znaky uspořádáme na pozice kódu — teď na pořadí záleží. Kolik uspořádání mají 3 různé znaky?`
         },
       ],
       choices: [
@@ -6231,7 +6120,7 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(0{,}59\\)`,
           value: "A",
-          feedback: `Chyba protokolu. \\(0{,}59\\) neodpovídá správnému výpočtu \\(C(22,3)/C(25,3)\\).`
+          feedback: `Chyba protokolu. \\(0{,}59\\) nevznikne korektním poměrem kombinací.`
         },
         {
           label: `\\(0{,}73\\)`,
@@ -6246,12 +6135,12 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(0{,}67\\)`,
           value: "D",
-          feedback: `Přístup povolen. \\(P = \\frac{C(22,3)}{C(25,3)} = \\frac{1540}{2300} \\approx 0{,}67\\). Alternativně: \\(\\frac{22}{25} \\cdot \\frac{21}{24} \\cdot \\frac{20}{23} \\approx 0{,}67\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
       ],
       hints: [
-        `Losujeme bez vrácení. Pravděpodobnost: první losovaná patří sportovci (\\(22\\) z \\(25\\)), druhá (\\(21\\) ze \\(24\\)), třetí (\\(20\\) z \\(23\\)). Výsledky vynásobte.`,
-        `\\(P = \\frac{22}{25} \\cdot \\frac{21}{24} \\cdot \\frac{20}{23}\\). Nebo: \\(\\frac{C(22,3)}{C(25,3)} = \\frac{1540}{2300}\\).`,
+        `Losujeme bez vrácení. Záleží na pořadí, ve kterém jsou výherci vylosováni?`,
+        `Alternativně: jaká je pravděpodobnost, že první vylosovaný je žák? A jak se mění situace po každém tahu?`,
       ],
       correctAnswer: "D", reward: { xp: 20 }
     },
@@ -6261,15 +6150,15 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
       isTraining: true, firewallId: "q_prav_16",
       visual_color: "#2ecc8a", visual_symbol: `P(A)`, points: 0,
       question: `Ze skupiny \\(10\\) účastníků výletu (\\(2\\) průvodci a \\(8\\) žáků) losujeme \\(2\\) výherce.`,
-      instruction: `Jaká je pravděpodobnost, že oba výherci jsou účastníci?`,
+      instruction: `Jaká je pravděpodobnost, že oba výherci jsou žáci?`,
       steps: [
         {
           trigger: `> Krok 1: Celkový počet výběrů`,
-          content: `\\(C(10,2) = 45\\) dvojic.`
+          content: `Losujeme bez vrácení, na pořadí výherců nezáleží — kombinace. Celkový počet výběrů 2 z 10: \\(C(10,2)\\).`
         },
         {
-          trigger: `> Krok 2: Příznivé výběry`,
-          content: `Oba účastníci: \\(C(8,2) = 28\\). \\(P = \\frac{28}{45}\\).`
+          trigger: `> Krok 2: Příznivé výběry a pravděpodobnost`,
+          content: `Příznivé výběry: oba výherci jsou žáci. Kolik způsoby lze vybrat 2 žáky z 8? Sestavte zlomek \\(P = \\frac{\\text{příznivé}}{\\text{celkem}}\\).`
         },
       ],
       choices: [
@@ -6313,7 +6202,7 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(\\dfrac{9}{44}\\)`,
           value: "B",
-          feedback: `Přístup povolen. \\(P(\\text{3 červené}) = C(5,3)/C(12,3) = 10/220\\). \\(P(\\text{3 modré}) = C(7,3)/C(12,3) = 35/220\\). Celkem: \\(45/220 = \\frac{9}{44}\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(\\dfrac{1}{22}\\)`,
@@ -6327,8 +6216,8 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         },
       ],
       hints: [
-        `„Všechny stejné barvy" = buď \\(3\\) červené, nebo \\(3\\) modré. Tyto události se vylučují → sčítáme pravděpodobnosti.`,
-        `\\(P(\\text{3 červené}) = C(5,3)/C(12,3)\\). \\(P(\\text{3 modré}) = C(7,3)/C(12,3)\\). \\(C(12,3) = 220\\).`,
+        `„Všechny stejné barvy" — kolik barevných variant připadá v úvahu? Mohou nastat současně?`,
+        `Kolik příznivých trojic existuje pro každou barvu? Kolik trojic celkem lze z vaku vybrat?`,
       ],
       correctAnswer: "B", reward: { xp: 20 }
     },
@@ -6342,12 +6231,11 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
       steps: [
         {
           trigger: `> Krok 1: Celkový počet dvojic`,
-          content: `\\(C(10,2) = 45\\).`
+          content: `Tahání najednou — na pořadí nezáleží, kombinace. Celkový počet dvojic: \\(C(10,2)\\).`
         },
         {
-          trigger: `> Krok 2: Příznivé dvojice`,
-          content: `Obě červené: \\(C(4,2) = 6\\). Obě modré: \\(C(6,2) = 15\\). Celkem: 21.
-\\(P = \\frac{21}{45} = \\frac{7}{15}\\).`
+          trigger: `> Krok 2: Příznivé dvojice a pravděpodobnost`,
+          content: `Příznivé: obě červené nebo obě modré — vzájemně se vylučují, sčítáme. Spočítejte \\(C(4,2)\\) a \\(C(6,2)\\) zvlášť a sestavte zlomek.`
         },
       ],
       choices: [
@@ -6364,7 +6252,7 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(\\dfrac{8}{15}\\)`,
           value: "C",
-          feedback: `Kritíká chyba. \\(8/15 = 24/45\\) — neodpovídá správnému výpočtu \\((21/45 = 7/15)\\).`
+          feedback: `Kritická chyba. \\(8/15 = 24/45\\) — zkontrolujte dílčí výpočty pro každou barvu.`
         },
         {
           label: `\\(\\dfrac{7}{15}\\)`,
@@ -6396,7 +6284,7 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         {
           label: `\\(550\\)`,
           value: "C",
-          feedback: `Přístup povolen. Začněte pokladníkem (5 možností), pak předseda (11 zbylých), tajemník (10 zbylých): \\(5 \\times 11 \\times 10 = 550\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(440\\)`,
@@ -6405,8 +6293,8 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
         },
       ],
       hints: [
-        `Klíčový tah: začněte funkcí s nejmenším výběrem — pokladníkem (\\(5\\) kandidátů). Poté volte předsedu (kdo zbývá ze \\(12\\) minus pokladník) a&nbsp;tajemníka.`,
-        `Pokladník: 5. Předseda: \\(12 - 1 = 11\\). Tajemník: \\(12 - 2 = 10\\).`,
+        `Záleží na pořadí — koordinátor, zapisovatel a pokladník jsou různé role. Kterou funkci je výhodné obsadit jako první?`,
+        `Kolik kandidátů zbývá na každou další roli po obsazení předchozí?`,
       ],
       correctAnswer: "C", reward: { xp: 20 }
     },
@@ -6420,11 +6308,11 @@ Např. PIN \\(1302\\) podmínku splňuje: trojice \\(1, 3, 0\\) i trojice \\(3, 
       steps: [
         {
           trigger: `> Krok 1: Začni pokladníkem`,
-          content: `Pokladník: 3 možnosti (omezený výběr). Předseda: \\(8 - 1 = 7\\). Místopředseda: \\(8 - 2 = 6\\).`
+          content: `Role jsou různé — záleží na pořadí, variace. Začněte pokladníkem (jen 3 kandidáti). Po jeho obsazení pokladník nemůže zastávat jinou roli.`
         },
         {
           trigger: `> Krok 2: Výpočet`,
-          content: `\\(3 \\times 7 \\times 6 = 126\\).`
+          content: `Kolik kandidátů zbývá na vedoucího a kolik na zástupce? Výsledky tří rolí vynásobte.`
         },
       ],
       choices: [
@@ -6467,7 +6355,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(120\\)`,
           value: "A",
-          feedback: `Přístup povolen. Kód: 4 _ _ _ → 4 je na 1. místě, zbývají 3 pozice. Ze zbylých 6 číslic \\(\\{1,2,3,5,6,7\\}\\) vybíráme 3 a uspořádáváme: \\(V(6,3) = 6 \\times 5 \\times 4 = 120\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
         {
           label: `\\(20\\)`,
@@ -6486,8 +6374,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Kód má \\(4\\) číslice (protože první číslice je \\(4\\)). První místo je obsazené číslicí \\(4\\) → zbývají \\(3\\) volné pozice a \\(6\\) zbývajících číslic.`,
-        `Záleží na pořadí? Ano — kódy \\(4135\\) a \\(4153\\) jsou různé. Použijte variace: \\(V(6,3) = 6 \\times 5 \\times 4\\).`,
+        `Co říká třetí pravidlo o délce kódu, když první číslice je \\(4\\)?`,
+        `Jsou kódy \\(4135\\) a \\(4153\\) stejné, nebo různé? Co to říká o tom, zda záleží na pořadí?`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
@@ -6501,11 +6389,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Délka kódu`,
-          content: `První číslice je \\(2\\) → kód má \\(2\\) číslice: 2_.`
+          content: `První číslice je 2 → kód má 2 číslice (délka = první číslice). Zbývá obsadit jednu pozici ze zbývajících číslic.`
         },
         {
           trigger: `> Krok 2: Výběr`,
-          content: `Na druhé místo: libovolná ze zbylých \\(4\\) číslic \\(\\{1, 3, 4, 5\\}\\). Celkem: <b>4</b> kódy (21, 23, 24, 25).`
+          content: `Číslici 2 jsme použili na první místo — nemůže se opakovat. Které číslice z \\(\\{1,2,3,4,5\\}\\) zbývají a kolik jich je?`
         },
       ],
       choices: [
@@ -6549,22 +6437,22 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(\\dfrac{1}{8}\\)`,
           value: "B",
-          feedback: `Chyba protokolu. \\(1/8\\) neodpovídá poměru \\(6/56\\). Počet skupin sousedních sedadel jste dělili celkovým počtem sedadel místo \\(C(8,3)\\).`
+          feedback: `Chyba protokolu. \\(1/8\\) — jmenovatelem není počet sedadel, ale počet všech možných trojic.`
         },
         {
           label: `\\(\\dfrac{1}{28}\\)`,
           value: "C",
-          feedback: `Kritická chyba. \\(1/28 = 2/56\\) — příznivých případů je \\(6\\), ne \\(2\\).`
+          feedback: `Kritická chyba. \\(1/28 = 2/56\\) — vyjmenujte si všechny sousední trojice, je jich víc než 2.`
         },
         {
           label: `\\(\\dfrac{3}{28}\\)`,
           value: "D",
-          feedback: `Přístup povolen. Celkový počet trojic sedadel: \\(C(8,3) = 56\\). Sousední trojice: \\(\\{1,2,3\\}\\), \\(\\{2,3,4\\}\\), …, \\(\\{6,7,8\\}\\) → \\(6\\). \\(P = \\frac{6}{56} = \\frac{3}{28}\\). Logika ověřena.`
+          feedback: `Přístup povolen. ✓`
         },
       ],
       hints: [
-        `Sousední trojice má tvar \\(\\{k, k+1, k+2\\}\\). Kolik takových trojic existuje v&nbsp;řadě 1 až 8?`,
-        `Sousední trojice: \\(\\{1,2,3\\}\\), \\(\\{2,3,4\\}\\), …, \\(\\{6,7,8\\}\\) → celkem \\(6\\). Celkový počet trojic: \\(C(8,3) = 56\\).`,
+        `Přidělování sedadel — na pořadí nezáleží (záleží jen na tom, která sedadla dostanou), jde o <strong>kombinace</strong>. Sousední trojice má tvar \\(\\{k, k+1, k+2\\}\\). Kolik takových trojic existuje v&nbsp;řadě 1 až 8?`,
+        `Kolik existuje sousedních trojic tvaru \\(\\{k, k+1, k+2\\}\\) v řadě 1 až 8?`,
       ],
       correctAnswer: "D", reward: { xp: 20 }
     },
@@ -6578,11 +6466,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Celkový počet`,
-          content: `Dvojice židlí: \\(C(5,2) = 10\\).`
+          content: `Na pořadí sedadel nezáleží — kombinace. Celkový počet dvojic sedadel z 5: \\(C(5,2) = 10\\).`
         },
         {
           trigger: `> Krok 2: Sousední dvojice`,
-          content: `\\(\\{1,2\\}\\), \\(\\{2,3\\}\\), \\(\\{3,4\\}\\), \\(\\{4,5\\}\\) → \\(4\\) sousední. \\(P = \\frac{4}{10} = \\frac{2}{5}\\).`
+          content: `Sousední dvojice mají tvar \\(\\{k, k+1\\}\\). Vyjmenujte je systematicky pro řadu 1 až 5 a sestavte pravděpodobnost.`
         },
       ],
       choices: [
@@ -6623,7 +6511,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(2\\)`,
           value: "A",
-          feedback: `Chyba syntaxe. Výsledek 2 vznikne, pokud vydělíte \\(60\\) počtem seniorů (30) místo počtem juniorů (20).`
+          feedback: `Chyba syntaxe. Tento výsledek vznikne dělením zbývající sumy počtem seniorů místo počtem juniorů.`
         },
         {
           label: `\\(3{,}6\\)`,
@@ -6642,8 +6530,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Z průměru celého turnaje a celkového počtu hráčů určete celkovou sumu bodů: \\(3{,}6 \\cdot 50\\).`,
-        `Odečtěte příspěvek seniorů (\\(30 \\cdot 4\\)) a výsledek podělte počtem juniorů (20) — ne celkovým počtem.`,
+        `Jaký je vztah mezi průměrem, počtem prvků a celkovou sumou?`,
+        `Celková suma se skládá z příspěvku seniorů a příspěvku juniorů. Pozor — dělte počtem juniorů, ne celkovým počtem.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
@@ -6656,11 +6544,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Celková suma`,
-          content: `Průměr \\(3{,}4\\) × počet žáků \\(25\\) = celková suma bodů \\(85\\).`
+          content: `Jakou celkovou sumu bodů získala celá třída? Využijte vztah: celková suma = průměr × počet.`
         },
         {
           trigger: `> Krok 2: Příspěvek chlapců`,
-          content: `Chlapci: \\(15 \\cdot 4 = 60\\). Dívkám zbývá \\(85 - 60 = 25\\) bodů celkem.`
+          content: `Kolik z celkové sumy připadá na chlapce? Zbytek patří dívkám.`
         },
         {
           trigger: `> Krok 3: Průměr dívek`,
@@ -6720,8 +6608,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
             hints: [
-        `Označte \\(n_2\\) a \\(n_3\\). Ze součtu četností: \\(n_2+n_3=30-(3+6+1)=20\\). To nestačí — potřebujete druhou rovnici.`,
-        `Medián = 2,5 → průměr 15. a 16. hodnoty. 15. musí být 2, 16. musí být 3. Kumulativní ≤2 (tj. \\(3+n_2\\)) musí být právě 15.`,
+        `Dvě neznámé → dvě rovnice. Jedna plyne ze součtu četností, druhá z podmínky na medián.`,
+        `Medián \\(2{,}5\\) znamená, že dvě prostřední hodnoty leží v různých skupinách. Kde musí ležet hranice kumulativních četností — tedy součtů, kolik hodnot leží ve skupinách až dosud?`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
@@ -6734,11 +6622,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Kumulativní četnosti`,
-          content: `Body 1→3, body 2→8, body 3→16, body 4→20.`
+          content: `Kumulativní četnost skupiny říká, kolik hodnot souboru leží v dané skupině a ve všech nižších dohromady. Sestavte ji: začněte od nejnižší skupiny a postupně přičítejte četnosti.`
         },
         {
           trigger: `> Krok 2: Poloha mediánu`,
-          content: `Pro \\(n=20\\): průměr 10. a 11. hodnoty. Kumulativní pro 2 je 8, pro 3 je 16. Obě hodnoty leží ve skupině 3.`
+          content: `Pro \\(n=20\\) hledáte průměr 10. a 11. hodnoty. V které skupině leží tyto pozice? Porovnejte s kumulativními četnostmi — průběžnými součty hodnot od nejnižší skupiny.`
         },
         {
           trigger: `> Krok 3: Výsledek`,
@@ -6749,12 +6637,12 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(2\\)`,
           value: "A",
-          feedback: `Chyba. 10. hodnota není ve skupině 2 — kumulativní pro 2 je pouze 8.`
+          feedback: `Chyba. Průběžný součet četností do skupiny 2 je jen 8 — 10. hodnota leží až výše.`
         },
         {
           label: `\\(2,5\\)`,
           value: "B",
-          feedback: `Chyba. \\((2+3)/2=2{,}5\\) by platilo, kdyby 10. hodnota byla 2 — ale kumulativní do 2 = 8 < 10.`
+          feedback: `Chyba. \\((2+3)/2=2{,}5\\) by platilo, kdyby 10. hodnota byla 2 — ale průběžný součet do skupiny 2 je 8, takže 10. hodnota tam neleží.`
         },
         {
           label: `\\(3\\)`,
@@ -6799,7 +6687,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
             hints: [
         `Z histogramu odečtěte četnosti pro každou kategorii. Zkontrolujte, že jejich součet dává 20.`,
-        `Vynásobte každou hodnotu (4, 6, 8, 10 tis.) příslušnou četností, sečtěte a vydělte 20.`,
+        `Vážený průměr = součet součinů (hodnota × četnost), děleno celkovým počtem.`,
       ],
       correctAnswer: "D", reward: { xp: 20 }
     },
@@ -6812,15 +6700,15 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Součiny`,
-          content: `\\(1\\cdot2=2\\), \\(2\\cdot4=8\\), \\(4\\cdot6=24\\), \\(3\\cdot8=24\\).`
+          content: `Vynásobte každou hodnotu \\(x_i\\) příslušnou četností \\(n_i\\).`
         },
         {
           trigger: `> Krok 2: Součet`,
-          content: `\\(2+8+24+24=58\\).`
+          content: `Sečtěte všechny součiny z předchozího kroku.`
         },
         {
           trigger: `> Krok 3: Průměr`,
-          content: `Vydělte sumu \\(58\\) počtem žáků \\(10\\) a vyberte výsledek z nabídky.`
+          content: `Celkovou sumu vydělte počtem žáků a vyberte výsledek z nabídky.`
         },
       ],
       choices: [
@@ -6877,7 +6765,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
             hints: [
         `Pro \\(n=40\\) je medián průměr 20. a 21. hodnoty seřazeného souboru.`,
-        `Sestavte kumulativní četnosti: 8, 20, 30, 37, 40. Kde přesně leží 20. a 21. hodnota? Pozor na hranici skupiny.`,
+        `Sestavte kumulativní četnosti — průběžné součty, kolik hodnot leží v dané skupině a nižších celkem — a najděte, ve kterých skupinách leží 20. a 21. hodnota.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -6890,11 +6778,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Seřazené hodnoty`,
-          content: `Seřazeno: 2, 3, 3, 4.`
+          content: `Rozepište tabulku do seznamu jednotlivých hodnot — každou zapište tolikrát, kolik udává její četnost.`
         },
         {
           trigger: `> Krok 2: Prostřední hodnoty`,
-          content: `Pro \\(n=4\\): 2. a 3. hodnota = 3 a 3.`
+          content: `Pro sudé \\(n\\) je medián průměrem dvou prostředních hodnot. Která je 2. a která 3. hodnota seřazeného souboru?`
         },
         {
           trigger: `> Krok 3: Medián`,
@@ -6935,7 +6823,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(5\\)`,
           value: "A",
-          feedback: `Chyba. Tento výsledek vznikne, použiješ-li zaokrouhlený průměr 3 (suma=75): \\((75-59)/3\\approx5\\). Průměr je 3,2, ne 3.`
+          feedback: `Chyba. Tento výsledek vznikne zaokrouhlením průměru na 3 místo přesné hodnoty \\(3{,}2\\). Zaokrouhlení mění cílovou sumu.`
         },
         {
           label: `\\(8\\)`,
@@ -6954,7 +6842,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
             hints: [
-        `Z průměru a celkového počtu žáků spočítejte cílovou sumu: \\(\\bar{x} \\cdot n = 3{,}2 \\cdot 25\\).`,
+        `Z průměru a celkového počtu žáků lze určit celkovou sumu bodů.`,
         `Sečtěte příspěvky ostatních skupin. Chybějící skupině 3 připadne zbytek — vyřešte rovnici pro \\(n_3\\).`,
       ],
       correctAnswer: "C", reward: { xp: 20 }
@@ -6968,15 +6856,15 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Součiny`,
-          content: `\\(4\\cdot1=4\\), \\(3\\cdot2=6\\), \\(3\\cdot3=9\\).`
+          content: `Vynásobte každou hodnotu \\(x_i\\) příslušnou četností \\(n_i\\).`
         },
         {
           trigger: `> Krok 2: Suma`,
-          content: `\\(4+6+9=19\\).`
+          content: `Sečtěte všechny součiny z předchozího kroku.`
         },
         {
           trigger: `> Krok 3: Průměr`,
-          content: `Vydělte sumu \\(19\\) počtem žáků \\(10\\) a vyberte výsledek z nabídky.`
+          content: `Celkovou sumu vydělte počtem žáků a vyberte výsledek z nabídky.`
         },
       ],
       choices: [
@@ -7031,7 +6919,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
             hints: [
-        `Nejdříve najděte \\(x\\): průměr = 7, n = 6, takže celkový součet = \\(7 \\cdot 6 = 42\\). Sestavte rovnici a vyřešte.`,
+        `Nejdříve najděte \\(x\\): z průměru a počtu prvků určete celkový součet. Sestavte rovnici a vyřešte.`,
         `Po nalezení \\(x\\) doplňte všechna čísla a seřaďte je. Medián pro \\(n=6\\) je průměr 3. a 4. hodnoty seřazeného souboru.`,
       ],
       correctAnswer: "A", reward: { xp: 25 }
@@ -7049,7 +6937,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Zjednodušení`,
-          content: `\\(10+4x=24 \\implies 4x=14 \\implies x=3{,}5\\).`
+          content: `Sečtěte známé členy na levé straně a vyřešte lineární rovnici pro \\(x\\).`
         },
         {
           trigger: `> Krok 3: Ověření`,
@@ -7109,8 +6997,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
             hints: [
-        `Chybějící četnost pro 0 medailí = \\(30 - (8+5+2)\\). Ověřte, zda je tato hodnota větší než četnost pro 1 medaili (podmínka modu).`,
-        `Po doplnění sestavte kumulativní četnosti. Pro \\(n=30\\) hledáte 15. a 16. hodnotu seřazeného souboru.`,
+        `Doplňte chybějící sloupec ze součtu všech četností. Podmínka modu kontroluje, zda je výsledek konzistentní.`,
+        `Po doplnění sestavte kumulativní četnosti — průběžné součty od nejnižší skupiny — a hledejte 15. a 16. hodnotu.`,
       ],
       correctAnswer: "D", reward: { xp: 20 }
     },
@@ -7123,11 +7011,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Kumulativní`,
-          content: `Kumulativní: 0→10, 1→16, 2→19, 3→20.`
+          content: `Kumulativní četnost skupiny říká, kolik hodnot souboru leží v dané skupině a ve všech nižších dohromady. Sestavte ji: začněte od nejnižší skupiny a postupně přičítejte četnosti.`
         },
         {
           trigger: `> Krok 2: Prostřední hodnoty`,
-          content: `10. hodnota: kumulativní ≤10 → skupina 0. 11. hodnota: kumulativní >10 → skupina 1.`
+          content: `Pro \\(n=20\\) hledáte průměr 10. a 11. hodnoty. V které skupině leží tyto pozice? Porovnejte s kumulativními četnostmi — průběžnými součty hodnot od nejnižší skupiny.`
         },
         {
           trigger: `> Krok 3: Medián`,
@@ -7167,7 +7055,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(22\\, 500\\) Kč`,
           value: "A",
-          feedback: `Chyba. Tato hodnota vznikne použitím chybného jmenovatele \\(n=8\\) místo \\(n_B=6\\): \\((260\\,000-80\\,000)/8=22\\,500\\).`
+          feedback: `Chyba. Zkontrolujte jmenovatel — dělíte celkovým počtem zaměstnanců místo počtem zaměstnanců skupiny B.`
         },
         {
           label: `\\(32\\, 000\\) Kč`,
@@ -7186,8 +7074,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
             hints: [
-        `Celkový mzdový fond celé firmy = \\(\\bar{x}_{\\text{firma}} \\cdot n_{\\text{celkem}} = 26\\,000 \\cdot 10\\).`,
-        `Odečtěte mzdy skupiny A (\\(4 \\cdot 20\\,000\\)) od celkového fondu a zbytek podělte počtem zaměstnanců skupiny B.`,
+        `Z průměrného platu a celkového počtu zaměstnanců lze určit celkový mzdový fond firmy.`,
+        `Celkový fond = fond skupiny A + fond skupiny B. Kolik z celku připadá na skupinu B?`,
       ],
       correctAnswer: "C", reward: { xp: 20 }
     },
@@ -7200,11 +7088,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Celkový fond mezd`,
-          content: `Oddělení A: \\(5\\cdot24\\,000=120\\,000\\) Kč. Oddělení B: \\(3\\cdot32\\,000=96\\,000\\) Kč. Celkem: \\(216\\,000\\) Kč.`
+          content: `Spočítejte celkový mzdový fond obou oddělení dohromady (počet zaměstnanců × průměrný plat v každém).`
         },
         {
           trigger: `> Krok 2: Průměr`,
-          content: `Vydělte celkový fond \\(216\\,000\\) Kč celkovým počtem zaměstnanců \\(8\\) a vyberte výsledek z nabídky.`
+          content: `Celkový fond vydělte celkovým počtem zaměstnanců a vyberte výsledek z nabídky.`
         },
       ],
       choices: [
@@ -7261,7 +7149,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
             hints: [
         `Označte chybějící četnosti \\(a\\) (pro 2 body) a \\(b\\) (pro 5 bodů). Zapište dvě rovnice: ze součtu četností a z podmínky průměru.`,
-        `Z první rovnice vyjádřete \\(b = 9 - a\\) a dosaďte do druhé. Vyřešte pro \\(a\\).`,
+        `Ze součtu četností vyjádřete jednu neznámou pomocí druhé a dosaďte do rovnice z průměru.`,
       ],
       correctAnswer: "A", reward: { xp: 25 }
     },
@@ -7274,15 +7162,15 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Cílová suma`,
-          content: `Průměr = 2, n = 20 → celková suma bodů = \\(2 \\cdot 20 = 40\\).`
+          content: `Z průměru a počtu žáků určete celkovou sumu bodů.`
         },
         {
           trigger: `> Krok 2: Součet z tabulky`,
-          content: `Příspěvky skupin 2, 3, 4: \\(2 \\cdot 6 + 3 \\cdot 4 + 4 \\cdot 2 = 12 + 12 + 8 = 32\\). Chybějícímu příspěvku skupiny 1 zbývá \\(40 - 32 = 8\\).`
+          content: `Sečtěte příspěvky skupin, kde znáte četnosti. Kolik z celkové sumy zbývá na chybějící skupinu?`
         },
         {
           trigger: `> Krok 3: Nalezení četnosti`,
-          content: `Chybějící příspěvek = \\(1 \\cdot n_1 = 8\\). Vyřešte pro \\(n_1\\) a ověřte součet četností: \\(n_1 + 6 + 4 + 2 = 20\\).`
+          content: `Zbývající příspěvek vydělte hodnotou \\(x_i\\) dané skupiny. Ověřte, zda součet všech četností dává \\(n\\).`
         },
       ],
       choices: [
@@ -7334,17 +7222,17 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(\\frac{x + 3}{x - 4}\\)`,
           value: "C",
-          feedback: `Kritická chyba. Jmenovatel \\(x^2 - 16 = (x-4)(x+4)\\) — faktor \\((x+4)\\) nelze zaměnit za \\((x-4)\\).`
+          feedback: `Kritická chyba. Jmenovatel \\(x^2 - 16 = (x-4)(x+4)\\) — výraz \\((x+4)\\) nelze zaměnit za \\((x-4)\\).`
         },
         {
           label: `\\(\\frac{(x - 4)(x + 3)}{x^{2} - 16}\\)`,
           value: "D",
-          feedback: `Chyba. Rozklad čitatele je správný, ale \\((x-4)\\) lze zkrátit se stejným faktorem ve jmenovateli. Zkrácení ještě neprovedl.`
+          feedback: `Chyba. Rozklad čitatele je správný, ale \\((x-4)\\) lze zkrátit se stejným výrazem ve jmenovateli. Zkrácení jsi ještě neprovedl.`
         },
       ],
       hints: [
-        `Zkus rozložit čitatel i jmenovatel na součin. U čitatele hledej dvě čísla, jejichž <b>součet je \\(-1\\)</b> a <b>součin je \\(-12\\)</b>.`,
-        `Jmenovatel \\(x^2 - 16\\) je rozdíl dvou čtverců: \\(a^2 - b^2 = (a-b)(a+b)\\). Který faktor se vyskytuje i v čitateli?`,
+        `Čitatel je kvadratický trojčlen — rozlož ho na součin dvou závorek. Jmenovatel je rozdíl dvou čtverců, také ho rozlož na závorky.`,
+        `Po rozkladu obou hledej to, co můžeš zkrátit.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -7361,11 +7249,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Hledáme správný pár`,
-          content: `Součin −12 a součet −1: zkus \\(-4\\) a \\(+3\\). Součet: \\(-4 + 3 = -1\\) ✓ Součin: \\((-4) \\cdot 3 = -12\\) ✓`
+          content: `Hledej dvojici celých čísel, jejichž součin je \\(-12\\) a součet je \\(-1\\). Zkus systematicky projít dělitele čísla 12.`
         },
         {
           trigger: `> Krok 3: Ověření`,
-          content: `Rozklad: \\((x-4)(x+3)\\). Roznásob: \\(x^2 + 3x - 4x - 12 = x^2 - x - 12\\) ✓`
+          content: `Ověř svůj výsledek roznásobením — musíš dostat původní trojčlen \\(x^2 - x - 12\\).`
         },
       ],
       choices: [
@@ -7439,11 +7327,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Nuly jmenovatele`,
-          content: `Rozložíme jmenovatel: \\(3a^2 + a - 2 = (3a - 2)(a + 1)\\). Nuly: \\(a = \\tfrac{2}{3}\\) nebo \\(a = -1\\).`
+          content: `Rozlož jmenovatel \\(3a^2 + a - 2\\) na součin a najdi jeho nulové body. Hledej závorku ve tvaru \\((3a - c)(a - d)\\), nebo použij diskriminant a výsledek napiš ve tvaru \\(k(x - a_1)(x - a_2)\\).`
         },
         {
           trigger: `> Krok 3: Definiční obor`,
-          content: `Definiční obor = ℝ bez hodnot, kde jmenovatel = 0: \\(\\mathbb{R} \\setminus \\left\\{-1;\\, \\tfrac{2}{3}\\right\\}\\).`
+          content: `Definiční obor = \\(\\mathbb{R}\\) bez hodnot, kde jmenovatel = 0. Zapiš ho sám.`
         },
       ],
       choices: [
@@ -7499,8 +7387,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Nejdřív zjednoduš výraz — vytknout ze jmenovatele. Znaménko výsledku závisí pouze na znaménku jmenovatele, protože čitatel je konstanta.`,
-        `Záporné číslo děleno kladným číslem je záporné. Kdy je \\(3x - 6 > 0\\)?`,
+        `Čitatel je konstanta — jaké má znaménko? Znaménko celého výrazu závisí na jmenovateli.`,
+        `Záporné děleno kladným je záporné. Urči, kdy je jmenovatel kladný a kdy záporný.`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
@@ -7573,8 +7461,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Rozlož jmenovatel \\(a^2 - 4\\) na součin. Pak urči společného jmenovatele obou zlomků a převeď na něj první zlomek.`,
-        `Po odečtení čitatelů zkus rozložit výsledek a zkrátit společný faktor — výsledek je kratší, než by se zdálo.`,
+        `Jmenovatel druhého zlomku je rozdíl čtverců — rozlož ho. To ti ukáže společného jmenovatele.`,
+        `Po odečtení čitatelů vytknout z výsledku a zkrátit — výsledek je kratší, než by se zdálo.`,
       ],
       correctAnswer: "C", reward: { xp: 20 }
     },
@@ -7595,7 +7483,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 3: Odečteme čitatele`,
-          content: `Rozlož závorku a odečti čitatele: \\(3(x-2) - 3x = ?\\). Výsledek dosaď do společného jmenovatele a zjednoduš.`
+          content: `Teď už stačí jen odečíst oba zlomky, upravit čitatele a podívat se, jestli nejde něco zkrátit.`
         },
       ],
       choices: [
@@ -7651,8 +7539,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Základ 4 je mocninou dvojky: \\(4 = 2^2\\). Pravidlo mocnin říká: \\((a^m)^k = a^{m \\cdot k}\\).`,
-        `Zkus exponent \\(2n + 4\\) přepsat jako \\(2 \\cdot (\\ldots)\\) — tak dostaneš tvar \\((2^2)^{\\,?}\\).`,
+        `Jaký je vztah mezi základy 2 a 4? Můžeš použít pravidlo: \\((a^m)^k = a^{m \\cdot k}\\).`,
+        `Z exponentu se dá určitě něco vytknout.`,
       ],
       correctAnswer: "B", reward: { xp: 10 }
     },
@@ -7669,7 +7557,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Pravidlo mocnin`,
-          content: `\\((a^m)^k = a^{m \\cdot k}\\). Tedy \\((2^2)^{n+1} = 2^{2(n+1)} = 2^{2n+2}\\).`
+          content: `Pravidlo mocniny mocniny: \\((a^m)^k = a^{m \\cdot k}\\). Dosaď \\(m=2\\), \\(k=n+1\\) a urči výsledný exponent.`
         },
       ],
       choices: [
@@ -7726,7 +7614,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
       hints: [
         `Výraz pod každou odmocninou musí být <b>nezáporný</b> (≥ 0). Odmocnina ve jmenovateli přidává ještě jednu podmínku — jakou?`,
-        `Zapiš dvě nerovnice: \\(8 - 2x \\geq 0\\) (čitatel) a \\(x - 1 > 0\\) (jmenovatel nesmí být nula). Hledáš jejich průnik.`,
+        `Zapiš podmínku pro čitatel i jmenovatel jako nerovnice. Hledáš jejich průnik.`,
       ],
       correctAnswer: "D", reward: { xp: 15 }
     },
@@ -7800,7 +7688,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
       hints: [
         `Nulový bod výrazu nastane, když <b>čitatel \\(= 0\\)</b> a jmenovatel \\(\\neq 0\\). Čitatel je součin dvou výrazů — součin je nulový, když alespoň jeden z faktorů je nulový.`,
-        `Zamysli se: může být \\(y^2 + 4 = 0\\) pro nějaké reálné \\(y\\)? (Nápověda: \\(y^2 \\geq 0\\) vždy.)`,
+        `Jeden z faktorů čitatele je "součet druhých mocnin". Může být někdy nulový?`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
@@ -7817,11 +7705,11 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Nuly čitatele`,
-          content: `\\((x-5)(x+2) = 0\\) → \\(x = 5\\) nebo \\(x = -2\\).`
+          content: `Čitatel je součin dvou binomů — kdy je každý z nich nulový?`
         },
         {
           trigger: `> Krok 3: Ověření podmínek`,
-          content: `Pro \\(x = 5\\): jmenovatel \\(5-3 = 2 \\neq 0\\) ✓. Pro \\(x = -2\\): jmenovatel \\(-2-3 = -5 \\neq 0\\) ✓. Obě hodnoty jsou platné.`
+          content: `Pro každou nulu čitatele ověř, že jmenovatel není nulový — jinak by výraz neměl smysl.`
         },
       ],
       choices: [
@@ -7877,7 +7765,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Nejdřív zjednoduš výraz — vytknout z čitatele i jmenovatele. Výsledek by měl být podstatně jednodušší než původní tvar.`,
+        `Výraz jde výrazně zjednodušit — hledej společný faktor v čitateli a jmenovateli.`,
         `Po zjednodušení ověř každé tvrzení dosazením. Nezapomeň zkontrolovat, pro která \\(a\\) výraz vůbec nemá smysl.`,
       ],
       correctAnswer: "C", reward: { xp: 20 }
@@ -7895,7 +7783,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Zkrátíme`,
-          content: `\\(\\frac{(a-2)^2}{2(a-2)} = \\frac{a-2}{2}\\). Zkrátili jsme jeden faktor (a−2).`
+          content: `Kolik faktorů \\((a-2)\\) je v čitateli a kolik ve jmenovateli? Zkrať společné a zapiš výsledek.`
         },
       ],
       choices: [
@@ -7951,8 +7839,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Nejdřív spočítej výraz v závorce — převeď oba zlomky na společného jmenovatele \\((a-2)(a+2)\\) a odečti čitatele.`,
-        `Všimni si, že \\(a^2 - 4 = (a-2)(a+2)\\). Po vynásobení hledej, co se zkrátí.`,
+        `Začni výrazem v závorce — převeď zlomky na společného jmenovatele a odečti čitatele.`,
+        `Výraz za závorkou obsahuje \\(a^2 - 4\\) — rozlož a hledej, co se po vynásobení zkrátí.`,
       ],
       correctAnswer: "B", reward: { xp: 25 }
     },
@@ -7965,15 +7853,15 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Zjednodušíme závorku`,
-          content: `\\(1 - \\frac{1}{x} = \\frac{x-1}{x}\\). Převedeme na společného jmenovatele x.`
+          content: `Převeď výraz v závorce na jeden zlomek — společný jmenovatel je \\(x\\).`
         },
         {
           trigger: `> Krok 2: Vynásobíme`,
-          content: `\\(\\frac{x-1}{x} \\cdot \\frac{x}{x-1} = \\frac{(x-1) \\cdot x}{x \\cdot (x-1)}\\).`
+          content: `Zapiš součin obou zlomků jako jeden zlomek — co vidíš v čitateli a jmenovateli?`
         },
         {
           trigger: `> Krok 3: Zkrátíme`,
-          content: `Faktor \\((x-1)\\) a faktor \\(x\\) se zkrátí: výsledek = \\(1\\).`
+          content: `Hledej společné faktory v čitateli a jmenovateli a zkrať. Jaký je výsledek?`
         },
       ],
       choices: [
@@ -8010,17 +7898,17 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(a^{\\frac{7}{4}}\\)`,
           value: "A",
-          feedback: `Chyba syntaxe. Zapomněl odečíst exponent z dělení: \\(\\frac{3}{2} + \\frac{1}{4} - 1 = \\frac{6}{4} + \\frac{1}{4} - \\frac{4}{4} = \\frac{3}{4}\\), ne \\(\\frac{7}{4}\\).`
+          feedback: `Chyba syntaxe. Zapomněl odečíst exponent z dělení.`
         },
         {
           label: `\\(\\sqrt{a^{3}}\\)`,
           value: "B",
-          feedback: `Chyba. Nezohlednil \\(\\sqrt[4]{a}\\) a dělení \\(a\\). Výsledný exponent je \\(\\frac{3}{2} + \\frac{1}{4} - 1 = \\frac{3}{4}\\), ne \\(\\frac{3}{2}\\).`
+          feedback: `Chyba. Nezohlednil \\(\\sqrt[4]{a}\\) a dělení \\(a\\).`
         },
         {
           label: `\\(\\sqrt[3]{a^{4}}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. Exponent výsledku je \\(\\frac{3}{4}\\) — stupeň odmocniny = jmenovatel = 4, mocnina základu = čitatel = 3. Správně je \\(\\sqrt[4]{a^3}\\), ne \\(\\sqrt[3]{a^4}\\) (tam by byl exponent \\(\\frac{4}{3}\\)).`
+          feedback: `Chyba syntaxe. Exponent výsledku je \\(\\frac{3}{4}\\). Jmenovatel odpovídá stupni odmocniny, čitatel stupni mocniny.`
         },
         {
           label: `\\(\\sqrt[4]{a^{3}}\\)`,
@@ -8029,7 +7917,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Přepiš každou odmocninu jako mocninu s racionálním exponentem: \\(\\sqrt{a^3} = a^{3/2}\\), \\(\\sqrt[4]{a} = a^{1/4}\\).`,
+        `Přepiš každou odmocninu jako mocninu s racionálním exponentem — to sjednotí tvar pro další úpravy.`,
         `Při násobení mocnin se stejným základem se exponenty <b>sčítají</b>, při dělení <b>odčítají</b>. Výsledný exponent si spočítej sám.`,
       ],
       correctAnswer: "D", reward: { xp: 20 }
@@ -8047,7 +7935,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Sečteme exponenty`,
-          content: `\\(a^{1/2} \\cdot a^{1/4} = a^{1/2 + 1/4} = a^{2/4 + 1/4} = a^{3/4}\\).`
+          content: `Sečti exponenty: \\(\\frac{1}{2} + \\frac{1}{4} = ?\\) Převeď na společného jmenovatele.`
         },
         {
           trigger: `> Krok 3: Zapíšeme odmocninou`,
@@ -8083,83 +7971,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
     // PLANIMETRIE — NOVÉ PŘÍKLADY
     // ==========================================
 
-    {
-      id: "q_plan_01", regionId: "planimetrie", type: "closed", monsterName: `FW_03A: Čtverec a tmavé rohy`,
-      visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_01"],
-      question: `Čtverec ABCD má stranu délky 14 cm. Je v něm vepsaná kružnice. Jaký je obsah čtyř tmavých rohů čtverce, které leží mimo kružnici?`,
-      formula: null,
-      diagram: `<svg viewBox="0 0 320 260" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <rect x="50" y="20" width="220" height="220" fill="#1a2040" stroke="#00b4d8" stroke-width="2"/> <circle cx="160" cy="130" r="110" fill="#111827" stroke="#00b4d8" stroke-width="2"/> <text x="160" y="13" text-anchor="middle" fill="#94a3b8" font-size="11">a = 14 cm</text> <line x1="160" y1="130" x2="270" y2="130" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/> <circle cx="160" cy="130" r="3" fill="#e2e8f0"/> <text x="195" y="148" fill="#94a3b8" font-size="11">r = 7 cm</text> <text x="44" y="18" fill="#e2e8f0" font-size="13" font-weight="bold">D</text> <text x="270" y="18" fill="#e2e8f0" font-size="13" font-weight="bold">C</text> <text x="44" y="248" fill="#e2e8f0" font-size="13" font-weight="bold">A</text> <text x="270" y="248" fill="#e2e8f0" font-size="13" font-weight="bold">B</text> <text x="82" y="60" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="bold">S = ?</text></svg>`,
-      instruction: `Vyberte správný obsah tmavých rohů.`,
-      choices: [
         {
-          label: `\\(196 + 49\\pi\\text{ cm}^{2}\\)`,
-          value: "A",
-          feedback: `Kritická chyba. Rohy čtverce leží mimo kružnici — hledáš plochu, kde kružnice není. Z obsahu čtverce kružnici odečítáš, ne přičítáš.`
-        },
-        {
-          label: `\\(196 - 14\\pi\\text{ cm}^{2}\\)`,
-          value: "B",
-          feedback: `Kritická chyba. Záměna poloměru r = 7 za průměr d = 14. Obsah kruhu = \\(\\pi r^2 = 49\\pi\\), ne \\(14\\pi\\).`
-        },
-        {
-          label: `\\(196 - 49\\pi\\text{ cm}^{2}\\)`,
-          value: "C",
-          feedback: `Přístup povolen. \\(r = a/2 = 7\\) cm; \\(S_{\\text{rohy}} = 14^2 - \\pi \\cdot 7^2 = 196 - 49\\pi\\) cm². Protokol ověřen.`
-        },
-        {
-          label: `\\(49\\pi - 196\\text{ cm}^{2}\\)`,
-          value: "D",
-          feedback: `Kritická chyba. \\(49\\pi \\approx 154 < 196\\), tedy kružnice je menší než čtverec — odečítat musíš kružnici od čtverce, ne naopak.`
-        },
-      ],
-      hints: [
-        `Obsah rohů = obsah čtverce − obsah kruhu. Jak spočítáš obsah čtverce se stranou 14 cm?`,
-        `Poloměr vepsané kružnice je polovina strany: \\(r = a/2\\). Dosaď do vzorce \\(S = a^2 - \\pi r^2\\).`,
-      ],
-      correctAnswer: "C", reward: { xp: 15 }
-    },
-    {
-      id: "t_plan_01", regionId: "planimetrie", type: "closed", monsterName: `SIM_03A: Kruh ve čtverci`,
-      isTraining: true, firewallId: "q_plan_01", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
-      question: `Čtverec má stranu 10 cm. Je v něm vepsaná kružnice. Jaký je obsah vepsaného kruhu?`,
-      formula: `$$S = \\pi r^{2},\\quad r = \\frac{a}{2}$$`,
-      instruction: `Vyberte správný obsah vepsaného kruhu.`,
-      steps: [
-        {
-          trigger: `> Krok 1: Poloměr vepsané kružnice`,
-          content: `Kružnice vepsaná čtverce se dotýká všech čtyř stran. Její poloměr je přesně polovina délky strany: \\(r = a/2 = 5\\) cm.`
-        },
-        {
-          trigger: `> Krok 2: Obsah kruhu`,
-          content: `Dosaď do vzorce: \\(S = \\pi r^2 = \\pi \\cdot 5^2\\). Výsledek najdi mezi možnostmi — pak zkus firewall a urči obsah tmavých rohů.`
-        },
-      ],
-      choices: [
-        {
-          label: `\\(100\\pi\\text{ cm}^{2}\\)`,
-          value: "A",
-          feedback: `Kritická chyba. \\(100\\pi\\) by byl obsah kruhu s \\(r = 10\\) cm. Vepsaná kružnice má \\(r = a/2 = 5\\) cm.`
-        },
-        {
-          label: `\\(25\\pi\\text{ cm}^{2}\\)`,
-          value: "B",
-          feedback: `Logika potvrzena. \\(r = a/2 = 5\\) cm; \\(S = \\pi \\cdot 5^2 = 25\\pi\\) cm². Výborně!`
-        },
-        {
-          label: `\\(50\\pi\\text{ cm}^{2}\\)`,
-          value: "C",
-          feedback: `Chyba. Použit \\(r = a = 10\\) místo \\(r = a/2 = 5\\). Poloměr = polovina strany, ne celá strana.`
-        },
-        {
-          label: `\\(10\\pi\\text{ cm}^{2}\\)`,
-          value: "D",
-          feedback: `Chyba syntaxe. Použit vzorec \\(S = \\pi r\\) (obvod) místo \\(S = \\pi r^2\\) (obsah).`
-        },
-      ],
-      correctAnswer: "B", reward: { xp: 5 }
-    },
-    {
-      id: "q_plan_02", regionId: "planimetrie", type: "closed", monsterName: `FW_03B: Lichoběžník — poměr základen`,
+      id: "q_plan_02", regionId: "planimetrie", type: "closed", monsterName: `FW_03A: Lichoběžník — poměr základen`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_02"],
       question: `Rovnoramenný lichoběžník ABCD má obvod 68 cm, délku ramene 10 cm a výšku 6 cm. V jakém poměru (delší : kratší) jsou délky základen?`,
       formula: null,
@@ -8184,18 +7997,18 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(5:3\\)`,
           value: "D",
-          feedback: `Chyba syntaxe. Nesprávný výpočet přesahu. \\(p = \\sqrt{l^2 - v^2} = \\sqrt{100-36} = 8\\) cm.`
+          feedback: `Chyba syntaxe. Nesprávný výpočet přesahu. Zkontroluj dosazení do Pythagorovy věty: \\(p = \\sqrt{l^2 - v^2}\\).`
         },
       ],
       hints: [
         `V rovnoramenném lichoběžníku označme \\(p\\) délku, o kterou delší základna přesahuje kratší na každé straně. Rameno \\(l\\), výška \\(v\\) a \\(p\\) tvoří pravoúhlý trojúhelník — zjisti \\(p\\) z Pythagorovy věty.`,
-        `Z obvodu: \\(o = a + c + 2l\\), zjisti \\(a + c\\). Základny se liší o \\(a - c = 2p\\). Z těchto dvou rovnic odvoď \\(a\\) a \\(c\\), pak urči poměr.`,
+        `Ze znalosti přesahu a obvodu můžeš vyjádřit obě základny. Jak spolu souvisí \\(a\\), \\(c\\) a \\(p\\)?`,
         `Vzorce pro výpočet: \\(l^2 = v^2 + p^2\\) (Pythagorova věta) a \\(o = a + c + 2l\\) (obvod lichoběžníku).`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_plan_02", regionId: "planimetrie", type: "closed", monsterName: `SIM_03B: Přesah ramene lichoběžníku`,
+      id: "t_plan_02", regionId: "planimetrie", type: "closed", monsterName: `SIM_03A: Přesah ramene lichoběžníku`,
       isTraining: true, firewallId: "q_plan_02", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
       question: `Rovnoramenný lichoběžník má rameno délky 5 cm a výšku 4 cm. Jaký je přesah delší základny oproti kratší na každé straně (délka p)?`,
       formula: `$$p = \\sqrt{l^{2} - v^{2}}$$`,
@@ -8208,19 +8021,19 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Pythagorova věta`,
-          content: `\\(l^2 = v^2 + p^2 \\Rightarrow p = \\sqrt{l^2 - v^2} = \\sqrt{25 - 16} = \\sqrt{9}\\). Kolik je \\(\\sqrt{9}\\)?`
+          content: `Dosaď do Pythagorovy věty: \\(p = \\sqrt{l^2 - v^2} = \\sqrt{25 - 16}\\). Kolik je výsledek?`
         },
       ],
       choices: [
         {
           label: `\\(p = 4\\text{ cm}\\)`,
           value: "A",
-          feedback: `Chyba. 4 cm je výška, ne přesah. \\(p = \\sqrt{5^2-4^2} = \\sqrt{9} = 3\\) cm.`
+          feedback: `Chyba. 4 cm je výška, ne přesah. Přesah se počítá z Pythagorovy věty: \\(p = \\sqrt{l^2 - v^2}\\).`
         },
         {
           label: `\\(p = 6\\text{ cm}\\)`,
           value: "B",
-          feedback: `Kritická chyba. Záměna ve výpočtu. Pythagorova věta: \\(p = \\sqrt{l^2 - v^2} = \\sqrt{25-16} = \\sqrt{9}\\).`
+          feedback: `Kritická chyba. Záměna ve výpočtu. Zkontroluj dosazení do Pythagorovy věty: \\(p = \\sqrt{l^2 - v^2}\\).`
         },
         {
           label: `\\(p = 5\\text{ cm}\\)`,
@@ -8236,7 +8049,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       correctAnswer: "D", reward: { xp: 5 }
     },
     {
-      id: "q_plan_03", regionId: "planimetrie", type: "closed", monsterName: `FW_03C: Lichoběžníky — nezakrytá plocha`,
+      id: "q_plan_03", regionId: "planimetrie", type: "closed", monsterName: `FW_03B: Lichoběžníky — nezakrytá plocha`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 4, trainingTasks: ["t_plan_03"],
       question: `Část šrafovaného pravoúhlého lichoběžníku je překryta celým bílým pravoúhlým lichoběžníkem. Bílý lichoběžník má základny délky 2x a 3x a výšku 2x. Ve šrafovaném lichoběžníku jsou obě základny o polovinu delší než v bílém a výška je dvakrát větší. Jaký je obsah nezakryté části šrafovaného lichoběžníku?`,
       formula: null,
@@ -8265,32 +8078,28 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Spočítej obsah každého lichoběžníku zvlášť: \\(S = \\frac{a+c}{2} \\cdot v\\). Bílý má základny \\(2x\\) a \\(3x\\), výšku \\(2x\\). Jaké rozměry má šrafovaný?`,
-        `Šrafovaný lichoběžník má základny o polovinu delší a výšku dvakrát větší než bílý. Vypočítej oba obsahy a odečti.`,
+        `Vzorec pro obsah lichoběžníku: \\(S = \\frac{a+c}{2} \\cdot v\\). Jaké jsou rozměry šrafovaného lichoběžníku?`,
+        `Nezakrytá plocha = obsah šrafovaného − obsah bílého.`,
       ],
       correctAnswer: "D", reward: { xp: 20 }
     },
     {
-      id: "t_plan_03", regionId: "planimetrie", type: "closed", monsterName: `SIM_03C: Obsah lichoběžníku vzorec`,
+      id: "t_plan_03", regionId: "planimetrie", type: "closed", monsterName: `SIM_03B: Obsah lichoběžníku vzorec`,
       isTraining: true, firewallId: "q_plan_03", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
       question: `Lichoběžník má základny délky a = 4x a c = 6x a výšku h = 3x. Vyjádřete jeho obsah v závislosti na x.`,
       formula: `$$S = \\frac{a + c}{2} \\cdot h$$`,
       instruction: `Vyberte správný obsah lichoběžníku.`,
       steps: [
         {
-          trigger: `> Krok 1: Součet základen`,
-          content: `Součet základen: \\(a + c = 4x + 6x = 10x\\). Průměr základen: \\(\\frac{a+c}{2} = 5x\\).`
-        },
-        {
-          trigger: `> Krok 2: Dosazení do vzorce`,
-          content: `\\(S = \\frac{a+c}{2} \\cdot h = 5x \\cdot 3x\\). Vynásob a vyber správný výsledek ze seznamu.`
+          trigger: `> Krok 1: Vzorec pro obsah lichoběžníku?`,
+          content: `\\(S = \\frac{a + c}{2} \\cdot h\\).`
         },
       ],
       choices: [
         {
           label: `\\(15x^{2}\\)`,
           value: "A",
-          feedback: `Přístup povolen. \\(\\frac{4x+6x}{2} \\cdot 3x = 5x \\cdot 3x = 15x^2\\). Výborně!`
+          feedback: `Přístup povolen. \\(\\frac{4x+6x}{2} \\cdot 3x = 5x \\cdot 3x = 15x^2\\). Protokol ověřen.`
         },
         {
           label: `\\(12x^{2}\\)`,
@@ -8311,7 +8120,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_plan_04", regionId: "planimetrie", type: "closed", monsterName: `FW_03D: Pětiúhelník — obsah trojúhelníku ABE`,
+      id: "q_plan_04", regionId: "planimetrie", type: "closed", monsterName: `FW_03C: Pětiúhelník — obsah trojúhelníku ABE`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_04"],
       question: `Pětiúhelník ABCED je složen ze čtverce ABCD s obsahem 64 cm² a trojúhelníku CED s obsahem 20 cm². Bod E leží nad stranou CD. Jaký je obsah trojúhelníku ABE?`,
       formula: null,
@@ -8321,7 +8130,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(42\\text{ cm}^{2}\\)`,
           value: "A",
-          feedback: `Chyba. Výšku E nad CD počítáš z \\(S_{CED} = \\frac{1}{2} \\cdot |CD| \\cdot h_E\\), tedy \\(h_E = \\frac{2 \\cdot 20}{8} = 5\\) cm, ne 2,5 cm. Chybí ti násobení 2.`
+          feedback: `Chyba. Výšku E nad CD počítáš z \\(S_{CED} = \\frac{1}{2} \\cdot |CD| \\cdot h_E\\). Při vyjadřování \\(h_E\\) nesmíš zapomenout na násobení dvěma v čitateli.`
         },
         {
           label: `\\(52\\text{ cm}^{2}\\)`,
@@ -8340,14 +8149,14 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Strana čtverce: \\(a = \\sqrt{64} = 8\\) cm. Z obsahu trojúhelníku CED urči výšku \\(h_E\\) vrcholu E nad CD: \\(S_{CED} = \\frac{1}{2} \\cdot a \\cdot h_E\\).`,
-        `\\(h_E = \\frac{2 \\cdot S_{CED}}{a}\\). Výška trojúhelníku ABE nad AB \\(= a + h_E\\). Pak \\(S_{ABE} = \\frac{1}{2} \\cdot a \\cdot (a + h_E)\\).`,
+        `Jak zjistíš stranu čtverce z jeho obsahu? A jak z obsahu trojúhelníku CED zjistíš výšku bodu E nad stranou CD?`,
+        `Výška trojúhelníku ABE nad stranou AB se skládá ze strany čtverce a výšky bodu E nad CD.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
 
     {
-      id: "t_plan_04", regionId: "planimetrie", type: "closed", monsterName: `SIM_03D: Výška z obsahu trojúhelníku`,
+      id: "t_plan_04", regionId: "planimetrie", type: "closed", monsterName: `SIM_03C: Výška z obsahu trojúhelníku`,
       isTraining: true, firewallId: "q_plan_04", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
       question: `Trojúhelník má základnu délky 8 cm a obsah 20 cm². Jaká je výška na tuto základnu?`,
       formula: `$$h = \\frac{2S}{a}$$`,
@@ -8359,14 +8168,14 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Dosazení`,
-          content: `\\(h = \\frac{2 \\cdot 20}{8} = \\frac{40}{8}\\). Dokonči výpočet a vyber správnou odpověď. Tuto dovednost budeš potřebovat ve firewallu.`
+          content: `Dosaď do vzorce z Kroku 1: \\(h = \\frac{2 \\cdot 20}{8}\\). Kolik vyjde?`
         },
       ],
       choices: [
         {
           label: `\\(h = 2{,}5\\text{ cm}\\)`,
           value: "A",
-          feedback: `Chyba. \\(h = 20/8 = 2{,}5\\) — chybí násobení 2 v čitateli. Správný vzorec: \\(h = \\frac{2S}{a} = \\frac{40}{8} = 5\\) cm.`
+          feedback: `Chyba. \\(h = 20/8 = 2{,}5\\) — chybí násobení 2 v čitateli. Vzorec: \\(h = \\frac{2S}{a}\\). Dosaď znovu.`
         },
         {
           label: `\\(h = 5\\text{ cm}\\)`,
@@ -8376,19 +8185,19 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(h = 8\\text{ cm}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. 8 cm je délka základny, ne výška. Výška: \\(h = \\frac{2S}{a} = \\frac{40}{8} = 5\\) cm.`
+          feedback: `Chyba syntaxe. 8 cm je délka základny, ne výška. Výšku vyjádříš z \\(h = \\frac{2S}{a}\\).`
         },
         {
           label: `\\(h = 10\\text{ cm}\\)`,
           value: "D",
-          feedback: `Chyba. \\(h = 20/2 = 10\\) — vydělil jsi obsah 2, ale chybí ti jmenovatel (základna a). Správně: \\(h = \\frac{2S}{a} = \\frac{40}{8} = 5\\) cm.`
+          feedback: `Chyba. \\(h = 20/2 = 10\\) — vydělil jsi obsah dvěma, ale zapomněl jsi dělit ještě základnou. Vzorec: \\(h = \\frac{2S}{a}\\).`
         },
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
 
     {
-      id: "q_plan_05", regionId: "planimetrie", type: "closed", monsterName: `FW_03E: Lichoběžník — úhlopříčka`,
+      id: "q_plan_05", regionId: "planimetrie", type: "closed", monsterName: `FW_03D: Lichoběžník — úhlopříčka`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_05"],
       question: `Lichoběžník ABCD má obsah 32 cm², výšku v = 4 cm a kratší základnu CD = 6 cm. Úhlopříčka BD dělí lichoběžník na trojúhelníky ABD a BCD. O kolik cm² se liší jejich obsahy?`,
       formula: null,
@@ -8398,7 +8207,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(4\\text{ cm}^{2}\\)`,
           value: "A",
-          feedback: `Chyba. Nejdřív z obsahu lichoběžníku a výšky urči delší základnu AB. Pak spočítej obsahy obou trojúhelníků — každý má základnu a výšku 4 cm.`
+          feedback: `Chyba. Znáš obě základny a výšku? Zkontroluj, jestli jsi správně vyjádřil delší základnu ze vzorce pro obsah lichoběžníku.`
         },
         {
           label: `\\(16\\text{ cm}^{2}\\)`,
@@ -8417,13 +8226,13 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Z obsahu lichoběžníku \\(S = \\frac{a+c}{2} \\cdot v\\) vyjádři delší základnu \\(a\\). Pak každý trojúhelník (ABD a BCD) má tu samou výšku \\(v = 4\\) cm.`,
-        `Obsah trojúhelníku = \\(\\frac{1}{2} \\cdot z \\cdot v\\), kde z je jeho základna (AB nebo CD). Spočítej oba a odečti.`,
+        `Ze vzorce pro obsah lichoběžníku a známé výšky lze vyjádřit neznámou základnu.`,
+        `Úhlopříčka BD rozdělí lichoběžník na dva trojúhelníky se společnou výškou.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_plan_05", regionId: "planimetrie", type: "closed", monsterName: `SIM_03E: Strana z obsahu lichoběžníku`,
+      id: "t_plan_05", regionId: "planimetrie", type: "closed", monsterName: `SIM_03D: Strana z obsahu lichoběžníku`,
       isTraining: true, firewallId: "q_plan_05", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
       question: `Lichoběžník má obsah S = 32 cm², výšku v = 4 cm a kratší základnu c = 6 cm. Jaká je délka delší základny a?`,
       formula: `$$S = \\frac{a + c}{2} \\cdot v$$`,
@@ -8435,14 +8244,14 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Dosaď čísla`,
-          content: `\\(a = \\frac{2 \\cdot 32}{4} - 6 = 16 - 6\\). Dokonči výpočet a vyber odpověď — pak zvládneš i firewall.`
+          content: `Dosaď do vzorce z Kroku 1: \\(a = \\frac{2 \\cdot 32}{4} - 6\\). Kolik vyjde?`
         },
       ],
       choices: [
         {
           label: `\\(8\\text{ cm}\\)`,
           value: "A",
-          feedback: `Chyba. \\(S/v = 8\\) je průměr základen \\((a+c)/2\\), ne délka \\(a\\). Ještě zdvoj a odečti: \\(a = 2 \\cdot 8 - 6 = 10\\) cm.`
+          feedback: `Chyba. \\(S/v = 8\\) je průměr základen \\((a+c)/2\\), ne délka \\(a\\). Jak z průměru základen vyjádříš samotné \\(a\\)?`
         },
         {
           label: `\\(10\\text{ cm}\\)`,
@@ -8452,18 +8261,18 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(12\\text{ cm}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. \\(a+c = 16\\), ale \\(a = 16 - c = 16 - 6 = 10\\) cm, ne \\(16 - 4 = 12\\). Odečítáš výšku místo kratší základny.`
+          feedback: `Chyba syntaxe. Od součtu základen se odečítá kratší základna \\(c\\), ne výška. Zkontroluj, co odečítáš.`
         },
         {
           label: `\\(16\\text{ cm}\\)`,
           value: "D",
-          feedback: `Chyba. \\(2S/v = 16\\) je součet obou základen \\(a + c\\), ne samotné \\(a\\). Odečti kratší základnu: \\(16 - 6 = 10\\) cm.`
+          feedback: `Chyba. \\(2S/v\\) je součet obou základen \\(a + c\\), ne samotné \\(a\\). Jak z \\(a + c\\) vyjádříš \\(a\\)?`
         },
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_plan_06", regionId: "planimetrie", type: "closed", monsterName: `FW_03F: Dva čtverce — obsah trojúhelníku`,
+      id: "q_plan_06", regionId: "planimetrie", type: "closed", monsterName: `FW_03E: Dva čtverce — obsah trojúhelníku`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_06"],
       question: `Dva čtverce sdílejí společný vrchol T a vymezují trojúhelník ABT. Obsahy čtverců jsou 144 cm² a 196 cm². Úhel trojúhelníku ABT ve vrcholu T je pravý, přičemž A a B jsou vnější vrcholy čtverců. Jaký je obsah trojúhelníku ABT?`,
       formula: null,
@@ -8493,12 +8302,12 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
       hints: [
         `Obsah čtverce se rovná straně na druhou. Jaká je strana čtverce s obsahem 144 cm²? A čtverce s obsahem 196 cm²?`,
-        `Úhel v T je pravý — to jsou přesně dvě odvěsny pravouhlého trojúhelníku. Vzorec pro obsah: \\(S = \\frac{1}{2} \\cdot a \\cdot b\\).`,
+        `Pravý úhel v T znamená, že strany čtverců tvoří dvě odvěsny pravouhlého trojúhelníku.`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
     {
-      id: "t_plan_06", regionId: "planimetrie", type: "closed", monsterName: `SIM_03F: Pravouhlý trojúhelník — obsah`,
+      id: "t_plan_06", regionId: "planimetrie", type: "closed", monsterName: `SIM_03E: Pravouhlý trojúhelník — obsah`,
       isTraining: true, firewallId: "q_plan_06", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
       question: `Pravouhlý trojúhelník má odvěsny a = 12 cm a b = 14 cm. Jaký je obsah trojúhelníku?`,
       formula: `$$S = \\frac{1}{2} \\cdot a \\cdot b$$`,
@@ -8517,180 +8326,182 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(168\\text{ cm}^{2}\\)`,
           value: "A",
-          feedback: `Kritická chyba. \\(168 = 12 \\cdot 14\\) — chybí \\(\\frac{1}{2}\\). \\(S = \\frac{1}{2} \\cdot a \\cdot b = 84\\) cm².`
+          feedback: `Kritická chyba. \\(168 = 12 \\cdot 14\\) — chybí \\(\\frac{1}{2}\\) ve vzorci pro obsah trojúhelníku.`
         },
         {
           label: `\\(42\\text{ cm}^{2}\\)`,
           value: "B",
-          feedback: `Chyba. Pravděpodobně jsi vydělil 4 místo 2. \\(S = \\frac{1}{2} \\cdot 12 \\cdot 14 = 84\\) cm².`
+          feedback: `Chyba. Obsah trojúhelníku se dělí dvěma, ne čtyřmi. Dosaď znovu do \\(S = \\frac{1}{2} \\cdot a \\cdot b\\).`
         },
         {
           label: `\\(96\\text{ cm}^{2}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. \\(\\frac{1}{2} \\cdot 12 \\cdot 14 = 84\\), ne 96.`
+          feedback: `Chyba syntaxe. Zkontroluj násobení: \\(\\frac{1}{2} \\cdot 12 \\cdot 14\\). Výsledek není 96.`
         },
         {
           label: `\\(84\\text{ cm}^{2}\\)`,
           value: "D",
-          feedback: `Přístup povolen. \\(S = \\frac{1}{2} \\cdot 12 \\cdot 14 = 84\\) cm². Výborně!`
+          feedback: `Přístup povolen. \\(S = \\frac{1}{2} \\cdot 12 \\cdot 14 = 84\\) cm². Protokol ověřen.`
         },
       ],
       correctAnswer: "D", reward: { xp: 5 }
     },
     {
-      id: "q_plan_07", regionId: "planimetrie", type: "closed", monsterName: `FW_03G: Zlomený strom`,
+      id: "q_plan_07", regionId: "planimetrie", type: "closed", monsterName: `FW_03F: Složený pětiúhelník`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_07"],
-      question: `Vichřice zlomila strom vysoký 18 m. Vrchol dopadl na zem ve vzdálenosti 12 m od paty stromu. Zlomená část a kmen stojí svisle — tvoří pravouhlý trojúhelník. V jaké výšce h nad zemí se strom zlomil?`,
+      question: `Pětiúhelník KLMNO je složen z rovnoběžníku LMNO (\\(|LM| = |NO| = 22\\) cm, \\(|MN| = |OL| = 15\\) cm, \\(|\\sphericalangle LMN| = 115°\\)) a rovnoramenného trojúhelníku KLO se základnou KL, kde ramena \\(|OK| = |OL| = 15\\) cm. Platí \\(|\\sphericalangle KLM| = 130°\\). Jaký je obvod pětiúhelníku KLMNO? Výsledek zaokrouhlete na celé cm.`,
       formula: null,
-      diagram: `<svg viewBox="0 0 320 260" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <line x1="20" y1="235" x2="300" y2="235" stroke="#94a3b8" stroke-width="2"/> <line x1="60" y1="235" x2="60" y2="80" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/> <line x1="60" y1="80" x2="245" y2="235" stroke="#00b4d8" stroke-width="4" stroke-linecap="round"/> <line x1="60" y1="235" x2="245" y2="235" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,3"/> <polyline points="66,235 66,229 60,229" fill="none" stroke="#e2e8f0" stroke-width="1.5"/> <circle cx="60" cy="80" r="4" fill="#fbbf24"/> <text x="48" y="239" text-anchor="end" fill="#e2e8f0" font-size="13" font-weight="bold">P</text> <text x="249" y="239" fill="#e2e8f0" font-size="13" font-weight="bold">T</text> <text x="36" y="76" fill="#fbbf24" font-size="12">lom</text> <text x="36" y="162" fill="#fbbf24" font-size="12">h = ?</text> <text x="152" y="252" text-anchor="middle" fill="#94a3b8" font-size="11">12 m</text> <text x="160" y="20" text-anchor="middle" fill="#94a3b8" font-size="10">Strom byl vysoký 18 m, vrchol dopadl 12 m od paty</text></svg>`,
-      instruction: `Vyberte správnou výšku lomu h.`,
+      diagram: `<svg viewBox="0 0 380 200" style="width:100%;max-width:380px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <polygon points="17,73 90,160 288,160 345,38 147,38" fill="none" stroke="#00b4d8" stroke-width="2.5"/> <line x1="90" y1="160" x2="147" y2="38" stroke="#00b4d8" stroke-width="1.5" stroke-dasharray="6,4"/> <text x="4" y="70" fill="#e2e8f0" font-size="13" font-weight="bold">K</text> <text x="77" y="178" fill="#e2e8f0" font-size="13" font-weight="bold">L</text> <text x="290" y="178" fill="#e2e8f0" font-size="13" font-weight="bold">M</text> <text x="349" y="35" fill="#e2e8f0" font-size="13" font-weight="bold">N</text> <text x="136" y="28" fill="#e2e8f0" font-size="13" font-weight="bold">O</text> <text x="103" y="149" fill="#fbbf24" font-size="10">130°</text> <text x="252" y="149" fill="#fbbf24" font-size="10">115°</text> <text x="185" y="178" text-anchor="middle" fill="#94a3b8" font-size="10">22 cm</text> <text x="323" y="105" text-anchor="middle" fill="#94a3b8" font-size="10">15 cm</text> <text x="100" y="93" fill="#94a3b8" font-size="10">15 cm</text> </svg>`,
+      instruction: `Vyberte správný obvod pětiúhelníku.`,
       choices: [
         {
-          label: `\\(h = 9\\text{ m}\\)`,
+          label: `\\(80\\text{ cm}\\)`,
           value: "A",
-          feedback: `Chyba. \\(h = 9\\) by znamenalo \\(c = 18 - 9 = 9\\) m, ale \\(9^2 + 12^2 = 225 \\neq (18-9)^2 = 81\\). Pythagorova věta nesedí.`
+          feedback: `Chyba. Ve vzorci \\(KL = 2 \\cdot |OL| \\cdot \\sin(25°)\\) nesmíš zapomenout na faktor 2 — jinak dostaneš jen polovinu základny.`
         },
         {
-          label: `\\(h = 6\\text{ m}\\)`,
+          label: `\\(87\\text{ cm}\\)`,
           value: "B",
-          feedback: `Kritická chyba. \\(6^2 + 12^2 = 36 + 144 = 180\\), ale \\((18-6)^2 = 144\\). Nerovná se.`
+          feedback: `Přístup povolen. \\(KL = 2 \\cdot 15 \\cdot \\sin(25°) \\approx 12{,}7\\) cm; obvod \\(= 2 \\cdot 22 + 2 \\cdot 15 + 12{,}7 \\approx 87\\) cm.`
         },
         {
-          label: `\\(h = 13\\text{ m}\\)`,
+          label: `\\(89\\text{ cm}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. 13 m je délka zlomené části — přepona pravouhlého trojúhelníku. Hledáš výšku lomu h, což je kratší odvěsna (svislý kmen).`
+          feedback: `Chyba. Základna KL není rovna ramenu trojúhelníku — musíš ji dopočítat z úhlů, nestačí dosadit 15 cm.`
         },
         {
-          label: `\\(h = 5\\text{ m}\\)`,
+          label: `\\(90\\text{ cm}\\)`,
           value: "D",
-          feedback: `Přístup povolen. \\(h^2 + 12^2 = (18-h)^2 \\Rightarrow 324 - 36h = 144 \\Rightarrow h = 5\\) m. Ověření: \\(5^2 + 12^2 = 169 = 13^2\\) ✓`
+          feedback: `Chyba syntaxe. Půlíš úhel u vrcholu \\(\\angle KOL = 50°\\), ne úhel u základny \\(\\angle KLO = 65°\\). Správně: \\(\\sin(50°/2) = \\sin(25°)\\).`
         },
       ],
       hints: [
-        `Zlomená část stromu + kmen dohromady = 18 m. Označme výšku lomu \\(h\\) — pak délka zlomené části je \\(18 - h\\). Co tvoří strany pravouhlého trojúhelníku?`,
-        `Pythagorova věta: \\(h^2 + 12^2 = (18-h)^2\\). Uprav pravou stranu a vyřeš rovnici pro \\(h\\).`,
+        `Rovnoběžník má protější strany stejně dlouhé a vedlejší úhly se doplňují do 180°. Které strany pětiúhelníku jsou zároveň stranami rovnoběžníku?`,
+        `Úhel \\(\\angle KLM\\) je složen ze dvou dílčích úhlů. Jeden z nich leží v rovnoběžníku — a vedlejší úhly v rovnoběžníku se doplňují do 180°.`,
       ],
-      correctAnswer: "D", reward: { xp: 15 }
+      correctAnswer: "B", reward: { xp: 15 }
     },
     {
-      id: "t_plan_07", regionId: "planimetrie", type: "closed", monsterName: `SIM_03G: Pythagorova věta — přepona`,
-      isTraining: true, firewallId: "q_plan_07", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
-      question: `Pravouhlý trojúhelník má odvěsny délky 5 m a 12 m. Jaká je délka přepony?`,
-      formula: `$$c = \\sqrt{a^{2} + b^{2}}$$`,
-      instruction: `Vyberte správnou délku přepony.`,
+      id: "t_plan_07", regionId: "planimetrie", type: "closed", monsterName: `SIM_03F: Základna rovnoramenného trojúhelníku`,
+      isTraining: true, firewallId: "q_plan_07", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0, showDiagramImmediately: true,
+      question: `Rovnoramenný trojúhelník PQR má ramena \\(|PQ| = |PR| = 10\\) cm a úhel u vrcholu \\(|\\sphericalangle QPR| = 80°\\). Jaká je délka základny \\(|QR|\\)? Výsledek zaokrouhli na celé cm.`,
+      formula: null,
+      diagram: `<svg viewBox="0 0 290 165" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><polygon points="145,22 68,122 222,122" fill="#1e3a5f" fill-opacity="0.35" stroke="#00b4d8" stroke-width="2"/><line x1="145" y1="22" x2="145" y2="122" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,3"/><path d="M 126,49 A 30,30 0 0,1 164,49" fill="none" stroke="#fbbf24" stroke-width="1.5"/><text x="145" y="63" text-anchor="middle" fill="#fbbf24" font-size="10">80°</text><text x="138" y="18" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">P</text><text x="55" y="138" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">Q</text><text x="235" y="138" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">R</text><text x="97" y="73" text-anchor="middle" fill="#94a3b8" font-size="11">10 cm</text><text x="193" y="73" text-anchor="middle" fill="#94a3b8" font-size="11">10 cm</text><text x="145" y="150" text-anchor="middle" fill="#fbbf24" font-size="11">|QR| = ?</text></svg>`,
+      instruction: `Vyberte správnou délku základny.`,
       steps: [
         {
-          trigger: `> Krok 1: Pythagorova věta`,
-          content: `\\(c^2 = a^2 + b^2 = 5^2 + 12^2 = 25 + 144 = 169\\).`
+          trigger: `> Krok 1: Výška na základnu`,
+          content: `Spusť výšku z vrcholu P na základnu QR. Rozdělí trojúhelník na dva shodné pravoúhlé trojúhelníky a zároveň rozpůlí úhel u vrcholu. Jaký je poloviční úhel?`
         },
         {
-          trigger: `> Krok 2: Odmocnina`,
-          content: `\\(c = \\sqrt{169}\\). Vypočítej odmocninu — je to celé číslo. (Tip: jde o klasickou pythagorejskou trojici.)`
+          trigger: `> Krok 2: Polovina základny`,
+          content: `Polovina základny \\(= |PQ| \\cdot \\sin(40°) = 10 \\cdot 0{,}643 \\approx ?\\) cm. Celá základna \\(|QR| = 2 \\cdot ?\\) Zaokrouhli na celé cm.`
         },
       ],
       choices: [
         {
-          label: `\\(c = 13\\text{ m}\\)`,
+          label: `\\(|QR| = 13\\text{ cm}\\)`,
           value: "A",
-          feedback: `Logika potvrzena. \\(c = \\sqrt{25 + 144} = \\sqrt{169} = 13\\) m. Pokračuj k firewallu!`
+          feedback: `Logika potvrzena. \\(|QR| = 2 \\cdot 10 \\cdot \\sin(40°) \\approx 12{,}9 \\doteq 13\\) cm. Firewall odemčen.`
         },
         {
-          label: `\\(c = 17\\text{ m}\\)`,
+          label: `\\(|QR| = 10\\text{ cm}\\)`,
           value: "B",
-          feedback: `Kritická chyba. \\(5 + 12 = 17\\) — přeponu nelze spočítat sečtením odvěsen. Musíš odmocnit součet čtverců.`
+          feedback: `Chyba. Základna rovnoramenného trojúhelníku se nerovná rameni — záleží na úhlu u vrcholu. Spusť výšku a dopočítej.`
         },
         {
-          label: `\\(c = 7\\text{ m}\\)`,
+          label: `\\(|QR| = 15\\text{ cm}\\)`,
           value: "C",
-          feedback: `Chyba. \\(12 - 5 = 7\\) — Pythagorova věta sčítá čtverce, nesčítá ani neodčítá délky přímo.`
+          feedback: `Chyba syntaxe. Použil jsi \\(\\sin(50°)\\) místo \\(\\sin(40°)\\) — výška půlí úhel u vrcholu (80° → 40°), ne úhel u základny.`
         },
         {
-          label: `\\(c = \\sqrt{119}\\text{ m}\\)`,
+          label: `\\(|QR| = 6\\text{ cm}\\)`,
           value: "D",
-          feedback: `Chyba syntaxe. \\(\\sqrt{144-25} = \\sqrt{119}\\) — to je odčítání místo sčítání. \\(c^2 = a^2 + b^2 = 169\\).`
+          feedback: `Kritická chyba. Spočítal jsi pouze polovinu základny (\\(\\approx 6{,}4\\) cm). Výsledek ještě zdvoj — výška rozdělí základnu na dvě stejné části.`
         },
       ],
       correctAnswer: "A", reward: { xp: 5 }
     },
     {
-      id: "q_plan_08", regionId: "planimetrie", type: "closed", monsterName: `FW_03H: Kosinova věta — úhel trojúhelníku`,
+      id: "q_plan_08", regionId: "planimetrie", type: "closed", monsterName: `FW_03G: Čtverec a dva půlkruhy — obsah`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_08"],
-      question: `Rovnoramenný trojúhelník ABC má ramena CA = CB = 4 cm a základnu AB = 4\\(\\sqrt{3}\\) cm. Jaká je velikost vnitřního úhlu \\(\\gamma = \\angle ACB\\)?`,
+      question: `Čtverec o straně 6 cm má na dvou protilehlých stranách sestrojeny půlkruhy o poloměru 3 cm směrem dovnitř čtverce. Oba půlkruhy se dotýkají ve středu čtverce. Jaký je obsah šedé oblasti (část čtverce mimo oba půlkruhy)?`,
       formula: null,
-      diagram: `<svg viewBox="0 0 320 260" style="width:100%;max-width:320px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"> <polygon points="39,225 281,225 160,155" fill="#1e3a5f" fill-opacity="0.35" stroke="#00b4d8" stroke-width="2.5"/> <path d="M 176,164 A 18,18 0 0 1 144,164" fill="none" stroke="#fbbf24" stroke-width="1.5"/> <text x="25" y="240" fill="#e2e8f0" font-size="13" font-weight="bold">A</text> <text x="284" y="240" fill="#e2e8f0" font-size="13" font-weight="bold">B</text> <text x="153" y="148" fill="#e2e8f0" font-size="13" font-weight="bold">C</text> <text x="80" y="183" fill="#94a3b8" font-size="11">CA = 4 cm</text> <text x="210" y="183" fill="#94a3b8" font-size="11">CB = 4 cm</text> <text x="160" y="245" text-anchor="middle" fill="#94a3b8" font-size="11">AB = 4\\(\\sqrt{3}\\) cm</text> <text x="160" y="181" text-anchor="middle" fill="#fbbf24" font-size="11">\\(\\gamma\\) = ?</text> <text x="160" y="14" text-anchor="middle" fill="#94a3b8" font-size="10">Rovnoramenný trojúhelník — kosinova věta</text></svg>`,
-      instruction: `Vyberte správnou velikost úhlu γ.`,
+      diagram: `<svg viewBox="0 0 290 255" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><path fill-rule="evenodd" fill="#1e4a80" d="M 55,25 L 235,25 L 235,205 L 55,205 Z M 55,25 A 90,90 0 0,0 235,25 Z M 55,205 A 90,90 0 0,1 235,205 Z"/><rect x="55" y="25" width="180" height="180" fill="none" stroke="#00b4d8" stroke-width="2"/><path d="M 55,25 A 90,90 0 0,0 235,25" fill="none" stroke="#00b4d8" stroke-width="2"/><path d="M 55,205 A 90,90 0 0,1 235,205" fill="none" stroke="#00b4d8" stroke-width="2"/><text x="145" y="220" text-anchor="middle" fill="#94a3b8" font-size="11">6 cm</text><text x="249" y="120" fill="#94a3b8" font-size="11">6 cm</text><line x1="145" y1="25" x2="145" y2="115" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4,3"/><text x="152" y="78" fill="#fbbf24" font-size="10">r = 3 cm</text><line x1="145" y1="205" x2="145" y2="115" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4,3"/><text x="152" y="168" fill="#fbbf24" font-size="10">r = 3 cm</text><circle cx="145" cy="115" r="3" fill="#fbbf24"/><text x="145" y="247" text-anchor="middle" fill="#94a3b8" font-size="9">Čtverec + dva protilehlé půlkruhy</text></svg>`,
+      instruction: `Vyberte správný obsah šedé oblasti.`,
       choices: [
         {
-          label: `\\(60°\\)`,
+          label: `\\((36 - 9\\pi)\\) cm²`,
           value: "A",
-          feedback: `Chyba. \\(\\cos(60°) = \\frac{1}{2} > 0\\), ale výpočet dává záporný cosinus: \\(\\cos(\\gamma) = \\frac{16+16-48}{32} = \\frac{-16}{32} = -\\frac{1}{2}\\). Záporný cosinus → tupý úhel.`
+          feedback: `Přístup povolen. \\(S = 36 - 2 \\cdot \\frac{1}{2}\\pi \\cdot 9 = 36 - 9\\pi \\approx 7{,}7\\) cm². Protokol ověřen.`
         },
         {
-          label: `\\(90°\\)`,
+          label: `\\(9\\pi\\) cm²`,
           value: "B",
-          feedback: `Chyba. Pravý úhel by nastal, kdyby \\(CA^2 + CB^2 = AB^2\\), tedy \\(16+16 = AB^2\\), čili \\(AB = 4\\sqrt{2} \\approx 5{,}7\\) cm. Ale \\(AB = 4\\sqrt{3} \\approx 6{,}9\\) cm — to je delší, úhel je tupý.`
+          feedback: `Kritická chyba. \\(9\\pi\\) je obsah obou půlkruhů — šedá oblast je to, co ve čtverci ZBYDE po jejich odebrání: \\(36 - 9\\pi\\).`
         },
         {
-          label: `\\(100°\\)`,
+          label: `\\(\\left(36 - \\dfrac{9}{2}\\pi\\right)\\) cm²`,
           value: "C",
-          feedback: `Chyba syntaxe. Zkontroluj dosazení: \\(\\cos(\\gamma) = \\frac{4^2 + 4^2 - (4\\sqrt{3})^2}{2 \\cdot 4 \\cdot 4} = \\frac{16+16-48}{32} = -\\frac{1}{2}\\). Kolik je \\(\\arccos(-\\tfrac{1}{2})\\)?`
+          feedback: `Nekompletní. Odečetl jsi jen jeden půlkruh \\(\\left(\\frac{9}{2}\\pi\\right)\\), ale v obrázku jsou dva. Obsah obou: \\(2 \\cdot \\frac{1}{2}\\pi \\cdot 9 = 9\\pi\\).`
         },
         {
-          label: `\\(120°\\)`,
+          label: `\\(27\\) cm²`,
           value: "D",
-          feedback: `Přístup povolen. \\(\\cos(\\gamma) = \\frac{16+16-48}{32} = -\\frac{1}{2}\\) \\(\\Rightarrow\\) \\(\\gamma = 120°\\). Protokol ověřen.`
+          feedback: `Chyba syntaxe. \\(36 - 9 = 27\\) ignoruje \\(\\pi\\). Obsah půlkruhu je \\(\\frac{1}{2}\\pi r^2 = \\frac{9\\pi}{2}\\), ne \\(r^2 = 9\\).`
         },
       ],
       hints: [
-        `Kosinova věta: \\(c^2 = a^2 + b^2 - 2ab\\cos(\\gamma)\\), kde \\(c = AB\\), \\(a = BC = 4\\), \\(b = CA = 4\\). Vyjádři \\(\\cos(\\gamma)\\) a dosaď čísla.`,
-        `\\(\\cos(\\gamma) = \\frac{|CA|^2 + |CB|^2 - |AB|^2}{2 \\cdot |CA| \\cdot |CB|} = \\frac{16 + 16 - 48}{32}\\). Výsledek je záporný — jaký tupý úhel má tento cosinus?`,
+        `Obsah půlkruhu: \\(\\frac{1}{2}\\pi r^2\\). Kolik půlkruhů vidíš na obrázku?`,
+        `Šedá oblast = obsah čtverce − obsah všech půlkruhů uvnitř.`,
       ],
-      correctAnswer: "D", reward: { xp: 15 }
+      correctAnswer: "A", reward: { xp: 15 }
     },
 
     {
-      id: "t_plan_08", regionId: "planimetrie", type: "closed", monsterName: `SIM_03H: Kosinova věta — výpočet úhlu`,
-      isTraining: true, firewallId: "q_plan_08", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
-      question: `V trojúhelníku ABC jsou délky stran \\(|BC| = 3\\) cm, \\(|CA| = 4\\) cm, \\(|AB| = 5\\) cm. Jaký je vnitřní úhel \\(\\gamma = \\angle ACB\\)?`,
-      formula: `$$\\cos(\\gamma) = \\frac{|BC|^{2} + |CA|^{2} - |AB|^{2}}{2 \\cdot |BC| \\cdot |CA|}$$`,
-      instruction: `Vyberte správnou velikost úhlu γ.`,
+      id: "t_plan_08", regionId: "planimetrie", type: "closed", monsterName: `SIM_03G: Čtverec a půlkruh — obsah`,
+      isTraining: true, firewallId: "q_plan_08", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0, showDiagramImmediately: true,
+      question: `Čtverec o straně 4 cm. Na jedné straně je sestrojen půlkruh o poloměru 2 cm směrem dovnitř čtverce. Vypočtěte obsah oblasti čtverce mimo půlkruh.`,
+      formula: null,
+      diagram: `<svg viewBox="0 0 260 220" style="width:100%;max-width:280px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><path fill-rule="evenodd" fill="#1e4a80" d="M 50,30 L 210,30 L 210,190 L 50,190 Z M 50,30 A 80,80 0 0,0 210,30 Z"/><rect x="50" y="30" width="160" height="160" fill="none" stroke="#00b4d8" stroke-width="2"/><path d="M 50,30 A 80,80 0 0,0 210,30" fill="none" stroke="#00b4d8" stroke-width="2"/><line x1="130" y1="30" x2="130" y2="110" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4,3"/><circle cx="130" cy="30" r="2.5" fill="#fbbf24"/><text x="138" y="75" fill="#fbbf24" font-size="11">r = 2 cm</text><text x="130" y="210" text-anchor="middle" fill="#94a3b8" font-size="11">4 cm</text><text x="228" y="113" fill="#94a3b8" font-size="11">4 cm</text><text x="130" y="158" text-anchor="middle" fill="#fbbf24" font-size="12">S = ?</text></svg>`,
+      instruction: `Vyberte správný obsah šedé oblasti.`,
       steps: [
         {
-          trigger: `> Krok 1: Dosaď do kosinovy věty`,
-          content: `\\(\\cos(\\gamma) = \\frac{3^2 + 4^2 - 5^2}{2 \\cdot 3 \\cdot 4} = \\frac{9 + 16 - 25}{24}\\). Kolik je čitatel?`
+          trigger: `> Krok 1: Jaký je obsah půlkruhu?`,
+          content: `Průměr půlkruhu je roven straně čtverce. Urči poloměr a dosaď do vzorce \\(\\frac{1}{2}\\pi r^2\\).`
         },
         {
-          trigger: `> Krok 2: Určení úhlu`,
-          content: `Čitatel: \\(9 + 16 - 25 = 0\\), tedy \\(\\cos(\\gamma) = 0\\). Jaký úhel má nulový cosinus?`
+          trigger: `> Krok 2: Co odečteš od čtverce?`,
+          content: `Šedá oblast = obsah čtverce minus obsah půlkruhu.`
         },
       ],
       choices: [
         {
-          label: `\\(30°\\)`,
+          label: `\\((16 - 2\\pi)\\) cm²`,
           value: "A",
-          feedback: `Chyba. \\(\\cos(30°) = \\frac{\\sqrt{3}}{2} \\approx 0{,}87 \\neq 0\\). Dosazení: \\(\\frac{9+16-25}{24} = \\frac{0}{24} = 0\\) \\(\\Rightarrow\\) \\(\\gamma = 90°\\).`
+          feedback: `Logika potvrzena. \\(16 - 2\\pi \\approx 9{,}7\\) cm². Teď zkus firewall — tam jsou dva půlkruhy.`
         },
         {
-          label: `\\(60°\\)`,
+          label: `\\((16 - 4\\pi)\\) cm²`,
           value: "B",
-          feedback: `Chyba. \\(\\cos(60°) = \\frac{1}{2} \\neq 0\\). Výsledek dosazení je přesně 0, tedy \\(\\gamma = 90°\\).`
+          feedback: `Chyba. \\(4\\pi\\) je obsah celého kruhu. Máme jen PŮLkruh — obsah je \\(\\frac{1}{2}\\pi r^2 = 2\\pi\\).`
         },
         {
-          label: `\\(90°\\)`,
+          label: `\\(2\\pi\\) cm²`,
           value: "C",
-          feedback: `Logika potvrzena. \\(\\cos(\\gamma) = \\frac{9+16-25}{24} = \\frac{0}{24} = 0\\) \\(\\Rightarrow\\) \\(\\gamma = 90°\\). Jde o pythagorejskou trojici 3-4-5! Teď zkus firewall s rovnoramenným trojúhelníkem.`
+          feedback: `Přehozen výstup. \\(2\\pi\\) je obsah půlkruhu — šedá oblast je to, co po něm ve čtverci zbyde: \\(16 - 2\\pi\\).`
         },
         {
-          label: `\\(120°\\)`,
+          label: `\\(12\\) cm²`,
           value: "D",
-          feedback: `Chyba. \\(\\cos(120°) = -\\frac{1}{2} \\neq 0\\). Záporný výsledek by nastal, kdyby \\(c^2 > a^2 + b^2\\) — tady vychází přesně 0.`
+          feedback: `Chyba syntaxe. \\(16 - 4 = 12\\) ignoruje \\(\\pi\\). Obsah půlkruhu je \\(\\frac{1}{2}\\pi r^2 = 2\\pi \\approx 6{,}3\\), ne \\(r^2 = 4\\).`
         },
       ],
-      correctAnswer: "C", reward: { xp: 5 }
+      correctAnswer: "A", reward: { xp: 5 }
     },
 
     {
-      id: "q_plan_09", regionId: "planimetrie", type: "closed", monsterName: `FW_03I: Čtverec dělen na lichoběžníky`,
+      id: "q_plan_09", regionId: "planimetrie", type: "closed", monsterName: `FW_03H: Čtverec dělen na lichoběžníky`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 3, trainingTasks: ["t_plan_09"],
       question: `Čtverec ABCD o straně 12 cm je úsečkou XY rozdělen na dva lichoběžníky — modrý AXYD a fialový XBCY. Bod X leží na straně AB tak, že |AX| : |XB| = 2 : 1. Bod Y leží na straně DC tak, že |DY| : |YC| = 1 : 3. V jakém poměru jsou délky základen lichoběžníku AXYD?`,
       formula: null,
@@ -8715,36 +8526,37 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(3:1\\)`,
           value: "D",
-          feedback: `Chyba syntaxe. To je poměr |DY|:|YC| = 1:3 převrácený. Počítej délky: AX = 8, DY = 3.`
+          feedback: `Chyba syntaxe. To je poměr |DY|:|YC| = 1:3 převrácený. Spočítej délky AX a DY z daných poměrů a strany 12 cm.`
         },
       ],
       hints: [
-        `Délka úsečky AX: poměr |AX|:|XB| = 2:1 → AX tvoří \\(\\frac{2}{3}\\) strany AB = 12 cm. Podobně spočítej |DY| z poměru |DY|:|YC| = 1:3.`,
+        `Poměr \\(|AX| : |XB| = 2:1\\) říká, kolik dílů z celkové strany AB připadá na úsečku AX. Stejně postupuj pro DY.`,
         `Základny lichoběžníku AXYD jsou úsečky AX a DY. Vyjádři jejich délky a urči poměr \\(|AX|:|DY|\\).`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_plan_09", regionId: "planimetrie", type: "closed", monsterName: `SIM_03I: Dělení úsečky v poměru`,
-      isTraining: true, firewallId: "q_plan_09", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
+      id: "t_plan_09", regionId: "planimetrie", type: "closed", monsterName: `SIM_03H: Dělení úsečky v poměru`,
+      isTraining: true, firewallId: "q_plan_09", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0, showDiagramImmediately: true,
       question: `Bod X dělí úsečku AB délky 18 cm v poměru |AX| : |XB| = 2 : 1. Jaká je délka |AX|?`,
-      formula: `$$|AX| = |AB| \\cdot \\frac{2}{2 + 1}$$`,
+      formula: null,
+      diagram: `<svg viewBox="0 0 290 100" style="width:100%;max-width:300px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><line x1="30" y1="50" x2="260" y2="50" stroke="#00b4d8" stroke-width="2.5"/><circle cx="30" cy="50" r="4" fill="#00b4d8"/><circle cx="183" cy="50" r="4" fill="#fbbf24"/><circle cx="260" cy="50" r="4" fill="#00b4d8"/><text x="27" y="74" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">A</text><text x="183" y="74" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="bold">X</text><text x="263" y="74" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="bold">B</text><text x="106" y="38" text-anchor="middle" fill="#94a3b8" font-size="11">2 díly (= |AX|?)</text><text x="221" y="38" text-anchor="middle" fill="#94a3b8" font-size="11">1 díl</text><line x1="30" y1="32" x2="183" y2="32" stroke="#94a3b8" stroke-width="1" marker-end="url(#arr)"/><line x1="183" y1="32" x2="260" y2="32" stroke="#94a3b8" stroke-width="1"/><text x="145" y="93" text-anchor="middle" fill="#94a3b8" font-size="10">|AB| = 18 cm, poměr 2:1</text></svg>`,
       instruction: `Vyberte správnou délku AX.`,
       steps: [
         {
           trigger: `> Krok 1: Kolik dílů celkem?`,
-          content: `Poměr 2:1 znamená, že AB je rozdělena na \\(2+1 = 3\\) díly. Každý díl má délku \\(18/3 = 6\\) cm.`
+          content: `Poměr 2:1 znamená \\(2+1 = 3\\) díly celkem. Jaká je délka jednoho dílu?`
         },
         {
           trigger: `> Krok 2: Délka AX`,
-          content: `AX zabírá 2 díly ze 3: \\(|AX| = 2 \\cdot 6\\). Vyber správný výsledek ze seznamu.`
+          content: `AX zabírá 2 díly. Jaká je délka \\(|AX|\\)?`
         },
       ],
       choices: [
         {
           label: `\\(|AX| = 9\\text{ cm}\\)`,
           value: "A",
-          feedback: `Chyba. 9 cm by byl střed AB (poměr 1:1). Poměr 2:1 dává \\(|AX| = \\frac{2}{3} \\cdot 18 = 12\\) cm.`
+          feedback: `Chyba. 9 cm by platilo pro poměr 1:1 (střed). Poměr 2:1 znamená, že AX zabírá dvě třetiny celé úsečky.`
         },
         {
           label: `\\(|AX| = 12\\text{ cm}\\)`,
@@ -8754,18 +8566,18 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(|AX| = 6\\text{ cm}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. 6 cm je délka jednoho dílu, ale AX = 2 díly = 12 cm.`
+          feedback: `Chyba syntaxe. 6 cm je délka jednoho dílu, ale AX zabírá dva díly. Kolik je \\(2 \\cdot 6\\)?`
         },
         {
           label: `\\(|AX| = 3\\text{ cm}\\)`,
           value: "D",
-          feedback: `Kritická chyba. 3 cm je délka třetiny AB/6 = 3... nesprávný výpočet. |AX| = 12 cm.`
+          feedback: `Kritická chyba. Špatný výpočet délky dílu. Celá úsečka AB = 18 cm se dělí na 3 díly — kolik měří jeden díl?`
         },
       ],
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_plan_10", regionId: "planimetrie", type: "closed", monsterName: `FW_03J: Sinová věta — délka strany`,
+      id: "q_plan_10", regionId: "planimetrie", type: "closed", monsterName: `FW_03I: Sinová věta — délka strany`,
       visual_color: "#00b4d8", visual_symbol: `△`, points: 4, trainingTasks: ["t_plan_10"],
       question: `V trojúhelníku ABC platí \\(|BC| = 4\\sqrt{2}\\) cm, \\(|\\angle BAC| = 45°\\), \\(|\\angle ACB| = 30°\\). Jaká je délka strany \\(|AB|\\)?`,
       formula: null,
@@ -8795,13 +8607,13 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
       hints: [
         `Sinová věta: \\(\\frac{|AB|}{\\sin(\\angle ACB)} = \\frac{|BC|}{\\sin(\\angle BAC)}\\). Jakou hodnotu mají \\(\\sin(45°)\\) a \\(\\sin(30°)\\)?`,
-        `\\(\\sin(45°) = \\frac{\\sqrt{2}}{2}\\), \\(\\sin(30°) = \\frac{1}{2}\\). Dosaď: \\(|AB| = |BC| \\cdot \\frac{\\sin(\\angle ACB)}{\\sin(\\angle BAC)}\\).`,
+        `Zjisti hodnoty \\(\\sin(45°)\\) a \\(\\sin(30°)\\) a dosaď do sinové věty.`,
       ],
       correctAnswer: "B", reward: { xp: 20 }
     },
 
     {
-      id: "t_plan_10", regionId: "planimetrie", type: "closed", monsterName: `SIM_03J: Sinová věta — základní použití`,
+      id: "t_plan_10", regionId: "planimetrie", type: "closed", monsterName: `SIM_03I: Sinová věta — základní použití`,
       isTraining: true, firewallId: "q_plan_10", visual_color: "#2ecc8a", visual_symbol: `△`, points: 0,
       question: `V trojúhelníku ABC platí \\(|BC| = 5\\) cm, \\(|\\angle BAC| = 30°\\), \\(|\\angle ACB| = 90°\\). Jaká je délka strany \\(|AB|\\)?`,
       formula: `$$\\frac{|AB|}{\\sin(\\angle ACB)} = \\frac{|BC|}{\\sin(\\angle BAC)}$$`,
@@ -8813,24 +8625,24 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Výpočet`,
-          content: `\\(\\frac{|AB|}{\\sin(90°)} = \\frac{5}{\\sin(30°)}\\). Protože \\(\\sin(90°) = 1\\) a \\(\\sin(30°) = \\frac{1}{2}\\): \\(|AB| = \\frac{5}{\\frac{1}{2}}\\). Dokonči výpočet.`
+          content: `Ze sinové věty plyne \\(\\frac{|AB|}{\\sin 90°} = \\frac{5}{\\sin 30°}\\). Dosaď hodnoty sinů a vyřeš pro \\(|AB|\\).`
         },
       ],
       choices: [
         {
           label: `\\(|AB| = 2{,}5\\text{ cm}\\)`,
           value: "A",
-          feedback: `Chyba. \\(2{,}5 = 5 \\cdot \\sin(30°)\\) — to je \\(|AB|\\) roznásobené místo vydělené. Sinová věta: \\(|AB| = |BC| \\cdot \\frac{\\sin(\\angle ACB)}{\\sin(\\angle BAC)} = 5 \\cdot \\frac{1}{1/2} = 10\\) cm.`
+          feedback: `Chyba. \\(2{,}5 = 5 \\cdot \\sin(30°)\\) — násobíš sinusem místo dělení. V sinové větě stranu dělíš sinusem protilehlého úhlu, ne násobíš.`
         },
         {
           label: `\\(|AB| = 5\\text{ cm}\\)`,
           value: "B",
-          feedback: `Chyba syntaxe. 5 cm je délka BC. Sinová věta: \\(\\frac{|AB|}{\\sin(90°)} = \\frac{5}{\\sin(30°)} = 10\\), tedy \\(|AB| = 10\\) cm.`
+          feedback: `Chyba syntaxe. 5 cm je délka BC, ne AB. Strany naproti různým úhlům mají různé délky — dosaď do sinové věty.`
         },
         {
           label: `\\(|AB| = 5\\sqrt{3}\\text{ cm}\\)`,
           value: "C",
-          feedback: `Chyba. \\(5\\sqrt{3}\\) by nastalo, kdybys záměnil strany — dosaď správně: strana AB je naproti úhlu 90°, strana BC naproti 30°. \\(|AB| = 5 / \\sin(30°) = 10\\) cm.`
+          feedback: `Chyba. \\(5\\sqrt{3}\\) by nastalo při záměně stran. Zkontroluj: která strana leží naproti kterému úhlu? AB je naproti úhlu ACB.`
         },
         {
           label: `\\(|AB| = 10\\text{ cm}\\)`,
@@ -8862,12 +8674,12 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(r = 4\\text{ dm}\\)`,
           value: "B",
-          feedback: `Chyba. Záměna vztahu - vyjdi z rovnice \\(\\frac{4}{3}\\pi r^3 = 12\\pi r^2\\).`
+          feedback: `Chyba. Při krácení rovnice jsi pravděpodobně ztratil faktor — zkontroluj, co zůstane po vydělení \\(\\pi r^2\\).`
         },
         {
           label: `\\(r = 6\\text{ dm}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. Bez vytknutí \\(\\pi r^2\\) dostaneš špatnou rovnici.`
+          feedback: `Chyba syntaxe. Rovnici je potřeba zjednodušit — hledej společný faktor na obou stranách.`
         },
         {
           label: `\\(r = 12\\text{ dm}\\)`,
@@ -8876,8 +8688,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `\\(\\frac{4}{3}\\pi r^3 = 12 \\cdot \\pi r^2\\) — vydělíme obě strany \\(\\pi r^2\\) (\\(r \\neq 0\\)). Co zbyde?`,
-        `Po krácení \\(\\pi r^2\\) dostaneme \\(\\frac{4}{3}r = 12\\). Vynásob obě strany \\(\\frac{3}{4}\\).`,
+        `Jaký je vzorec pro objem koule a jaký pro obsah kruhu? Sestav z nich rovnici.`,
+        `Obě strany rovnice obsahují \\(\\pi r^2\\). Co se stane, když tím vydělíš?`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
@@ -8890,7 +8702,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       steps: [
         {
           trigger: `> Krok 1: Sestav rovnici`,
-          content: `Objem: \\(V = \\frac{4}{3}\\pi r^3\\). Průřez středem je kruh s poloměrem \\(r\\): \\(S = \\pi r^2\\). Podmínka \\(V = 4S\\) dává rovnici \\(\\frac{4}{3}\\pi r^3 = 4\\pi r^2\\).`
+          content: `Objem koule: \\(V = \\frac{4}{3}\\pi r^3\\). Průřez středem je kruh: \\(S = \\pi r^2\\). Sestav rovnici z podmínky \\(V = 4S\\).`
         },
         {
           trigger: `> Krok 2: Vyřeš r`,
@@ -8906,7 +8718,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(r = 2\\text{ cm}\\)`,
           value: "B",
-          feedback: `Chyba. \\(\\frac{4}{3}\\cdot2 = \\frac{8}{3} \\neq 4\\). Vyřeš \\(\\frac{4}{3}r = 4\\) přesně.`
+          feedback: `Chyba. \\(\\frac{4}{3}\\cdot2 = \\frac{8}{3} \\neq 4\\). Zkus dosazení znovu — jaké \\(r\\) splní podmínku?`
         },
         {
           label: `\\(r = 3\\text{ cm}\\)`,
@@ -8922,79 +8734,81 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_ster_02", regionId: "stereometrie", type: "closed", monsterName: `FW_04B: Dva válce z téhož pláště`,
+      id: "q_ster_02", regionId: "stereometrie", type: "closed", monsterName: `FW_04B: Válec vepsaný do krychle — povrch`,
       visual_color: "#a78bfa", visual_symbol: `●`, points: 3, trainingTasks: ["t_ster_02"],
-      question: `Tentýž obdélník slouží jako rozvinutý plášť dvou různých rotačních válců. Délky sousedních stran obdélníku jsou v poměru 3 : 2. Výška prvního válce odpovídá delší straně obdélníku, výška druhého válce kratší straně. V jakém poměru jsou objemy V₁ : V₂?`,
+      question: `Do krychle je vložen válec. Válec se dotýká každé stěny krychle. Objem válce je \\(250\\pi\\) cm³. Jaký je povrch krychle?`,
       formula: null,
-      diagram: `<svg viewBox="0 0 310 225" style="width:100%;max-width:310px;display:block;margin:12px auto; background:#111827;border:1px solid #1a2544;border-radius:8px; font-family:'Segoe UI',Arial,sans-serif;"> <defs><marker id="arr2" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"> <path d="M0,0 L7,3.5 L0,7 Z" fill="#e2e8f0"/> </marker></defs> <!-- Obdélník (plášť) --> <rect x="55" y="18" width="90" height="60" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <text x="100" y="48" text-anchor="middle" fill="#94a3b8" font-size="10">plášť</text> <!-- Šipka --> <line x1="153" y1="48" x2="171" y2="48" stroke="#e2e8f0" stroke-width="1.5" marker-end="url(#arr2)"/> <!-- Válec 1 (výška=3a) --> <ellipse cx="72" cy="190" rx="18" ry="5" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <ellipse cx="72" cy="100" rx="18" ry="5" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <line x1="54" y1="100" x2="54" y2="190" stroke="#a78bfa" stroke-width="1.5"/> <line x1="90" y1="100" x2="90" y2="190" stroke="#a78bfa" stroke-width="1.5"/> <text x="72" y="205" text-anchor="middle" fill="#94a3b8" font-size="10">v₁</text> <!-- Válec 2 (výška=2a) --> <ellipse cx="230" cy="190" rx="32" ry="8" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <ellipse cx="230" cy="145" rx="32" ry="8" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <line x1="198" y1="145" x2="198" y2="190" stroke="#a78bfa" stroke-width="1.5"/> <line x1="262" y1="145" x2="262" y2="190" stroke="#a78bfa" stroke-width="1.5"/> <text x="230" y="205" text-anchor="middle" fill="#94a3b8" font-size="10">v₂</text> <!-- Otázka --> <text x="155" y="220" text-anchor="middle" fill="#e2e8f0" font-size="11">V₁ : V₂ = ?</text> </svg>`,
-      instruction: `Vyberte správný poměr V₁ : V₂.`,
+      diagram: null,
+      instruction: `Vyberte správný povrch krychle.`,
       choices: [
         {
-          label: `\\(9:4\\)`,
+          label: `\\(150\\text{ cm}^{2}\\)`,
           value: "A",
-          feedback: `Chyba. To by byl poměr, kdyby se lišily jen poloměry (\\(r_1:r_2 = 3:2\\)) — ale poloměr se odvíjí od druhé (zbývající) strany.`
+          feedback: `Chyba syntaxe. Do vzorce pro povrch krychle patří strana \\(a\\), ne poloměr válce.`
         },
         {
-          label: `\\(4:9\\)`,
+          label: `\\(400\\text{ cm}^{2}\\)`,
           value: "B",
-          feedback: `Chyba. Zaměnil jsi, který válec je 'první' - zkus výpočet znovu.`
+          feedback: `Chyba. Krychle má 6 stejných stěn — nejen 4 boční. Vzorec pro povrch je \\(S = 6a^2\\).`
         },
         {
-          label: `\\(2:3\\)`,
+          label: `\\(500\\text{ cm}^{2}\\)`,
           value: "C",
-          feedback: `Chyba. Správně je \\(V_1:V_2 = a:b\\), kde \\(a\\) je delší strana — zkontroluj přiřazení výšek.`
+          feedback: `Nekompletní. Přepočítej stěny — krychle jich má 6, ne 5.`
         },
         {
-          label: `\\(3:2\\)`,
+          label: `\\(600\\text{ cm}^{2}\\)`,
           value: "D",
-          feedback: `Logika potvrzena. \\(\\frac{V_1}{V_2} = \\frac{a^2 b}{b^2 a} = \\frac{a}{b} = \\frac{3}{2}\\).`
+          feedback: `Přístup povolen. \\(V = \\frac{\\pi a^3}{4} = 250\\pi \\Rightarrow a^3 = 1\\,000 \\Rightarrow a = 10\\) cm; \\(S = 6 \\cdot 100 = 600\\) cm².`
         },
       ],
       hints: [
-        `Označ strany obdélníku \\(3a\\) a \\(2a\\). Válec 1: výška \\(v_1 = 3a\\), obvod podstavy \\(= 2a = 2\\pi r_1\\). Válec 2: výška \\(v_2 = 2a\\), obvod podstavy \\(= 3a = 2\\pi r_2\\).`,
-        `\\(r_1 = \\frac{a}{\\pi},\\; r_2 = \\frac{3a}{2\\pi}\\). Dosaď do \\(V = \\pi r^2 v\\): \\(V_1 = \\pi \\cdot \\frac{a^2}{\\pi^2} \\cdot 3a\\), \\(V_2 = \\pi \\cdot \\frac{9a^2}{4\\pi^2} \\cdot 2a\\). Vydělíme \\(V_1/V_2\\).`,
+        `Jak spolu souvisí poloměr válce a strana krychle, když se válec dotýká všech stěn?`,
+        `Kolik neznámých vlastně máš? Poloměr i výška válce závisí na straně \\(a\\).`,
       ],
       correctAnswer: "D", reward: { xp: 15 }
     },
     {
-      id: "t_ster_02", regionId: "stereometrie", type: "closed", monsterName: `SIM_04B: Válec z rozvinutého pláště`,
+      id: "t_ster_02", regionId: "stereometrie", type: "closed", monsterName: `SIM_04B: Válec vepsaný do krychle — objem`,
       isTraining: true, firewallId: "q_ster_02", visual_color: "#2ecc8a", visual_symbol: `●`, points: 0,
-      question: `Obdélník o délce strany \\(a\\) je rozvinutým pláštěm válce. Jaký je poloměr podstavy tohoto válce?`,
+      showDiagramImmediately: true,
+      question: `Válec je vepsán do krychle (dotýká se všech stěn). Strana krychle je \\(a = 4\\) cm. Jaký je objem válce?`,
       formula: null,
-      instruction: `Vyberte správný výraz pro r.`,
+      diagram: `<svg viewBox="0 0 220 195" style="width:100%;max-width:230px;display:block;margin:12px auto;background:#111827;border:1px solid var(--panel-border,#1a2544);border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;"><rect x="30" y="20" width="160" height="160" fill="#0d1f3c" stroke="#a78bfa" stroke-width="2"/><circle cx="110" cy="100" r="80" fill="#162d55" stroke="#00b4d8" stroke-width="1.5"/><line x1="110" y1="100" x2="190" y2="100" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="4,2"/><circle cx="110" cy="100" r="2.5" fill="#fbbf24"/><text x="150" y="93" fill="#fbbf24" font-size="11">r = ?</text><text x="110" y="190" text-anchor="middle" fill="#94a3b8" font-size="11">a = 4 cm</text><text x="14" y="104" fill="#94a3b8" font-size="11">a</text><text x="110" y="14" text-anchor="middle" fill="#94a3b8" font-size="9">Pohled shora — kruh vepsán do čtverce</text></svg>`,
+      instruction: `Vyberte správný objem válce.`,
       steps: [
         {
-          trigger: `> Krok 1: Co je obvodem podstavy?`,
-          content: `Když rozvineme plášť válce, dostaneme obdélník. <b>Delší strana = výška válce</b>, kratší strana = obvod podstavy (= 2πr).`
+          trigger: `> Krok 1: Poloměr a výška válce`,
+          content: `Válec se dotýká všech 6 stěn krychle. Jak se poloměr \\(r\\) a výška \\(h\\) vztahují ke straně \\(a\\)?`
         },
         {
-          trigger: `> Krok 2: Vyjádři r`,
-          content: `Kratší strana obdélníku se rovná obvodu podstavy: \\(2\\pi r = a\\). Vyjádři z toho \\(r\\).`
+          trigger: `> Krok 2: Dosaď do vzorce`,
+          content: `\\(V = \\pi r^2 h\\). Vyjádři \\(r\\) a \\(h\\) pomocí \\(a\\) z kroku 1 a dosaď.`
         },
       ],
       choices: [
         {
-          label: `\\(r = \\frac{a}{\\pi}\\)`,
+          label: `\\(8\\pi\\text{ cm}^{3}\\)`,
           value: "A",
-          feedback: `Chyba - zapomněl jsi na faktor 2 (obvod = 2πr, ne πr).`
+          feedback: `Chyba. Zkontroluj, co je výška válce a co poloměr — zaměnil jsi je.`
         },
         {
-          label: `\\(r = a\\pi\\)`,
+          label: `\\(16\\pi\\text{ cm}^{3}\\)`,
           value: "B",
-          feedback: `Kritická chyba - poloměr by byl obrovský. Znovu z 2πr = a.`
+          feedback: `Logika potvrzena. \\(r = 2\\) cm, \\(h = 4\\) cm; \\(V = \\pi \\cdot 4 \\cdot 4 = 16\\pi\\) cm³. Teď zkus firewall — tam je objem dán a ty hledáš povrch.`
         },
         {
-          label: `\\(r = \\frac{a}{2\\pi}\\)`,
+          label: `\\(32\\pi\\text{ cm}^{3}\\)`,
           value: "C",
-          feedback: `Logika potvrzena. \\(2\\pi r = a \\Rightarrow r = \\frac{a}{2\\pi}\\).`
+          feedback: `Chyba syntaxe. Rozmysli si, jak se válec dotýká krychle — který rozměr odpovídá poloměru a který výšce?`
         },
         {
-          label: `\\(r = 2a\\pi\\)`,
+          label: `\\(64\\pi\\text{ cm}^{3}\\)`,
           value: "D",
-          feedback: `Kritická chyba - tuto hodnotu dosaď zpět a ověř, zda souhlasí.`
+          feedback: `Kritická chyba. Válec se dotýká stěn — jeho průměr odpovídá straně krychle, ne poloměr.`
         },
       ],
-      correctAnswer: "C", reward: { xp: 5 }
+      correctAnswer: "B", reward: { xp: 5 }
     },
     {
       id: "q_ster_03", regionId: "stereometrie", type: "closed", monsterName: `FW_04C: Kvádr rozříznutý na hranol`,
@@ -9007,17 +8821,17 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(144\\text{ cm}^{2}\\)`,
           value: "A",
-          feedback: `Chyba. Zapomněl jsi na diagonální stěnu - je to obdélník 10 × 5 cm.`
+          feedback: `Chyba. Zapomněl jsi na jednu boční stěnu — řez kvádrem vytvoří obdélník s přeponou trojúhelníku.`
         },
         {
           label: `\\(168\\text{ cm}^{2}\\)`,
           value: "B",
-          feedback: `Přístup povolen. \\(2\\cdot24 + 30 + 40 + 50 = 168\\) cm². Výborně.`
+          feedback: `Přístup povolen. \\(2\\cdot24 + 30 + 40 + 50 = 168\\) cm².`
         },
         {
           label: `\\(152\\text{ cm}^{2}\\)`,
           value: "C",
-          feedback: `Chyba syntaxe. Pravděpodobně jsi použil nesprávnou délku diagonály.`
+          feedback: `Chyba syntaxe. Zkontroluj délku přepony pravoúhlého trojúhelníku — Pythagorova věta.`
         },
         {
           label: `\\(196\\text{ cm}^{2}\\)`,
@@ -9026,8 +8840,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Hranol má 5 stěn: 2 trojúhelníkové podstavy (odvěsny 6 a 8 cm) a 3 obdélníkové boky. Nejdřív spočítej délku přepony trojúhelníku.`,
-        `Přepona: \\(c = \\sqrt{6^2+8^2} = 10\\) cm. Povrch: \\(2 \\cdot \\frac{1}{2} \\cdot 6 \\cdot 8 + (6+8+10) \\cdot 5\\).`,
+        `Kolik stěn má trojboký hranol a jaký tvar mají? Jednu délku budeš muset dopočítat.`,
+        `Podstava je pravoúhlý trojúhelník — jakou má přeponu? Tu potřebuješ pro třetí boční stěnu.`,
       ],
       correctAnswer: "B", reward: { xp: 15 }
     },
@@ -9044,7 +8858,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Obsah trojúhelníku`,
-          content: `\\(S = \\frac{1}{2} \\cdot 6 \\cdot 8 = 24\\) cm². Hranol má dvě takové podstavy.`
+          content: `Obsah pravoúhlého trojúhelníku: \\(S = \\frac{1}{2} \\cdot a \\cdot b\\). Dosaď odvěsny a vypočítej.`
         },
       ],
       choices: [
@@ -9101,8 +8915,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Délka oblouku výseče = obvod podstavy kužele: \\(l = \\frac{288}{360} \\cdot 2\\pi \\cdot 5 = 8\\pi\\) cm. Z \\(2\\pi r = 8\\pi\\) urči poloměr \\(r\\).`,
-        `\\(r = 4\\) cm, \\(s = 5\\) cm (přepona = poloměr výseče). Výška: \\(v = \\sqrt{s^2 - r^2} = \\sqrt{25-16} = 3\\) cm. Dosaď do \\(V = \\frac{1}{3}\\pi r^2 v\\).`,
+        `Co se stane s obloukem výseče, když plášť svinete do kužele? Čemu se rovná délka toho oblouku?`,
+        `Poloměr výseče = strana kužele. Máš poloměr podstavy i stranu — jak z nich získáš výšku?`,
       ],
       correctAnswer: "A", reward: { xp: 20 }
     },
@@ -9162,7 +8976,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(\\frac{1}{2}\\)`,
           value: "B",
-          feedback: `Chyba. Objemy nejsou stejné — \\(V_{\\text{kužel}} = 96\\pi\\), \\(V_{\\text{válec}} = 144\\pi\\).`
+          feedback: `Chyba. Kužel a válec nemají stejný objem — kužel je třetina válce se stejnou základnou a výškou, ale pozor: výšky se tu liší.`
         },
         {
           label: `\\(\\frac{2}{5}\\)`,
@@ -9176,8 +8990,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `\\(V_{\\text{kužel}} = \\frac{1}{3}\\pi \\cdot 6^2 \\cdot 8 = 96\\pi\\) cm³. \\(V_{\\text{válec}} = \\pi \\cdot 6^2 \\cdot 4 = 144\\pi\\) cm³.`,
-        `Sečti \\(V_{\\text{kužel}}\\) a \\(V_{\\text{válec}}\\) z kroku 1. Pak spočítej podíl \\(\\frac{V_{\\text{kužel}}}{V_{\\text{celkem}}}\\) a zkrať zlomek.`,
+        `Spočítej objem kužele a objem válce zvlášť. Jaké vzorce pro ně platí?`,
+        `Celkový objem je součet obou. Podíl kužele = \\(\\frac{V_{\\text{kužel}}}{V_{\\text{celkem}}}\\). Nezapomeň zlomek zkrátit.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
@@ -9232,17 +9046,17 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(27\\pi\\text{ cm}^{3}\\)`,
           value: "A",
-          feedback: `Chyba. To by byl objem pro r = 3, v = 3 - ale v = 2r = 6, ne 3.`
+          feedback: `Chyba. Výška válce se rovná průměru, ne poloměru — máš správně \\(r\\), ale \\(v \\neq r\\).`
         },
         {
           label: `\\(36\\pi\\text{ cm}^{3}\\)`,
           value: "B",
-          feedback: `Chyba syntaxe. Zkontroluj dosazení v = 2r do vzorce pro objem.`
+          feedback: `Chyba syntaxe. Zkontroluj, jestli jsi správně nahradil \\(v\\) výrazem \\(2r\\) ve vzorci pro objem.`
         },
         {
           label: `\\(81\\pi\\text{ cm}^{3}\\)`,
           value: "C",
-          feedback: `Kritická chyba. Použil jsi \\(r = 3\\), ale pak \\(v = 2r = 6 \\Rightarrow V = 9\\cdot6\\cdot\\pi = 54\\pi\\), ne \\(81\\pi\\).`
+          feedback: `Kritická chyba. Zkontroluj dosazení do \\(V = \\pi r^2 v\\) — ověř, že \\(r\\) i \\(v\\) odpovídají podmínce.`
         },
         {
           label: `\\(54\\pi\\text{ cm}^{3}\\)`,
@@ -9251,8 +9065,8 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Dosaď \\(v = 2r\\) do vzorce pro povrch: \\(S = 2\\pi r^2 + 2\\pi r \\cdot 2r = 6\\pi r^2 = 54\\pi\\). Vyřeš \\(r\\).`,
-        `Z \\(6\\pi r^2 = 54\\pi\\) dostaneš \\(r\\). Pak urči \\(v = 2r\\) a dosaď do vzorce \\(V = \\pi r^2 v\\).`,
+        `Povrch válce má dvě části — podstavy a plášť. Co se stane se vzorcem, když za \\(v\\) dosadíš \\(2r\\)?`,
+        `Po zjednodušení dostaneš rovnici s jednou neznámou \\(r\\). Pak nezapomeň, že \\(v = 2r\\).`,
       ],
       correctAnswer: "D", reward: { xp: 15 }
     },
@@ -9269,7 +9083,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Dosazení r=3, v=6`,
-          content: `\\(S = 2\\pi\\cdot9 + 2\\pi\\cdot3\\cdot6 = 18\\pi + 36\\pi\\). Sečti oba členy.`
+          content: `Dosaď \\(r=3\\), \\(v=6\\) do vzorce z Kroku 1: \\(S = 2\\pi \\cdot 9 + 2\\pi \\cdot 3 \\cdot 6 = ?\\)`
         },
       ],
       choices: [
@@ -9297,82 +9111,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       correctAnswer: "C", reward: { xp: 5 }
     },
     {
-      id: "q_ster_07", regionId: "stereometrie", type: "closed", monsterName: `FW_04G: Přelití vody mezi válci`,
-      visual_color: "#a78bfa", visual_symbol: `●`, points: 3, trainingTasks: ["t_ster_07"],
-      question: `Dvě nádoby mají tvar rotačního válce. První nádoba je dvakrát vyšší než druhá, ale průměr jejího dna je třikrát menší. První nádobu naplníme vodou po okraj a vodu přelijeme do druhé (prázdné) nádoby. Jakou část objemu druhé nádoby voda zaplní?`,
-      formula: null,
-      diagram: `<svg viewBox="0 0 310 222" style="width:100%;max-width:310px;display:block;margin:12px auto; background:#111827;border:1px solid #1a2544;border-radius:8px; font-family:'Segoe UI',Arial,sans-serif;"> <defs><marker id="arr7" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"> <path d="M0,0 L7,3.5 L0,7 Z" fill="#e2e8f0"/> </marker></defs> <!-- Left cylinder (full of water) --> <rect x="72" y="60" width="36" height="125" fill="#1e3a5f" opacity="0.6"/> <ellipse cx="90" cy="185" rx="18" ry="5" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <ellipse cx="90" cy="60" rx="18" ry="5" fill="#3b82f6" opacity="0.7" stroke="#a78bfa" stroke-width="1.5"/> <line x1="72" y1="60" x2="72" y2="185" stroke="#a78bfa" stroke-width="1.5"/> <line x1="108" y1="60" x2="108" y2="185" stroke="#a78bfa" stroke-width="1.5"/>  <!-- Arrow --> <line x1="116" y1="122" x2="160" y2="122" stroke="#e2e8f0" stroke-width="1.5" marker-end="url(#arr7)"/> <!-- Right cylinder (empty) --> <ellipse cx="225" cy="185" rx="55" ry="13" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <ellipse cx="225" cy="150" rx="55" ry="13" fill="#1a2040" stroke="#a78bfa" stroke-width="1.5"/> <line x1="170" y1="150" x2="170" y2="185" stroke="#a78bfa" stroke-width="1.5"/> <line x1="280" y1="150" x2="280" y2="185" stroke="#a78bfa" stroke-width="1.5"/>  <text x="225" y="212" text-anchor="middle" fill="#e2e8f0" font-size="11">zaplněno: ?</text> </svg>`,
-      instruction: `Vyberte správný zlomek.`,
-      choices: [
-        {
-          label: `\\(\\frac{4}{9}\\)`,
-          value: "A",
-          feedback: `Chyba. Možná jsi zapomněl zohlednit výšku - ta se musí projevit v čitateli.`
-        },
-        {
-          label: `\\(\\frac{2}{9}\\)`,
-          value: "B",
-          feedback: `Přístup povolen. \\(V_1 = \\pi\\left(\\frac{r}{3}\\right)^2\\cdot2v = \\frac{2}{9}\\pi r^2 v = \\frac{2}{9}V_2\\).`
-        },
-        {
-          label: `\\(\\frac{1}{3}\\)`,
-          value: "C",
-          feedback: `Chyba. Buď jsi špatně dosadil průměr, nebo výšku.`
-        },
-        {
-          label: `\\(\\frac{1}{6}\\)`,
-          value: "D",
-          feedback: `Kritická chyba. Zkontroluj poloměr první nádoby — je \\(r/3\\), takže \\(r_1^2 = r^2/9\\).`
-        },
-      ],
-      hints: [
-        `Označ poloměr 2. nádoby \\(r\\) a výšku \\(v\\). 1. nádoba: poloměr \\(\\frac{r}{3}\\), výška \\(2v\\). Napiš výraz pro \\(V_1\\).`,
-        `Rozpiš \\(V_1 = \\pi \\cdot \\left(\\frac{r}{3}\\right)^2 \\cdot 2v\\). Zjednodušuj krok po kroku a pak srovnej s \\(V_2 = \\pi r^2 v\\).`,
-      ],
-      correctAnswer: "B", reward: { xp: 15 }
-    },
-    {
-      id: "t_ster_07", regionId: "stereometrie", type: "closed", monsterName: `SIM_04G: Objem válce`,
-      isTraining: true, firewallId: "q_ster_07", visual_color: "#2ecc8a", visual_symbol: `●`, points: 0,
-      question: `Válcová nádoba má poloměr dna r = 6 cm a výšku v = 10 cm. Jaký je objem nádoby?`,
-      formula: null,
-      instruction: `Vyberte správný objem.`,
-      steps: [
-        {
-          trigger: `> Krok 1: Základna a výška`,
-          content: `Objem válce = obsah podstavy (kruh πr²) × výška. Tedy \\(V = \\pi r^2 \\cdot v\\).`
-        },
-        {
-          trigger: `> Krok 2: Dosazení`,
-          content: `\\(V = \\pi r^2 \\cdot v = \\pi \\cdot 36 \\cdot 10\\). Dosaď a vypočítej.`
-        },
-      ],
-      choices: [
-        {
-          label: `\\(360\\pi\\text{ cm}^{3}\\)`,
-          value: "A",
-          feedback: `Logika potvrzena. \\(V = \\pi\\cdot36\\cdot10 = 360\\pi\\) cm³.`
-        },
-        {
-          label: `\\(120\\pi\\text{ cm}^{3}\\)`,
-          value: "B",
-          feedback: `Chyba - použil jsi průměr místo poloměru (r=6, ne r=3).`
-        },
-        {
-          label: `\\(720\\pi\\text{ cm}^{3}\\)`,
-          value: "C",
-          feedback: `Chyba - zdvojil jsi výsledek (možná jsi počítal s průměrem 12²).`
-        },
-        {
-          label: `\\(180\\pi\\text{ cm}^{3}\\)`,
-          value: "D",
-          feedback: `Kritická chyba - aplikoval jsi faktor 1/2 nebo 1/3, který u válce neplatí.`
-        },
-      ],
-      correctAnswer: "A", reward: { xp: 5 }
-    },
-    {
-      id: "q_ster_08", regionId: "stereometrie", type: "closed", monsterName: `FW_04H: Polokoule - povrch a objem`,
+      id: "q_ster_08", regionId: "stereometrie", type: "closed", monsterName: `FW_04G: Polokoule - povrch a objem`,
       visual_color: "#a78bfa", visual_symbol: `●`, points: 3, trainingTasks: ["t_ster_08"],
       question: `Obsah zakřivené plochy (pláště) polokoule je 72π cm². Vypočtěte objem polokoule.`,
       formula: null,
@@ -9401,13 +9140,13 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Z \\(S_{\\text{plášť}} = 2\\pi r^2 = 72\\pi\\) vyjádři \\(r^2\\), pak \\(r\\).`,
-        `\\(r^2 = 36 \\Rightarrow r = 6\\) cm. Dosaď do \\(V = \\frac{2}{3}\\pi r^3 = \\frac{2}{3}\\pi \\cdot 216\\).`,
+        `Plášť polokoule je polovina povrchu koule. Jaký je vzorec pro povrch celé koule?`,
+        `Z plochy pláště vyjádři \\(r\\). Objem polokoule je polovina objemu koule.`,
       ],
       correctAnswer: "C", reward: { xp: 15 }
     },
     {
-      id: "t_ster_08", regionId: "stereometrie", type: "closed", monsterName: `SIM_04H: Objem polokoule`,
+      id: "t_ster_08", regionId: "stereometrie", type: "closed", monsterName: `SIM_04G: Objem polokoule`,
       isTraining: true, firewallId: "q_ster_08", visual_color: "#2ecc8a", visual_symbol: `●`, points: 0,
       question: `Polokoule má poloměr r = 3 cm. Jaký je její objem?`,
       formula: null,
@@ -9447,7 +9186,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       correctAnswer: "D", reward: { xp: 5 }
     },
     {
-      id: "q_ster_09", regionId: "stereometrie", type: "closed", monsterName: `FW_04I: Dutý válec - objem materiálu`,
+      id: "q_ster_09", regionId: "stereometrie", type: "closed", monsterName: `FW_04H: Dutý válec - objem materiálu`,
       visual_color: "#a78bfa", visual_symbol: `●`, points: 3, trainingTasks: ["t_ster_09"],
       question: `Dutý válec (roura) má vnější poloměr R = 5 cm, vnitřní poloměr r = 3 cm a výšku v = 10 cm. Vypočtěte objem materiálu, ze kterého je roura vyrobena.`,
       formula: null,
@@ -9462,7 +9201,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(80\\pi\\text{ cm}^{3}\\)`,
           value: "B",
-          feedback: `Chyba. Výsledek je 160π, ne 80π - možná jsi nevynásobil výškou.`
+          feedback: `Chyba. Mezikruží počítáš správně, ale nezapomněl jsi vynásobit výškou?`
         },
         {
           label: `\\(250\\pi\\text{ cm}^{3}\\)`,
@@ -9477,12 +9216,12 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
       hints: [
         `Objem materiálu = velký válec minus dutina: \\(V = \\pi R^2 v - \\pi r^2 v = \\pi(R^2 - r^2)\\cdot v\\).`,
-        `Dosaď \\(R = 5\\), \\(r = 3\\), \\(v = 10\\) do vzorce z kroku 1 a vypočítej.`,
+        `Pozor na rozdíl \\(R^2 - r^2\\) — to není \\((R-r)^2\\).`,
       ],
       correctAnswer: "A", reward: { xp: 15 }
     },
     {
-      id: "t_ster_09", regionId: "stereometrie", type: "closed", monsterName: `SIM_04I: Průřez mezikruží`,
+      id: "t_ster_09", regionId: "stereometrie", type: "closed", monsterName: `SIM_04H: Průřez mezikruží`,
       isTraining: true, firewallId: "q_ster_09", visual_color: "#2ecc8a", visual_symbol: `●`, points: 0,
       question: `Průřez dutého válce (roury) tvoří mezikruží. Vnější poloměr R = 5 cm, vnitřní poloměr r = 3 cm. Jaký je obsah průřezu?`,
       formula: null,
@@ -9494,14 +9233,14 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
         {
           trigger: `> Krok 2: Dosazení`,
-          content: `\\(S = \\pi(R^2 - r^2) = \\pi(25 - 9)\\). Dosaď a vypočítej.`
+          content: `Dosaď \\(R=5\\), \\(r=3\\) do vzorce z Kroku 1: \\(S = \\pi(R^2 - r^2) = ?\\)`
         },
       ],
       choices: [
         {
           label: `\\(4\\pi\\text{ cm}^{2}\\)`,
           value: "A",
-          feedback: `Chyba - spočítal jsi π(R−r)² = π·4 místo π(R²−r²) = 16π.`
+          feedback: `Chyba — spočítal jsi \\(\\pi(R-r)^2\\) místo \\(\\pi(R^2 - r^2)\\). Pozor: \\((R-r)^2 \\neq R^2 - r^2\\).`
         },
         {
           label: `\\(16\\pi\\text{ cm}^{2}\\)`,
@@ -9522,7 +9261,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       correctAnswer: "B", reward: { xp: 5 }
     },
     {
-      id: "q_ster_10", regionId: "stereometrie", type: "closed", monsterName: `FW_04J: Válec z průměru a plochy pláště`,
+      id: "q_ster_10", regionId: "stereometrie", type: "closed", monsterName: `FW_04I: Válec z průměru a plochy pláště`,
       visual_color: "#a78bfa", visual_symbol: `●`, points: 3, trainingTasks: ["t_ster_10"],
       question: `Průměr podstavy rotačního válce je 16 cm. Obsah pláště (boční plochy) tohoto válce je 96π cm². Vypočtěte objem válce.`,
       formula: null,
@@ -9542,7 +9281,7 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         {
           label: `\\(512\\pi\\text{ cm}^{3}\\)`,
           value: "C",
-          feedback: `Kritická chyba. Zdvojil jsi objem - ověř dosazení r = 8 a v = 6.`
+          feedback: `Kritická chyba. Objem je příliš velký — zkontroluj, jestli jsi výšku z plochy pláště odvodil správně.`
         },
         {
           label: `\\(384\\pi\\text{ cm}^{3}\\)`,
@@ -9551,13 +9290,13 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
         },
       ],
       hints: [
-        `Průměr \\(d = 16\\) cm \\(\\Rightarrow r = 8\\) cm. Dosaď do \\(S_{\\text{plášť}} = 2\\pi r v\\) a vyjádři \\(v\\).`,
-        `\\(v = \\frac{96\\pi}{2\\pi \\cdot 8} = 6\\) cm. Dosaď \\(r = 8\\) cm a \\(v = 6\\) cm do vzorce pro objem válce.`,
+        `Jaký je vztah mezi průměrem a poloměrem? Plášť válce po rozvinutí je obdélník — jaké má rozměry?`,
+        `Z plochy pláště \\(S = 2\\pi r v\\) vyjádři neznámou výšku. Pak dosaď do objemu.`,
       ],
       correctAnswer: "D", reward: { xp: 15 }
     },
     {
-      id: "t_ster_10", regionId: "stereometrie", type: "closed", monsterName: `SIM_04J: Výška válce z pláště`,
+      id: "t_ster_10", regionId: "stereometrie", type: "closed", monsterName: `SIM_04I: Výška válce z pláště`,
       isTraining: true, firewallId: "q_ster_10", visual_color: "#2ecc8a", visual_symbol: `●`, points: 0,
       question: `Plášť válce s průměrem 12 cm má obsah 60π cm². Jaká je výška válce?`,
       formula: null,
@@ -9596,10 +9335,650 @@ Podmínkám vyhovují např. klíče \\(32\\), \\(437\\), \\(5324\\) a další.`
       ],
       correctAnswer: "C", reward: { xp: 5 }
     },
-    // --- ZÁSTUPNÍ UZLY ---], correctAnswer: "A", reward: { xp: 10 } },
-    
-    { id: "q_placeholder_8", regionId: "pravdepodobnost", type: "closed", monsterName: "FW_08K: Pravděpodobnost", choices: [{label: "A", value: "A"}], correctAnswer: "A", reward: { xp: 10 } },
-    { id: "q_placeholder_10", regionId: "goniometrie", type: "closed", monsterName: "FW_10K: Goniometrie", choices: [{label: "A", value: "A"}], correctAnswer: "A", reward: { xp: 10 } },
-    { id: "q_placeholder_11", regionId: "maturita", type: "closed", monsterName: "JÁDRO SYSTÉMU", choices: [{label: "Iniciovat simulaci", value: "A"}], correctAnswer: "A", reward: { xp: 100 } }
+
+    // ==========================================
+    // 12. SLOVNÍ ÚLOHY
+    // ==========================================
+    {
+      id: "q_slov_01", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12A: YouTube kanál — změna sledujících`,
+      visual_color: "#e17055", visual_symbol: `%`, points: 3, trainingTasks: ["t_slov_01"],
+      question: `Počet sledujících YouTube kanálu vzrostl v lednu o \\(15\\,\\%\\) a v únoru klesl o \\(20\\,\\%\\). Na začátku ledna měl kanál \\(4\\,000\\) sledujících.`,
+      instruction: `Kolik sledujících měl kanál na konci února?`,
+      choices: [
+        { label: `\\(3\\,680\\)`, value: "A", feedback: `Přístup povolen. \\(4000 \\cdot 1{,}15 \\cdot 0{,}80 = 3\\,680\\)` },
+        { label: `\\(3\\,800\\)`, value: "B", feedback: `Chyba protokolu. Nelze sčítat procenta: \\(+15\\,\\% - 20\\,\\% \\neq -5\\,\\%\\) z původní hodnoty.` },
+        { label: `\\(4\\,200\\)`, value: "C", feedback: `Kritická chyba. Zaměnil(a) jsi znaménka — výsledek je vyšší než start, přitom celkově klesáš.` },
+        { label: `\\(3\\,600\\)`, value: "D", feedback: `Chyba syntaxe. Odhad není výpočet — zkus přesný postup krok po kroku.` },
+      ],
+      hints: [
+        `Procenta se počítají vždy z aktuální hodnoty, ne z původní. Jaký je stav po lednu?`,
+        `Po lednu: \\(4000 \\cdot 1{,}15 = ?\\). Z tohoto nového počtu teprve počítej únorový pokles.`,
+      ],
+      correctAnswer: "A", reward: { xp: 15 }
+    },
+    {
+      id: "t_slov_01", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12A: Cena grafické karty`,
+      isTraining: true, firewallId: "q_slov_01", visual_color: "#2ecc8a", visual_symbol: `%`, points: 0,
+      question: `Cena grafické karty byla v listopadu \\(8\\,000\\) Kč. V prosinci klesla o \\(10\\,\\%\\) a v lednu vzrostla o \\(30\\,\\%\\).`,
+      instruction: `Jaká je cena grafické karty v lednu?`,
+      steps: [
+        { trigger: `> Krok 1: Prosinec`, content: `Po poklesu o \\(10\\,\\%\\): \\(8000 \\cdot 0{,}90 = 7\\,200\\) Kč.` },
+        { trigger: `> Krok 2: Leden`, content: `Z prosincové ceny \\(7\\,200\\) Kč počítej růst o \\(30\\,\\%\\): \\(7200 \\cdot 1{,}30 = ?\\)` },
+      ],
+      choices: [
+        { label: `\\(9\\,360\\)`, value: "A", feedback: `Logika potvrzena. \\(8000 \\cdot 0{,}90 \\cdot 1{,}30 = 9\\,360\\) Kč.` },
+        { label: `\\(9\\,600\\)`, value: "B", feedback: `Chyba protokolu. Sečetl(a) jsi procenta: \\(+20\\,\\%\\) z původní ceny není správně.` },
+        { label: `\\(8\\,400\\)`, value: "C", feedback: `Kritická chyba. Počítal(a) jsi \\(+30\\,\\%\\) z původních \\(8\\,000\\) místo z prosincové ceny.` },
+        { label: `\\(7\\,200\\)`, value: "D", feedback: `Chyba syntaxe. Zapomněl(a) jsi na druhý krok — lednovýrůst.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_02", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12B: E-shop Black Friday`,
+      visual_color: "#e17055", visual_symbol: `%%`, points: 4, trainingTasks: ["t_slov_02"],
+      question: `E-shop nabízí na Black Friday slevu \\(25\\,\\%\\). Držitelé věrnostní karty dostanou navíc slevu \\(10\\,\\%\\) z již snížené ceny. Herní konzole stojí původně \\(12\\,000\\) Kč.`,
+      instruction: `Kolik zaplatí držitel věrnostní karty?`,
+      choices: [
+        { label: `\\(7\\,800\\) Kč`, value: "A", feedback: `Chyba protokolu. Sečetl(a) jsi slevy: \\(25\\,\\% + 10\\,\\% = 35\\,\\%\\) z původní ceny není správně.` },
+        { label: `\\(8\\,100\\) Kč`, value: "B", feedback: `Přístup povolen. \\(12000 \\cdot 0{,}75 \\cdot 0{,}90 = 8\\,100\\) Kč.` },
+        { label: `\\(9\\,000\\) Kč`, value: "C", feedback: `Chyba syntaxe. Aplikoval(a) jsi jen první slevu — věrnostní sleva chybí.` },
+        { label: `\\(7\\,200\\) Kč`, value: "D", feedback: `Kritická chyba. Obě slevy jsi odečetl(a) od původní ceny zvlášť a výsledky sečetl(a).` },
+      ],
+      hints: [
+        `Druhá sleva se nepočítá z původní ceny, ale ze snížené. Jaká je cena po první slevě?`,
+        `Po první slevě: \\(12000 \\cdot 0{,}75 = ?\\) Kč. Z této snížené ceny odečti dalších \\(10\\,\\%\\).`,
+      ],
+      correctAnswer: "B", reward: { xp: 20 }
+    },
+    {
+      id: "t_slov_02", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12B: Skipas pro studenta`,
+      isTraining: true, firewallId: "q_slov_02", visual_color: "#2ecc8a", visual_symbol: `%%`, points: 0,
+      question: `Lyžařské středisko nabízí slevu \\(20\\,\\%\\) na skipas při online nákupu. Studenti dostanou navíc slevu \\(15\\,\\%\\) ze snížené ceny. Plná cena skipasu je \\(2\\,000\\) Kč.`,
+      instruction: `Kolik zaplatí student při online nákupu?`,
+      steps: [
+        { trigger: `> Krok 1: Online sleva`, content: `\\(2000 \\cdot 0{,}80 = 1\\,600\\) Kč.` },
+        { trigger: `> Krok 2: Studentská sleva`, content: `Ze snížené ceny \\(1\\,600\\) Kč odečti studentskou slevu \\(15\\,\\%\\): \\(1600 \\cdot 0{,}85 = ?\\)` },
+      ],
+      choices: [
+        { label: `\\(1\\,360\\) Kč`, value: "A", feedback: `Logika potvrzena. \\(2000 \\cdot 0{,}80 \\cdot 0{,}85 = 1\\,360\\) Kč.` },
+        { label: `\\(1\\,300\\) Kč`, value: "B", feedback: `Chyba protokolu. \\(20\\,\\% + 15\\,\\% = 35\\,\\%\\) — slevy se nesčítají.` },
+        { label: `\\(1\\,600\\) Kč`, value: "C", feedback: `Chyba syntaxe. Aplikoval(a) jsi jen online slevu, studentská chybí.` },
+        { label: `\\(1\\,400\\) Kč`, value: "D", feedback: `Kritická chyba. Studentskou slevu jsi počítal(a) z původní ceny místo ze snížené.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_03", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12C: Instagram influencer`,
+      visual_color: "#e17055", visual_symbol: `1.25ⁿ`, points: 5, trainingTasks: ["t_slov_03"],
+      question: `Influencer má na Instagramu \\(8\\,000\\) sledujících. Díky virálnímu videu jeho sledovanost roste každý týden o \\(25\\,\\%\\).`,
+      instruction: `Po kolika celých týdnech překročí poprvé \\(15\\,000\\) sledujících?`,
+      choices: [
+        { label: `Po \\(2\\) týdnech`, value: "A", feedback: `Chyba syntaxe. Po 2 týdnech: \\(8000 \\cdot 1{,}25^2 = 12\\,500 < 15\\,000\\). Nestačí.` },
+        { label: `Po \\(4\\) týdnech`, value: "B", feedback: `Chyba protokolu. Po 3 týdnech už hranici překročí — \\(4\\) jsou příliš.` },
+        { label: `Po \\(3\\) týdnech`, value: "C", feedback: `Přístup povolen. \\(8000 \\cdot 1{,}25^3 = 15\\,625 > 15\\,000\\). První překročení!` },
+        { label: `Po \\(1\\) týdnu`, value: "D", feedback: `Kritická chyba. Po 1 týdnu: \\(8000 \\cdot 1{,}25 = 10\\,000 < 15\\,000\\).` },
+      ],
+      hints: [
+        `Kolik sledujících je po prvním týdnu? Po druhém? Kdy poprvé přesáhneš \\(15\\,000\\)?`,
+        `Týden 1: \\(8000 \\cdot 1{,}25 = 10\\,000\\). Pokračuj stejným postupem — po kterém týdnu hodnota poprvé překročí \\(15\\,000\\)?`,
+      ],
+      correctAnswer: "C", reward: { xp: 25 }
+    },
+    {
+      id: "t_slov_03", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12C: Startup uživatelé`,
+      isTraining: true, firewallId: "q_slov_03", visual_color: "#2ecc8a", visual_symbol: `1.5ⁿ`, points: 0,
+      question: `Startup měl v lednu \\(200\\) uživatelů. Každý měsíc počet uživatelů vzroste o \\(50\\,\\%\\). Po kolika celých měsících překročí poprvé \\(1\\,000\\) uživatelů?`,
+      instruction: `Postupuj měsíc po měsíci.`,
+      steps: [
+        { trigger: `> Krok 1: Výpočet po měsících`, content: `\\(200 \\to 300 \\to 450 \\to 675 \\to 1\\,012\\). Po \\(4\\) měsících: \\(200 \\cdot 1{,}5^4 \\approx 1\\,013\\).` },
+        { trigger: `> Krok 2: První překročení`, content: `Po \\(3\\) měsících je \\(675 < 1\\,000\\). Kolik bude po \\(4\\) měsících? Překročí to hranici \\(1\\,000\\)?` },
+      ],
+      choices: [
+        { label: `Po \\(4\\) měsících`, value: "A", feedback: `Logika potvrzena. \\(200 \\cdot 1{,}5^4 \\approx 1\\,013 > 1\\,000\\).` },
+        { label: `Po \\(3\\) měsících`, value: "B", feedback: `Chyba protokolu. Po 3 měsících: \\(200 \\cdot 1{,}5^3 = 675 < 1\\,000\\).` },
+        { label: `Po \\(5\\) měsících`, value: "C", feedback: `Chyba syntaxe. Hranici překročíš dříve — zkontroluj krok 4.` },
+        { label: `Po \\(2\\) měsících`, value: "D", feedback: `Kritická chyba. Po 2 měsících: \\(200 \\cdot 1{,}5^2 = 450 < 1\\,000\\).` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_04", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12D: Baterie tabletu`,
+      visual_color: "#e17055", visual_symbol: `½·⅗`, points: 4, trainingTasks: ["t_slov_04"],
+      question: `Baterie tabletu měla na začátku dne plnou kapacitu. Dopoledne se spotřebovaly \\(\\frac{2}{5}\\) kapacity. Odpoledne se spotřebovaly \\(\\frac{3}{4}\\) zbývající kapacity.`,
+      instruction: `Jaká část celkové kapacity baterie zbyla na večer?`,
+      choices: [
+        { label: `\\(\\frac{1}{5}\\)`, value: "A", feedback: `Chyba protokolu. Spočítal(a) jsi \\(1 - \\frac{2}{5} - \\frac{3}{4}\\) bez zohlednění „zbývající".` },
+        { label: `\\(\\frac{3}{20}\\)`, value: "B", feedback: `Přístup povolen. Po dopoledni zbývá \\(\\frac{3}{5}\\), odpoledne se spotřebuje \\(\\frac{3}{4} \\cdot \\frac{3}{5} = \\frac{9}{20}\\), zbývá \\(\\frac{3}{20}\\).` },
+        { label: `\\(\\frac{7}{20}\\)`, value: "C", feedback: `Chyba syntaxe. Odečetl(a) jsi \\(\\frac{1}{4}\\) zbytku místo \\(\\frac{3}{4}\\) — přepočítej odpolední spotřebu.` },
+        { label: `\\(\\frac{1}{10}\\)`, value: "D", feedback: `Kritická chyba. Chybný zlomkový výpočet — zkontroluj, z čeho počítáš \\(\\frac{3}{4}\\).` },
+      ],
+      hints: [
+        `Klíčové slovo: „zbývající kapacity". Odpoledne se nespotřebuje \\(\\frac{3}{4}\\) z celku, ale \\(\\frac{3}{4}\\) z toho, co po ránu zbyde.`,
+        `Po dopoledni zbývá \\(1 - \\frac{2}{5} = \\frac{3}{5}\\) celkové kapacity. Odpoledne se spotřebuje \\(\\frac{3}{4} \\cdot \\frac{3}{5} = ?\\)`,
+      ],
+      correctAnswer: "B", reward: { xp: 20 }
+    },
+    {
+      id: "t_slov_04", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12D: Nádrž automobilu`,
+      isTraining: true, firewallId: "q_slov_04", visual_color: "#2ecc8a", visual_symbol: `½·¾`, points: 0,
+      question: `Nádrž automobilu byla plná. Při cestě do práce se spotřebovala \\(\\frac{1}{4}\\) nádrže. Při odpolední cestě se spotřebovaly \\(\\frac{2}{3}\\) zbývajícího paliva.`,
+      instruction: `Jaká část plné nádrže zbyla?`,
+      steps: [
+        { trigger: `> Krok 1: Po ránu`, content: `Zbývá \\(1 - \\frac{1}{4} = \\frac{3}{4}\\) nádrže.` },
+        { trigger: `> Krok 2: Odpoledne`, content: `Odpolední spotřeba: \\(\\frac{2}{3} \\cdot \\frac{3}{4} = \\frac{1}{2}\\). Kolik ze \\(\\frac{3}{4}\\) zbude po odečtení této spotřeby?` },
+      ],
+      choices: [
+        { label: `\\(\\frac{1}{4}\\)`, value: "A", feedback: `Logika potvrzena. \\(\\frac{3}{4} - \\frac{2}{3} \\cdot \\frac{3}{4} = \\frac{1}{4}\\).` },
+        { label: `\\(\\frac{1}{12}\\)`, value: "B", feedback: `Chyba protokolu. Odečetl(a) jsi \\(\\frac{2}{3}\\) z celku místo ze zbytku.` },
+        { label: `\\(\\frac{1}{3}\\)`, value: "C", feedback: `Chyba syntaxe. Zkontroluj odpolední spotřebu — \\(\\frac{2}{3}\\) z \\(\\frac{3}{4}\\) není \\(\\frac{5}{12}\\).` },
+        { label: `\\(\\frac{5}{12}\\)`, value: "D", feedback: `Kritická chyba. Spočítal(a) jsi zbývající podíl, ne zbytek po obou cestách.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_05", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12E: Škola v přírodě`,
+      visual_color: "#e17055", visual_symbol: `x=?`, points: 5, trainingTasks: ["t_slov_05"],
+      question: `Na školu v přírodě jelo několik dětí. \\(\\frac{2}{5}\\) z nich šly na výlet do lesa. Z těch, co zůstaly, šla polovina na koupaliště. Na základně zůstalo \\(15\\) dětí.`,
+      instruction: `Kolik dětí jelo na školu v přírodě celkem?`,
+      choices: [
+        { label: `\\(45\\)`, value: "A", feedback: `Chyba protokolu. Zkontroluj práci se zlomky — zkus dosadit \\(45\\) a ověř, zda ti vyjde \\(15\\).` },
+        { label: `\\(60\\)`, value: "B", feedback: `Chyba syntaxe. Polovina zbytku není polovina celku — při \\(x = 60\\): výlet \\(24\\), zbytek \\(36\\), koupaliště \\(18\\), základ \\(18 \\neq 15\\).` },
+        { label: `\\(75\\)`, value: "C", feedback: `Kritická chyba. Násobil(a) jsi \\(15 \\cdot 5\\) bez zohlednění struktury úlohy.` },
+        { label: `\\(50\\)`, value: "D", feedback: `Přístup povolen. \\(\\frac{3}{10} \\cdot 50 = 15\\). Verifikace: výlet \\(20\\), zbytek \\(30\\), koupaliště \\(15\\), základ \\(15\\). ✓` },
+      ],
+      hints: [
+        `Po odchodu na výlet zbývá \\(\\frac{3}{5}\\) dětí. Z tohoto zbytku jde polovina na koupaliště. Jaká část celku tedy zůstala na základně?`,
+        `Zbytek na základně je určitý zlomek celku \\(x\\). Tento zlomek krát \\(x\\) se musí rovnat \\(15\\). Jaké je \\(x\\)?`,
+      ],
+      correctAnswer: "D", reward: { xp: 25 }
+    },
+    {
+      id: "t_slov_05", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12E: Studenti ve třídě`,
+      isTraining: true, firewallId: "q_slov_05", visual_color: "#2ecc8a", visual_symbol: `x=?`, points: 0,
+      question: `Ve třídě je několik studentů. \\(\\frac{1}{3}\\) z nich odjelo na soutěž. Z těch, co zůstali, odešla \\(\\frac{3}{4}\\) na oběd. Ve třídě zůstalo \\(8\\) studentů.`,
+      instruction: `Kolik studentů je ve třídě celkem?`,
+      steps: [
+        { trigger: `> Krok 1: Zbytek po soutěži`, content: `Po odjezdu zbývá \\(1 - \\frac{1}{3} = \\frac{2}{3}\\) třídy. Na oběd odejdou \\(\\frac{3}{4}\\) z tohoto zbytku — zůstane \\(\\frac{1}{4} \\cdot \\frac{2}{3} = \\frac{1}{6}\\) třídy.` },
+        { trigger: `> Krok 2: Rovnice`, content: `\\(\\frac{1}{6} \\cdot x = 8\\). Kolik je \\(x\\)?` },
+      ],
+      choices: [
+        { label: `\\(48\\)`, value: "A", feedback: `Logika potvrzena. \\(\\frac{1}{6} \\cdot 48 = 8\\). ✓` },
+        { label: `\\(32\\)`, value: "B", feedback: `Chyba protokolu. Počítal(a) jsi \\(\\frac{1}{4}\\) z celku místo \\(\\frac{1}{4}\\) ze zbytku po soutěži.` },
+        { label: `\\(24\\)`, value: "C", feedback: `Chyba syntaxe. Přeskočil(a) jsi jeden krok — výsledek je příliš nízký.` },
+        { label: `\\(64\\)`, value: "D", feedback: `Kritická chyba. Pracoval(a) jsi s chybným zlomkem zbytku.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_06", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12F: Dvě 3D tiskárny`,
+      visual_color: "#e17055", visual_symbol: `1/t`, points: 5, trainingTasks: ["t_slov_06"],
+      question: `Dvě 3D tiskárny tisknou zakázku prototypů. Tiskárna A by zakázku zvládla sama za \\(6\\) hodin, tiskárna B za \\(10\\) hodin.`,
+      instruction: `Za jak dlouho zvládnou zakázku společně?`,
+      choices: [
+        { label: `\\(3\\) h \\(45\\) min`, value: "A", feedback: `Přístup povolen. \\(\\frac{1}{6} + \\frac{1}{10} = \\frac{4}{15}\\) zakázky/h \\(\\Rightarrow\\) čas \\(= \\frac{15}{4} = 3{,}75\\) h \\(= 3\\) h \\(45\\) min.` },
+        { label: `\\(4\\) h`, value: "B", feedback: `Chyba protokolu. Zaokrouhlil(a) jsi — ale výsledek není celé číslo. Spočítej zlomek přesně.` },
+        { label: `\\(3\\) h \\(20\\) min`, value: "C", feedback: `Chyba syntaxe. Průměr časů \\(\\frac{6+10}{2} = 8\\) h nevyjde. Sčítáš výkony, ne časy.` },
+        { label: `\\(8\\) h`, value: "D", feedback: `Kritická chyba. Průměr časů — ale při spolupráci je to vždy kratší, ne průměr.` },
+      ],
+      hints: [
+        `Výkon každé tiskárny vyjádři jako zlomek zakázky za hodinu: A udělá \\(\\frac{1}{6}\\) za hodinu, B udělá \\(\\frac{1}{10}\\) za hodinu.`,
+        `Společný výkon: \\(\\frac{1}{6} + \\frac{1}{10}\\). Najdi společného jmenovatele, sečti, pak převrať na čas.`,
+      ],
+      correctAnswer: "A", reward: { xp: 25 }
+    },
+    {
+      id: "t_slov_06", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12F: Dva roboti`,
+      isTraining: true, firewallId: "q_slov_06", visual_color: "#2ecc8a", visual_symbol: `1/t`, points: 0,
+      question: `Robot A vyčistí sklad za \\(4\\) hodiny, robot B za \\(12\\) hodin.`,
+      instruction: `Za jak dlouho vyčistí sklad společně?`,
+      steps: [
+        { trigger: `> Krok 1: Výkony`, content: `Výkon A: \\(\\frac{1}{4}\\) skladu/h. Výkon B: \\(\\frac{1}{12}\\) skladu/h. Součet: \\(\\frac{3}{12} + \\frac{1}{12} = \\frac{4}{12} = \\frac{1}{3}\\) skladu/h.` },
+        { trigger: `> Krok 2: Čas`, content: `Čas \\(= \\frac{1}{\\text{výkon}} = \\frac{1}{\\frac{1}{3}}\\). Kolik hodin to je?` },
+      ],
+      choices: [
+        { label: `\\(3\\) hodiny`, value: "A", feedback: `Logika potvrzena. Společný výkon \\(\\frac{1}{3}\\) skladu/h → čas \\(3\\) h.` },
+        { label: `\\(8\\) hodin`, value: "B", feedback: `Chyba protokolu. Průměr časů \\(\\frac{4+12}{2} = 8\\) — ale spolupráce je vždy rychlejší než průměr.` },
+        { label: `\\(4\\) hodiny`, value: "C", feedback: `Chyba syntaxe. To je čas robota A samostatně — robot B také přispívá.` },
+        { label: `\\(2\\) hodiny`, value: "D", feedback: `Kritická chyba. Příliš optimistické — zkontroluj součet výkonů.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_07", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12G: Model železnice H0`,
+      visual_color: "#e17055", visual_symbol: `1:87`, points: 3, trainingTasks: ["t_slov_07"],
+      question: `Na modelu železnice v měřítku \\(1:87\\) (standard H0) měří lokomotiva \\(25\\) cm.`,
+      instruction: `Jaká je skutečná délka lokomotivy v metrech?`,
+      choices: [
+        { label: `\\(3{,}48\\) m`, value: "A", feedback: `Chyba protokolu. Výsledek dělení \\(\\frac{87}{25}\\) — ale skutečná délka je naopak větší, ne menší.` },
+        { label: `\\(217{,}5\\) m`, value: "B", feedback: `Chyba syntaxe. Výsledek správný v centimetrech, ale zapomněl(a) jsi převést na metry.` },
+        { label: `\\(21{,}75\\) m`, value: "C", feedback: `Přístup povolen. \\(25 \\cdot 87 = 2\\,175\\) cm \\(= 21{,}75\\) m.` },
+        { label: `\\(2{,}175\\) m`, value: "D", feedback: `Chyba syntaxe. Dělil(a) jsi \\(1\\,000\\) místo \\(100\\) při převodu cm → m.` },
+      ],
+      hints: [
+        `Měřítko \\(1:87\\) znamená: model je \\(87\\times\\) zmenšený. Skutečná délka \\(=\\) délka modelu \\(\\times\\, 87\\).`,
+        `\\(25 \\cdot 87 = ?\\) cm. Výsledek převeď na metry — \\(1\\) m \\(= 100\\) cm.`,
+      ],
+      correctAnswer: "C", reward: { xp: 15 }
+    },
+    {
+      id: "t_slov_07", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12G: Turistická mapa`,
+      isTraining: true, firewallId: "q_slov_07", visual_color: "#2ecc8a", visual_symbol: `1:k`, points: 0,
+      question: `Na turistické mapě v měřítku \\(1:50\\,000\\) je vzdálenost mezi dvěma chatami \\(6{,}4\\) cm.`,
+      instruction: `Jaká je skutečná vzdálenost v kilometrech?`,
+      steps: [
+        { trigger: `> Krok 1: Skutečná vzdálenost v cm`, content: `\\(6{,}4 \\cdot 50\\,000 = 320\\,000\\) cm.` },
+        { trigger: `> Krok 2: Převod na km`, content: `Máš \\(320\\,000\\) cm. Kolik je to kilometrů? (\\(1\\) km \\(= 100\\,000\\) cm)` },
+      ],
+      choices: [
+        { label: `\\(3{,}2\\) km`, value: "A", feedback: `Logika potvrzena. \\(6{,}4 \\cdot 50\\,000 = 320\\,000\\) cm \\(= 3{,}2\\) km.` },
+        { label: `\\(32\\) km`, value: "B", feedback: `Chyba protokolu. Dělil(a) jsi \\(10\\,000\\) místo \\(100\\,000\\) při převodu cm → km.` },
+        { label: `\\(0{,}32\\) km`, value: "C", feedback: `Chyba syntaxe. Přehlédl(a) jsi jeden řád — výsledek je desetkrát menší.` },
+        { label: `\\(320\\) km`, value: "D", feedback: `Kritická chyba. Zapomněl(a) jsi převést centimetry na kilometry.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_08", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12H: Herní měna RPG`,
+      visual_color: "#e17055", visual_symbol: `0.85³`, points: 4, trainingTasks: ["t_slov_08"],
+      question: `Hodnota herní měny v online RPG klesá kvůli inflaci každý měsíc o \\(15\\,\\%\\). Hráč má zásobu v hodnotě \\(10\\,000\\) goldů.`,
+      instruction: `Jaká bude přibližná hodnota zásoby po \\(3\\) měsících? (zaokrouhlete na celé goldy)`,
+      choices: [
+        { label: `\\(5\\,500\\)`, value: "A", feedback: `Chyba protokolu. Sečetl(a) jsi \\(3 \\times 15\\,\\% = 45\\,\\%\\) a odečetl(a) od originálu — procenta se nesčítají.` },
+        { label: `\\(6\\,141\\)`, value: "B", feedback: `Přístup povolen. \\(10000 \\cdot 0{,}85^3 = 10000 \\cdot 0{,}614125 \\doteq 6\\,141\\).` },
+        { label: `\\(7\\,225\\)`, value: "C", feedback: `Chyba syntaxe. Počítal(a) jsi jen \\(2\\) měsíce: \\(10000 \\cdot 0{,}85^2 = 7\\,225\\).` },
+        { label: `\\(5\\,000\\)`, value: "D", feedback: `Kritická chyba. Odhad „zhruba polovina" není přesný výpočet.` },
+      ],
+      hints: [
+        `Každý měsíc zbývá \\(85\\,\\%\\) aktuální hodnoty. Po \\(3\\) měsících: \\(10000 \\cdot 0{,}85 \\cdot 0{,}85 \\cdot 0{,}85\\).`,
+        `\\(10000 \\cdot 0{,}85^3 = ?\\) Zaokrouhli na celé goldy.`,
+      ],
+      correctAnswer: "B", reward: { xp: 20 }
+    },
+    {
+      id: "t_slov_08", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12H: Rybník v suchu`,
+      isTraining: true, firewallId: "q_slov_08", visual_color: "#2ecc8a", visual_symbol: `0.8ⁿ`, points: 0,
+      question: `Rybník ztrácí kvůli suchu každý měsíc \\(20\\,\\%\\) objemu vody. Na začátku léta měl \\(5\\,000\\) m³.`,
+      instruction: `Kolik m³ zbyde po \\(2\\) měsících?`,
+      steps: [
+        { trigger: `> Krok 1: Po 1. měsíci`, content: `\\(5000 \\cdot 0{,}80 = 4\\,000\\) m³.` },
+        { trigger: `> Krok 2: Po 2. měsíci`, content: `Z \\(4\\,000\\) m³ ubyde dalších \\(20\\,\\%\\): \\(4000 \\cdot 0{,}80 = ?\\)` },
+      ],
+      choices: [
+        { label: `\\(3\\,200\\) m³`, value: "A", feedback: `Logika potvrzena. \\(5000 \\cdot 0{,}8^2 = 3\\,200\\) m³.` },
+        { label: `\\(3\\,000\\) m³`, value: "B", feedback: `Chyba protokolu. \\(2 \\times 20\\,\\% = 40\\,\\%\\) z \\(5\\,000\\) — procenta se nesčítají.` },
+        { label: `\\(4\\,000\\) m³`, value: "C", feedback: `Chyba syntaxe. To je stav po \\(1\\) měsíci, ne po dvou.` },
+        { label: `\\(2\\,560\\) m³`, value: "D", feedback: `Chyba protokolu. Počítal(a) jsi \\(3\\) měsíce místo \\(2\\).` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_09", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12I: Kavárna — zdražení a sleva`,
+      visual_color: "#e17055", visual_symbol: `×1.2×0.8`, points: 3, trainingTasks: ["t_slov_09"],
+      question: `Kavárna zvýšila cenu cappuccina o \\(20\\,\\%\\). Po stížnostech zákazníků snížila novou cenu o \\(20\\,\\%\\). Původní cena cappuccina byla \\(75\\) Kč.`,
+      instruction: `Jaká je výsledná cena cappuccina?`,
+      choices: [
+        { label: `\\(72\\) Kč`, value: "A", feedback: `Přístup povolen. \\(75 \\cdot 1{,}20 \\cdot 0{,}80 = 72\\) Kč. Stejné procento z různé základny — výsledek je nižší.` },
+        { label: `\\(75\\) Kč`, value: "B", feedback: `Chyba protokolu. Zdánlivě logické — \\(+20\\,\\%\\) a \\(-20\\,\\%\\) se ale nevynulují.` },
+        { label: `\\(70\\) Kč`, value: "C", feedback: `Chyba syntaxe. Chybný výpočet — zkontroluj oba kroky postupně.` },
+        { label: `\\(78\\) Kč`, value: "D", feedback: `Kritická chyba. Přičetl(a) jsi \\(+20\\,\\%\\) a odečetl(a) \\(-20\\,\\%\\) obojí z původní ceny \\(75\\) Kč.` },
+      ],
+      hints: [
+        `\\(+20\\,\\%\\) a \\(-20\\,\\%\\) se nevynulují! Zdražení zvýší základ, ze kterého se pak sleva počítá.`,
+        `Nejdřív: \\(75 \\cdot 1{,}20 = 90\\) Kč (po zdražení). Pak: \\(90 \\cdot 0{,}80 = ?\\) (po slevě z vyšší ceny).`,
+      ],
+      correctAnswer: "A", reward: { xp: 15 }
+    },
+    {
+      id: "t_slov_09", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12I: Streamovací předplatné`,
+      isTraining: true, firewallId: "q_slov_09", visual_color: "#2ecc8a", visual_symbol: `×1.25×0.75`, points: 0,
+      question: `Cena předplatného streamovací služby vzrostla o \\(25\\,\\%\\) a poté byla snížena o \\(25\\,\\%\\). Původní cena byla \\(200\\) Kč.`,
+      instruction: `Jaká je výsledná cena? Je stejná jako původní?`,
+      steps: [
+        { trigger: `> Krok 1: Po zdražení`, content: `\\(200 \\cdot 1{,}25 = 250\\) Kč.` },
+        { trigger: `> Krok 2: Po slevě`, content: `Z ceny \\(250\\) Kč odečti slevu \\(25\\,\\%\\): \\(250 \\cdot 0{,}75 = ?\\) Je výsledek stejný jako původní cena?` },
+      ],
+      choices: [
+        { label: `\\(187{,}50\\) Kč (nižší)`, value: "A", feedback: `Logika potvrzena. \\(200 \\cdot 1{,}25 \\cdot 0{,}75 = 187{,}50\\) Kč.` },
+        { label: `\\(200\\) Kč (stejná)`, value: "B", feedback: `Chyba protokolu. \\(+25\\,\\%\\) a \\(-25\\,\\%\\) se nevynulují — proč ne, vysvětlí postup.` },
+        { label: `\\(212{,}50\\) Kč (vyšší)`, value: "C", feedback: `Kritická chyba. Přehodil(a) jsi pořadí operací nebo spočítal(a) špatně druhý krok.` },
+        { label: `\\(190\\) Kč (nižší)`, value: "D", feedback: `Chyba syntaxe. Výsledek je blízko, ale výpočet někde mírně chybí.` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_slov_10", regionId: "slovni_ulohy", type: "closed", monsterName: `FW_12J: Esportový turnaj`,
+      visual_color: "#e17055", visual_symbol: `2/5+1/3`, points: 4, trainingTasks: ["t_slov_10"],
+      question: `Tři členové esportového týmu si rozdělují výhru \\(54\\,000\\) Kč. Kapitán dostane \\(\\frac{2}{5}\\) výhry, střelec \\(\\frac{1}{3}\\) výhry a zbytek podpora.`,
+      instruction: `Kolik korun dostane podpora?`,
+      choices: [
+        { label: `\\(21\\,600\\) Kč`, value: "A", feedback: `Chyba protokolu. To je podíl kapitána: \\(\\frac{2}{5} \\cdot 54\\,000 = 21\\,600\\) Kč.` },
+        { label: `\\(18\\,000\\) Kč`, value: "B", feedback: `Chyba syntaxe. To je podíl střelce: \\(\\frac{1}{3} \\cdot 54\\,000 = 18\\,000\\) Kč.` },
+        { label: `\\(12\\,000\\) Kč`, value: "C", feedback: `Kritická chyba. Chybný zlomkový výpočet zbytku — zkontroluj součet \\(\\frac{2}{5} + \\frac{1}{3}\\).` },
+        { label: `\\(14\\,400\\) Kč`, value: "D", feedback: `Přístup povolen. Zbytek \\(= 1 - \\frac{2}{5} - \\frac{1}{3} = \\frac{4}{15}\\). \\(\\frac{4}{15} \\cdot 54\\,000 = 14\\,400\\) Kč.` },
+      ],
+      hints: [
+        `Jakou část výhry dostanou kapitán a střelec dohromady? (\\(\\frac{2}{5} + \\frac{1}{3} = ?\\))`,
+        `Společný jmenovatel pro \\(\\frac{2}{5}\\) a \\(\\frac{1}{3}\\) je \\(15\\). Kolik z celku zbude pro podporu?`,
+      ],
+      correctAnswer: "D", reward: { xp: 20 }
+    },
+    {
+      id: "t_slov_10", regionId: "slovni_ulohy", type: "closed", monsterName: `SIM_12J: Účet za elektřinu`,
+      isTraining: true, firewallId: "q_slov_10", visual_color: "#2ecc8a", visual_symbol: `½+⅓`, points: 0,
+      question: `Tři spolubydlící si rozdělili účet za elektřinu \\(6\\,000\\) Kč. Adam zaplatí \\(\\frac{1}{2}\\), Bára \\(\\frac{1}{3}\\) a zbytek Cyril.`,
+      instruction: `Kolik zaplatí Cyril?`,
+      steps: [
+        { trigger: `> Krok 1: Součet Adama a Báry`, content: `\\(\\frac{1}{2} + \\frac{1}{3} = \\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}\\).` },
+        { trigger: `> Krok 2: Cyrilův podíl`, content: `Zbývá \\(1 - \\frac{5}{6} = \\frac{1}{6}\\). Kolik je \\(\\frac{1}{6}\\) z \\(6\\,000\\) Kč?` },
+      ],
+      choices: [
+        { label: `\\(1\\,000\\) Kč`, value: "A", feedback: `Logika potvrzena. \\(\\frac{1}{6} \\cdot 6\\,000 = 1\\,000\\) Kč.` },
+        { label: `\\(2\\,000\\) Kč`, value: "B", feedback: `Chyba protokolu. Zaměnil(a) jsi Cyrila a Báru — \\(\\frac{1}{3} \\cdot 6\\,000 = 2\\,000\\) je Bářin podíl.` },
+        { label: `\\(500\\) Kč`, value: "C", feedback: `Chyba syntaxe. Chybný výpočet podílu \\(\\frac{1}{6}\\) z \\(6\\,000\\).` },
+        { label: `\\(1\\,500\\) Kč`, value: "D", feedback: `Kritická chyba. Pracoval(a) jsi se zlomkem \\(\\frac{1}{4}\\) místo \\(\\frac{1}{6}\\).` },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_alg_11", regionId: "algebra", type: "closed", monsterName: `FW_01K: Vlastnosti racionálního výrazu`,
+      visual_color: "#7c5cfc", visual_symbol: `x²`, points: 3, trainingTasks: ["t_alg_11"],
+      question: `Je dán výraz W s reálnou proměnnou x:`,
+      formula: `$$W(x) = \\frac{x^{2} + x}{x^{2} - x} + \\frac{1}{x} - \\frac{2}{x - 1}$$`,
+      instruction: `Které tvrzení o hodnotách výrazu W je pravdivé?`,
+      choices: [
+        {
+          label: `W(1) = 2`,
+          value: "A",
+          feedback: `Kritická chyba. Pro x = 1 je výraz nedefinovaný — jmenovatele \\(x^2 - x\\) i \\(x - 1\\) jsou nulové.`
+        },
+        {
+          label: `Hodnota výrazu W nemůže být rovna 1`,
+          value: "B",
+          feedback: `Přístup povolen. Po zjednodušení \\(W(x) = \\frac{x+1}{x} = 1 + \\frac{1}{x}\\). Rovnice \\(\\frac{1}{x} = 0\\) nemá řešení.`
+        },
+        {
+          label: `Hodnota W je pro x = −1 záporná`,
+          value: "C",
+          feedback: `Chyba syntaxe. \\(W(-1) = \\frac{-1+1}{-1} = 0\\). Nulová, ne záporná.`
+        },
+        {
+          label: `Hodnota W je kladná pro všechna x v definičním oboru`,
+          value: "D",
+          feedback: `Nekompletní. Zkus dosadit zápornou hodnotu blízkou nule — například \\(W\\!\\left(-\\tfrac{1}{2}\\right) = -1 < 0\\).`
+        },
+      ],
+      hints: [
+        `Tvrzení o hodnotě v konkrétním bodě (A, C) ověříš dosazením — ale nejdřív zkontroluj, zda bod patří do definičního oboru.`,
+        `Tvrzení o hodnotě, které výraz nemůže nabývat (B), ověříš rovnicí W(x) = daná hodnota. Tvrzení o znaménku na celém oboru (D) vyvrátíš jediným protipříkladem.`,
+      ],
+      correctAnswer: "B", reward: { xp: 15 }
+    },
+    {
+      id: "t_alg_11", regionId: "algebra", type: "closed", monsterName: `SIM_01K: Hodnota výrazu a definiční obor`,
+      isTraining: true, firewallId: "q_alg_11", visual_color: "#2ecc8a", visual_symbol: `x²`, points: 0,
+      question: `Je dán výraz \\(V\\) pro \\(x \\neq 0\\):`,
+      formula: `$$V(x) = 1 + \\frac{1}{x}$$`,
+      instruction: `Může být \\(V(x) = 1\\) pro nějaké reálné \\(x\\)?`,
+      steps: [
+        {
+          trigger: `> Krok 1: Co je hodnota výrazu?`,
+          content: `Hodnota výrazu \\(V(x)\\) je číslo, které dostaneš po dosazení konkrétního \\(x\\). Jaká je \\(V(2)\\)? Dosad sám a zkontroluj.`
+        },
+        {
+          trigger: `> Krok 2: Kdy výraz hodnotu nemá?`,
+          content: `Výraz \\(\\frac{1}{x}\\) nemá hodnotu, když je jmenovatel nulový — tedy pro \\(x = 0\\). Pro všechna ostatní \\(x\\) je \\(\\frac{1}{x}\\) nenulové. Co to říká o možné hodnotě \\(V(x) = 1\\)?`
+        },
+      ],
+      choices: [
+        {
+          label: `Ne, \\(V(x) = 1\\) nemá řešení`,
+          value: "A",
+          feedback: `Přístup povolen. \\(1 + \\frac{1}{x} = 1\\) by znamenalo \\(\\frac{1}{x} = 0\\) — to pro žádné reálné \\(x\\) neplatí.`
+        },
+        {
+          label: `Ano, pro \\(x = 1\\)`,
+          value: "B",
+          feedback: `Chyba. \\(V(1) = 1 + \\frac{1}{1} = 2\\), ne 1. Dosaď přesně.`
+        },
+        {
+          label: `Ano, pro velmi velká \\(x\\)`,
+          value: "C",
+          feedback: `Nekompletní. Pro velká \\(x\\) se \\(V(x)\\) blíží 1, ale nikdy se 1 nerovná — \\(\\frac{1}{x}\\) je malé, ale nenulové.`
+        },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_alg_13", regionId: "algebra", type: "closed", monsterName: `FW_01M: Mocniny a třetí odmocnina`,
+      visual_color: "#7c5cfc", visual_symbol: `x²`, points: 3, trainingTasks: ["t_alg_13"],
+      question: `Pro \\(b \\in (0;\\, {+}\\infty)\\) zjednodušte výraz:`,
+      formula: `$$\\frac{(b^{2})^{60}}{b^{40} \\cdot \\sqrt[3]{b^{-60}}}$$`,
+      instruction: `Vyberte správný výsledek.`,
+      choices: [
+        {
+          label: `\\(b^{100}\\)`,
+          value: "A",
+          feedback: `Přístup povolen. \\((b^2)^{60} = b^{120}\\), \\(\\sqrt[3]{b^{-60}} = b^{-20}\\), jmenovatel \\(b^{40} \\cdot b^{-20} = b^{20}\\). Výsledek: \\(b^{120-20} = b^{100}\\).`
+        },
+        {
+          label: `\\(b^{60}\\)`,
+          value: "B",
+          feedback: `Chyba syntaxe. Záporný exponent zůstává záporný i po odmocnění — \\(\\sqrt[3]{b^{-60}} = b^{-20}\\), ne \\(b^{+20}\\).`
+        },
+        {
+          label: `\\(b^{140}\\)`,
+          value: "C",
+          feedback: `Kritická chyba. Třetí odmocnina dělí exponent třemi — nelze ji přeskočit. \\(\\sqrt[3]{b^{-60}} = b^{-20}\\), ne \\(b^{-60}\\).`
+        },
+        {
+          label: `\\(b^{110}\\)`,
+          value: "D",
+          feedback: `Nekompletní. Pod odmocninou je třetí odmocnina (\\(\\sqrt[3]{\\cdot}\\)), ne druhá. Exponent se dělí 3, ne 2.`
+        },
+      ],
+      hints: [
+        `Pravidla pro mocniny: \\((b^m)^n = b^{m \\cdot n}\\), \\(\\; b^m \\cdot b^n = b^{m+n}\\), \\(\\; \\dfrac{b^m}{b^n} = b^{m-n}\\).`,
+        `Třetí odmocnina jako mocnina: \\(\\sqrt[3]{b^k} = b^{k/3}\\). Záporný exponent pod odmocninou zůstává záporný.`,
+      ],
+      correctAnswer: "A", reward: { xp: 15 }
+    },
+    {
+      id: "t_alg_13", regionId: "algebra", type: "closed", monsterName: `SIM_01M: Zjednodušení výrazu s třetí odmocninou`,
+      isTraining: true, firewallId: "q_alg_13", visual_color: "#2ecc8a", visual_symbol: `x²`, points: 0,
+      question: `Pro \\(x \\in (0;\\, {+}\\infty)\\) zjednodušte výraz:`,
+      formula: `$$\\frac{(x^{3})^{4}}{x^{6} \\cdot \\sqrt[3]{x^{-9}}}$$`,
+      instruction: `Vyberte správný výsledek.`,
+      steps: [
+        {
+          trigger: `> Krok 1: Mocnina mocniny`,
+          content: `Jaké pravidlo platí pro \\((a^m)^n\\)? Aplikuj ho na čitatele.`
+        },
+        {
+          trigger: `> Krok 2: Odmocnina jako mocnina`,
+          content: `Přepiš \\(\\sqrt[3]{x^{-9}}\\) jako \\(x\\) na racionální exponent. Čím se dělí exponent u třetí odmocniny?`
+        },
+        {
+          trigger: `> Krok 3: Dělení mocnin`,
+          content: `Sečti exponenty ve jmenovateli a odečti od exponentu v čitateli.`
+        },
+      ],
+      choices: [
+        {
+          label: `\\(x^{9}\\)`,
+          value: "A",
+          feedback: `Logika potvrzena. \\(x^{12} / (x^{6} \\cdot x^{-3}) = x^{12} / x^{3} = x^{9}\\).`
+        },
+        {
+          label: `\\(x^{3}\\)`,
+          value: "B",
+          feedback: `Chyba syntaxe. \\(\\sqrt[3]{x^{-9}} = x^{-3}\\), ne \\(x^{+3}\\). Znaménko exponentu se odmocněním nemění.`
+        },
+        {
+          label: `\\(x^{15}\\)`,
+          value: "C",
+          feedback: `Kritická chyba. Třetí odmocnina dělí exponent třemi: \\(-9 / 3 = -3\\), ne \\(-9\\).`
+        },
+        {
+          label: `\\(x^{6}\\)`,
+          value: "D",
+          feedback: `Nekompletní. Ve jmenovateli je ještě \\(\\sqrt[3]{x^{-9}}\\) — ten člen nelze ignorovat.`
+        },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    {
+      id: "q_rov_12", regionId: "rovnice", type: "closed", monsterName: `FW_02L: Soustava lineárních nerovnic`,
+      visual_color: "#f7b84f", visual_symbol: `x=`, points: 5, trainingTasks: ["t_rov_12"],
+      question: `V oboru \\(\\mathbb{R}\\) řešte soustavu nerovnic. Výsledek zapište intervalem.`,
+      formula: `$$\\frac{2x + 3}{5} > \\frac{x - 1}{2}$$\n$$4x - 3 \\geq x$$`,
+      instruction: `Vyberte správný interval.`,
+      choices: [
+        {
+          label: `\\((1;\\, 11)\\)`,
+          value: "A",
+          feedback: `Chyba syntaxe. Druhá nerovnice má \\(\\geq\\), takže hranice 1 do intervalu patří — závorka musí být uzavřená.`
+        },
+        {
+          label: `\\(\\langle 1;\\, 11)\\)`,
+          value: "B",
+          feedback: `Logika potvrzena. Průnik: \\(x \\geq 1\\) a současně \\(x < 11\\).`
+        },
+        {
+          label: `\\(\\langle 1;\\, 11\\rangle\\)`,
+          value: "C",
+          feedback: `Nekompletní. První nerovnice má \\(>\\), tedy \\(x < 11\\) ostře — hranice 11 do intervalu nepatří.`
+        },
+        {
+          label: `\\((1;\\, 11\\rangle\\)`,
+          value: "D",
+          feedback: `Kritická chyba. Závorky jsou prohozené — zkontroluj, která nerovnice je ostrá a která ne.`
+        },
+      ],
+      hints: [
+        `Ostrá nerovnost (\\(>\\) nebo \\(<\\)) → otevřená závorka. Neostrá (\\(\\geq\\) nebo \\(\\leq\\)) → uzavřená závorka.`,
+        `Řeš každou nerovnici zvlášť. Průnik znamená, že obě podmínky musí platit současně.`,
+      ],
+      correctAnswer: "B", reward: { xp: 25 }
+    },
+    {
+      id: "t_rov_12", regionId: "rovnice", type: "closed", monsterName: `SIM_02L: Průnik dvou nerovností`,
+      isTraining: true, firewallId: "q_rov_12", visual_color: "#2ecc8a", visual_symbol: `x=`, points: 0,
+      question: `V oboru \\(\\mathbb{R}\\) řešte soustavu nerovnic. Výsledek zapište intervalem.`,
+      formula: `$$2x + 1 > 5 \\qquad x \\leq 6$$`,
+      instruction: `Vyberte správný interval.`,
+      steps: [
+        {
+          trigger: `> Krok 1: Řešení každé nerovnice`,
+          content: `Izoluj \\(x\\) v každé nerovnici zvlášť. Jaké nerovnosti vyjdou? Jsou ostré nebo neostré?`
+        },
+        {
+          trigger: `> Krok 2: Průnik`,
+          content: `Obě podmínky musí platit současně. Zakresli si obě řešení na číselnou osu — kde se překrývají?`
+        },
+      ],
+      choices: [
+        {
+          label: `\\((2;\\, 6\\rangle\\)`,
+          value: "A",
+          feedback: `Přístup povolen. \\(x > 2\\) (otevřená) a \\(x \\leq 6\\) (uzavřená).`
+        },
+        {
+          label: `\\(\\langle 2;\\, 6\\rangle\\)`,
+          value: "B",
+          feedback: `Chyba. Nerovnost \\(2x + 1 > 5\\) dává \\(x > 2\\) ostře — 2 do intervalu nepatří.`
+        },
+        {
+          label: `\\((2;\\, 6)\\)`,
+          value: "C",
+          feedback: `Nekompletní. Nerovnost \\(x \\leq 6\\) zahrnuje rovnost — 6 do intervalu patří.`
+        },
+        {
+          label: `\\(\\langle 2;\\, 6)\\)`,
+          value: "D",
+          feedback: `Kritická chyba. Závorky jsou prohozené — 2 nepatří (ostrá), 6 patří (neostrá).`
+        },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    },
+    // --- ZÁSTUPNÍ UZLY ---
+
+    {
+      id: "q_gon_11", regionId: "goniometrie", type: "closed",
+      monsterName: `FW_10K: Průsečíky s osou x`,
+      visual_color: "#e040fb", visual_symbol: `y=0`, points: 3, trainingTasks: ["t_gon_11"],
+      question: `Pro \\(x \\in \\mathbb{R}\\) je dána funkce:`,
+      formula: `$$f\\colon y = \\sin\\!\\left(x - \\frac{\\pi}{6}\\right)$$`,
+      instruction: `Nalezněte všechny průsečíky grafu funkce f se souřadnicovou osou x v intervalu \\(\\langle 0;\\, 2\\pi \\rangle\\).`,
+      choices: [
+        {
+          label: `\\(x_1 = \\dfrac{\\pi}{6},\\quad x_2 = \\dfrac{7\\pi}{6}\\)`,
+          value: "A",
+          feedback: `Přístup povolen. \\(\\sin\\!\\left(x - \\tfrac{\\pi}{6}\\right) = 0 \\Rightarrow x - \\tfrac{\\pi}{6} = n\\pi \\Rightarrow x = \\tfrac{\\pi}{6} + n\\pi\\). V \\(\\langle 0; 2\\pi \\rangle\\): \\(x_1 = \\tfrac{\\pi}{6}\\), \\(x_2 = \\tfrac{7\\pi}{6}\\). ✓`
+        },
+        {
+          label: `\\(x_1 = 0,\\quad x_2 = \\pi\\)`,
+          value: "B",
+          feedback: `Chyba. Opomenuli jste fázový posun — tato řešení platí pro \\(\\sin(x) = 0\\), ne pro \\(\\sin\\!\\left(x - \\tfrac{\\pi}{6}\\right) = 0\\).`
+        },
+        {
+          label: `\\(x_1 = \\dfrac{\\pi}{6},\\quad x_2 = \\dfrac{5\\pi}{6}\\)`,
+          value: "C",
+          feedback: `Kritická chyba. \\(x_2 = \\tfrac{5\\pi}{6}\\) by nastalo pro \\(\\sin(x) = 0\\) s posunem \\(+\\tfrac{\\pi}{6}\\), zde je posun opačný. Obecné řešení je \\(x = \\tfrac{\\pi}{6} + n\\pi\\).`
+        },
+        {
+          label: `\\(x_1 = -\\dfrac{\\pi}{6},\\quad x_2 = \\dfrac{5\\pi}{6}\\)`,
+          value: "D",
+          feedback: `Chyba. Tato řešení jsou mimo interval \\(\\langle 0; 2\\pi \\rangle\\) nebo nevznikají ze správného obecného řešení. Ověřte dosazením: \\(\\sin\\!\\left(\\tfrac{5\\pi}{6} - \\tfrac{\\pi}{6}\\right) = \\sin\\tfrac{2\\pi}{3} \\neq 0\\).`
+        },
+      ],
+      hints: [
+        `Na jednotkové kružnici: \\(\\sin\\theta = 0\\) odpovídá bodům, kde se kružnice protíná s vodorovnou osou. Kolik takových bodů je v jednom oběhu a jaké jsou odpovídající úhly?`,
+        `Máte-li obecné řešení pro \\(\\theta\\), zaveďte substituci \\(\\theta = x - \\tfrac{\\pi}{6}\\). Která \\(x\\) pak leží v intervalu \\(\\langle 0; 2\\pi \\rangle\\)?`,
+      ],
+      correctAnswer: "A", reward: { xp: 15 }
+    },
+    {
+      id: "t_gon_11", regionId: "goniometrie", type: "closed", monsterName: `SIM_10K: Průsečíky posunutého sinu`,
+      isTraining: true, firewallId: "q_gon_11", visual_color: "#2ecc8a", visual_symbol: `y=0`, points: 0,
+      formula: null,
+      question: `Je dána funkce \\(f\\colon y = \\sin\\!\\left(x - \\dfrac{\\pi}{3}\\right)\\).`,
+      instruction: `Najděte všechny průsečíky grafu funkce f se souřadnicovou osou x v intervalu \\(\\langle 0;\\, 2\\pi \\rangle\\).`,
+      steps: [
+        {
+          trigger: `> Krok 1: Podmínka průsečíku s osou x`,
+          content: `Průsečík s osou \\(x\\) nastane, když \\(y = 0\\), tedy \\(\\sin\\!\\left(x - \\tfrac{\\pi}{3}\\right) = 0\\).<br>
+Zaveďte substituci \\(\\theta = x - \\tfrac{\\pi}{3}\\). Kdy platí \\(\\sin\\theta = 0\\)?`
+        },
+        {
+          trigger: `> Krok 2: Obecné řešení a zpětná substituce`,
+          content: `\\(\\sin\\theta = 0\\) nastane pro \\(\\theta = n\\pi\\) (celé násobky \\(\\pi\\)).<br>
+Zpět: \\(x - \\tfrac{\\pi}{3} = n\\pi\\), tedy \\(x = \\tfrac{\\pi}{3} + n\\pi\\).<br>
+Pro \\(n = 0\\): \\(x_1 = \\tfrac{\\pi}{3}\\). Pro \\(n = 1\\): \\(x_2 = \\tfrac{\\pi}{3} + \\pi = \\tfrac{4\\pi}{3}\\). Obě hodnoty leží v \\(\\langle 0; 2\\pi \\rangle\\). Vyber správnou volbu.`
+        },
+      ],
+      choices: [
+        {
+          label: `\\(x_1 = \\dfrac{\\pi}{3},\\quad x_2 = \\dfrac{4\\pi}{3}\\)`,
+          value: "A",
+          feedback: `Přístup povolen. \\(x = \\tfrac{\\pi}{3} + n\\pi\\) → \\(x_1 = \\tfrac{\\pi}{3}\\), \\(x_2 = \\tfrac{4\\pi}{3}\\). ✓`
+        },
+        {
+          label: `\\(x_1 = 0,\\quad x_2 = \\pi\\)`,
+          value: "B",
+          feedback: `Chyba fázového posunu. Tato řešení platí pro \\(\\sin(x) = 0\\), ale funkce je \\(\\sin(x - \\tfrac{\\pi}{3})\\). Fázový posun musíš zahrnout do obecného řešení.`
+        },
+        {
+          label: `\\(x_1 = \\dfrac{\\pi}{3},\\quad x_2 = \\dfrac{2\\pi}{3}\\)`,
+          value: "C",
+          feedback: `Kritická chyba. \\(\\tfrac{2\\pi}{3}\\) není řešení — ověř: \\(\\sin\\!\\left(\\tfrac{2\\pi}{3} - \\tfrac{\\pi}{3}\\right) = \\sin\\tfrac{\\pi}{3} = \\tfrac{\\sqrt{3}}{2} \\neq 0\\). Druhé řešení se liší o celé \\(\\pi\\), ne o \\(\\tfrac{\\pi}{3}\\).`
+        },
+        {
+          label: `\\(x_1 = \\dfrac{2\\pi}{3},\\quad x_2 = \\dfrac{5\\pi}{3}\\)`,
+          value: "D",
+          feedback: `Chyba ve směru posunu. Tato řešení vzniknou, pokud posun přičteš místo odečteš. Funkce je \\(\\sin(x - \\tfrac{\\pi}{3})\\), tedy \\(x = \\tfrac{\\pi}{3} + n\\pi\\), ne \\(x = -\\tfrac{\\pi}{3} + n\\pi\\).`
+        },
+      ],
+      correctAnswer: "A", reward: { xp: 5 }
+    }
   ]
 };
