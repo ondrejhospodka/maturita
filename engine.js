@@ -1345,7 +1345,11 @@ const Engine = {
   },
 
   renderDailyPanel: function() {
-    const container = document.getElementById('daily-panel');
+    this.renderHudDaily();
+  },
+
+  renderHudDaily: function() {
+    const container = document.getElementById('hud-daily');
     if (!container) return;
     const today = getTodayISO();
     const streak = this.state.dailyStreak || 0;
@@ -1353,26 +1357,21 @@ const Engine = {
     const missionDate = this.state.dailyMissionDate;
     const progress = (missionDate === today) ? (this.state.dailyMissionProgress || 0) : 0;
     const claimed = (missionDate === today) && this.state.dailyMissionClaimed;
-    const pct = Math.min(100, Math.round((progress / 10) * 100));
-
     const streakColor = streak >= 7 ? '#f7b84f' : (streak >= 3 ? '#2ecc8a' : 'var(--neon-cyan)');
     const streakGlow = streak >= 3 ? `text-shadow: 0 0 8px ${streakColor}` : '';
-
+    const dots = Array.from({length: 10}, (_, i) => {
+      if (claimed) return `<span class="hud-dot hud-dot-done">■</span>`;
+      return i < progress
+        ? `<span class="hud-dot hud-dot-filled">■</span>`
+        : `<span class="hud-dot hud-dot-empty">□</span>`;
+    }).join('');
     container.innerHTML = `
-      <div class="daily-row">
-        <div class="daily-streak" style="color:${streakColor};${streakGlow}">
-          <span class="daily-streak-fire">${isActiveToday ? '🔥' : '⚫'}</span>
-          <span class="daily-streak-num">${streak}</span>
-          <span class="daily-streak-label">DNÍ V ŘADĚ</span>
-        </div>
-        <div class="daily-mission">
-          <div class="daily-mission-label">
-            DENNÍ MISE: <span style="color:${claimed ? '#2ecc8a' : 'var(--neon-cyan)'}">${claimed ? 'SPLNĚNA ✓' : `${progress} / 10`}</span>
-          </div>
-          <div class="daily-mission-track">
-            <div class="daily-mission-fill" style="width:${pct}%;${claimed ? 'background:#2ecc8a;box-shadow:0 0 10px rgba(46,204,138,0.6)' : ''}"></div>
-          </div>
-        </div>
+      <div class="hud-daily-inner">
+        <span class="hud-streak" style="color:${streakColor};${streakGlow}" title="Denní série">
+          ${isActiveToday ? '🔥' : '⚫'}<span class="hud-streak-num">${streak}</span>
+        </span>
+        <span class="hud-mission-dots" title="Denní mise: ${claimed ? 'splněna' : progress + '/10'}">${dots}</span>
+        <span class="hud-mission-count" style="color:${claimed ? '#2ecc8a' : 'var(--text-muted)'}">${claimed ? '✓' : progress + '/10'}</span>
       </div>`;
   },
 
